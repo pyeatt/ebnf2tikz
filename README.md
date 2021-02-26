@@ -109,8 +109,8 @@ it is possible because, ... look at CircuiTikZ.
 
 Trying to get TikZ to do all of the work to lay out complex diagrams was a nightmare.  It
 does not do recursive structures well. I put in some effort, then gave
-up and decided to go another direction.  Ebnf2TikZ does all of the layout, and just uses TikZ to do the drawing. 
-This does mean that it needs some information from LaTeX about how big the basic nodes are.  This means that you have to run ebnf2tikz, then LaTeX, then ebnf2tikz again, then LaTeX again.
+up and decided to go another direction.  I now have ebnf2TikZ do all of the layout, and just use TikZ to do the drawing. 
+This does mean that ebnf2tikz needs some information from LaTeX about how big the basic nodes are.  Therefore, you have to run ebnf2tikz, then LaTeX, then ebnf2tikz again, then LaTeX again.
 
 I have written it so that
 you can:
@@ -119,7 +119,7 @@ you can:
 correct.
 
 2. Run the incorrect diagrams through LaTeX to get the dimensions of
-the nodes and the settings for railcolsep and railrowsep.
+the basic nodes and the settings for railcolsep and railrowsep.
 
 3. After that, re-run ebnf2tikz and all of the diagrams are correct.
 
