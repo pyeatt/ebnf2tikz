@@ -3,7 +3,7 @@
 An optimizing compiler to convert (possibly annotated) <a href=https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>Extended Backus–Naur  Form</a> (EBNF) to railroad diagrams expressed as LaTeX <a href=https://en.wikipedia.org/wiki/PGF/TikZ> TikZ</a> commands.
 
 For example, if  you feed a file containing the following annotated EBNF into ebnf2tikz:
-```
+```ebnf
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
 
@@ -87,7 +87,7 @@ You can just include that code in your LaTeX document, and it will draw this:
 
 <img src="./testdriver.png" height="200">
 
-You can then just include the TikZ code in your LaTeX document, and have beautiful rail diagrams.
 
-This is a work in progress.  There are still a couple of bugs, and I have not started working on newlines, so the diagrams can easily become wider than the space available.  
+This is a work in progress.  There are still a couple of bugs that I am aware of, but nothing major.
+I have not really started working on newlines, so the diagrams can easily become wider than the space available.  
 
