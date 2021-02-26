@@ -2,7 +2,7 @@
 
 An optimizing compiler to convert (possibly annotated) <a href=https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>Extended Backus–Naur  Form</a> (EBNF) to railroad diagrams expressed as LaTeX <a href=https://en.wikipedia.org/wiki/PGF/TikZ> TikZ</a> commands.
 
-In other words, you feed this file into ebnf2tikz:
+For example, if  you feed a file containing the following annotated EBNF into ebnf2tikz:
 ```
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
@@ -18,7 +18,7 @@ choice =
     simple_name |
     'others' ;
 ```
-and it outputs the TikZ code to create this:
+Then it will output the TikZ code to create this:
 
 <img src="./testdriver.png" height="300">
 
