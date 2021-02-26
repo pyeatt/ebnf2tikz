@@ -84,7 +84,7 @@ Then it will output the following TikZ code:
 ```
 
 You will need a ```\usepackage{ebnf2tikz}``` command in the preamble of your LaTeX document.
-You can just include the TikZ code in your LaTeX document, and it will draw this:
+Then you can just include the TikZ code in your LaTeX document, and it will draw this:
 
 <img src="./testdriver.png" height="200">
 
