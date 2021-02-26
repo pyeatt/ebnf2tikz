@@ -20,18 +20,6 @@ choice =
 ```
 and it outputs the TikZ code to create this:
 
-<div id="adobe-dc-view" style="width: 800px;"></div>
-<script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-<script type="text/javascript">
-	document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
-		var adobeDCView = new AdobeDC.View({clientId: "<YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
-		adobeDCView.previewFile({
-			content:{location: {url: "https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf"}},
-			metaData:{fileName: "testdriver.crop.pdf"}
-		}, {embedMode: "IN_LINE"});
-	});
-</script>
-
 
 [embed]https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf[/embed] 
 
