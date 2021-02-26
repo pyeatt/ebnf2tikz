@@ -20,7 +20,7 @@ choice =
 ```
 and it outputs the TikZ code to create this:
 
-![alt text](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf?raw=true)
+![Screenshot](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.png?raw=true)
 
 <object data="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf">
