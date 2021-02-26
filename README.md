@@ -20,12 +20,7 @@ choice =
 ```
 and it outputs the TikZ code to create this:
 
-![Screenshot](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true)
+![Rail Diagram](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true)
 
 
-<img
-src=“https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png”
-raw=true
-alt=“Rail Diagram”
-style=“margin-right: 10px;”
-/>
+<img src="./testdriver.png">
