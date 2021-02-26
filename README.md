@@ -18,13 +18,7 @@ choice =
     simple_name |
     'others' ;
 ```
-Then it will output the TikZ code to create this:
-
-<img src="./testdriver.png" height="200">
-
-You can then just include the TikZ code in your LaTeX document, and have beautiful rail diagrams.
-
-This is a work in progress.  There are still a couple of bugs, and I have not started working on newlines, so the diagrams can easily become wider than the space available.  
+Then it will output the following TikZ code:
 
 ```latex
 \begin{figure}
@@ -88,3 +82,12 @@ This is a work in progress.  There are still a couple of bugs, and I have not st
 \label{No Caption.}
 \end{figure}
 ```
+
+You can just include that code in your LaTeX document, and it will draw this:
+
+<img src="./testdriver.png" height="200">
+
+You can then just include the TikZ code in your LaTeX document, and have beautiful rail diagrams.
+
+This is a work in progress.  There are still a couple of bugs, and I have not started working on newlines, so the diagrams can easily become wider than the space available.  
+
