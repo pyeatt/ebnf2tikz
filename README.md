@@ -20,7 +20,7 @@ choice =
 ```
 Then it will output the TikZ code to create this:
 
-<img src="./testdriver.png" height="300">
+<img src="./testdriver.png" height="200">
 
 You can then just include the TikZ code in your LaTeX document, and have beautiful rail diagrams.
 
