@@ -24,7 +24,7 @@ and it outputs the TikZ code to create this:
 
 
 <img
-src=“https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true”
+src=“https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png”
 raw=true
 alt=“Rail Diagram”
 style=“margin-right: 10px;”
