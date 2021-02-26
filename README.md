@@ -20,9 +20,9 @@ choice =
 ```
 and it outputs the TikZ code to create this:
 
-![Rail Diagram](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true height="150")
+![Rail Diagram](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true)
 
-<!-- <img src="./testdriver.png" height="300"> -->
+<img src="./testdriver.png" height="150">
 
 You can then just include the TikZ code in your LaTeX document, and have beautiful rail diagrams.
 
