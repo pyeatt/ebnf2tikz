@@ -1,0 +1,118 @@
+
+simple =
+         [ a  | b | c | d ] ;
+
+simple =
+  b, { a , b } ;
+
+ optionchoice =
+  b,  [ a | b ], c;
+
+case_statement =
+    [ label, ':' ], 'case', expression, 'is',  case_statement_alternative,
+    { ',' , case_statement_alternative },
+    'end', 'case', [ label ] ,';' ;
+
+subsume
+case_statement_alternative =
+    'when' , choices , '=>', sequence_of_statements;
+    
+character_literal =
+    "'", graphic_character, "'" ;
+
+subsume
+choice =
+    simple_expression |
+    discrete_range |
+    simple_name |
+    'others' ;
+
+subsume
+choices =
+    choice, { '|', choice } ;
+
+
+toollist =
+ tool,{ ',', tool };
+
+subsume
+tool =
+  'hammer' | 'screwdriver' | saw;
+
+subsume
+saw =
+   'hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ,'saw';
+
+nolist=
+  a , b , [c , "d" ] , e , f ;
+
+list =
+  a, 'b', c,  this | that_one | 'and' ,  the, other;
+
+list =
+  a, 'b', (c , this | that_one,  'and',   the ),other;
+
+
+
+listx =
+  a , ( 'b' | c , ( this | { that_one | 'and' }  |   the )),other;
+
+listj =
+  a , (  'b' | c | (this , that_one ) | 'and'|   the ),  other;
+
+listk =
+  a  ,(  'b'  | c | "none" ,{ ( (this , that_one) | other_one | "none" ) } | 'and'|
+  the ), other ;
+
+
+aawesome_list =
+  a , ( 'b' | c | (( this , [that_one | 'this one' ]) | ( other_one |
+  ('and'|   the |"bout"))  | "neither") ),
+  other;
+
+grammar = { rule } ;
+
+other =
+  (((a, b), [ (c, d, e), (f), (g , h, i), j ] ), (k, l, m), (n, o ) );
+
+
+otherb =
+  (((a, b),  (c, d, e), (f), (g,  h, i), j ), (k, l, m), (n, o ) );
+
+easyone =
+[ a | b];
+
+a_better_loop =
+ a, [{a}];
+ 
+a_much_better_loop =
+ a, [{  ',', a}];
+
+
+// a_much_better_loop =
+//  	x    a b {  ','  a b};
+
+
+// wowzer =
+//  	x    a b[{  blue ','  'part' a b g}];
+
+// gleep =
+//  	x    a b [{  ','  a b}] right;
+
+
+// muckrake =
+//  	x    a b [{  blue ','  a b}] 'toodles';
+
+// broken =
+//  	x    a b[{x}];
+
+// scooby =
+//   	[{  blue ','  'part' a (b | g)}];
+
+// // scooby =
+// //   	x    a b[{  blue ','  'part' a (b | g)}];
+
+// muckrake =
+//  	x    a|b [{  blue ','  a| b}] 'toodles';
+
+

@@ -1,0 +1,69 @@
+lexer.cc:1657:2: warning: Possible null pointer dereference: b [nullPointer]
+/* %if-c-only */
+ ^
+lexer.cc:1519:18: note: Calling function 'yy_init_buffer', 1st argument '(yy_buffer_stack)?(yy_buffer_stack)[yy_buffer_stack_top]:NULL' value is 0
+
+                 ^
+lexer.cc:1657:2: note: Null pointer dereference
+/* %if-c-only */
+ ^
+lexer.cc:1661:2: warning: Possible null pointer dereference: b [nullPointer]
+/* %endif */
+ ^
+lexer.cc:1519:18: note: Calling function 'yy_init_buffer', 1st argument '(yy_buffer_stack)?(yy_buffer_stack)[yy_buffer_stack_top]:NULL' value is 0
+
+                 ^
+lexer.cc:1661:2: note: Null pointer dereference
+/* %endif */
+ ^
+parser.cc:501:0: style: The function 'debug_level' is never used. [unusedFunction]
+
+^
+parser.cc:488:0: style: The function 'debug_stream' is never used. [unusedFunction]
+
+^
+graph.cc:25:0: style: The function 'stripSpecial' is never used. [unusedFunction]
+
+^
+lexer.cc:2117:0: style: The function 'yy_flex_strlen' is never used. [unusedFunction]
+
+^
+lexer.cc:1875:0: style: The function 'yy_scan_string' is never used. [unusedFunction]
+
+^
+lexer.cc:2029:0: style: The function 'yyget_debug' is never used. [unusedFunction]
+
+^
+lexer.cc:1970:0: style: The function 'yyget_in' is never used. [unusedFunction]
+
+^
+lexer.cc:1986:0: style: The function 'yyget_leng' is never used. [unusedFunction]
+
+^
+lexer.cc:1961:0: style: The function 'yyget_lineno' is never used. [unusedFunction]
+
+^
+lexer.cc:1978:0: style: The function 'yyget_out' is never used. [unusedFunction]
+
+^
+lexer.cc:1995:0: style: The function 'yyget_text' is never used. [unusedFunction]
+
+^
+lexer.cc:2078:0: style: The function 'yylex_destroy' is never used. [unusedFunction]
+
+^
+lexer.cc:1721:0: style: The function 'yypush_buffer_state' is never used. [unusedFunction]
+
+^
+lexer.cc:2034:0: style: The function 'yyset_debug' is never used. [unusedFunction]
+
+^
+lexer.cc:2019:0: style: The function 'yyset_in' is never used. [unusedFunction]
+
+^
+lexer.cc:2007:0: style: The function 'yyset_lineno' is never used. [unusedFunction]
+
+^
+lexer.cc:2024:0: style: The function 'yyset_out' is never used. [unusedFunction]
+
+^

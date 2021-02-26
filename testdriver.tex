@@ -1,0 +1,168 @@
+\documentclass[10pt,letterpaper]{article}
+\textwidth 6.5in
+\evensidemargin 0in
+\oddsidemargin 0in
+\topmargin 0in
+\headheight 0in
+\headsep 0in
+
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[full]{textcomp}
+\RequirePackage[lining,proportional]{fbb}% Bembo-like font
+\RequirePackage[scale=.95,type1]{cabin}% sans serif in style of Gill Sans
+\RequirePackage[varqu,varl]{zi4}% inconsolata typewriter
+\csdef{verbatim@font}{\ttfamily\fontsize{8}{10}\selectfont}
+\RequirePackage[libertine,bigdelims]{newtxmath}
+\let\Bbbk\relax
+\RequirePackage{amsmath,amssymb,amsfonts}
+\let\openbox\relax
+\RequirePackage{amsthm}
+
+\usepackage{tikz,pgf}
+\usetikzlibrary{positioning,shapes,matrix,chains,scopes,fit,scopes,calc,shadings,intersections}
+\usepackage[nomessages]{fp}
+
+\newcommand{\railname}[1]{\it #1}
+\newcommand{\railtermname}[1]{\bf #1}
+\newlength\railcolsep
+\setlength\railcolsep{5pt}
+\newlength\railrowsep
+\setlength\railrowsep{\baselineskip}
+\newlength\railnodeheight
+\setlength\railnodeheight{14pt}
+\newlength\railcorners
+\setlength\railcorners{\railcolsep}
+\addtolength\railcorners{-1pt}
+
+\tikzset{
+  nonterminal/.style={
+    draw,
+    inner sep=2pt,
+    % The shape:
+    rectangle,
+    % The size:
+    minimum size=\railnodeheight,
+    % The border:
+    thick,
+%    draw=red!50!black!50,         % 50% red and 50% black,
+    % and that mixed with 50% white
+    %shading=ball,
+    %ball color=white,
+     % The filling:
+   top color=white,              % a shading that is white at the top...
+    bottom color=red!50!black!20, % and something else at the bottom
+    % Font
+    font=\itshape
+  },
+  terminal/.style={
+    draw,
+    inner sep=2pt,
+    % The shape:
+    rounded rectangle,
+    minimum size=\railnodeheight,
+    % The rest
+    thick,
+%    draw=black!50,
+    top color=white,bottom color=black!20,
+    font=\ttfamily
+  },
+  every picture/.style={thick},%,rounded corners=0.001\railcolsep},
+%  every picture/.style={thick,rounded corners={\railcorners}},%,rounded corners=0.001\railcolsep},
+  every node/.style={inner sep=0,outer sep=0,draw=none}
+%  skip loop/.style={to path={-- ++(0,#1) -| (\tikztotarget)}}
+}
+
+\makeatletter
+\tikzset{
+    getyshift/.style args={#1 and #2 and #3}{
+      getdistc={#1}{#2},yshift=-\mylength-\railnodeheight+\pgflinewidth/#3
+    },
+getdistc/.code 2 args={
+\pgfextra{
+    \pgfpointdiff{\pgfpointanchor{#1}{north}}{\pgfpointanchor{#2}{south}}
+    \xdef\mylength{\the\pgf@y}
+         }
+    }
+}
+\makeatother
+
+\makeatletter
+\newcommand{\Distance}[3]{% % from https://tex.stackexchange.com/q/56353/121799
+\tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax  
+\pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}
+}% Explanation: the calc library allows us, among other things, to add and
+% subtract points, so ($#1-#2$) is simply the difference between the points
+% #1 and #2. The combination \tikz@scan@one@point\pgfutil@firstofone extracts
+% the coordinates of the new point and stores them in \pgf@x and \pgf@y. 
+% They get fed in veclen, and \pgfmathsetmacro stores the result in #3. 
+% EDIT: included fudge factor, see https://tex.stackexchange.com/a/22702/121799
+\makeatother
+
+\makeatletter
+\newcommand\settoxdiff[3]{%
+%\pgfpointdiff{\pgfpointanchor{#1}{center}}%
+%             {\pgfpointanchor{#2}{center}}%
+\pgfpointdiff{#2}{#3}%
+%\pgf@xa=
+\global\expandafter\edef #1{\pgf@x}%
+%% \FP@eval\@temp@a{\pgfmath@tonumber{\pgf@xa}}%
+%% \global\expandafter\edef\csname #3\endcsname{\pgf@xa}%
+%\setlength{#3}{\pgf@x pt}%
+}
+
+\def\settodistance(#1,#2)#3{%
+\pgfpointdiff{\pgfpointanchor{#1}{center}}%
+             {\pgfpointanchor{#2}{center}}%
+\pgf@xa=\pgf@x%
+\pgf@ya=\pgf@y%
+\global\expandafter\edef\csname xlen\endcsname{\pgf@xa}%
+\global\expandafter\edef\csname ylen\endcsname{\pgf@ya}%
+\FP@eval\@temp@a{\pgfmath@tonumber{\pgf@xa}}%
+\FPeval\@temp@b{\pgfmath@tonumber{\pgf@ya}}%
+\FPeval\@temp@sum{(\@temp@a*\@temp@a+\@temp@b*\@temp@b)}%
+\FProot{\FPMathLen}{\@temp@sum}{2}%
+\FPround\FPMathLen\FPMathLen5\relax%
+\global\expandafter\edef\csname #3\endcsname{\pgf@x}%
+}%
+\makeatother
+
+
+
+
+\newwrite\tempfile
+\immediate\openout\tempfile=bnfnodes.dat
+
+
+%\pgfpointdiff{\pgfpointanchor{TestBlock}{south east}}{\pgfpointanchor{TestBlock}{north east}}
+%\pgfmathsetmacro\mytemp{\csname pgf@y\endcsname}
+
+\makeatletter
+\newcommand{\writenodesize}[1]{%
+  \pgfpointdiff{\pgfpointanchor{#1}{west}}{\pgfpointanchor{#1}{east}}%
+\FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
+  \pgfpointdiff{\pgfpointanchor{#1}{south}}{\pgfpointanchor{#1}{north}}%
+\FP@eval\@temp@y{\pgfmath@tonumber{\pgf@y}}%
+\immediate\write\tempfile{#1 \@temp@x,  \@temp@y}}
+\makeatother
+
+
+\begin{document}
+\newlength{\tmplength}
+\newlength{\tmplengthb}
+\newlength{\tmplengthc}
+\setlength{\tmplength}{12pt}
+\setlength{\tmplengthb}{12pt}
+\setlength{\tmplengthc}{12pt}
+
+
+
+\input{test}
+
+
+
+\immediate\closeout\tempfile
+
+\end{document}
