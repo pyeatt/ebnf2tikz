@@ -20,12 +20,13 @@ choice =
 ```
 and it outputs the TikZ code to create this:
 
-
-[embed]https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf[/embed] 
-
-
-
-
+<iframe
+    src="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf"
+    frameBorder="0"
+    scrolling="auto"
+    height="100%"
+    width="100%"
+></iframe>
 
 <object data="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf">
