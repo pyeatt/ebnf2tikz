@@ -26,11 +26,14 @@ and it outputs the TikZ code to create this:
 	document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
 		var adobeDCView = new AdobeDC.View({clientId: "<YOUR_CLIENT_ID>", divId: "adobe-dc-view"});
 		adobeDCView.previewFile({
-			content:{location: {url: "https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf""}},
+			content:{location: {url: "https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf"}},
 			metaData:{fileName: "testdriver.crop.pdf"}
 		}, {embedMode: "IN_LINE"});
 	});
 </script>
+
+
+[embed]https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf[/embed] 
 
 <iframe src="https://docs.google.com/gview?url=https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
 
