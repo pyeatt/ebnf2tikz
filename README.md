@@ -19,9 +19,9 @@ choice =
     'others' ;
 ```
 and it outputs the TikZ code to create this:
-<object data="http://yoursite.com/the.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://yoursite.com/the.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
+<object data="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf">Download PDF</a>.</p>
     </embed>
 </object>
 
