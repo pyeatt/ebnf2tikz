@@ -20,11 +20,12 @@ choice =
 ```
 and it outputs the TikZ code to create this:
 
-![Screenshot](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.png?raw=true)
+![Screenshot](https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true)
 
-<object data="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.crop.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
 
+<img
+src=“https://github.com/pyeatt/ebnf2tikz/blob/main/testdriver.png?raw=true”
+raw=true
+alt=“Rail Diagram”
+style=“margin-right: 10px;”
+/>
