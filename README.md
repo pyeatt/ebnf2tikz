@@ -83,7 +83,8 @@ Then it will output the following TikZ code:
 \end{figure}
 ```
 
-You will need a ```latex \usepackage{ebnf2tikz}``` command in the preamble of your LaTeX document.
+You will need a ```latex
+\usepackage{ebnf2tikz}``` command in the preamble of your LaTeX document.
 You can just include that code in your LaTeX document, and it will draw this:
 
 <img src="./testdriver.png" height="200">
