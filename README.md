@@ -137,5 +137,5 @@ they can possibly be. All of the layout is handled by ebnf2tikz, so
 LaTeX does not spend a lot of time on them. Also, I may be able to do
 some sort of "auto-newline" thing.
 
-All nodes are placed using exact coordinates```\node (nodename) at (exat
-coordinates)``` but all lines are drawn using the node names.
+All nodes are placed using exact coordinates```\node (nodename) at (exact
+coordinate)``` but all lines are drawn using the node names.
