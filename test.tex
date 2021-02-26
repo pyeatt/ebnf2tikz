@@ -1,0 +1,154 @@
+
+\begin{figure}
+\centerline{
+\begin{tikzpicture}
+\node at (0pt,0pt)[anchor=west](name){\railname{case\_statement\_alternative\strut}};
+\coordinate (node42) at (59.3677pt,-21pt);
+\coordinate (node42linetop) at (59.3677pt,-27pt);
+\coordinate (node42linebottom) at (59.3677pt,-101pt);
+\draw [rounded corners=\railcorners] (node42linetop) -- (node42linebottom);
+\draw [rounded corners=\railcorners] (node42linetop) -- (node42) -- +(east:8pt);
+\coordinate (node45) at (67.3677pt,-21pt);
+\coordinate (node45linetop) at (67.3677pt,-27pt);
+\coordinate (node45linebottom) at (67.3677pt,-79pt);
+\draw [rounded corners=\railcorners] (node45linetop) -- (node45linebottom);
+\draw [rounded corners=\railcorners] (node45linetop) -- (node45) -- +(west:8pt);
+\coordinate (node51) at (156.118pt,-21pt);
+\coordinate (node51linetop) at (156.118pt,-27pt);
+\coordinate (node51linebottom) at (156.118pt,-79pt);
+\draw [rounded corners=\railcorners] (node51linetop) -- (node51linebottom);
+\draw [rounded corners=\railcorners] (node51linetop) -- (node51) -- +(east:8pt);
+\coordinate (node53) at (164.118pt,-21pt);
+\coordinate (node53linetop) at (164.118pt,-27pt);
+\coordinate (node53linebottom) at (164.118pt,-101pt);
+\draw [rounded corners=\railcorners] (node53linetop) -- (node53linebottom);
+\draw [rounded corners=\railcorners] (node53linetop) -- (node53) -- +(west:8pt);
+\node (node1) at (16pt,-21pt)[anchor=west,terminal] {\railtermname{when\strut}};
+\writenodesize{node1}
+\draw [rounded corners=\railcorners] (node1.east) -- (node42.west);
+\node (node47) at (75.3677pt,-21pt)[anchor=west,nonterminal] {\railname{simple\_expression\strut}};
+\writenodesize{node47}
+\node (node48) at (83.5977pt,-43pt)[anchor=west,nonterminal] {\railname{discrete\_range\strut}};
+\writenodesize{node48}
+\node (node49) at (84.5176pt,-65pt)[anchor=west,nonterminal] {\railname{simple\_name\strut}};
+\writenodesize{node49}
+\node (node50) at (92.8288pt,-87pt)[anchor=west,terminal] {\railtermname{others\strut}};
+\writenodesize{node50}
+\draw [rounded corners=\railcorners] (node45.east) -- (node47.west);
+\draw [rounded corners=\railcorners] (node47.east) -- (node51.west);
+\node (node52) at (104.743pt,-109pt)[anchor=west,terminal] {\railtermname{|}};
+\writenodesize{node52}
+\draw [rounded corners=\railcorners] (node42.east) -- (node45.west);
+\draw [rounded corners=\railcorners] (node51.east) -- (node53.west);
+\node (node4) at (172.118pt,-21pt)[anchor=west,terminal] {\railtermname{=>\strut}};
+\writenodesize{node4}
+\draw [rounded corners=\railcorners] (node53.east) -- (node4.west);
+\node (node5) at (199.775pt,-21pt)[anchor=west,nonterminal] {\railname{sequence\_of\_statements\strut}};
+\writenodesize{node5}
+\draw [rounded corners=\railcorners] (node4.east) -- (node5.west);
+\draw [rounded corners=\railcorners] (node48.west) -- (node48.west-|node45) -- (node45linetop);
+\draw [rounded corners=\railcorners] (node49.west) -- (node49.west-|node45) -- (node45linetop);
+\draw [rounded corners=\railcorners] (node50.west) -- (node50.west-|node45) -- (node45linetop);
+\draw [rounded corners=\railcorners] (node52.west) -- (node52.west-|node42) -- (node42linetop);
+\draw [rounded corners=\railcorners] (node48.east) -- (node48.east-|node51) -- (node51linetop);
+\draw [rounded corners=\railcorners] (node49.east) -- (node49.east-|node51) -- (node51linetop);
+\draw [rounded corners=\railcorners] (node50.east) -- (node50.east-|node51) -- (node51linetop);
+\draw [rounded corners=\railcorners] (node52.east) -- (node52.east-|node53) -- (node53linetop);
+\end{tikzpicture}
+}
+\caption{No Caption.}
+\label{No Caption.}
+\end{figure}
+
+\ \\
+\newpage
+\pagebreak[4]
+\eject
+
+\begin{figure}
+\centerline{
+\begin{tikzpicture}
+\node at (0pt,0pt)[anchor=west](name){\railname{choice\strut}};
+\coordinate (node16) at (16pt,-21pt);
+\coordinate (node16linetop) at (16pt,-27pt);
+\coordinate (node16linebottom) at (16pt,-79pt);
+\draw [rounded corners=\railcorners] (node16linetop) -- (node16linebottom);
+\draw [rounded corners=\railcorners] (node16linetop) -- (node16) -- +(west:8pt);
+\coordinate (node17) at (104.75pt,-21pt);
+\coordinate (node17linetop) at (104.75pt,-27pt);
+\coordinate (node17linebottom) at (104.75pt,-79pt);
+\draw [rounded corners=\railcorners] (node17linetop) -- (node17linebottom);
+\draw [rounded corners=\railcorners] (node17linetop) -- (node17) -- +(east:8pt);
+\node (node7) at (24pt,-21pt)[anchor=west,nonterminal] {\railname{simple\_expression\strut}};
+\writenodesize{node7}
+\node (node9) at (32.23pt,-43pt)[anchor=west,nonterminal] {\railname{discrete\_range\strut}};
+\writenodesize{node9}
+\node (node12) at (33.15pt,-65pt)[anchor=west,nonterminal] {\railname{simple\_name\strut}};
+\writenodesize{node12}
+\node (node14) at (41.4611pt,-87pt)[anchor=west,terminal] {\railtermname{others\strut}};
+\writenodesize{node14}
+\draw [rounded corners=\railcorners] (node16.east) -- (node7.west);
+\draw [rounded corners=\railcorners] (node7.east) -- (node17.west);
+\draw [rounded corners=\railcorners] (node9.west) -- (node9.west-|node16) -- (node16linetop);
+\draw [rounded corners=\railcorners] (node12.west) -- (node12.west-|node16) -- (node16linetop);
+\draw [rounded corners=\railcorners] (node14.west) -- (node14.west-|node16) -- (node16linetop);
+\draw [rounded corners=\railcorners] (node9.east) -- (node9.east-|node17) -- (node17linetop);
+\draw [rounded corners=\railcorners] (node12.east) -- (node12.east-|node17) -- (node17linetop);
+\draw [rounded corners=\railcorners] (node14.east) -- (node14.east-|node17) -- (node17linetop);
+\end{tikzpicture}
+}
+\caption{No Caption.}
+\label{No Caption.}
+\end{figure}
+
+\begin{figure}
+\centerline{
+\begin{tikzpicture}
+\node at (0pt,0pt)[anchor=west](name){\railname{choices\strut}};
+\coordinate (node29) at (16pt,-21pt);
+\coordinate (node29linetop) at (16pt,-27pt);
+\coordinate (node29linebottom) at (16pt,-101pt);
+\draw [rounded corners=\railcorners] (node29linetop) -- (node29linebottom);
+\draw [rounded corners=\railcorners] (node29linetop) -- (node29) -- +(east:8pt);
+\coordinate (node34) at (24pt,-21pt);
+\coordinate (node34linetop) at (24pt,-27pt);
+\coordinate (node34linebottom) at (24pt,-79pt);
+\draw [rounded corners=\railcorners] (node34linetop) -- (node34linebottom);
+\draw [rounded corners=\railcorners] (node34linetop) -- (node34) -- +(west:8pt);
+\coordinate (node40) at (112.75pt,-21pt);
+\coordinate (node40linetop) at (112.75pt,-27pt);
+\coordinate (node40linebottom) at (112.75pt,-79pt);
+\draw [rounded corners=\railcorners] (node40linetop) -- (node40linebottom);
+\draw [rounded corners=\railcorners] (node40linetop) -- (node40) -- +(east:8pt);
+\coordinate (node30) at (120.75pt,-21pt);
+\coordinate (node30linetop) at (120.75pt,-27pt);
+\coordinate (node30linebottom) at (120.75pt,-101pt);
+\draw [rounded corners=\railcorners] (node30linetop) -- (node30linebottom);
+\draw [rounded corners=\railcorners] (node30linetop) -- (node30) -- +(west:8pt);
+\node (node36) at (32pt,-21pt)[anchor=west,nonterminal] {\railname{simple\_expression\strut}};
+\writenodesize{node36}
+\node (node37) at (40.23pt,-43pt)[anchor=west,nonterminal] {\railname{discrete\_range\strut}};
+\writenodesize{node37}
+\node (node38) at (41.15pt,-65pt)[anchor=west,nonterminal] {\railname{simple\_name\strut}};
+\writenodesize{node38}
+\node (node39) at (49.4611pt,-87pt)[anchor=west,terminal] {\railtermname{others\strut}};
+\writenodesize{node39}
+\draw [rounded corners=\railcorners] (node34.east) -- (node36.west);
+\draw [rounded corners=\railcorners] (node36.east) -- (node40.west);
+\node (node23) at (61.3749pt,-109pt)[anchor=west,terminal] {\railtermname{|}};
+\writenodesize{node23}
+\draw [rounded corners=\railcorners] (node29.east) -- (node34.west);
+\draw [rounded corners=\railcorners] (node40.east) -- (node30.west);
+\draw [rounded corners=\railcorners] (node37.west) -- (node37.west-|node34) -- (node34linetop);
+\draw [rounded corners=\railcorners] (node38.west) -- (node38.west-|node34) -- (node34linetop);
+\draw [rounded corners=\railcorners] (node39.west) -- (node39.west-|node34) -- (node34linetop);
+\draw [rounded corners=\railcorners] (node23.west) -- (node23.west-|node29) -- (node29linetop);
+\draw [rounded corners=\railcorners] (node37.east) -- (node37.east-|node40) -- (node40linetop);
+\draw [rounded corners=\railcorners] (node38.east) -- (node38.east-|node40) -- (node40linetop);
+\draw [rounded corners=\railcorners] (node39.east) -- (node39.east-|node40) -- (node40linetop);
+\draw [rounded corners=\railcorners] (node23.east) -- (node23.east-|node30) -- (node30linetop);
+\end{tikzpicture}
+}
+\caption{No Caption.}
+\label{No Caption.}
+\end{figure}

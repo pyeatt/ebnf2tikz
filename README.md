@@ -8,6 +8,10 @@ case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
 
 subsume
+choices =
+    choice, { '|', choice } ;
+
+subsume
 choice =
     simple_expression |
     discrete_range |
