@@ -109,7 +109,7 @@ it is possible because, ... look at CircuiTikZ.
 
 Trying to get TikZ to do all of the work to lay out complex diagrams was a nightmare.  It
 does not do recursive structures well. I put in some effort, then gave
-up and decided to go another direction.  I now have ebnf2TikZ do all of the layout, and just use TikZ to do the drawing. 
+up and decided to go another direction.  I now have ebnf2tikz do all of the layout, and just use TikZ to do the drawing. 
 This does mean that ebnf2tikz needs some information from LaTeX about how big the basic nodes are.  Therefore, you have to run ebnf2tikz, then LaTeX, then ebnf2tikz again, then LaTeX again.
 
 I have written it so that
