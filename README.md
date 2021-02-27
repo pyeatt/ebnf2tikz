@@ -139,3 +139,8 @@ some sort of "auto-newline" thing.
 
 All nodes are placed using exact coordinates```\node (nodename) at (exact
 coordinate)``` but all lines are drawn using the node names.
+
+## To Do
+
+I have not written the ```ebnf2tikz``` style file, so the ```\usepackage{ebnf2tiks|``` will not work.
+For now, you just have to look at ```testdriver.tex``` and do the best you can.
