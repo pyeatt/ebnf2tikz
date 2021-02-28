@@ -50,6 +50,7 @@ protected:
   float beforeskip;
   int drawtoprev;
   railnode *leftrail,*rightrail;
+  int dead;
 
   coordinate location; // where to draw the east point of the thing
   
@@ -81,6 +82,7 @@ public:
     rightrail = NULL;
     beforeskip = original.beforeskip;
     drawtoprev = original.drawtoprev;
+    dead = 0;
     //parent = original.parent;
   }
   virtual node* clone() const = 0;
@@ -97,7 +99,9 @@ public:
 
   virtual void drawToLeftRail(ofstream &outs, railnode* p,vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p,vraildir join);
-  
+
+  void makeDead(){dead = 1;}
+  int isDead(){return dead;}
 
   void setBeforeSkip(float s){beforeskip=s;}
   void setDrawToPrev(int d){drawtoprev=d;}
@@ -157,8 +161,9 @@ public:
   void setheight(float h){myHeight=h;}
   virtual int mergeConcats(int depth);
   virtual int liftConcats(int depth);
-  virtual int liftOptionChoice(int depth);
-  virtual int analyzeLoops(int depth);
+  //  virtual int liftOptionChoice(int depth);
+  virtual int analyzeOptLoops(int depth);
+  virtual int analyzeNonOptLoops(int depth);
   virtual int mergeChoices(int depth);
   virtual int numChildren(){return 0;}
   virtual node* getChild(int n){return NULL;}
@@ -201,8 +206,9 @@ public:
   virtual int mergeConcats(int depth){return body->mergeConcats(depth+1);}
   virtual int liftConcats(int depth);
   virtual int mergeChoices(int depth){return body->mergeChoices(depth+1);}
-  virtual int analyzeLoops(int depth){return body->analyzeLoops(depth+1);}
-  virtual int liftOptionChoice(int depth);
+  virtual int analyzeOptLoops(int depth){return body->analyzeOptLoops(depth+1);}
+  virtual int analyzeNonOptLoops(int depth){return body->analyzeNonOptLoops(depth+1);}
+  //  virtual int liftOptionChoice(int depth);
   virtual int numChildren(){return 1;}
   virtual node* getChild(int n){return body;}
   virtual int operator ==(node &r){
@@ -237,7 +243,7 @@ class railnode:public node{
                           // of bottom child.  Otherwise it is even with
                           // bottom of bottom child.
 public:
-  railnode():node(){type=RAIL;beforeskip=0;}
+  railnode():node(){type=RAIL;}//beforeskip=0;}
   railnode(vrailside s,vraildir d):node(){type=RAIL;side = s; direction = d;}
   railnode(const railnode &original):node(original){
     side=original.side;
@@ -352,15 +358,21 @@ public:
       sum += (*i)->mergeChoices(depth+1);
     return sum;
   }
-  virtual int analyzeLoops(int depth){
+  virtual int analyzeOptLoops(int depth){
     int sum=0;
     for(auto i = nodes.begin();i!=nodes.end();i++)
-      sum += (*i)->analyzeLoops(depth+1);
+      sum += (*i)->analyzeOptLoops(depth+1);
+    return sum;
+  }
+  virtual int analyzeNonOptLoops(int depth){
+    int sum=0;
+    for(auto i = nodes.begin();i!=nodes.end();i++)
+      sum += (*i)->analyzeNonOptLoops(depth+1);
     return sum;
   }
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  virtual int liftOptionChoice(int depth);
+  //  virtual int liftOptionChoice(int depth);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
   virtual node* subsume(string name, node *replacement){
@@ -414,8 +426,9 @@ public:
   virtual int mergeChoices(int depth){return 0;}
   virtual int liftConcats(int depth){return 0;}
   virtual node* getChild(int n){return NULL;}
-  virtual int liftOptionChoice(int depth){return 0;}
-  virtual int analyzeLoops(int depth){return 0;}
+  //  virtual int liftOptionChoice(int depth){return 0;}
+  virtual int analyzeOptLoops(int depth){return 0;}
+  virtual int analyzeNonOptLoops(int depth){return 0;}
 
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
@@ -578,14 +591,12 @@ public:
   
 class concatnode:public multinode{
 private:
-  int analyzeOptLoops(int depth);
-  int analyzeNonOptLoops(int depth);
   int findAndDeleteMatches(vector<node*> &parentnodes,
 			   vector<node*>::iterator &wherep,
 			   vector<node*> &childnodes,
 			   vector<node*>::iterator &wherec);
 public:
-  concatnode(node *p):multinode(p){type=CONCAT;beforeskip=0;}
+  concatnode(node *p):multinode(p){type=CONCAT;}//beforeskip=0;}
   concatnode(const concatnode &original):multinode(original){
     ea=nodes.back()->east();}
   virtual concatnode* clone() const {
@@ -600,7 +611,8 @@ public:
   virtual int rail_left(){return nodes.front()->rail_left();};
   virtual int rail_right(){return nodes.back()->rail_right();};
   virtual int mergeConcats(int depth);
-  virtual int analyzeLoops(int depth);
+  virtual int analyzeOptLoops(int depth);
+  virtual int analyzeNonOptLoops(int depth);
 
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);

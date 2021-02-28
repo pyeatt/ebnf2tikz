@@ -134,7 +134,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   string coord=nextCoord();
   string coord2=nextCoord();
 
-  nullnode *null1, *null2;
+
   
   c = start+coordinate(0.0,-1.5*sizes.minsize);
   if(body->is_choice())

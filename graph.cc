@@ -8,7 +8,7 @@
 #include <cstring>
 #include <sstream>
 #include <nodesize.hh>
-
+#include <algorithm>    // std::find
 using namespace std;
 
 
@@ -147,15 +147,21 @@ int node::liftConcats(int depth)
   return 0;
 }
 
-int node::liftOptionChoice(int depth)
+// int node::liftOptionChoice(int depth)
+// {
+//   //cout<<"No implementation given for liftOptionChoices\n";
+//   return 0;
+// }
+
+int node::analyzeOptLoops(int depth)
 {
-  //cout<<"No implementation given for liftOptionChoices\n";
+  // cout<<"No implementation given for analyzeOptLoops\n";
   return 0;
 }
 
-int node::analyzeLoops(int depth)
+int node::analyzeNonOptLoops(int depth)
 {
-  // cout<<"No implementation given for analyzeLoops\n";
+  // cout<<"No implementation given for analyzeNonOptLoops\n";
   return 0;
 }
 
@@ -185,28 +191,28 @@ int singlenode::liftConcats(int depth)
 
 // this optimization is never used, because it is handled by
 // mergeChoices.
-int singlenode::liftOptionChoice(int depth)
-{
-  int count = body->liftOptionChoice(depth+1);
-  // if my child is an option and their child is a choice, then
-  // lift the choice and make it an optional choice
-  //  if(body->is_option() && body->getChild(0)->is_choice())
-  if(body->is_choice() &&
-     body->numChildren()==2 &&
-     body->getChild(0)->is_null() &&
-     body->getChild(1)->is_choice())
-    {    
-      node *i = body->getChild(1);
-      // inserting a nullnode at the front makes it an optional choice
-      if( ! i->getChild(0)->is_null())
-	i->insert(new nullnode("ebnf2tikz NULL node"));
-      body->forgetChild(1); // don't let body delete the choicenode
-      delete body;
-      body = i;
-      count++;
-    }
-  return count;
-}
+// int singlenode::liftOptionChoice(int depth)
+// {
+//   int count = body->liftOptionChoice(depth+1);
+//   // if my child is an option and their child is a choice, then
+//   // lift the choice and make it an optional choice
+//   //  if(body->is_option() && body->getChild(0)->is_choice())
+//   if(body->is_choice() &&
+//      body->numChildren()==2 &&
+//      body->getChild(0)->is_null() &&
+//      body->getChild(1)->is_choice())
+//     {    
+//       node *i = body->getChild(1);
+//       // inserting a nullnode at the front makes it an optional choice
+//       if( ! i->getChild(0)->is_null())
+// 	i->insert(new nullnode("ebnf2tikz NULL node"));
+//       body->forgetChild(1); // don't let body delete the choicenode
+//       delete body;
+//       body = i;
+//       count++;
+//     }
+//   return count;
+// }
 
 // ------------------------------------------------------------------------
 
@@ -241,36 +247,36 @@ int multinode::liftConcats(int depth)
   return count;
 }
 
-int multinode::liftOptionChoice(int depth)
-{
+// int multinode::liftOptionChoice(int depth)
+// {
 
-  int count = 0;
-  for(auto i = nodes.begin(); i != nodes.end(); i++)
-    count += (*i)->liftOptionChoice(depth+1);
+//   int count = 0;
+//   for(auto i = nodes.begin(); i != nodes.end(); i++)
+//     count += (*i)->liftOptionChoice(depth+1);
   
-  // if my child is an option and their child is a choice, then
-  // lift the choice and make it an optional choice
-  for(auto i = nodes.begin(); i != nodes.end(); i++)
+//   // if my child is an option and their child is a choice, then
+//   // lift the choice and make it an optional choice
+//   for(auto i = nodes.begin(); i != nodes.end(); i++)
 
-    if((*i)->is_choice() &&
-       (*i)->numChildren()==2 &&
-       (*i)->getChild(0)->is_null() &&
-       (*i)->getChild(1)->is_choice())
+//     if((*i)->is_choice() &&
+//        (*i)->numChildren()==2 &&
+//        (*i)->getChild(0)->is_null() &&
+//        (*i)->getChild(1)->is_choice())
 
-      //if((*i)->is_option() && (*i)->getChild(0)->is_choice())
-      {
-	choicenode *k = (choicenode*)(*i);
-	choicenode *j = (choicenode*)(*i)->getChild(1);
-	// inserting a NULL at the front makes it an optional choice
-	if(!j->getChild(0)->is_null())
-	  j->insert(new nullnode("ebnf2tikz NULL node"));
-	k->forgetChild(1); // don't want (*i) to delete the choicenode
-	delete *i;;
-	*i = j;
-	count++;
-      }
-  return count;
-}
+//       //if((*i)->is_option() && (*i)->getChild(0)->is_choice())
+//       {
+// 	choicenode *k = (choicenode*)(*i);
+// 	choicenode *j = (choicenode*)(*i)->getChild(1);
+// 	// inserting a NULL at the front makes it an optional choice
+// 	if(!j->getChild(0)->is_null())
+// 	  j->insert(new nullnode("ebnf2tikz NULL node"));
+// 	k->forgetChild(1); // don't want (*i) to delete the choicenode
+// 	delete *i;;
+// 	*i = j;
+// 	count++;
+//       }
+//   return count;
+// }
 
 int multinode::operator == (node &r)
 {
@@ -314,47 +320,60 @@ void productionnode::dump(int depth) const
 void productionnode::optimize()
 {
   int changes=0,tmp;
-  //cout << latexwrite("emph",name) <<endl;
-  do
-    {
-      changes = 0;
-      do{
-	// combine consecutive concants
-	tmp = body->mergeConcats(0);
-	changes += tmp;
-	//cout<<tmp<<" concats merged\n";
-	// if a child of a concat is a concat, lift the child
-	tmp += body->liftConcats(0);
-	changes += tmp;
-	//cout<<tmp<<" concats lifted\n";	
-      }while(tmp > 0);
-      
-      do{
-	// if a child of a choice is a choice, merge it with the parent
-        tmp = body->mergeChoices(0);
-        changes += tmp;
-	//cout<<tmp<<" choices merged\n";
-      }while(tmp > 0);
-      
-      do{
-	// if an option is parent to a choice, make it a choice with
-	// the first child being null
-        tmp = body->liftOptionChoice(0);
-        changes += tmp;
-	//cout<<tmp<<" optionchoices lifted\n";
-      }while(tmp > 0);
+  cout << latexwrite("emph",name) <<endl;
+  // do
+  //   {
+  changes = 0;
 
-      do{
-	//	body->dump(0);
-        tmp = body-> analyzeLoops(0);
-	//cout <<"-----------------\n";
-	//body->dump(0);
-        changes += tmp;
-	//cout<<tmp<<" loops modified\n";
-      }while(tmp > 0);
-      //cout <<"-----------------\n";
-    } while (changes);
+  // do{
+  // 	// if an option is parent to a choice, make it a choice with
+  // 	// the first child being null
+  //   tmp = body->liftOptionChoice(0);
+  //   changes += tmp;
+  // 	//cout<<tmp<<" optionchoices lifted\n";
+  // }while(tmp > 0);
+
+  tmp = body-> analyzeNonOptLoops(0);
+  cout <<"-----------------\n";
+  //body->dump(0);
+  changes += tmp;
+  cout<<tmp<<" non-optional loops modified\n";
+  //  }while(tmp > 0);
+  cout <<"-----------------\n";
+
+  // do{
+  //	body->dump(0);
+  tmp = body-> analyzeOptLoops(0);
+  cout <<"-----------------\n";
+  //body->dump(0);
+  changes += tmp;
+  cout<<tmp<<" optional loops modified\n";
+  //  }while(tmp > 0);
+  cout <<"-----------------\n";
+
+
+      
+  // } while (changes);
   
+  do{
+    // if a child of a choice is a choice, merge it with the parent
+    tmp = body->mergeChoices(0);
+    changes += tmp;
+    //cout<<tmp<<" choices merged\n";
+  }while(tmp > 0);
+      
+  do{
+    // combine consecutive concants
+    tmp = body->mergeConcats(0);
+    changes += tmp;
+    //cout<<tmp<<" concats merged\n";
+    // if a child of a concat is a concat, lift the child
+    tmp += body->liftConcats(0);
+    changes += tmp;
+    //cout<<tmp<<" concats lifted\n";	
+  }while(tmp > 0);
+      
+
 };
 
 // ------------------------------------------------------------------------
@@ -602,6 +621,9 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
 				     vector<node*>::iterator &wherec)
 {
   int numnodes = 0;
+
+  //if(wherep != parentnodes.begin())
+  //{
   wherec = childnodes.end()-1; // get iterator to last node in child nodes
   
   while(wherec != childnodes.begin() &&
@@ -618,8 +640,8 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
       wherep == parentnodes.begin()) &&
      *(*wherep) == *(*wherec))
     numnodes++;
-  // The previous loop either ended because of a mismatch. If it
-  // was a mismatch, then move both forward one item.
+  // The previous loop may have ended because of a mismatch. If
+  // so, then move both forward one item.
   if(*(*wherep) != *(*wherec))
     {
       wherep++;
@@ -627,10 +649,41 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
     }	  
   // delete matching nodes from this concat
   for(int count=0;count<numnodes;count++) {
-    delete *wherep;
-    wherep = nodes.erase(wherep);
+    (*wherep)->makeDead();
+    wherep++;
   }
+  //}
   return numnodes;
+}
+
+static void moveLoop(loopnode *loop, vector<node*>::iterator i)
+{
+  choicenode *option = (choicenode *)*i;
+
+  // When we delete the option node, it will delete everything under
+  // it, recursively.  When the concat holding the loop is deleted, we
+  // don't want it to take the loop with it.  Tell the concat to
+  // forget about the loop. We have to do this now, because we are
+  // about to change the loop's parent.
+  loop->getParent()->forgetChild(1);	    
+  // link the loop to its new parent and siblings
+  loop->setParent(option->getParent());
+  loop->setPrevious(option->getPrevious());
+  loop->setNext(option->getNext());
+  // link siblings to the loop
+  if(loop->getPrevious() != NULL)
+    loop->getPrevious()->setNext(loop);
+  if(loop->getNext() != NULL)
+    loop->getNext()->setPrevious(loop);
+  // Fix up the rails
+  loop->setLeftRail(option->getLeftRail());
+  loop->setRightRail(option->getRightRail());
+  loop->getLeftRail()->setRailDir(UP);
+  loop->getRightRail()->setRailDir(DOWN);
+  // replace the option node with the loop node
+  *i = loop;	    
+  // free the option node
+  delete option;
 }
 
 // analyze optionloops
@@ -641,54 +694,75 @@ int concatnode::analyzeOptLoops(int depth)
   vector<node*>::iterator i, prev, j, child_last,oleft,oright;
   concatnode *child;
   loopnode *loop;
-  concatnode* option;
+  concatnode *gp;
   int numnodes;
   // do analyzeLoops on every child of this concat
   for(i = nodes.begin();i!=nodes.end();i++)
-    sum += (*i)->analyzeLoops(depth+1);
-  
+    sum += (*i)->analyzeOptLoops(depth+1);
+  // bury the dead
+  i = nodes.begin();
+  while(i!=nodes.end())
+    {
+      if((*i)->isDead())
+	{
+	  (*i)->dump(0);
+	  if(i != nodes.end()-1)
+	    (*(i+1))->setLeftRail((*i)->getLeftRail());
+	  if(i != nodes.begin())
+	    (*(i-1))->setRightRail((*i)->getRightRail());
+	  delete (*i);
+	  i = nodes.erase(i);
+	}
+      else
+	i++;
+    }
   // find loops and try to make them better
   for(i = nodes.begin()+1;i!=nodes.end();i++) {
-    // looking for an optionnode containing a loop, but not the first
-    // node of this concat
-
-    //if((*i)->is_option()  &&
-    // (*i)->getChild(0)->is_loop() ) { //&&
-
+    
     // An optionnode is a choicenode with exactly two children, where
     // the first child is a nullnode. We want to find optionnodes where
     // the second child is a concat containing a loop between two rails..
-    if((i-1)!=nodes.begin() &&
-       (*i)->is_choice()  && (*i)->numChildren() == 2 &&
-       (*i)->getChild(0)->is_null()  &&  //&&
-       (*i)->getChild(1)->is_concat() &&
-       (*i)->getChild(1)->numChildren() == 3 &&
-       (*i)->getChild(1)->getChild(0)->is_rail() &&
-       (*i)->getChild(1)->getChild(1)->is_loop() &&
-       (*i)->getChild(1)->getChild(2)->is_rail()) { 
+    if( i !=nodes.begin() &&
+	(*i)->is_choice()  && (*i)->numChildren() == 2 &&
+	(*i)->getChild(0)->is_null()  &&  //&&
+	(*i)->getChild(1)->is_concat() &&
+	(*i)->getChild(1)->numChildren() == 3 &&
+	(*i)->getChild(1)->getChild(0)->is_rail() &&
+	(*i)->getChild(1)->getChild(1)->is_loop() &&
+	(*i)->getChild(1)->getChild(2)->is_rail()) { 
 
       // Found an optionnode containing a loop node.  Can we rebuild it?
-      loop = (loopnode*)(*i)->getChild(1)->getChild(1);
-      prev = i-2;
-      //      if((*prev)->is_rail())
-      // prev--;
-
-      loop->setLeftRail((railnode*)*(i-1));
-      loop->getLeftRail()->setRailDir(UP);
-      loop->setRightRail((railnode*)*(i+1));
-      loop->getRightRail()->setRailDir(DOWN);
+      sum++;
+ 
+      // get an iterator to the node preceding "this" in its parent's nodes
+      if(parent->is_concat())
+	{
+	  gp = (concatnode*)parent;
+	  prev = find(gp->nodes.begin(),gp->nodes.end(),this);
+	  prev--;  
+	}
+      else
+	gp = NULL;
       
-      // is loop body a concat?
+      // Get the loopnode that we are interested in;
+      loop = (loopnode*)(*i)->getChild(1)->getChild(1);
+
+       // is loop body a concat?
       if(loop->getChild(0)->is_concat()) {
-	// Loop body is a concat or a choice.  Working back from the
-	// end of the child, find the first node that does not match a
-	// corresponding node in this concat. call findAndDelete... to
-	// do all of that and delete matching fram the parent
+	// Loop body is a concat.  Working back from the end of the
+	// loop body, find the first node that does not match a
+	// corresponding node in the nodes of the parent of "this".
+	// Call findAndDelete to do all of that and delete matching
+	// nodes the parent
+	
 	child = (concatnode*)loop->getChild(0);
-	numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
-	i=prev+1;
-	if((*prev)->is_rail())
-	  prev++;
+
+	if(gp != NULL) {
+	  numnodes = findAndDeleteMatches(gp->nodes,prev,child->nodes,j);
+	}
+	else
+	  numnodes = 0;
+
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
 	  // If there is only one node left in the child concat,
@@ -701,7 +775,10 @@ int concatnode::analyzeOptLoops(int depth)
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
-	    // the remaining nodes into it IN REVERSE ORDER.
+	    // the remaining nodes into it IN REVERSE ORDER.  But,
+	    // if I find a rail, then I need to find the matching
+	    // rail and keep them in order.
+
 	    j--;
 	    concatnode *c = new concatnode(*j);
 	    do
@@ -711,6 +788,7 @@ int concatnode::analyzeOptLoops(int depth)
 		delcount++;
 	      }
 	    while(j!= child->nodes.begin());
+
 	    // replace the loop repeat node with the new concat
 	    loop->setRepeat(c);
 	    
@@ -718,35 +796,69 @@ int concatnode::analyzeOptLoops(int depth)
 	    for(int i=0;i<delcount+1;i++)
 	      j = child->nodes.erase(j);
 	  }
-	  // replace the optionnode with the loop node
-	  option = (concatnode*)*i;
-	  *i = loop;
-	  // free the option node
-	  option->forgetChild(1);
-	  delete option;
+	}
+	else {
+	  // If there is only one node left in the child concat,
+	  if(child->numChildren()==1) {
+	    // then swap the body and the repeat.
+	    node *tmp = loop->getChild(0);
+	    loop->nodes[0] = loop->getChild(1);
+	    loop->nodes[1] = tmp;
+	  }
+	  else {
+	    int delcount = 0;
+	    // If there is more than one node left in the child
+	    // concat, then create a new concat node and move all of
+	    // the remaining nodes into it IN REVERSE ORDER.  But,
+	    // if I find a rail, then I need to find the matching
+	    // rail and keep them in order.
+
+	    if(gp == NULL)
+	      j = (child->nodes.end()-1);
+	    if(j == child->nodes.end())
+	      j--;
+	    concatnode *c = new concatnode(*j);
+	    do
+	      {
+		j--;
+		c->insert(*j);
+		delcount++;
+	      }
+	    while(j!= child->nodes.begin());
+
+	    // erase the nodes that were moved from the child concat
+	    for(int k=0;k<delcount+1;k++)
+	      j = child->nodes.erase(j);
+
+	    // replace the loop repeat node with the new concat
+	    loop->nodes[0] = loop->nodes[1];
+	    loop->nodes[1] = c;
+	  }
 	}
       }
       else {
 	// loop body is NOT a concat.
 	// if loop body matches previous item in this concat
-	if(*(loop->getChild(0)) == **prev)
+	if(gp != NULL && prev != gp->nodes.end() &&
+	   *(loop->getChild(0)) == **prev)
 	  {
-	    //   erase previous item in this concat
-	    delete *prev;
-	    i = nodes.erase(prev);
+	    // mark matching node for deletion
+	    (*prev)->makeDead();
 	    //   replace the option node with the loop node
-	    i++;
-	    option = (concatnode*)*i;
-	    *i = loop;
-	    // free the option node
-	    option->forgetChild(1);
-	    delete option;
+	  }
+	else
+	  {
+	    // does not match previous item in this concat
+	    // swap the repeat and the body
+	    node *tmp = loop->getChild(0);
+	    loop->nodes[0] = loop->getChild(1);
+	    loop->nodes[1] = tmp;
+	    //   replace the option node with the loop node
 	  }
       }
-
+      moveLoop(loop,i);
     }
   }
-  
   return sum;
 }
 
@@ -759,24 +871,50 @@ int concatnode::analyzeNonOptLoops(int depth)
   int sum = 0;
   vector<node*>::iterator i, prev, j, child_last;
   concatnode *child;
+  concatnode *gp;
   loopnode *loop;
   int numnodes;
   // do analyzeLoops on everything beneath this concat
   for(i = nodes.begin();i!=nodes.end();i++)
-    sum += (*i)->analyzeLoops(depth+1);
+    sum += (*i)->analyzeNonOptLoops(depth+1);
+  // bury the dead
+  i = nodes.begin();
+  while(i!=nodes.end())
+    {
+      if((*i)->isDead())
+	{
+	  cout<<"deleting something\n";
+	  (*i)->dump(0);
+	  if(i != nodes.end()-1)
+	    (*(i+1))->setLeftRail((*i)->getLeftRail());
+	  if(i != nodes.begin())
+	    (*(i-1))->setRightRail((*i)->getRightRail());
+	  delete (*i);
+	  i = nodes.erase(i);
+	}
+      else
+	i++;
+    }
   
   // find loops and try to make them better
   for(i = nodes.begin()+1;i!=nodes.end();i++) {
-    // looking for a loop, but not the first node of this concat
-    if((i-1)!=nodes.begin() && (*i)->is_loop() && (*i)->getChild(1)->is_null() ) {
+    // looking for concat containing a loop
+    if((*i)->is_concat() &&
+       (*i)->numChildren() == 3 &&
+       (*i)->getChild(0)->is_rail() &&
+       (*i)->getChild(1)->is_loop() &&
+       (*i)->getChild(2)->is_rail()) { 
+	
+     
       // Found a loop node.  Can we rebuild it?
-      loop = (loopnode*)(*i);
-      prev = i-2;
 
-      loop->setLeftRail((railnode*)*(i-1));
-      loop->getLeftRail()->setRailDir(UP);
-      loop->setRightRail((railnode*)*(i+1));
-      loop->getRightRail()->setRailDir(DOWN);
+
+      cout<<"Found non-optional loop\n";
+      // get an iterator to the node preceding "this" in its parent's nodes
+
+      prev = i-1;	            
+      loop = (loopnode*)(*i)->getChild(1);
+
       
       // is loop body a conca?
       if(loop->getChild(0)->is_concat()) {
@@ -786,12 +924,13 @@ int concatnode::analyzeNonOptLoops(int depth)
 	// do all of that and delete matching fram the parent
 	child = (concatnode*)loop->getChild(0);
 	numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
-	i=prev+1;
+	// i=prev+1;
 
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
 	  // If there is only one node left in the child concat,
 	  if(j-1 == child->nodes.begin()) {
+	    cout << "One remaining node\n";
 	    // then move it to the repeat part.
 	    loop->setRepeat(*(j-1));
 	    j = child->nodes.erase(j-1);
@@ -836,19 +975,11 @@ int concatnode::analyzeNonOptLoops(int depth)
   return sum;
 }
 
-int concatnode::analyzeLoops(int depth)
-{
-  int sum = 0;
-  sum += analyzeNonOptLoops(depth);
-  sum += analyzeOptLoops(depth);
-  return sum;
-}
 
 
 void concatnode::mergeRails(){
   railnode *newrail;
   railnode *oldrail;
-  node *p;
   // if(nodes[0]->is_rail() && nodes[1]->is_choice())
   //   {
   //     cout << "searching for left rail\n";
