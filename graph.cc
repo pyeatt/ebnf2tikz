@@ -90,20 +90,12 @@ void grammar::subsume()
   string name;
   // look for productions that are marked for subsumption
   for(auto i=productions.begin();i!=productions.end();i++)
-    if((*i)->getSubsume())
-      {
-	name = (*i)->getName();
-	for(auto j=productions.begin();j!=productions.end();j++)
-	  if(j != i)
-	    {
-	      //cout << "SUBSUMING\n";
-	      //(*j)->dump(0);
-	      (*j)->subsume(name,(*i)->getChild(0));
-	      //(*j)->dump(0);
-	      //cout << "-------------\n";
-	    }
-      }
-  
+    if((*i)->getSubsume()) {
+      name = (*i)->getName();
+      for(auto j=productions.begin();j!=productions.end();j++)
+	if(j != i)
+	  (*j)->subsume(name,(*i)->getChild(0));
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -111,8 +103,6 @@ void grammar::subsume()
 node::node(){
   lastPlaced=NULL;
   nodename=nextNode();
-  na=nodename+".north";
-  sa=nodename+".south";
   ea=nodename+".east";
   wa=nodename+".west";
   parent = NULL;
@@ -147,12 +137,6 @@ int node::liftConcats(int depth)
   return 0;
 }
 
-// int node::liftOptionChoice(int depth)
-// {
-//   //cout<<"No implementation given for liftOptionChoices\n";
-//   return 0;
-// }
-
 int node::analyzeOptLoops(int depth)
 {
   // cout<<"No implementation given for analyzeOptLoops\n";
@@ -170,8 +154,6 @@ int node::analyzeNonOptLoops(int depth)
 singlenode::singlenode(node *p):node()
 {
   body=p;
-  na=p->north(); // not correct
-  sa=p->south(); // not correct should be based on # rows in tallest item
   ea=p->east(); 
   wa=p->west();
 }
@@ -189,41 +171,13 @@ int singlenode::liftConcats(int depth)
   return count;
 }
 
-// this optimization is never used, because it is handled by
-// mergeChoices.
-// int singlenode::liftOptionChoice(int depth)
-// {
-//   int count = body->liftOptionChoice(depth+1);
-//   // if my child is an option and their child is a choice, then
-//   // lift the choice and make it an optional choice
-//   //  if(body->is_option() && body->getChild(0)->is_choice())
-//   if(body->is_choice() &&
-//      body->numChildren()==2 &&
-//      body->getChild(0)->is_null() &&
-//      body->getChild(1)->is_choice())
-//     {    
-//       node *i = body->getChild(1);
-//       // inserting a nullnode at the front makes it an optional choice
-//       if( ! i->getChild(0)->is_null())
-// 	i->insert(new nullnode("ebnf2tikz NULL node"));
-//       body->forgetChild(1); // don't let body delete the choicenode
-//       delete body;
-//       body = i;
-//       count++;
-//     }
-//   return count;
-// }
-
 // ------------------------------------------------------------------------
 
 multinode::multinode(node *p):node(){
   nodes.push_back(p);
-  na=p->north(); // not correct
-  sa=p->south(); // not correct should be based on # rows in tallest item
   ea=p->east(); 
   wa=p->west();
   drawtoprev=0;
-  //  beforeskip=0;
 };
 
 int multinode::liftConcats(int depth)
@@ -246,37 +200,6 @@ int multinode::liftConcats(int depth)
     }
   return count;
 }
-
-// int multinode::liftOptionChoice(int depth)
-// {
-
-//   int count = 0;
-//   for(auto i = nodes.begin(); i != nodes.end(); i++)
-//     count += (*i)->liftOptionChoice(depth+1);
-  
-//   // if my child is an option and their child is a choice, then
-//   // lift the choice and make it an optional choice
-//   for(auto i = nodes.begin(); i != nodes.end(); i++)
-
-//     if((*i)->is_choice() &&
-//        (*i)->numChildren()==2 &&
-//        (*i)->getChild(0)->is_null() &&
-//        (*i)->getChild(1)->is_choice())
-
-//       //if((*i)->is_option() && (*i)->getChild(0)->is_choice())
-//       {
-// 	choicenode *k = (choicenode*)(*i);
-// 	choicenode *j = (choicenode*)(*i)->getChild(1);
-// 	// inserting a NULL at the front makes it an optional choice
-// 	if(!j->getChild(0)->is_null())
-// 	  j->insert(new nullnode("ebnf2tikz NULL node"));
-// 	k->forgetChild(1); // don't want (*i) to delete the choicenode
-// 	delete *i;;
-// 	*i = j;
-// 	count++;
-//       }
-//   return count;
-// }
 
 int multinode::operator == (node &r)
 {
@@ -301,6 +224,18 @@ int multinode::operator == (node &r)
 
 // ------------------------------------------------------------------------
 
+void rownode::dump(int depth) const
+{
+  int i;
+  for(i=0;i<depth;i++)
+    cout<<"  ";
+  cout << "row";
+  node::dump(depth);
+  body->dump(depth+1);
+}
+
+// ------------------------------------------------------------------------
+
 productionnode::productionnode(int subsumptionspec,string s,node *p):singlenode(p){
   name = s;
   subsume_spec = subsumptionspec;
@@ -310,9 +245,7 @@ productionnode::productionnode(int subsumptionspec,string s,node *p):singlenode(
 void productionnode::dump(int depth) const
 { 
   depth=0;
-  cout << "SUBSUME: "<<subsume_spec<<"\n";
-  cout<<latexwrite("railname",name);
-  cout << endl;
+  cout << "production: "<<name<<endl;
   body->dump(1);
 }
 
@@ -320,60 +253,40 @@ void productionnode::dump(int depth) const
 void productionnode::optimize()
 {
   int changes=0,tmp;
-  cout << latexwrite("emph",name) <<endl;
-  // do
-  //   {
-  changes = 0;
-
-  // do{
-  // 	// if an option is parent to a choice, make it a choice with
-  // 	// the first child being null
-  //   tmp = body->liftOptionChoice(0);
-  //   changes += tmp;
-  // 	//cout<<tmp<<" optionchoices lifted\n";
-  // }while(tmp > 0);
-
-  tmp = body-> analyzeNonOptLoops(0);
-  cout <<"-----------------\n";
-  //body->dump(0);
-  changes += tmp;
-  cout<<tmp<<" non-optional loops modified\n";
-  //  }while(tmp > 0);
-  cout <<"-----------------\n";
-
-  // do{
-  //	body->dump(0);
-  tmp = body-> analyzeOptLoops(0);
-  cout <<"-----------------\n";
-  //body->dump(0);
-  changes += tmp;
-  cout<<tmp<<" optional loops modified\n";
-  //  }while(tmp > 0);
-  cout <<"-----------------\n";
-
-
+  //  do {
+    changes = 0;
+    tmp = body-> analyzeNonOptLoops(0);
+    cout <<"-----------------\n";
+    cout << latexwrite("emph",name) <<endl;
+    cout<<tmp<<" non-optional loops modified\n";
+    changes += tmp;
+    //}while(tmp > 0);
+    
+    //  do{
+    tmp = body-> analyzeOptLoops(0);
+    cout<<tmp<<" optional loops modified\n";
+    changes += tmp;
+    //  }while(tmp > 0);
       
-  // } while (changes);
-  
   do{
     // if a child of a choice is a choice, merge it with the parent
     tmp = body->mergeChoices(0);
     changes += tmp;
-    //cout<<tmp<<" choices merged\n";
+    cout<<tmp<<" choices merged\n";
   }while(tmp > 0);
       
   do{
     // combine consecutive concants
     tmp = body->mergeConcats(0);
     changes += tmp;
-    //cout<<tmp<<" concats merged\n";
+    cout<<tmp<<" concats merged\n";
     // if a child of a concat is a concat, lift the child
     tmp += body->liftConcats(0);
     changes += tmp;
-    //cout<<tmp<<" concats lifted\n";	
+    cout<<tmp<<" concats lifted\n";	
   }while(tmp > 0);
-      
-
+  
+cout <<"-----------------\n";
 };
 
 // ------------------------------------------------------------------------
@@ -384,8 +297,6 @@ nontermnode::nontermnode(string s):node()
   style="nonterminal";
   format="railname";
   sizes.getSize(nodename,myWidth,myHeight);
-  na = nodename+".north";
-  sa = nodename+".south";
   ea = nodename+".east";
   wa = nodename+".west";
   type=NONTERM;
@@ -430,8 +341,6 @@ nullnode::nullnode(string s):nontermnode(s)
   //myHeight=
   myHeight=1.5*sizes.rowsep;
   //myHeight=0.5*sizes.minsize;
-  na = nodename;
-  sa = nodename;
   ea = nodename;
   wa = nodename;
 }
@@ -516,20 +425,28 @@ void loopnode::dump(int depth) const
 
 // ------------------------------------------------------------------------
 
-newlinenode::newlinenode(string s):nontermnode(s)
+newlinenode::newlinenode():railnode()
 {
   type = NEWLINE;
-  style = "newline";
-  format = "newline";
   nodename = nextCoord();
-  lineheight=0;
-  myWidth=0;
-  myHeight=0;
-  na = nextCoord();
-  sa = nextCoord();
+  
+  // lineheight=0;
+  // myWidth=0;
+  // myHeight=0;
   ea = nodename;
   wa = nodename;
+  drawtoprev = 0;
+  beforeskip = 0;
 }
+
+void newlinenode::dump(int depth) const
+{ int i;
+  for(i=0;i<depth;i++)
+    cout<<"  ";
+  cout<<"newline";
+  node::dump(depth);
+}  
+
 
 // ------------------------------------------------------------------------
 
@@ -546,7 +463,7 @@ void concatnode::dump(int depth) const
 int concatnode::mergeConcats(int depth){
   int sum=0;
   concatnode *ip,*currp;
-
+  int no_newlines=1;
   auto curr = nodes.begin();
   auto i = nodes.begin();
     
@@ -582,29 +499,38 @@ int concatnode::mergeConcats(int depth){
 	i++;
     }
 
-  // find children that can be merged with this parent
+  // check to see if this parent has any newlinenodes
   i = nodes.begin();
-  while(i != nodes.end())
-    {
-      if((*i)->is_concat())
-	{
-	  // get pointer to node at i ( we know it is a concat )
-	  ip = (concatnode*)(*i);
-	  // get pointer to its nodes
-	  vector<node*>* inodes = &(ip->nodes);
-	  // erase i and set i to its replacement
-	  i = nodes.erase(i);
-	  // insert nodes of i into our nodes, at position where i
-	  // used to be, and update i to reference first item inserted
-	  i = nodes.insert(i,inodes->begin(),inodes->end());
-	  // delete the node that used to be at i beacuse we don't need it
-	  delete ip;
-	  sum++;
-	}
-      else
-	i++;
-    }
+  while(i != nodes.end() && no_newlines)
+    if((*i)->is_newline())
+      no_newlines = 0;
+    else
+      i++;
 
+  if(no_newlines) {
+    // find children that can be merged with this parent
+    i = nodes.begin();
+    while(i != nodes.end())
+      {
+	if((*i)->is_concat())
+	  {
+	    // get pointer to node at i ( we know it is a concat )
+	    ip = (concatnode*)(*i);
+	    // get pointer to its nodes
+	    vector<node*>* inodes = &(ip->nodes);
+	    // erase i and set i to its replacement
+	    i = nodes.erase(i);
+	    // insert nodes of i into our nodes, at position where i
+	    // used to be, and update i to reference first item inserted
+	    i = nodes.insert(i,inodes->begin(),inodes->end());
+	    // delete the node that used to be at i beacuse we don't need it
+	    delete ip;
+	    sum++;
+	  }
+	else
+	  i++;
+      }
+  }
   return sum;
 }
 
@@ -628,8 +554,7 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
   
   while(wherec != childnodes.begin() &&
 	wherep != parentnodes.begin() &&
-	*(*wherep) == *(*wherec))
-    {
+	*(*wherep) == *(*wherec)) {
       wherep--;
       wherec--;
       numnodes++;
@@ -642,8 +567,7 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
     numnodes++;
   // The previous loop may have ended because of a mismatch. If
   // so, then move both forward one item.
-  if(*(*wherep) != *(*wherec))
-    {
+  if(*(*wherep) != *(*wherec)) {
       wherep++;
       wherec++;
     }	  
@@ -701,24 +625,20 @@ int concatnode::analyzeOptLoops(int depth)
     sum += (*i)->analyzeOptLoops(depth+1);
   // bury the dead
   i = nodes.begin();
-  while(i!=nodes.end())
-    {
-      if((*i)->isDead())
-	{
-	  (*i)->dump(0);
-	  if(i != nodes.end()-1)
-	    (*(i+1))->setLeftRail((*i)->getLeftRail());
-	  if(i != nodes.begin())
-	    (*(i-1))->setRightRail((*i)->getRightRail());
-	  delete (*i);
-	  i = nodes.erase(i);
-	}
-      else
-	i++;
+  while(i!=nodes.end()) {
+    if((*i)->isDead()) {
+      if(i != nodes.end()-1)
+	(*(i+1))->setLeftRail((*i)->getLeftRail());
+      if(i != nodes.begin())
+	(*(i-1))->setRightRail((*i)->getRightRail());
+      delete (*i);
+      i = nodes.erase(i);
     }
+    else
+      i++;
+  }
   // find loops and try to make them better
   for(i = nodes.begin()+1;i!=nodes.end();i++) {
-    
     // An optionnode is a choicenode with exactly two children, where
     // the first child is a nullnode. We want to find optionnodes where
     // the second child is a concat containing a loop between two rails..
@@ -730,10 +650,8 @@ int concatnode::analyzeOptLoops(int depth)
 	(*i)->getChild(1)->getChild(0)->is_rail() &&
 	(*i)->getChild(1)->getChild(1)->is_loop() &&
 	(*i)->getChild(1)->getChild(2)->is_rail()) { 
-
       // Found an optionnode containing a loop node.  Can we rebuild it?
       sum++;
- 
       // get an iterator to the node preceding "this" in its parent's nodes
       if(parent->is_concat())
 	{
@@ -743,26 +661,20 @@ int concatnode::analyzeOptLoops(int depth)
 	}
       else
 	gp = NULL;
-      
       // Get the loopnode that we are interested in;
       loop = (loopnode*)(*i)->getChild(1)->getChild(1);
-
-       // is loop body a concat?
+      // is loop body a concat?
       if(loop->getChild(0)->is_concat()) {
 	// Loop body is a concat.  Working back from the end of the
 	// loop body, find the first node that does not match a
 	// corresponding node in the nodes of the parent of "this".
 	// Call findAndDelete to do all of that and delete matching
 	// nodes the parent
-	
 	child = (concatnode*)loop->getChild(0);
-
-	if(gp != NULL) {
+	if(gp != NULL)
 	  numnodes = findAndDeleteMatches(gp->nodes,prev,child->nodes,j);
-	}
 	else
 	  numnodes = 0;
-
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
 	  // If there is only one node left in the child concat,
@@ -778,20 +690,15 @@ int concatnode::analyzeOptLoops(int depth)
 	    // the remaining nodes into it IN REVERSE ORDER.  But,
 	    // if I find a rail, then I need to find the matching
 	    // rail and keep them in order.
-
 	    j--;
 	    concatnode *c = new concatnode(*j);
-	    do
-	      {
-		j--;
-		c->insert(*j);
-		delcount++;
-	      }
-	    while(j!= child->nodes.begin());
-
+	    do {
+	      j--;
+	      c->insert(*j);
+	      delcount++;
+	    } while(j!= child->nodes.begin());
 	    // replace the loop repeat node with the new concat
 	    loop->setRepeat(c);
-	    
 	    // erase the nodes that were moved from the child concat
 	    for(int i=0;i<delcount+1;i++)
 	      j = child->nodes.erase(j);
@@ -812,7 +719,6 @@ int concatnode::analyzeOptLoops(int depth)
 	    // the remaining nodes into it IN REVERSE ORDER.  But,
 	    // if I find a rail, then I need to find the matching
 	    // rail and keep them in order.
-
 	    if(gp == NULL)
 	      j = (child->nodes.end()-1);
 	    if(j == child->nodes.end())
@@ -825,11 +731,9 @@ int concatnode::analyzeOptLoops(int depth)
 		delcount++;
 	      }
 	    while(j!= child->nodes.begin());
-
 	    // erase the nodes that were moved from the child concat
 	    for(int k=0;k<delcount+1;k++)
 	      j = child->nodes.erase(j);
-
 	    // replace the loop repeat node with the new concat
 	    loop->nodes[0] = loop->nodes[1];
 	    loop->nodes[1] = c;
@@ -840,21 +744,19 @@ int concatnode::analyzeOptLoops(int depth)
 	// loop body is NOT a concat.
 	// if loop body matches previous item in this concat
 	if(gp != NULL && prev != gp->nodes.end() &&
-	   *(loop->getChild(0)) == **prev)
-	  {
-	    // mark matching node for deletion
-	    (*prev)->makeDead();
-	    //   replace the option node with the loop node
-	  }
-	else
-	  {
-	    // does not match previous item in this concat
-	    // swap the repeat and the body
-	    node *tmp = loop->getChild(0);
-	    loop->nodes[0] = loop->getChild(1);
-	    loop->nodes[1] = tmp;
-	    //   replace the option node with the loop node
-	  }
+	   *(loop->getChild(0)) == **prev) {
+	  // mark matching node for deletion
+	  (*prev)->makeDead();
+	  //   replace the option node with the loop node
+	}
+	else {
+	  // does not match previous item in this concat
+	  // swap the repeat and the body
+	  node *tmp = loop->getChild(0);
+	  loop->nodes[0] = loop->getChild(1);
+	  loop->nodes[1] = tmp;
+	  //   replace the option node with the loop node
+	}
       }
       moveLoop(loop,i);
     }
@@ -871,30 +773,11 @@ int concatnode::analyzeNonOptLoops(int depth)
   int sum = 0;
   vector<node*>::iterator i, prev, j, child_last;
   concatnode *child;
-  concatnode *gp;
   loopnode *loop;
   int numnodes;
   // do analyzeLoops on everything beneath this concat
   for(i = nodes.begin();i!=nodes.end();i++)
     sum += (*i)->analyzeNonOptLoops(depth+1);
-  // bury the dead
-  i = nodes.begin();
-  while(i!=nodes.end())
-    {
-      if((*i)->isDead())
-	{
-	  cout<<"deleting something\n";
-	  (*i)->dump(0);
-	  if(i != nodes.end()-1)
-	    (*(i+1))->setLeftRail((*i)->getLeftRail());
-	  if(i != nodes.begin())
-	    (*(i-1))->setRightRail((*i)->getRightRail());
-	  delete (*i);
-	  i = nodes.erase(i);
-	}
-      else
-	i++;
-    }
   
   // find loops and try to make them better
   for(i = nodes.begin()+1;i!=nodes.end();i++) {
@@ -904,18 +787,11 @@ int concatnode::analyzeNonOptLoops(int depth)
        (*i)->getChild(0)->is_rail() &&
        (*i)->getChild(1)->is_loop() &&
        (*i)->getChild(2)->is_rail()) { 
-	
-     
       // Found a loop node.  Can we rebuild it?
-
-
-      cout<<"Found non-optional loop\n";
+      sum++;
       // get an iterator to the node preceding "this" in its parent's nodes
-
       prev = i-1;	            
       loop = (loopnode*)(*i)->getChild(1);
-
-      
       // is loop body a conca?
       if(loop->getChild(0)->is_concat()) {
 	// Loop body is a concat.  Working back from the end of the
@@ -924,13 +800,10 @@ int concatnode::analyzeNonOptLoops(int depth)
 	// do all of that and delete matching fram the parent
 	child = (concatnode*)loop->getChild(0);
 	numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
-	// i=prev+1;
-
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
 	  // If there is only one node left in the child concat,
 	  if(j-1 == child->nodes.begin()) {
-	    cout << "One remaining node\n";
 	    // then move it to the repeat part.
 	    loop->setRepeat(*(j-1));
 	    j = child->nodes.erase(j-1);
@@ -942,17 +815,13 @@ int concatnode::analyzeNonOptLoops(int depth)
 	    // the remaining nodes into it IN REVERSE ORDER.
 	    j--;
 	    concatnode *c = new concatnode(*j);
-	    do
-	      {
-		j--;
-		c->insert(*j);
-		delcount++;
-	      }
-	    while(j!= child->nodes.begin());
-
+	    do {
+	      j--;
+	      c->insert(*j);
+	      delcount++;
+	    } while(j!= child->nodes.begin());
 	    // replace the loop repeat node with the new concat
 	    loop->setRepeat(c);
-	    
 	    // erase the nodes that were moved from the child concat
 	    for(int i=0;i<delcount+1;i++)
 	      j = child->nodes.erase(j);
@@ -972,6 +841,23 @@ int concatnode::analyzeNonOptLoops(int depth)
 
     }
   }
+  
+  // bury the dead
+  i = nodes.begin();
+  while(i!=nodes.end())
+    {
+      if((*i)->isDead())
+	{
+	  if(i != nodes.end()-1)
+	    (*(i+1))->setLeftRail((*i)->getLeftRail());
+	  if(i != nodes.begin())
+	    (*(i-1))->setRightRail((*i)->getRightRail());
+	  delete (*i);
+	  i = nodes.erase(i);
+	}
+      else
+	i++;
+    }
   return sum;
 }
 
@@ -1010,7 +896,6 @@ void concatnode::mergeRails(){
       newrail = parent->getLeftRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  cout <<"replacing left rail\n";
 	  newrail->setBottom(oldrail->getBottom());
 	  nodes.erase(nodes.begin());
 	  (*(nodes.begin()))->setLeftRail(newrail);
@@ -1023,7 +908,6 @@ void concatnode::mergeRails(){
       newrail = parent->getRightRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  cout <<"replacing right rail\n";
 	  newrail->setBottom(oldrail->getBottom());
 	  nodes.erase(nodes.end()-1);
 	  (*(nodes.end()-1))->setRightRail(newrail);

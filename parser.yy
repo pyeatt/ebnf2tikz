@@ -76,20 +76,19 @@ node* wrapChoice(node *n) {
 // Define the "terminal symbol" token types (in CAPS by convention),
 // and associate each with a field of the %union:
 
-// declare the type for nonterminals
-// %nterm <node*> concat;
-// %nterm <node*> concats;
+// declare the types for nonterminals
 %nterm <productionnode*> production;
 %nterm <grammar*> productions;
-//%nterm <node*> choice;
-//%nterm <node*> choices;
 %nterm <grammar*> grammar;
 %nterm <int> annotations;
 %nterm <node*> expression;
 %nterm <node*> primary;
+%nterm <node*> rows;
 
+// associativity and precedence.  Lowest precedence first.
 %right EQUAL
 %left SEMICOLON
+%left NEWLINE
 %left LBRACK RBRACK
 %left LBRACE RBRACE
 %left LPAREN RPAREN
@@ -102,7 +101,6 @@ node* wrapChoice(node *n) {
 
 // Define the grammar: A grammar is a list of productions
 grammar : productions {
-     // after reading the grammar...
      grammar *g = $1;
      g->dump();
      g->setParent();
@@ -118,15 +116,18 @@ grammar : productions {
      g->setParent();
      g->setPrevious();
      g->setNext();
-     g->dump();
+     
      // let everyoune know their parent, and if they are in a concat,
      // who is previous and who is next.
      g->mergeRails();
+     g->dump();
+     
+     g->setParent();
+     g->setPrevious();
+     g->setNext();
      g->place(drv.outs());
   } ;
 
-// "productions" is either a single production or a list of
-// productions
 productions: productions production {
     // add new production to the grammar
     $1->insert($2);
@@ -141,7 +142,7 @@ productions: productions production {
 // Finally getting to the meat.  A single production is described
 // as annotations, followed by a production name, followed by an
 // equal sign, followed by an expression, followed by a semicolon.
-production: annotations STRING EQUAL expression SEMICOLON
+production: annotations STRING EQUAL rows SEMICOLON
   {
     coordinate start;
     $4=wrapChoice($4);
@@ -168,14 +169,52 @@ annotations : SUBSUME{
       $$=0;
   } ;
 
-/* lines : lines NEWLINE concats { */
-/*     $$ = new newlinenode("ebnf2tikz manual newline node"); */
-/*     } | */
-/*     concats */
-/*     { */
-/*     } */
+// this is how we handle manual newline "\\" in the input
+rows :
+  rows NEWLINE expression {
+      $3 = wrapChoice($3);
+      if($1->is_concat())
+	$$ = $1;
+      else
+        $$ = new concatnode($1);
+      newlinenode *n = new newlinenode();
+      rownode *row = new rownode($3);
+      railnode *r,*l;
+      l = new railnode(RIGHT,DOWN);
+      r = new railnode(LEFT,STARTNEWLINE);
+      n->setLeftRail(l);
+      n->setRightRail(r);
+      $$->getChild($$->numChildren()-1)->setRightRail(l);
+      row->setLeftRail(r);
+      $$->insert(l);
+      $$->insert(n);
+      $$->insert(r);
+      $$->insert(row);
+      l->setDrawToPrev(0);
+      r->setDrawToPrev(0);
+      n->setDrawToPrev(0);
+      $$->setDrawToPrev(0);
+     } | 
+    expression {
+      $1 = wrapChoice($1);
+      $$ = new rownode($1);
+      $$->setDrawToPrev(0);
+     } ;
   
 expression:
+  // NEWLINE
+  //   {
+  //     railnode *r,*l;
+  //     newlinenode *n;
+  //     l = new railnode(RIGHT,DOWN);
+  //     r = new railnode(LEFT,UP);
+  //     n = new newlinenode("ebnf2tikz manual newline node");
+  //     n->setLeftRail(l);
+  //     n->setRightRail(r);
+  //     $$ = new concatnode(l);
+  //     $$->insert(n);
+  //     $$->insert(r);
+  //   } |
   expression PIPE expression
     {
       // PIPE is left associative, so only need to check $1
@@ -190,7 +229,7 @@ expression:
       $1=wrapChoice($1);
       $3=wrapChoice($3);
       // COMMA is left associative, so only need to check $1
-      if($1->is_terminal() || $1->is_nonterm()) {
+      if(!$1->is_concat()) {
         $$ = new concatnode($1);
         $$->insert($3);
       } else {

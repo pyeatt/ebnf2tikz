@@ -30,18 +30,18 @@ string stripSpecial(string s);
 // ------------------------------------------------------------------------
 
 typedef enum {LEFT,RIGHT} vrailside;
-typedef enum {UP,DOWN} vraildir;
+typedef enum {UP,DOWN,STARTNEWLINE} vraildir;
 class railnode;
 // base class for all nodes in the parse tree
 class node {
 protected:
   typedef enum {GRAMMAR, CHOICE, TERMINAL, NONTERM, CONCAT,
-    NULLNODE, LOOP, NEWLINE, PRODUCTION, RAIL, UNKNOWN} nodetype;
+    NULLNODE, LOOP, NEWLINE, PRODUCTION, RAIL, ROW, UNKNOWN} nodetype;
 
   nodetype type;
   
   static node *lastPlaced; // the last thing that was drawn
-  string ea,na,sa,wa,nodename;
+  string ea,wa,nodename;   // east and west attachment points, and node name
   static nodesizes sizes;
   float myWidth,myHeight;
   node* parent;
@@ -70,8 +70,6 @@ public:
     //    nodename = original.nodename;
     nodename = nextNode();;
     ea   = nodename+".east";
-    na   = nodename+".north";
-    sa   = nodename+".south";
     wa   = nodename+".west";
     myWidth = original.myWidth;
     myHeight = original.myHeight;
@@ -123,13 +121,11 @@ public:
   int is_concat(){return type==CONCAT;}
   int is_null(){return type==NULLNODE;}
   int is_loop(){return type==LOOP;}
-  //  int is_option(){return type==OPTION;}
+  int is_row(){return type==ROW;}
   int is_production(){return type==PRODUCTION;}
   int is_newline(){return type==NEWLINE;}
   int is_rail(){return type==RAIL;}
 
-  string north(){return na;}
-  string south(){return sa;}
   string east(){return ea;}
   string west(){return wa;}
   
@@ -149,8 +145,9 @@ public:
   virtual void mergeRails(){}
     
   virtual void dump(int depth) const {
-    cout << " " <<nodename <<" : " <<na<<" "<<sa<<" "<<ea<<" "<<wa<<
-      " width="<<myWidth<<" height="<<myHeight<<endl;
+    cout << " " <<nodename <<" : "<<ea<<" "<<wa<<
+      " width="<<myWidth<<" height="<<myHeight<<" beforeskip="<<beforeskip<<
+      " drawtoprev="<<drawtoprev<<endl;
   }
 
   virtual string texName() { return "";};
@@ -208,6 +205,7 @@ public:
   virtual int mergeChoices(int depth){return body->mergeChoices(depth+1);}
   virtual int analyzeOptLoops(int depth){return body->analyzeOptLoops(depth+1);}
   virtual int analyzeNonOptLoops(int depth){return body->analyzeNonOptLoops(depth+1);}
+  virtual void setPrevious(node *n){body->setPrevious(n);}
   //  virtual int liftOptionChoice(int depth);
   virtual int numChildren(){return 1;}
   virtual node* getChild(int n){return body;}
@@ -236,6 +234,7 @@ public:
 // ------------------------------------------------------------------------
 
 class railnode:public node{
+protected:
   vrailside side;       // LEFT or RIGHT: Which side of choice/loop is it on?
   vraildir direction;  // UP or DOWN: Direction of travel down this rail.
   coordinate top,bottom;  // top is even with bottom of top child
@@ -244,7 +243,8 @@ class railnode:public node{
                           // bottom of bottom child.
 public:
   railnode():node(){type=RAIL;}//beforeskip=0;}
-  railnode(vrailside s,vraildir d):node(){type=RAIL;side = s; direction = d;}
+  railnode(vrailside s,vraildir d):node(){
+    type=RAIL;side = s; direction = d;}
   railnode(const railnode &original):node(original){
     side=original.side;
     direction=original.direction;
@@ -296,8 +296,6 @@ public:
 	    (*(i-1))-> is_concat()))
 	  (*(nodes.end()-2))->setRightRail((railnode*)nodes.back());
       }
-    na = nodes.front()->north();
-    sa = nodes.back()->south();
     ea = nodes.front()->east();
     wa = nodes.front()->west();
   }
@@ -321,14 +319,11 @@ public:
   virtual void insert(node *node){
     nodes.push_back(node);
     ea = node->east();
-    sa = node->south();
-    na = node->north();
   }
   virtual void insertFirst(node *node){
+    node->setPrevious(nodes.back());
     nodes.insert(nodes.begin(),node);
     wa = node->west();
-    na = node->north();
-    sa = node->south();
   }
   virtual int numChildren(){return nodes.size();}
   virtual node* getChild(int n){return nodes[n];}
@@ -480,12 +475,13 @@ public:
 };
 
 // ------------------------------------------------------------------------
-class newlinenode:public nontermnode{
+class newlinenode:public railnode{
   float lineheight;
+  
 public:
-  newlinenode(string s);
-  newlinenode(const newlinenode &original):nontermnode(original){
-    na = nextCoord();sa = nextCoord();lineheight=original.lineheight;}
+  newlinenode();
+  newlinenode(const newlinenode &original):railnode(original){drawtoprev=0;
+    lineheight=original.lineheight;}
   virtual newlinenode* clone() const {
     return new newlinenode(*this);
   }
@@ -495,10 +491,11 @@ public:
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
   virtual void setLineHeight(float h){lineheight=h;}
+  virtual void dump(int depth) const;
 };
 
 // ------------------------------------------------------------------------
-  
+// A productionnode contains lines, rails, and nelines
 class productionnode:public singlenode{
 private:
   string name;
@@ -532,6 +529,26 @@ public:
   }
 
 };
+
+
+// ------------------------------------------------------------------------
+// A rownode contains expressions that are drawn across the page.
+class rownode:public singlenode{
+public:
+  rownode(node *p):singlenode(p){
+    type=ROW;drawtoprev=0;beforeskip=sizes.colsep;p->setDrawToPrev(0);}
+  rownode(const rownode &original):singlenode(original){
+    drawtoprev=original.drawtoprev;}
+  virtual rownode* clone() const {
+    return new rownode(*this);
+  }
+  virtual ~rownode(){}
+
+  virtual void dump(int depth) const;
+  virtual coordinate place(ofstream &outs, int draw, int drawrails,
+			   coordinate start,node *parent, int depth);
+};
+
 
 // ------------------------------------------------------------------------
 
@@ -605,7 +622,14 @@ public:
   virtual ~concatnode(){}
   
   virtual void dump(int depth) const;
-  virtual void insert(node* p){multinode::insert(p);p->setDrawToPrev(1);}
+  virtual void insert(node* p){
+    multinode::insert(p);
+    drawtoprev = 1;
+    if(p->is_null() || p->is_nonterm() || p->is_terminal())
+      p->setDrawToPrev(1);
+    else
+      p->setDrawToPrev(0);
+  }
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   virtual int rail_left(){return nodes.front()->rail_left();};

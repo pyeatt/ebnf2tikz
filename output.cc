@@ -47,17 +47,26 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 
   if(side == LEFT)
     {
-      bottom = start - coordinate(0,next->height());
-      bottom = bottom +
-	coordinate(0, sizes.colsep + 
-		   next->getChild(next->numChildren()-1)->height());
+      if(direction == STARTNEWLINE)
+	{
+	  // left newline rails have top and bottom inverted... makes
+	  // everything easier
+	  top = start + coordinate(0, sizes.colsep);
+	  bottom = start + coordinate(0,sizes.rowsep);
+	}
+      else
+	{
+	  top = start - coordinate(0,sizes.colsep);
+	  bottom = start -  coordinate(0, sizes.rowsep);
+	}
     }
   else
     {
-      bottom = start - coordinate(0,previous->height());
-      bottom = bottom +
-	coordinate(0, sizes.colsep +
-		   previous->getChild(previous->numChildren()-1)->height());
+      bottom = start - coordinate(0, sizes.colsep);
+      // bottom = start - coordinate(0,previous->height());
+      // bottom = bottom +
+      // 	coordinate(0, sizes.colsep +
+      // 		   previous->getChild(previous->numChildren()-1)->height());
     }
 
   if(drawrails)
@@ -73,13 +82,11 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 	{
 	  s<<"+west:"<<sizes.colsep<<"pt";
 	  line(outs,3,nodename+"linetop",nodename,s.str());
-	  //line(outs,2,nodename,s.str());
 	}
       else
 	{
 	  s<<"+east:"<<sizes.colsep<<"pt";
 	  line(outs,3,nodename+"linetop",nodename,s.str());
-	  //line(outs,2,nodename,s.str());
 	}
       // }
       // else
@@ -116,11 +123,25 @@ void grammar::place(ofstream &outs)
     {
       // place everything
       (*i)->place(outs, 0, 0, coordinate(0,0), NULL, 0);
+      (*i)->dump(1);
       // draw rails
       (*i)->place(outs, 0, 1, coordinate(0,0), NULL, 0);
       // draw everything else
       (*i)->place(outs, 1, 0, coordinate(0,0), NULL, 0);
     }
+  
+}
+
+// ------------------------------------------------------------------------
+
+coordinate rownode::place(ofstream &outs,int draw, int drawrails,
+			  coordinate start,node *parent, int depth)
+{
+  coordinate nc;
+  nc=body->place(outs,draw,drawrails,start,this,0);
+  myWidth = body->width();
+  myHeight = body->height();
+  return nc;
 }
 
 // ------------------------------------------------------------------------
@@ -163,10 +184,6 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       outs<<"\\label{No Caption.}\n";
       outs<<"\\end{figure}\n";
     }
-  // na = nodename+".north";
-  // sa = nodename+".south";
-  // ea = nodename+".east";
-  // wa = nodename+".west";
   lastPlaced=this;
   return nc;
 }
@@ -256,53 +273,33 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
 coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
 			      coordinate start,node *parent, int depth)
 {
-  coordinate nc,c2,c3,c4,c5,sc;
-  string coord1,coord2,coord3,coord4;
-  // place coordinates
-  coord1=nextCoord();
-  coord2=nextCoord();
-  coord3=nextCoord();
-  coord4=nextCoord();
-  nc = start;
-  // if(rightfancy==NONE)
-  //   c2 = start + coordinate(sizes.colsep,0);
-  // else
-  //   c2 = start + coordinate(sizes.colsep,0);
+
+
+  cout << "placing newline "<<previous->getPrevious()->height() <<endl;
+
+  myWidth = -previous->getPrevious()->width() + sizes.colsep;
+  myHeight = previous->getPrevious()->height();
+
+  // for newline nodes, top is actually the right-hand side, and
+  // bottom is the left-hand side.  The previous and next will always
+  // be rails.
+  top = start - coordinate(0, previous->getPrevious()->height());
+  bottom = coordinate(sizes.colsep,top.y);
   
-  // if(getPrevious() != NULL && getPrevious()->rail_right())
-  //   c3 = c2 - coordinate(0,sizes.minsize);
-  // else
-  //   c3 = c2 - coordinate(0,lineheight);
+  if(draw)
+    {
+      outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
+      outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
+      outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
 
-  // c4 = coordinate(0,c3.y);
-  // c5 = c4 - coordinate(0,sizes.minsize+2);
-  // sc = c5 + coordinate(sizes.colsep,0);
-  // if(draw)
-  //   {
-  //     if(rightfancy==NONE)
-  // 	outs<<"\\coordinate ("<<na<<") at "<<nc<<";\n";
-  //     outs<<"\\coordinate ("<<coord1<<") at "<<c2<<";\n";
-  //     outs<<"\\coordinate ("<<coord2<<") at "<<c3<<";\n";
-  //     outs<<"\\coordinate ("<<coord3<<") at "<<c4<<";\n";
-  //     outs<<"\\coordinate ("<<coord4<<") at "<<c5<<";\n";
-  //     if(leftfancy==NONE) 
-  // 	outs<<"\\coordinate ("<<sa<<") at "<<sc<<";\n";
-
-  //     if(rightfancy == NONE && leftfancy==NONE)
-  // 	line(outs,6,ea,coord1,coord2,coord3,coord4,sa);
-  //     else
-  // 	if(rightfancy == NONE)
-  // 	  line(outs,5,na,coord1,coord2,coord3,coord4);
-  // 	else
-  // 	  if(leftfancy == NONE)
-  // 	    line(outs,5,coord1,coord2,coord3,coord4,sa);
-  // 	  else
-  // 	    line(outs,4,coord1,coord2,coord3,coord4);
-  //   }
-  //ea=na=coord2;
-  //wa=sa=coord4;
-
-  return sc;
+      line(outs,4,
+	   ((railnode*)previous)->rawName()+"linebottom",
+	   nodename+"linetop",
+	   nodename+"linebottom",
+	   ((railnode*)next)->rawName()+"linebottom");
+	   
+    }
+  return bottom;
 }
 
 // ------------------------------------------------------------------------
@@ -312,42 +309,73 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
 {
   // go through all of the nodes and place them, then draw the lines
   // between them.
+  float linewidth = 0, rowheight = 0;;
   coordinate current = start;
-  float rowheight=0,totalheight=0;
-  float mywidth=0;
-  
-  auto prev=nodes.begin();
+  int firstnewline=1;
+  myWidth = 0;
+  myHeight = 0;
+
   for(auto j=nodes.begin();j!=nodes.end();j++)
     {      
       // place the node and update the current coordinate
       if(j != nodes.begin())
-	current.x += (*j)->getBeforeSkip();
+	{
+	  current.x += (*j)->getBeforeSkip();
+	  linewidth += (*j)->getBeforeSkip();
+	}
  
       (*j)->place(outs,draw,drawrails,current,this,depth+1);
       current = current + coordinate((*j)->width(),0);
-      
-      mywidth += (*j)->width();
-      
-      if(j != nodes.begin())
-	mywidth += (*j)->getBeforeSkip();
+      linewidth += (*j)->width();      
 
-      if(draw && j!=prev)
-	line(outs,2,(*prev)->east(),(*j)->west());
-      
       if((*j)->height() > rowheight)
 	rowheight = (*j)->height();
-      
-      prev=j;
-    }  
 
-  totalheight += rowheight;
-  // update our width, north, south, east, and west anchors
-  setheight(totalheight);
+      if((*j)->is_newline())
+	{
+	  if(firstnewline)
+	    {
+	      current = current - coordinate(linewidth+2*sizes.colsep,
+					     (*j)->height() + 3*sizes.rowsep - 2);
+	      firstnewline = 0;
+	    }
+	  else
+	    current = current - coordinate(linewidth,
+					   (*j)->height() + 3*sizes.rowsep - 2);
 
-  setwidth(mywidth);
-  
-  na=(*prev)->north();
-  sa=(*prev)->south();
+	  if(linewidth > myWidth)
+	    myWidth = linewidth;
+	  cout << "adding "<<rowheight<<" to myHeight\n";
+	  myHeight += rowheight;
+	  linewidth = 0;
+	  rowheight = 0;
+				       
+	}
+
+     // connect to previous node
+      // if(draw &&
+      // 	 j!=nodes.begin() && (*j)->getDrawToPrev())
+      // 	{
+      // 	  outs << "% drawing to previous\n";
+      // 	  line(outs,2,(*j)->getPrevious()->east(),(*j)->west());
+      // 	}
+     // connect to previous node
+      // cout << " pointer to previous :"<< (*j)->getPrevious()<<endl;
+      // if(draw && j!=nodes.begin() &&
+      // 	  (*j)->getDrawToPrev())
+      // 	{
+      // 	  outs << "% drawing to previous\n";
+      // 	  line(outs,2,(*j)->getPrevious()->east(),(*j)->west());
+      // 	}
+    }
+  if(linewidth > myWidth)
+    myWidth = linewidth;
+  myHeight += rowheight;
+
+  cout << "width: "<<myWidth<<"  height: "<<myHeight<<endl;
+
+  //  na=(*prev)->north();
+  //  sa=(*prev)->south();
   ea=nodes.back()->east();
   wa=nodes.front()->west();
   // if(nodes.back()->is_loop())
