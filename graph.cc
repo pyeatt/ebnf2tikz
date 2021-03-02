@@ -919,22 +919,35 @@ void concatnode::mergeRails(){
     {
       oldrail = (railnode*)nodes.front();
       newrail = parent->getLeftRail();
-      // newrail->setBottom(oldrail->getBottom());
       if(oldrail->getRailDir() == UP)
 	newrail->setRailDir(STARTNEWLINEUP);
       else
       	newrail->setRailDir(STARTNEWLINEDOWN);
-        //newrail->setRailDir(oldrail->getRailDir());
-
       nodes.erase(nodes.begin());
       (*(nodes.begin()))->setLeftRail(newrail);
+      setLeftRail(newrail);
     }
 
+  if(parent->is_row() && parent->getRightRail() != NULL &&
+     nodes.back()->is_rail())
+    {
+      oldrail = (railnode*)nodes.back();
+      newrail = parent->getRightRail();
+      // if(oldrail->getRailDir() == UP)
+      // 	newrail->setRailDir(STARTNEWLINEUP);
+      // else
+      // 	newrail->setRailDir(STARTNEWLINEDOWN);
+      //      newrail->setRailDir(oldrail->getRailDir());
+      if(oldrail->getRailDir() == UP)
+	newrail->setRailDir(STARTNEWLINEUP);
+      else
+      	newrail->setRailDir(STARTNEWLINEDOWN);
 
+      newrail->setDrawToPrev(0);
+      nodes.erase(nodes.end()-1);
+      nodes.back()->setRightRail(newrail);
+      setRightRail(newrail);
+    }
 
-
-
-
-  
   multinode::mergeRails();
 }

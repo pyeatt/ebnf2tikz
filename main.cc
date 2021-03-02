@@ -7,13 +7,13 @@
    getopt.h You can use "man getopt" ath the command line to learn
    more about this. */
 struct option options[] = {
-  {"nooptimize", 0,  NULL, 'n'},
-  {"makefigures", 0,  NULL, 'f'},
-  {"help", 0,  NULL, 'h'},
-  {0}
+  {"nooptimize", no_argument,  NULL, 'n'},
+  {"makefigures", no_argument,  NULL, 'f'},
+  {"help", no_argument,  NULL, 'h'},
+  {0, 0, 0, 0}
 };
 
-char *optstring = (char*)"lfh";
+char *optstring = (char*)"nfh";
 
 /* description is an array of strings, each of which describes one of
    the command line options.  They are given in the same order as the
@@ -54,7 +54,7 @@ void usage(char *name)
 int main(int argc, char** argv) {
   char *infilename,*outfilename;
   int option_index = 0;
-  char c;
+  int c;
   int noopt=0,figures=0;
   
   /* process the command line options */
@@ -62,6 +62,7 @@ int main(int argc, char** argv) {
   while((c = getopt_long (argc, argv, optstring, options,
                           &option_index)) >= 0)
     {
+      cout << "got option "<<c<<endl;
       switch(c)
         {
         case 'n':
