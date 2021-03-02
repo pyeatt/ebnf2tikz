@@ -30,7 +30,7 @@ string stripSpecial(string s);
 // ------------------------------------------------------------------------
 
 typedef enum {LEFT,RIGHT} vrailside;
-typedef enum {UP,DOWN,STARTNEWLINE} vraildir;
+typedef enum {UP,DOWN,STARTNEWLINEUP,STARTNEWLINEDOWN} vraildir;
 class railnode;
 // base class for all nodes in the parse tree
 class node {
@@ -150,10 +150,9 @@ public:
       cout<<" leftrail="<<((node*)leftrail)->rawName();
     if(rightrail != NULL)
       cout<<" rightrail="<<((node*)rightrail)->rawName();
-    cout<<endl;
+    cout<<" drawtoprev="<<drawtoprev<<endl;
       //<<ea<<" "<<wa<<
       //" width="<<myWidth<<" height="<<myHeight<<" beforeskip="<<beforeskip<<
-      //" drawtoprev="<<drawtoprev<<endl;
   }
 
   virtual string texName() { return "";};
