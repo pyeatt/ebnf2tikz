@@ -182,6 +182,8 @@ public:
   singlenode(const singlenode &original):node(original)
   {
     body = original.body->clone();
+    ea = body->east();
+    wa = body->west();
   }
   virtual singlenode* clone() const {
     return new singlenode(*this);
@@ -205,7 +207,7 @@ public:
   virtual int mergeChoices(int depth){return body->mergeChoices(depth+1);}
   virtual int analyzeOptLoops(int depth){return body->analyzeOptLoops(depth+1);}
   virtual int analyzeNonOptLoops(int depth){return body->analyzeNonOptLoops(depth+1);}
-  virtual void setPrevious(node *n){body->setPrevious(n);}
+
   //  virtual int liftOptionChoice(int depth);
   virtual int numChildren(){return 1;}
   virtual node* getChild(int n){return body;}
@@ -220,6 +222,9 @@ public:
     tmp = body->subsume(name,replacement);
     if(tmp != body)
       {
+	tmp->setParent(this);
+	tmp->setPrevious(body->getPrevious());
+	tmp->setNext(body->getNext());
 	delete body;
 	body = tmp;
       }
@@ -229,6 +234,11 @@ public:
     parent = p;
     body->setParent(this);
   }
+  virtual void setPrevious(node *n){previous = n;body->setPrevious(n);}
+  virtual void setNext(node *n) {next = n;body->setNext(n);}
+
+
+
 };
 
 // ------------------------------------------------------------------------
@@ -371,8 +381,30 @@ public:
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
   virtual node* subsume(string name, node *replacement){
+    node *tmp;
     for(auto i = nodes.begin();i!=nodes.end();i++)
-      (*i) = (*i)->subsume(name,replacement);
+      {
+	tmp = (*i)->subsume(name,replacement);
+	if(tmp != (*i))
+	  {
+	    tmp->setParent(this);
+	    if((*i)==nodes.front())
+	      tmp->setPrevious(NULL);
+	    else
+	      {
+		tmp->setPrevious(*(i-1));
+		(*(i-1))->setNext(*i);
+	      }
+	    if((*i)==nodes.back())
+	      tmp->setNext(NULL);
+	    else
+	      {
+		tmp->setNext(*(i+1));
+		(*(i+1))->setPrevious(*i);
+	      }
+	    (*i) = tmp;
+	  }
+      }
     return this;
   }
   virtual void setParent(node* p){
@@ -495,43 +527,6 @@ public:
 };
 
 // ------------------------------------------------------------------------
-// A productionnode contains lines, rails, and nelines
-class productionnode:public singlenode{
-private:
-  string name;
-  int subsume_spec;
-public:
-  productionnode(int subsumespec,string s,node *p);
-  productionnode(const productionnode &original):singlenode(original)
-  {
-    name = original.name;
-    subsume_spec = original.subsume_spec;
-  }
-  virtual productionnode* clone() const {
-    return new productionnode(*this);
-  }
-  virtual ~productionnode(){}
-  virtual int getSubsume(){return subsume_spec;}
-  virtual string getName(){return name;}
-  void optimize();
-  virtual node* subsume(string name, node *replacement){return body->subsume(name,replacement);}
-  virtual void dump(int depth) const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
-  // void setParent() {
-  //   body->setParent(this);
-  // }
-  void setPrevious() {
-    body->setPrevious(NULL);
-  }
-  void setNext() {
-    body->setNext(NULL);
-  }
-
-};
-
-
-// ------------------------------------------------------------------------
 // A rownode contains expressions that are drawn across the page.
 class rownode:public singlenode{
 public:
@@ -547,17 +542,28 @@ public:
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-};
+  
+  virtual void setPrevious() {
+    body->setPrevious(getPrevious());
+  }
+  virtual void setNext() {
+    body->setNext(getNext());
+  }
 
+};
 
 // ------------------------------------------------------------------------
 
 class choicenode:public multinode{
 public:
-  choicenode(node *p):multinode(p){type=CHOICE;}
+  choicenode(node *p):multinode(p){type=CHOICE;p->setDrawToPrev(0);drawtoprev=0;}
   choicenode(const choicenode &original):multinode(original){}
   virtual choicenode* clone() const {
     return new choicenode(*this);
+  }
+  virtual void insert(node *node){
+    nodes.push_back(node);
+    node->setDrawToPrev(0);
   }
   virtual ~choicenode(){}
   virtual int rail_left(){return 1;}
@@ -613,7 +619,7 @@ private:
 			   vector<node*> &childnodes,
 			   vector<node*>::iterator &wherec);
 public:
-  concatnode(node *p):multinode(p){type=CONCAT;}//beforeskip=0;}
+  concatnode(node *p):multinode(p){type=CONCAT;drawtoprev=0;}//beforeskip=0;}
   concatnode(const concatnode &original):multinode(original){
     ea=nodes.back()->east();}
   virtual concatnode* clone() const {
@@ -624,7 +630,7 @@ public:
   virtual void dump(int depth) const;
   virtual void insert(node* p){
     multinode::insert(p);
-    drawtoprev = 1;
+    //drawtoprev = 1;
     if(p->is_null() || p->is_nonterm() || p->is_terminal())
       p->setDrawToPrev(1);
     else
@@ -657,6 +663,38 @@ public:
 };
 
 // ------------------------------------------------------------------------
+// A productionnode contains lines, rails, and nelines
+class productionnode:public singlenode{
+private:
+  string name;
+  int subsume_spec;
+public:
+  productionnode(int subsumespec,string s,node *p);
+  productionnode(const productionnode &original):singlenode(original)
+  {
+    name = original.name;
+    subsume_spec = original.subsume_spec;
+  }
+  virtual productionnode* clone() const {
+    return new productionnode(*this);
+  }
+  virtual ~productionnode(){}
+  virtual int getSubsume(){return subsume_spec;}
+  virtual string getName(){return name;}
+  void optimize();
+  virtual node* subsume(string name, node *replacement) {
+    replacement = new concatnode(replacement->getChild(2)->getChild(0));
+    return body->subsume(name,replacement);
+  }
+  virtual void dump(int depth) const;
+  virtual coordinate place(ofstream &outs, int draw, int drawrails,
+			   coordinate start,node *parent, int depth);
+  // void setParent(node *n){parent = n;body->setParent(this);}
+  // void setNext(){body->setNext(NULL);}
+  // void setPrevious(){body->setPrevious(NULL);}
+};
+
+// ------------------------------------------------------------------------
 // All of the productions are collected into a grammar
 class grammar{
 private:
@@ -684,11 +722,11 @@ public:
   }
   void setPrevious() {
     for(auto i=productions.begin();i!=productions.end();i++)
-      (*i)->setPrevious();
+      (*i)->setPrevious(NULL);
   }
   void setNext() {
     for(auto i=productions.begin();i!=productions.end();i++)
-      (*i)->setNext();
+      (*i)->setNext(NULL);
   }
   
 };
