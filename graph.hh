@@ -145,9 +145,15 @@ public:
   virtual void mergeRails(){}
     
   virtual void dump(int depth) const {
-    cout << " " <<nodename <<" : "<<ea<<" "<<wa<<
-      " width="<<myWidth<<" height="<<myHeight<<" beforeskip="<<beforeskip<<
-      " drawtoprev="<<drawtoprev<<endl;
+    cout << " " <<nodename <<" :";
+    if(leftrail != NULL)
+      cout<<" leftrail="<<((node*)leftrail)->rawName();
+    if(rightrail != NULL)
+      cout<<" rightrail="<<((node*)rightrail)->rawName();
+    cout<<endl;
+      //<<ea<<" "<<wa<<
+      //" width="<<myWidth<<" height="<<myHeight<<" beforeskip="<<beforeskip<<
+      //" drawtoprev="<<drawtoprev<<endl;
   }
 
   virtual string texName() { return "";};
@@ -331,7 +337,10 @@ public:
     ea = node->east();
   }
   virtual void insertFirst(node *node){
-    node->setPrevious(nodes.back());
+    node->setPrevious(nodes.front()->getPrevious());
+    node->setNext(nodes.front());
+    node->setParent(this);
+    nodes.front()->setPrevious(node);
     nodes.insert(nodes.begin(),node);
     wa = node->west();
   }
@@ -388,20 +397,10 @@ public:
 	if(tmp != (*i))
 	  {
 	    tmp->setParent(this);
-	    if((*i)==nodes.front())
-	      tmp->setPrevious(NULL);
-	    else
-	      {
-		tmp->setPrevious(*(i-1));
-		(*(i-1))->setNext(*i);
-	      }
-	    if((*i)==nodes.back())
-	      tmp->setNext(NULL);
-	    else
-	      {
-		tmp->setNext(*(i+1));
-		(*(i+1))->setPrevious(*i);
-	      }
+	    tmp->setPrevious((*i)->getPrevious());
+	    tmp->setNext((*i)->getNext());
+	    tmp->setDrawToPrev((*i)->getDrawToPrev());
+	    delete (*i);
 	    (*i) = tmp;
 	  }
       }
@@ -414,13 +413,17 @@ public:
   }
   virtual void setPrevious(node* p){
     node::setPrevious(p);
-    for(auto i=nodes.begin(); i!=nodes.end(); i++)
+    for(auto i=nodes.begin(); i!=nodes.end(); i++) {
+      (*i)->setDrawToPrev(0);
       (*i)->setPrevious(NULL);
+    }
   }
   virtual void setNext(node* p){
     node::setNext(p);
-    for(auto i=nodes.begin(); i!=nodes.end(); i++)
+    for(auto i=nodes.begin(); i!=nodes.end(); i++) {
+      (*i)->setDrawToPrev(0);
       (*i)->setNext(NULL);
+    }
   }
 };
 
@@ -543,12 +546,12 @@ public:
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   
-  virtual void setPrevious() {
-    body->setPrevious(getPrevious());
-  }
-  virtual void setNext() {
-    body->setNext(getNext());
-  }
+  // virtual void setPrevious(node *p) {
+  //   body->setPrevious(getPrevious());
+  // }
+  // virtual void setNext(node *p) {
+  //   body->setNext(getNext());
+  // }
 
 };
 
@@ -651,14 +654,18 @@ public:
   virtual void setPrevious(node* p){
     node::setPrevious(p);
     for(auto i=nodes.begin()+1; i!=nodes.end(); i++)
-      (*i)->setPrevious(*(i-1));
-    nodes.front()->setPrevious(getParent()->getPrevious());
+      {
+	(*i)->setPrevious(*(i-1));
+	//	(*i)->setDrawToPrev(1);
+      }
+    nodes.front()->setPrevious(getPrevious());
+    //   nodes.front()->setDrawToPrev(1);
   }
   virtual void setNext(node* p){
     node::setNext(p);
     for(auto i=nodes.begin(); i!=nodes.end()-1; i++)
       (*i)->setNext(*(i+1));
-    nodes.back()->setNext(getParent()->getNext());
+    nodes.back()->setNext(getNext());
   }
 };
 
