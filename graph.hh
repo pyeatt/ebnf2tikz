@@ -593,9 +593,8 @@ public:
   //  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
 
-  virtual void dump(int depth) const;
   node* getRepeat(){
-    return nodes[1];
+    return nodes[0];
   }
   void setRepeat(node *r){
     if(nodes[1] != NULL)
