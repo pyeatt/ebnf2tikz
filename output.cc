@@ -53,7 +53,7 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 	  // left newline rails have top and bottom inverted... makes
 	  // everything easier
 	  top = start + coordinate(0, sizes.colsep);
-	  bottom = start + coordinate(0,sizes.rowsep);
+	  bottom = top;
 	}
       else
 	{
@@ -63,6 +63,7 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
     }
   else
     {
+      top = start - coordinate(0,sizes.rowsep);
       bottom = start - coordinate(0, sizes.colsep);
       // bottom = start - coordinate(0,previous->height());
       // bottom = bottom +
@@ -79,16 +80,16 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
       stringstream s;
       // if(side==LEFT)
       // 	{
-      if(direction==DOWN)
-	{
+       if(direction==DOWN) {
 	  s<<"+west:"<<sizes.colsep<<"pt";
 	  line(outs,3,nodename+"linetop",nodename,s.str());
 	}
-      else
-	{
+
+      if(direction==UP) {
 	  s<<"+east:"<<sizes.colsep<<"pt";
 	  line(outs,3,nodename+"linetop",nodename,s.str());
 	}
+
       // }
       // else
       // 	{
@@ -372,8 +373,13 @@ void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
   //cout << "basic node "<<nodename<<" drawing to right rail "<<p<<' '<<join<<"\n";
   if(p != NULL)
     {
-      // s<<"+up:"<<sizes.colsep<<"pt";
-      // line(outs,3,ea,ea+"-|"+p->rawName(),s.str());
+      // if(join == STARTNEWLINEDOWN)
+      // 	{
+      // 	  stringstream s;
+      // 	  s<<"+left:"<<sizes.colsep<<"pt";
+      // 	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
+      // 	}
+      // else
       line(outs,3,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
     }
 }
@@ -464,3 +470,4 @@ void singlenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
     }
   body->drawToRightRail(outs,p,join);
 }
+

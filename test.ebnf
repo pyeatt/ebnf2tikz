@@ -1,127 +1,127 @@
-// newlines =
-//  a \\ b \\ c;
+newlines =
+ a \\ b \\ c;
 
  otherb =
    (a, b) \\ (c, d, e), (f) \\ {g,  h, i, j}  \\ [k, l, m] \\ (n, o  );
 
 
-// simple =
-//          [ a  | b | c | d ] ;
+simple =
+         [ a  | b | c | d ] ;
 
-// simple =
-//   b, { a , b } ;
+simple =
+  b, { a , b } ;
 
-//  optionchoice =
-//   b,  [ a | b ], c;
+ optionchoice =
+  b,  [ a | b ], c;
 
-// case_statement =
-//     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
-//     { ',' , case_statement_alternative } \\
-//     'end', 'case', [ label ] ,';' ;
+case_statement =
+    [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
+    { ',' , case_statement_alternative } \\
+    'end', 'case', [ label ] ,';' ;
 
-// subsume
-// case_statement_alternative =
-//     'when' , choices , '=>', sequence_of_statements;
+subsume
+case_statement_alternative =
+    'when' , choices , '=>', sequence_of_statements;
     
-// character_literal =
-//     "'", graphic_character, "'" ;
+character_literal =
+    "'", graphic_character, "'" ;
 
-// subsume
-// choices =
-//     simple_expression |
-//     discrete_range |
-//     simple_name |
-//     'others' ;
+subsume
+choices =
+    simple_expression |
+    discrete_range |
+    simple_name |
+    'others' ;
 
-// subsume
-// choices =
-//     choice, { '|', choice } ;
-
-
-// toollist =
-//  tool,{ ',', tool };
-
-// subsume
-// tool =
-//   'hammer' | 'screwdriver' | saw;
-
-// subsume
-// saw =
-//    ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
-
-// nolist=
-//   a , b , [c , "d" ] , e , f ;
-
-// list =
-//   a, 'b', c,  this | that_one | 'and' ,  the, other;
-
-// list =
-//   a, 'b', (c , this | that_one,  'and',   the ),other;
+subsume
+choices =
+    choice, { '|', choice } ;
 
 
+toollist =
+ tool,{ ',', tool };
 
-// listx =
-//   a , ( 'b' | c , ( this | { that_one | 'and' }  |   the )),other;
+subsume
+tool =
+  'hammer' | 'screwdriver' | saw;
 
-// listj =
-//   a , (  'b' | c | (this , that_one ) | 'and'|   the ),  other;
+subsume
+saw =
+   ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
 
-// listk =
-//   a  ,(  'b'  | c | "none" ,{  (this , that_one) | other_one | "none"  } | 'and'|
-//   the ), other ;
+nolist=
+  a , b , [c , "d" ] , e , f ;
 
-// hmm =
-//     a, (that_one | other_one | "none") ,other ;
+list =
+  a, 'b', c,  this | that_one | 'and' ,  the, other;
 
-// aawesome_list =
-//   a , ( 'b' | c | (( this , [that_one | 'this one' ]) | ( other_one |
-//   ('and'|   the |"bout"))  | "neither") ),
-//   other;
-
-// grammar = { rule } ;
-
-// other =
-//   (((a, b), [ c, d, e, f, g , h, i, j ] ), (k, l, m), (n, o ) );
+list =
+  a, 'b', (c , this | that_one,  'and',   the ),other;
 
 
-// easyone =
-// [ a | b];
 
-//  a_better_loop =
-//   a, [{a}];
+listx =
+  a , ( 'b' | c , ( this | { that_one | 'and' }  |   the )),other;
+
+listj =
+  a , (  'b' | c | (this , that_one ) | 'and'|   the ),  other;
+
+listk =
+  a  ,(  'b'  | c | "none" ,{  (this , that_one) | other_one | "none"  } | 'and'|
+  the ), other ;
+
+hmm =
+    a, (that_one | other_one | "none") ,other ;
+
+aawesome_list =
+  a , ( 'b' | c | (( this , [that_one | 'this one' ]) | ( other_one |
+  ('and'|   the |"bout"))  | "neither") ),
+  other;
+
+grammar = { rule } ;
+
+other =
+  (((a, b), [ c, d, e, f, g , h, i, j ] ), (k, l, m), (n, o ) );
+
+
+easyone =
+[ a | b];
+
+ a_better_loop =
+  a, [{a}];
  
-//  a_better_loopb =
-//   a, [{b}];
+ a_better_loopb =
+  a, [{b}];
 
-// a_much_better_loop =
-//  a, [{  ',', a}];
-
-
-// a_much_better_loop =
-//  	x ,   a, b, {  ',',  a, b};
+a_much_better_loop =
+ a, [{  ',', a}];
 
 
-
-// wowzer =
-//  	x  ,  a, b, [{  blue, ',',  'part', a,  b, g}];
-
-// gleep =
-//  	x  ,  a, b, [{  ',',  a, b}], right;
+a_much_better_loop =
+ 	x ,   a, b, {  ',',  a, b};
 
 
-// muckrake =
-//  	x  ,  a, b, [{  blue, ',',  a, b}], 'toodles';
 
-// broken =
-//  	x  ,  a, b, [{x}];
+wowzer =
+ 	x  ,  a, b, [{  blue, ',',  'part', a,  b, g}];
 
-// scooby =
-//   	[{  blue, ',',  'part', a, (b | g)}];
+gleep =
+ 	x  ,  a, b, [{  ',',  a, b}], right;
 
-// scooby =
-//    	x,    a, b,[{  blue, ',' , 'part', a, (b | g)}];
 
-// muckrake =
-//  	x ,  ( a|b), [{  blue, ',',  (a| b)}], 'toodles';
+muckrake =
+ 	x  ,  a, b, [{  blue, ',',  a, b}], 'toodles';
+
+broken =
+ 	x  ,  a, b, [{x}];
+
+scooby =
+  	[{  blue, ',',  'part', a, (b | g)}];
+
+scooby =
+   	x,    a, b,[{  blue, ',' , 'part', a, (b | g)}];
+
+muckrake =
+ 	x ,  ( a|b), [{  blue, ',',  (a| b)}], 'toodles';
 
 
