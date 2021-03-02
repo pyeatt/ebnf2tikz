@@ -840,21 +840,21 @@ int concatnode::analyzeNonOptLoops(int depth)
   }
   
   // bury the dead
-  i = nodes.begin();
-  while(i!=nodes.end())
-    {
-      if((*i)->isDead())
-	{
-	  if(i != nodes.end()-1)
-	    (*(i+1))->setLeftRail((*i)->getLeftRail());
-	  if(i != nodes.begin())
-	    (*(i-1))->setRightRail((*i)->getRightRail());
-	  delete (*i);
-	  i = nodes.erase(i);
-	}
-      else
-	i++;
-    }
+  // i = nodes.begin();
+  // while(i!=nodes.end())
+  //   {
+  //     if((*i)->isDead())
+  // 	{
+  // 	  if(i != nodes.end()-1)
+  // 	    (*(i+1))->setLeftRail((*i)->getLeftRail());
+  // 	  if(i != nodes.begin())
+  // 	    (*(i-1))->setRightRail((*i)->getRightRail());
+  // 	  delete (*i);
+  // 	  i = nodes.erase(i);
+  // 	}
+  //     else
+  // 	i++;
+  //   }
   return sum;
 }
 
