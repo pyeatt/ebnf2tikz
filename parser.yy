@@ -105,11 +105,12 @@ node* wrapChoice(node *n) {
 // Define the grammar: A grammar is a list of productions
 grammar : productions {
      grammar *g = $1;
-     // g->dump();
+     g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();
      g->optimize();
+     g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();

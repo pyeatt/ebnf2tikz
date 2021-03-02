@@ -689,6 +689,8 @@ public:
   virtual string getName(){return name;}
   void optimize();
   virtual node* subsume(string name, node *replacement) {
+    cout<<"subsuming"<<endl;
+    replacement->getParent()->dump(2);
     replacement = new concatnode(replacement->getChild(2)->getChild(0));
     return body->subsume(name,replacement);
   }
