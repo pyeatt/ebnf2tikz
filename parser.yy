@@ -114,7 +114,7 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
      g->subsume();
-//     g->optimize();
+     g->optimize();
 
      g->setParent();
      g->setPrevious();

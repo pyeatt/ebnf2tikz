@@ -1,45 +1,45 @@
-newlines =
- a \\ b \\ c;
+// newlines =
+//  a \\ b \\ c;
 
- otherb =
-   (((a, b),  (c, d, e), (f), (g,  h, i), j ), (k, l, m), (n, o ) );
+//  otherb =
+//    (((a, b),  (c, d, e), (f), (g,  h, i), j ), (k, l, m), (n, o ) );
 
 
-simple =
-         [ a  | b | c | d ] ;
+// simple =
+//          [ a  | b | c | d ] ;
 
-simple =
-  b, { a , b } ;
+// simple =
+//   b, { a , b } ;
 
- optionchoice =
-  b,  [ a | b ], c;
+//  optionchoice =
+//   b,  [ a | b ], c;
 
-case_statement =
-    [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
-    { ',' , case_statement_alternative } \\
-    'end', 'case', [ label ] ,';' ;
+// case_statement =
+//     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
+//     { ',' , case_statement_alternative } \\
+//     'end', 'case', [ label ] ,';' ;
 
-subsume
-case_statement_alternative =
-    'when' , choices , '=>', sequence_of_statements;
+// subsume
+// case_statement_alternative =
+//     'when' , choices , '=>', sequence_of_statements;
     
-character_literal =
-    "'", graphic_character, "'" ;
+// character_literal =
+//     "'", graphic_character, "'" ;
 
-subsume
-choices =
-    simple_expression |
-    discrete_range |
-    simple_name |
-    'others' ;
+// subsume
+// choices =
+//     simple_expression |
+//     discrete_range |
+//     simple_name |
+//     'others' ;
 
-subsume
-choices =
-    choice, { '|', choice } ;
+// subsume
+// choices =
+//     choice, { '|', choice } ;
 
 
-toollist =
- tool,{ ',', tool };
+// toollist =
+//  tool,{ ',', tool };
 
 subsume
 tool =

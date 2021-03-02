@@ -340,7 +340,7 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
 	}
 
      // connect to previous node
-      if(draw && (*j)->getDrawToPrev() && previous != NULL)
+      if(draw && (*j)->getDrawToPrev() && (*j)->getPrevious() != NULL)
 	{
 	  if(j==nodes.begin())
 	    {
