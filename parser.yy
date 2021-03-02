@@ -105,7 +105,7 @@ node* wrapChoice(node *n) {
 // Define the grammar: A grammar is a list of productions
 grammar : productions {
      grammar *g = $1;
-     g->dump();
+     // g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();
@@ -198,7 +198,7 @@ rows :
       rownode *row = new rownode($3);
       railnode *r,*l;
       l = new railnode(RIGHT,DOWN);
-      r = new railnode(LEFT,STARTNEWLINE);
+      r = new railnode(LEFT,STARTNEWLINEDOWN);
       n->setLeftRail(l);
       n->setRightRail(r);
       $$->getChild($$->numChildren()-1)->setRightRail(l);

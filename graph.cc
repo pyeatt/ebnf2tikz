@@ -913,5 +913,28 @@ void concatnode::mergeRails(){
 	  (*(nodes.end()-1))->setRightRail(newrail);
 	}
     }
+
+  if(parent->is_row() && parent->getLeftRail() != NULL &&
+     nodes.front()->is_rail())
+    {
+      oldrail = (railnode*)nodes.front();
+      newrail = parent->getLeftRail();
+      // newrail->setBottom(oldrail->getBottom());
+      if(oldrail->getRailDir() == UP)
+	newrail->setRailDir(STARTNEWLINEUP);
+      else
+      	newrail->setRailDir(STARTNEWLINEDOWN);
+        //newrail->setRailDir(oldrail->getRailDir());
+
+      nodes.erase(nodes.begin());
+      (*(nodes.begin()))->setLeftRail(newrail);
+    }
+
+
+
+
+
+
+  
   multinode::mergeRails();
 }

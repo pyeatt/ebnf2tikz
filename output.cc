@@ -48,7 +48,7 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 
   if(side == LEFT)
     {
-      if(direction == STARTNEWLINE)
+      if(direction == STARTNEWLINEUP || direction == STARTNEWLINEDOWN)
 	{
 	  // left newline rails have top and bottom inverted... makes
 	  // everything easier
@@ -124,7 +124,6 @@ void grammar::place(ofstream &outs)
     {
       // place everything
       (*i)->place(outs, 0, 0, coordinate(0,0), NULL, 0);
-      (*i)->dump(1);
       // draw rails
       (*i)->place(outs, 0, 1, coordinate(0,0), NULL, 0);
       // draw everything else
@@ -265,32 +264,28 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
 coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
 			      coordinate start,node *parent, int depth)
 {
-
-
-  cout << "placing newline "<<previous->getPrevious()->height() <<endl;
-
   myWidth = -previous->getPrevious()->width() + sizes.colsep;
   myHeight = previous->getPrevious()->height();
-
   // for newline nodes, top is actually the right-hand side, and
   // bottom is the left-hand side.  The previous and next will always
   // be rails.
   top = start - coordinate(0, previous->getPrevious()->height());
   bottom = coordinate(sizes.colsep,top.y);
-  
-  if(draw)
-    {
-      outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
-      outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
-      outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
-
-      line(outs,4,
-	   ((railnode*)previous)->rawName()+"linebottom",
-	   nodename+"linetop",
-	   nodename+"linebottom",
-	   ((railnode*)next)->rawName()+"linebottom");
-	   
-    }
+  if(draw) {
+    outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
+    outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
+    outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
+    line(outs,2,
+	 ((railnode*)previous)->rawName()+"linebottom",
+	 nodename+"linetop",
+	 nodename+"linebottom",
+	 ((railnode*)next)->rawName()+"linebottom");
+    // line(outs,4,
+    // 	 ((railnode*)previous)->rawName()+"linebottom",
+    // 	 nodename+"linetop",
+    // 	 nodename+"linebottom",
+    // 	 ((railnode*)next)->rawName()+"linebottom");
+  }
   return bottom;
 }
 
@@ -304,76 +299,42 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
   float linewidth = 0, rowheight = 0;;
   coordinate current = start;
   myWidth = 0;
-  myHeight = 0;
-
-  if(depth==0)
-    cout<< "placing concat at "<<start<<endl;
-  
-  for(auto j=nodes.begin();j!=nodes.end();j++)
-    {      
-      // place the node and update the current coordinate
-      if(j != nodes.begin())
-	{
-	  current.x += (*j)->getBeforeSkip();
-	  linewidth += (*j)->getBeforeSkip();
-	}
- 
-      (*j)->place(outs,draw,drawrails,current,this,depth+1);
-      current = current + coordinate((*j)->width(),0);
-      linewidth += (*j)->width();      
-
-      if((*j)->height() > rowheight)
-	rowheight = (*j)->height();
-
-      if((*j)->is_newline())
-	{
-	  current = current - coordinate(linewidth,
-					 (*j)->height() + 3*sizes.rowsep - 2);
-
-	  if(linewidth > myWidth)
-	    myWidth = linewidth;
-	  cout << "adding "<<rowheight<<" to myHeight\n";
-	  myHeight += rowheight;
-	  linewidth = 0;
-	  rowheight = 0;
-				       
-	}
-
-     // connect to previous node
-      if(draw && (*j)->getDrawToPrev() && (*j)->getPrevious() != NULL)
-	{
-	  if(j==nodes.begin())
-	    {
-	      outs << "% drawing to previous\n";
-	      line(outs,2,previous->east(),(*j)->west());
-	    }
-	  else
-	    {
-	      outs << "% drawing to previous\n";
-	      line(outs,2,(*j)->getPrevious()->east(),(*j)->west());
-	    }
-	}
-     // connect to previous node
-      // cout << " pointer to previous :"<< (*j)->getPrevious()<<endl;
-      // if(draw && j!=nodes.begin() &&
-      // 	  (*j)->getDrawToPrev())
-      // 	{
-      // 	  outs << "% drawing to previous\n";
-      // 	  line(outs,2,(*j)->getPrevious()->east(),(*j)->west());
-      // 	}
+  myHeight = 0;  
+  for(auto j=nodes.begin();j!=nodes.end();j++) {      
+    // place the node and update the current coordinate
+    if(j != nodes.begin()) {
+      current.x += (*j)->getBeforeSkip();
+      linewidth += (*j)->getBeforeSkip();
     }
+    (*j)->place(outs,draw,drawrails,current,this,depth+1);
+    current = current + coordinate((*j)->width(),0);
+    linewidth += (*j)->width();      
+    if((*j)->height() > rowheight)
+      rowheight = (*j)->height();
+    if((*j)->is_newline()) {
+      current = current - coordinate(linewidth,(*j)->height() + 3*sizes.rowsep - 2);
+      if(linewidth > myWidth)
+	myWidth = linewidth;
+      myHeight += rowheight;
+      linewidth = 0;
+      rowheight = 0;
+    }
+    // connect to previous node
+    if(draw && (*j)->getDrawToPrev() && (*j)->getPrevious() != NULL) {
+      if(j==nodes.begin()) {
+	if(! (parent->is_row() && parent->getLeftRail()!=NULL)) {
+	  line(outs,2,previous->east(),(*j)->west());
+	}
+      }
+      else 
+	line(outs,2,(*j)->getPrevious()->east(),(*j)->west());
+    }
+  }
   if(linewidth > myWidth)
     myWidth = linewidth;
   myHeight += rowheight;
-
-  cout << "width: "<<myWidth<<"  height: "<<myHeight<<endl;
-
-  //  na=(*prev)->north();
-  //  sa=(*prev)->south();
   ea=nodes.back()->east();
   wa=nodes.front()->west();
-  // if(nodes.back()->is_loop())
-  //   current.x -= sizes.colsep;
   return current;
 }
 
@@ -396,7 +357,14 @@ void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join){
       // stringstream s;
       // s<<"+up:"<<sizes.colsep<<"pt";
       // line(outs,3,wa,wa+"-|"+p->rawName(),s.str());
-      line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
+      if(join == STARTNEWLINEUP)
+	{
+	  stringstream s;
+	  s<<"+right:"<<sizes.colsep<<"pt";
+	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
+	}
+      else
+	line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
     }
 }
 
@@ -404,7 +372,6 @@ void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
   //cout << "basic node "<<nodename<<" drawing to right rail "<<p<<' '<<join<<"\n";
   if(p != NULL)
     {
-      // stringstream s;
       // s<<"+up:"<<sizes.colsep<<"pt";
       // line(outs,3,ea,ea+"-|"+p->rawName(),s.str());
       line(outs,3,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
