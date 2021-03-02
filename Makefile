@@ -21,7 +21,7 @@ lexer.cc: lexer.ll parser.cc parser.hh
 	$(CC) $(DEFINES) $(CFLAGS) $(INCLUDES) $<
 
 clean:
-	rm -f lexer.cc parser.hh parser.cc ebnf2tikz location.hh $(OBJS) *~
+	rm -f lexer.cc parser.hh parser.cc ebnf2tikz location.hh $(OBJS) *~ .depend bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex
 
 realclean: clean
 	rm -f .depend

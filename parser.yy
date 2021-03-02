@@ -1,3 +1,6 @@
+
+
+
 %require "3.7"
 %language "c++"
 %define api.token.raw
@@ -125,6 +128,7 @@ grammar : productions {
      g->setParent();
      g->setPrevious();
      g->setNext();
+     
      g->place(drv.outs());
   } ;
 
@@ -144,9 +148,22 @@ productions: productions production {
 // equal sign, followed by an expression, followed by a semicolon.
 production: annotations STRING EQUAL rows SEMICOLON
   {
+  concatnode *c = new concatnode(new nullnode("start1"));
+  c->setBeforeSkip(0);
+  c->setDrawToPrev(0);
+  c->getChild(0)->setBeforeSkip(0);
+  c->getChild(0)->setDrawToPrev(0);
+  c->insert(new nullnode("start2"));
     coordinate start;
+    $4->setDrawToPrev(0);
+    // if($4->is_concat())
+    // $4->getChild(0)->setDrawToPrev(1);
     $4=wrapChoice($4);
-    $$ = new productionnode($1,$2,$4);
+    c->insert($4);
+    c->insert(new nullnode("end1"));
+    c->insert(new nullnode("end2"));
+    
+    $$ = new productionnode($1,$2,c);
   } ;
 
 // I would like to support these options for annotations:
@@ -192,13 +209,13 @@ rows :
       $$->insert(row);
       l->setDrawToPrev(0);
       r->setDrawToPrev(0);
-      n->setDrawToPrev(0);
+//      n->setDrawToPrev(0);
       $$->setDrawToPrev(0);
      } | 
     expression {
       $1 = wrapChoice($1);
       $$ = new rownode($1);
-      $$->setDrawToPrev(0);
+      $$->setDrawToPrev(1);
      } ;
   
 expression:
@@ -218,8 +235,12 @@ expression:
   expression PIPE expression
     {
       // PIPE is left associative, so only need to check $1
+      
       if(!$1->is_choice())
-        $$ = new choicenode($1);
+        {
+          $$ = new choicenode($1);
+	  $1->setDrawToPrev(0);
+	}
       else
         $$ = $1;    
       $$->insert($3);

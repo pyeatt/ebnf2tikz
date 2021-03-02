@@ -67,9 +67,9 @@ public:
 	    inf >> ch;
 	  while(ch != ',' && !inf.eof());
 	  inf >> size.y;
-	  if(!inf.eof())
+	  if(inf)
 	    sizemap.insert ( pair<string,coordinate>(nodename,size) );
-	}while(!inf.eof());
+	}while(inf);
 	inf.close();
       }
   }
