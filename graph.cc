@@ -687,23 +687,23 @@ int concatnode::analyzeOptLoops(int depth)
 	  //     j = child->nodes.erase(j-1);
 	  //   }
 	  //else {
-	  int delcount = 0;
-	  // If there is more than one node left in the child
-	  // concat, then create a new concat node and move all of
-	  // the remaining nodes into it IN REVERSE ORDER.  
-	  j--;
-	  concatnode *c = new concatnode(*j);
-	  while(j!= child->nodes.begin())
-	    {
-	      j--;
-	      c->insert(*j);
-	      delcount++;
-	    } 
-	  // replace the loop repeat node with the new concat
-	  loop->setRepeat(c);
-	  // erase the nodes that were moved from the child concat
-	  for(int i=0;i<delcount+1;i++)
-	    j = child->nodes.erase(j);
+	  // int delcount = 0;
+	  // // If there is more than one node left in the child
+	  // // concat, then create a new concat node and move all of
+	  // // the remaining nodes into it IN REVERSE ORDER.  
+	  // j--;
+	  // concatnode *c = new concatnode(*j);
+	  // while(j!= child->nodes.begin())
+	  //   {
+	  //     j--;
+	  //     c->insert(*j);
+	  //     delcount++;
+	  //   } 
+	  // // replace the loop repeat node with the new concat
+	  // loop->setRepeat(c);
+	  // // erase the nodes that were moved from the child concat
+	  // for(int i=0;i<delcount+1;i++)
+	  //   j = child->nodes.erase(j);
 	  //}
 	}
 	else {
