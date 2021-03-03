@@ -261,6 +261,7 @@ void productionnode::optimize()
     cout<<tmp<<" non-optional loops modified\n";
     changes += tmp;
     //}while(tmp > 0);
+
     
     //  do{
     // tmp = body-> analyzeOptLoops(0);
