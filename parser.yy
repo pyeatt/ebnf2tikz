@@ -131,6 +131,8 @@ grammar : productions {
      g->setNext();
      
      g->place(drv.outs());
+
+     delete g;
   } ;
 
 productions: productions production {
