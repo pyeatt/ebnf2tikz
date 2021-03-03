@@ -806,37 +806,38 @@ int concatnode::analyzeNonOptLoops(int depth)
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
 	  // If there is only one node left in the child concat,
-	  if(j-1 == child->nodes.begin()) {
-	    // then move it to the repeat part.
-	    loop->nodes[1]=(*(j-1));
-	    child = (concatnode*)loop->getChild(0);
-	    j = child->nodes.erase(j-1);
-	    // if child only has one remaining node, then replace it
-	    // with its one child and delete it.
-	    if(j == child->nodes.begin()) {
-	      loop->setBody(child->getChild(0));
-	      //child->forgetChild(0);
-	      // delete child;
-	    }
-	  }
-	  else {
+	  // if(numnodes == 1) {
+	  //   // then move it to the repeat part.
+	  //   loop->nodes[1]=(*(j-1));
+	  //   child = (concatnode*)loop->getChild(0);
+	  //   j = child->nodes.erase(j-1);
+	  //   // if child only has one remaining node, then replace it
+	  //   // with its one child and delete it.
+	  //   if(child->nodes.size()==1) {
+	  //     loop->nodes[0] = child->nodes[0];
+	  //     child->nodes.clear();
+	  //     delete child;
+	  //   }
+	  // }
+	  // else {
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
 	    // the remaining nodes into it IN REVERSE ORDER.
 	    j--;
 	    concatnode *c = new concatnode(*j);
-	    do {
-	      j--;
-	      c->insert(*j);
-	      delcount++;
-	    } while(j!= child->nodes.begin());
+	    while(j!= child->nodes.begin())
+	      {
+		j--;
+		c->insert(*j);
+		delcount++;
+	      } 
 	    // replace the loop repeat node with the new concat
 	    loop->setRepeat(c);
 	    // erase the nodes that were moved from the child concat
 	    for(int i=0;i<delcount+1;i++)
 	      j = child->nodes.erase(j);
-	  }
+	    //}
 	}
       }
       else {
