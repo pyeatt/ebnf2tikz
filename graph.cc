@@ -917,107 +917,107 @@ int concatnode::analyzeOptLoops(int depth)
 
     // // sequence_a followed by loop containing optional separator and sequence_a
     // // analyze non optionloops
-    // int concatnode::analyzeNonOptLoops(int depth)
-    // {
-    //   int sum = 0;
-    //   vector<node*>::iterator i, prev, j, child_last;
-    //   concatnode *child;
-    //   loopnode *loop;
-    //   int numnodes;
-    //   // do analyzeLoops on everything beneath this concat
-    //   for(i = nodes.begin();i!=nodes.end();i++)
-    // 	sum += (*i)->analyzeNonOptLoops(depth+1);
+    int concatnode::analyzeNonOptLoops(int depth)
+    {
+      int sum = 0;
+      vector<node*>::iterator i, prev, j, child_last;
+      concatnode *child;
+      loopnode *loop;
+      int numnodes;
+      // do analyzeLoops on everything beneath this concat
+      for(i = nodes.begin();i!=nodes.end();i++)
+	sum += (*i)->analyzeNonOptLoops(depth+1);
   
-    //   // find loops and try to make them better
-    //   for(i = nodes.begin()+1;i!=nodes.end();i++) {
-    // 	// looking for concat containing a loop
-    // 	if((*i)->is_concat() &&
-    // 	   (*i)->numChildren() == 3 &&
-    // 	   (*i)->getChild(0)->is_rail() &&
-    // 	   (*i)->getChild(1)->is_loop() &&
-    // 	   (*i)->getChild(2)->is_rail()) { 
-    // 	  // Found a loop node.  Can we rebuild it?
-    // 	  sum++;
-    // 	  // get an iterator to the node preceding "this" in its parent's nodes
-    // 	  prev = i-1;	            
-    // 	  loop = (loopnode*)(*i)->getChild(1);
-    // 	  // is loop body a conca?
-    // 	  if(loop->getChild(0)->is_concat()) {
-    // 	    // Loop body is a concat.  Working back from the end of the
-    // 	    // child, find the first node that does not match a
-    // 	    // corresponding node in this concat. call findAndDelete... to
-    // 	    // do all of that and delete matching fram the parent
-    // 	    child = (concatnode*)loop->getChild(0);
-    // 	    numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
-    // 	    // If there were matching nodes, then we can move stuff around
-    // 	    if(numnodes > 0) {
-    // 	      // If there is only one node left in the child concat,
-    // 	      // if(numnodes == 1) {
-    // 	      //   // then move it to the repeat part.
-    // 	      //   loop->nodes[1]=(*(j-1));
-    // 	      //   child = (concatnode*)loop->getChild(0);
-    // 	      //   j = child->nodes.erase(j-1);
-    // 	      //   // if child only has one remaining node, then replace it
-    // 	      //   // with its one child and delete it.
-    // 	      //   if(child->nodes.size()==1) {
-    // 	      //     loop->nodes[0] = child->nodes[0];
-    // 	      //     child->nodes.clear();
-    // 	      //     delete child;
-    // 	      //   }
-    // 	      // }
-    // 	      // else {
-    // 	      int delcount = 0;
-    // 	      // If there is more than one node left in the child
-    // 	      // concat, then create a new concat node and move all of
-    // 	      // the remaining nodes into it IN REVERSE ORDER.
-    // 	      j--;
-    // 	      concatnode *c = new concatnode(*j);
-    // 	      while(j!= child->nodes.begin())
-    // 		{
-    // 		  j--;
-    // 		  c->insert(*j);
-    // 		  delcount++;
-    // 		} 
-    // 	      // replace the loop repeat node with the new concat
-    // 	      loop->setRepeat(c);
-    // 	      // erase the nodes that were moved from the child concat
-    // 	      for(int i=0;i<delcount+1;i++)
-    // 		j = child->nodes.erase(j);
-    // 	      //}
-    // 	    }
-    // 	  }
-    // 	  else {
-    // 	    // loop body is NOT a concat.
-    // 	    // if loop body matches previous item in this concat
-    // 	    if(*(loop->getChild(0)) == **prev)
-    // 	      {
-    // 		//   erase previous item in this concat
-    // 		delete *prev;
-    // 		i = nodes.erase(prev);
-    // 	      }
-    // 	  }
+      // find loops and try to make them better
+      for(i = nodes.begin()+1;i!=nodes.end();i++) {
+	// looking for concat containing a loop
+	if((*i)->is_concat() &&
+	   (*i)->numChildren() == 3 &&
+	   (*i)->getChild(0)->is_rail() &&
+	   (*i)->getChild(1)->is_loop() &&
+	   (*i)->getChild(2)->is_rail()) { 
+	  // Found a loop node.  Can we rebuild it?
+	  sum++;
+	  // get an iterator to the node preceding "this" in its parent's nodes
+	  prev = i-1;	            
+	  loop = (loopnode*)(*i)->getChild(1);
+	  // is loop body a conca?
+	  if(loop->getChild(0)->is_concat()) {
+	    // Loop body is a concat.  Working back from the end of the
+	    // child, find the first node that does not match a
+	    // corresponding node in this concat. call findAndDelete... to
+	    // do all of that and delete matching fram the parent
+	    child = (concatnode*)loop->getChild(0);
+	    numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
+	    // If there were matching nodes, then we can move stuff around
+	    if(numnodes > 0) {
+	      // If there is only one node left in the child concat,
+	      // if(numnodes == 1) {
+	      //   // then move it to the repeat part.
+	      //   loop->nodes[1]=(*(j-1));
+	      //   child = (concatnode*)loop->getChild(0);
+	      //   j = child->nodes.erase(j-1);
+	      //   // if child only has one remaining node, then replace it
+	      //   // with its one child and delete it.
+	      //   if(child->nodes.size()==1) {
+	      //     loop->nodes[0] = child->nodes[0];
+	      //     child->nodes.clear();
+	      //     delete child;
+	      //   }
+	      // }
+	      // else {
+	      int delcount = 0;
+	      // If there is more than one node left in the child
+	      // concat, then create a new concat node and move all of
+	      // the remaining nodes into it IN REVERSE ORDER.
+	      j--;
+	      concatnode *c = new concatnode(*j);
+	      while(j!= child->nodes.begin())
+		{
+		  j--;
+		  c->insert(*j);
+		  delcount++;
+		} 
+	      // replace the loop repeat node with the new concat
+	      loop->setRepeat(c);
+	      // erase the nodes that were moved from the child concat
+	      for(int i=0;i<delcount+1;i++)
+		j = child->nodes.erase(j);
+	      //}
+	    }
+	  }
+	  else {
+	    // loop body is NOT a concat.
+	    // if loop body matches previous item in this concat
+	    if(*(loop->getChild(0)) == **prev)
+	      {
+		//   erase previous item in this concat
+		delete *prev;
+		i = nodes.erase(prev);
+	      }
+	  }
 
-    // 	}
-    //   }
+	}
+      }
   
-    //   // bury the dead
-    //   // i = nodes.begin();
-    //   // while(i!=nodes.end())
-    //   //   {
-    //   //     if((*i)->isDead())
-    //   // 	{
-    //   // 	  if(i != nodes.end()-1)
-    //   // 	    (*(i+1))->setLeftRail((*i)->getLeftRail());
-    //   // 	  if(i != nodes.begin())
-    //   // 	    (*(i-1))->setRightRail((*i)->getRightRail());
-    //   // 	  delete (*i);
-    //   // 	  i = nodes.erase(i);
-    //   // 	}
-    //   //     else
-    //   // 	i++;
-    //   //   }
-    //   return sum;
-    // }
+      // bury the dead
+      // i = nodes.begin();
+      // while(i!=nodes.end())
+      //   {
+      //     if((*i)->isDead())
+      // 	{
+      // 	  if(i != nodes.end()-1)
+      // 	    (*(i+1))->setLeftRail((*i)->getLeftRail());
+      // 	  if(i != nodes.begin())
+      // 	    (*(i-1))->setRightRail((*i)->getRightRail());
+      // 	  delete (*i);
+      // 	  i = nodes.erase(i);
+      // 	}
+      //     else
+      // 	i++;
+      //   }
+      return sum;
+    }
 
 
 
