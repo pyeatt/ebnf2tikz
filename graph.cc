@@ -690,9 +690,7 @@ int concatnode::analyzeOptLoops(int depth)
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
-	    // the remaining nodes into it IN REVERSE ORDER.  But,
-	    // if I find a rail, then I need to find the matching
-	    // rail and keep them in order.
+	    // the remaining nodes into it IN REVERSE ORDER.  
 	    j--;
 	    concatnode *c = new concatnode(*j);
 	    while(j!= child->nodes.begin())
@@ -710,13 +708,13 @@ int concatnode::analyzeOptLoops(int depth)
 	}
 	else {
 	  // If there is only one node left in the child concat,
-	  if(child->numChildren()==1) {
-	    // then swap the body and the repeat.
-	    node *tmp = loop->getChild(0);
-	    loop->nodes[0] = loop->getChild(1);
-	    loop->nodes[1] = tmp;
-	  }
-	  else {
+	  // if(child->numChildren()==1) {
+	  //   // then swap the body and the repeat.
+	  //   node *tmp = loop->getChild(0);
+	  //   loop->nodes[0] = loop->getChild(1);
+	  //   loop->nodes[1] = tmp;
+	  // }
+	  // else {
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
@@ -728,20 +726,20 @@ int concatnode::analyzeOptLoops(int depth)
 	    if(j == child->nodes.end())
 	      j--;
 	    concatnode *c = new concatnode(*j);
-	    do
+	    while(j!= child->nodes.begin())
 	      {
 		j--;
 		c->insert(*j);
 		delcount++;
 	      }
-	    while(j!= child->nodes.begin());
+	    
 	    // erase the nodes that were moved from the child concat
 	    for(int k=0;k<delcount+1;k++)
 	      j = child->nodes.erase(j);
 	    // replace the loop repeat node with the new concat
 	    loop->nodes[0] = loop->nodes[1];
 	    loop->nodes[1] = c;
-	  }
+	    //}
 	}
       }
       else {
