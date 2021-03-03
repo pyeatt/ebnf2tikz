@@ -117,8 +117,8 @@ public:
     sizes = new nodesizes();
     sizes->loadData(filename);
   }
-  static void deleteData(string filename) {
-    delete nodesizes;
+  static void deleteData() {
+    delete sizes;
   }
 
   int is_choice(){return type==CHOICE;}
@@ -540,7 +540,7 @@ public:
 class rownode:public singlenode{
 public:
   rownode(node *p):singlenode(p){
-    type=ROW;drawtoprev=0;beforeskip=sizes.colsep;p->setDrawToPrev(0);}
+    type=ROW;drawtoprev=0;beforeskip=sizes->colsep;p->setDrawToPrev(0);}
   rownode(const rownode &original):singlenode(original){
     drawtoprev=original.drawtoprev;}
   virtual rownode* clone() const {
