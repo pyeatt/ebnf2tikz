@@ -670,8 +670,8 @@ int concatnode::analyzeOptLoops(int depth)
 	  if(j-1 == child->nodes.begin()) {
 	    // then move it to the repeat part.
 	    loop->nodes[1]=(*(j-1));
-	    child = (concatnode*)loop->getChild(0);
-	    j = child->nodes.erase(j-1);
+	    //child = (concatnode*)loop->getChild(0);
+	    //j = child->nodes.erase(j-1);
 	    // if child only has one remaining node, then replace it
 	    // with its one child and delete it.
 	    // if(j == child->nodes.begin()) {
