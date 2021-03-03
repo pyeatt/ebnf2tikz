@@ -262,11 +262,11 @@ void productionnode::optimize()
     changes += tmp;
     //}while(tmp > 0);
     
-    //  do{
-    // tmp = body-> analyzeOptLoops(0);
-    // cout<<tmp<<" optional loops modified\n";
-    // changes += tmp;
-    //  }while(tmp > 0);
+     do{
+    tmp = body-> analyzeOptLoops(0);
+    cout<<tmp<<" optional loops modified\n";
+    changes += tmp;
+     }while(tmp > 0);
       
   do{
     // if a child of a choice is a choice, merge it with the parent
