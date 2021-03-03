@@ -262,11 +262,11 @@ void productionnode::optimize()
     changes += tmp;
     //}while(tmp > 0);
     
-    // //  do{
-    // tmp = body-> analyzeOptLoops(0);
-    // cout<<tmp<<" optional loops modified\n";
-    // changes += tmp;
-    // //  }while(tmp > 0);
+    //  do{
+    tmp = body-> analyzeOptLoops(0);
+    cout<<tmp<<" optional loops modified\n";
+    changes += tmp;
+    //  }while(tmp > 0);
       
   do{
     // if a child of a choice is a choice, merge it with the parent
@@ -674,11 +674,10 @@ int concatnode::analyzeOptLoops(int depth)
 	    j = child->nodes.erase(j-1);
 	    // if child only has one remaining node, then replace it
 	    // with its one child and delete it.
-	    if(j == child->nodes.begin()) {
-	      loop->setBody(child->getChild(0));
+	    // if(j == child->nodes.begin()) {
+	    //   loop->setBody(child->getChild(0));
 	      //child->forgetChild(0);
 	      // delete child;
-	    }
 	  }
 	// if(numnodes > 0) {
 	//   // If there is only one node left in the child concat,
