@@ -616,6 +616,7 @@ int concatnode::analyzeOptLoops(int depth)
   i = nodes.begin();
   while(i!=nodes.end()) {
     if((*i)->isDead()) {
+      //cout<<"found something to delete\n";
       if(i != nodes.end()-1)
 	(*(i+1))->setLeftRail((*i)->getLeftRail());
       if(i != nodes.begin())
@@ -626,8 +627,17 @@ int concatnode::analyzeOptLoops(int depth)
     else
       i++;
   }
+
+  // The previous loop may have deleted nodes. If we have only one
+  // node left, then return immediately
+  if(nodes.size() < 2)
+    return 0;
+  
   // find loops and try to make them better
   for(i = nodes.begin()+1;i!=nodes.end();i++) {
+    //cout << "EXAMINING:\n";
+    //(*i)->dump(2);
+    //cout << "---------\n";
     // An optionnode is a choicenode with exactly two children, where
     // the first child is a nullnode. We want to find optionnodes where
     // the second child is a concat containing a loop between two rails..
@@ -650,6 +660,9 @@ int concatnode::analyzeOptLoops(int depth)
 	}
       else
 	gp = NULL;
+
+
+      
       // Get the loopnode that we are interested in;
       loop = (loopnode*)(*i)->getChild(1)->getChild(1);
       // is loop body a concat?
@@ -666,13 +679,19 @@ int concatnode::analyzeOptLoops(int depth)
 	  numnodes = 0;
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
+	  // THERE WERE MATCHING NODES
+	  //cout << "THERE WERE MATCHING NODES"<<endl;
 	  // If there is only one node left in the child concat,
 	  if(j-1 == child->nodes.begin()) {
+	    // CHILD HAS ONE REMAINING NODE
+	    //cout << "CHILD HAS ONE REMAINING NODE"<<endl;
 	    // then move it to the repeat part.
 	    loop->setRepeat(*(j-1));
 	    j = child->nodes.erase(j-1);
 	  }
 	  else {
+	    // CHILD HAS MULTIPLE REMAINING NODES
+	    //cout << "CHILD HAS MULTIPLE REMAINING NODES"<<endl;
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
@@ -694,14 +713,20 @@ int concatnode::analyzeOptLoops(int depth)
 	  }
 	}
 	else {
+	  // THERE WERE NO MATCHING NODES
+	  //cout << "THERE WERE NO MATCHING NODES"<<endl;
 	  // If there is only one node left in the child concat,
 	  if(child->numChildren()==1) {
+	    // CHILD HAS ONE REMAINING NODE
+	    cout << "CHILD HAS ONE REMAINING NODE"<<endl;
 	    // then swap the body and the repeat.
 	    node *tmp = loop->getChild(0);
 	    loop->nodes[0] = loop->getChild(1);
 	    loop->nodes[1] = tmp;
 	  }
 	  else {
+	    // CHILD HAS MULTIPLE REMAINING NODES
+	    //cout << "CHILD HAS MULTIPLE REMAINING NODES"<<endl;
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
@@ -729,6 +754,8 @@ int concatnode::analyzeOptLoops(int depth)
 	  }
 	}
       }
+
+
       else {
 	// loop body is NOT a concat.
 	// if loop body matches previous item in this concat
