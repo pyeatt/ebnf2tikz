@@ -262,11 +262,11 @@ void productionnode::optimize()
     changes += tmp;
     //}while(tmp > 0);
     
-    // //  do{
-    // tmp = body-> analyzeOptLoops(0);
-    // cout<<tmp<<" optional loops modified\n";
-    // changes += tmp;
-    // //  }while(tmp > 0);
+    //  do{
+    tmp = body-> analyzeOptLoops(0);
+    cout<<tmp<<" optional loops modified\n";
+    changes += tmp;
+    //  }while(tmp > 0);
       
   do{
     // if a child of a choice is a choice, merge it with the parent
@@ -669,9 +669,24 @@ int concatnode::analyzeOptLoops(int depth)
 	  // If there is only one node left in the child concat,
 	  if(j-1 == child->nodes.begin()) {
 	    // then move it to the repeat part.
-	    loop->setRepeat(*(j-1));
+	    loop->nodes[1]=(*(j-1));
+	    child = (concatnode*)loop->getChild(0);
 	    j = child->nodes.erase(j-1);
+	    // if child only has one remaining node, then replace it
+	    // with its one child and delete it.
+	    if(j == child->nodes.begin()) {
+	      loop->setBody(child->getChild(0));
+	      //child->forgetChild(0);
+	      // delete child;
+	    }
 	  }
+	// if(numnodes > 0) {
+	//   // If there is only one node left in the child concat,
+	//   if(j-1 == child->nodes.begin()) {
+	//     // then move it to the repeat part.
+	//     loop->setRepeat(*(j-1));
+	//     j = child->nodes.erase(j-1);
+	//   }
 	  else {
 	    int delcount = 0;
 	    // If there is more than one node left in the child
@@ -801,7 +816,7 @@ int concatnode::analyzeNonOptLoops(int depth)
 	    // with its one child and delete it.
 	    if(j == child->nodes.begin()) {
 	      loop->setBody(child->getChild(0));
-	      // child->forgetChild(0);
+	      //child->forgetChild(0);
 	      // delete child;
 	    }
 	  }
