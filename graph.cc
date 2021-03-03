@@ -19,7 +19,7 @@ string nextChain();
 string nextFit();
 string stripSpecial(string s);
 
-nodesizes node::sizes;
+nodesizes* node::sizes;
 node* node::lastPlaced;
 
 string stripSpecial(string s)
@@ -113,7 +113,7 @@ node::node(){
   type = UNKNOWN;
   myWidth = 0;
   myHeight = 0;
-  beforeskip = sizes.colsep;
+  beforeskip = sizes->colsep;
   drawtoprev = 1;
   dead = 0;
 };
@@ -301,7 +301,7 @@ nontermnode::nontermnode(string s):node()
   str = s;
   style="nonterminal";
   format="railname";
-  sizes.getSize(nodename,myWidth,myHeight);
+  sizes->getSize(nodename,myWidth,myHeight);
   ea = nodename+".east";
   wa = nodename+".west";
   type=NONTERM;
@@ -344,8 +344,8 @@ nullnode::nullnode(string s):nontermnode(s)
   nodename = nextCoord();
   myWidth=0;
   //myHeight=
-  myHeight=1.5*sizes.rowsep;
-  //myHeight=0.5*sizes.minsize;
+  myHeight=1.5*sizes->rowsep;
+  //myHeight=0.5*sizes->minsize;
   ea = nodename;
   wa = nodename;
 }
