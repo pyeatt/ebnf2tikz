@@ -115,6 +115,7 @@ node::node(){
   myHeight = 0;
   beforeskip = sizes.colsep;
   drawtoprev = 1;
+  dead = 0;
 };
 node::~node(){};
 
@@ -163,9 +164,11 @@ int singlenode::liftConcats(int depth)
   int count = body->liftConcats(depth+1);
   if(body->is_concat() && body->numChildren() == 1)
     {
-      node *i = body->getChild(0);
+      cout << "SINGLNODE LIFTING CONCAT\n";
+      node *child = body->getChild(0);
+      body->forgetChild(0);
       delete body;
-      body = i;
+      body = child;
       count++;
     }
   return count;
@@ -192,7 +195,9 @@ int multinode::liftConcats(int depth)
     {
       if((*i)->is_concat() && (*i)->numChildren() == 1)
 	{
+	  cout << "MULTINODE LIFTING CONCAT\n";
 	  node *child = (*i)->getChild(0);
+	  (*i)->forgetChild(0);
 	  delete *i;
 	  *i = child;
 	  count++;
@@ -389,10 +394,12 @@ int choicenode::mergeChoices(int depth)
 	    { // don't copy leading null nodes
 	      i= nodes.insert(i,inodes->begin()+1,inodes->end());
 	      delete inodes->front();
+	      inodes->erase(inodes->begin());
 	    }
 	  else
 	    i= nodes.insert(i,inodes->begin(),inodes->end());
 	  // delete the node that used to be at i
+	  inodes->clear();
 	  delete cp;
 	  for(auto j = nodes.begin(); j != nodes.end(); j++)
 	    {
@@ -480,7 +487,8 @@ int concatnode::mergeConcats(int depth){
 	  currnodes->insert(currnodes->end(),inodes->begin(),inodes->end());
 	  // erase i from our nodes and free it
 	  //	  (*curr)->setRightRail((*i)->getRightRail());
-	  i = nodes.erase(i); // make sure to set i to its replacement 
+	  i = nodes.erase(i); // make sure to set i to its replacement
+	  ip->nodes.clear();
 	  delete ip;
 	  sum++;
 	}
@@ -513,6 +521,7 @@ int concatnode::mergeConcats(int depth){
 	    // used to be, and update i to reference first item inserted
 	    i = nodes.insert(i,inodes->begin(),inodes->end());
 	    // delete the node that used to be at i beacuse we don't need it
+	    ip->nodes.clear();
 	    delete ip;
 	    sum++;
 	  }

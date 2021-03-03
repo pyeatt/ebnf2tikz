@@ -46,7 +46,9 @@ private:
 public:
   float rowsep,colsep,minsize;
   nodesizes(){};
-
+  ~nodesizes() {
+    sizemap.clear();
+  }
   void loadData(string filename) {
     string nodename;
     char ch;

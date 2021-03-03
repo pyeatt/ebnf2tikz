@@ -42,7 +42,7 @@ protected:
   
   static node *lastPlaced; // the last thing that was drawn
   string ea,wa,nodename;   // east and west attachment points, and node name
-  static nodesizes sizes;
+  static nodesizes* sizes;
   float myWidth,myHeight;
   node* parent;
   node* previous;
@@ -113,7 +113,13 @@ public:
   // call this static member function to load the row and colum widths
   // and the node sizes before calling the place(...) function on the
   // top level (graph) node.
-  static void loadData(string filename) {sizes.loadData(filename);}
+  static void loadData(string filename) {
+    sizes = new nodesizes();
+    sizes->loadData(filename);
+  }
+  static void deleteData(string filename) {
+    delete nodesizes;
+  }
 
   int is_choice(){return type==CHOICE;}
   int is_terminal(){return type==TERMINAL;}
@@ -329,7 +335,8 @@ public:
     nodes.erase(i);
   }
   virtual ~multinode(){
-    //for(auto i = nodes.begin();i!=nodes.end();i++)delete (*i);}
+    for(auto i = nodes.begin();i!=nodes.end();i++)
+      delete (*i);
   }
   virtual void insert(node *node){
     nodes.push_back(node);
