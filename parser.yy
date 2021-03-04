@@ -20,9 +20,6 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
-
-
 %require "3.7"
 %language "c++"
 %define api.token.raw
@@ -148,12 +145,12 @@ grammar : productions {
      g->setNext();
      g->mergeRails();
 
-     //g->dump();
-     
      g->setParent();
      g->setPrevious();
      g->setNext();
-     
+
+     g->dump();
+
      g->place(drv.outs());
 
      delete g;

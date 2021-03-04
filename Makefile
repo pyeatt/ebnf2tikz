@@ -6,7 +6,7 @@ CFLAGS=-I. -c -Wall -g
 CC=g++
 
 ebnf2tikz: $(OBJS)
-	g++ -g -I. -o ebnf2tikz $(OBJS)
+	$(CC) -g -I. -o ebnf2tikz $(OBJS)
 
 parser.cc: parser.yy
 	bison -d --locations -o parser.cc parser.yy 
@@ -21,14 +21,10 @@ lexer.cc: lexer.ll parser.cc parser.hh
 	$(CC) $(DEFINES) $(CFLAGS) $(INCLUDES) $<
 
 clean:
-	rm -f lexer.cc parser.hh parser.cc ebnf2tikz location.hh $(OBJS) *~ .depend bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex
+	rm -f lexer.cc parser.hh parser.cc ebnf2tikz location.hh $(OBJS) *~ bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex
 
 realclean: clean
 	rm -f .depend
-
-#linecount:
-#	wc -l symtab.c  utils.c branch.c  dataproc.c  lav.c  ldst.c lexer.l parser.y utils.h
-
 
 depend: parser.cc lexer.cc parser.hh
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) $(DEPENDFLAGS) $(CSRC) > .depend
