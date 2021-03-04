@@ -176,6 +176,47 @@ void productionnode::dump(int depth) const
   body->dump(1);
 }
 
+
+void productionnode::optimize()
+{
+  int changes=0,tmp;
+  //  do {
+    changes = 0;
+    tmp = body-> analyzeNonOptLoops(0);
+    cout <<"-----------------\n";
+    cout << latexwrite("emph",name) <<endl;
+    cout<<tmp<<" non-optional loops modified\n";
+    changes += tmp;
+    //}while(tmp > 0);
+
+    
+    //  do{
+    // tmp = body-> analyzeOptLoops(0);
+    // cout<<tmp<<" optional loops modified\n";
+    // changes += tmp;
+    //  }while(tmp > 0);
+      
+  do{
+    // if a child of a choice is a choice, merge it with the parent
+    tmp = body->mergeChoices(0);
+    changes += tmp;
+    cout<<tmp<<" choices merged\n";
+  }while(tmp > 0);
+      
+  do{
+    // combine consecutive concants
+    tmp = body->mergeConcats(0);
+    changes += tmp;
+    cout<<tmp<<" concats merged\n";
+    // if a child of a concat is a concat, lift the child
+    tmp += body->liftConcats(0);
+    changes += tmp;
+    cout<<tmp<<" concats lifted\n";	
+  }while(tmp > 0);
+  
+cout <<"-----------------\n";
+};
+
 // ------------------------------------------------------------------------
 
 nontermnode::nontermnode(string s):node()
