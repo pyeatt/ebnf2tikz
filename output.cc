@@ -1,12 +1,6 @@
 
 #include <graph.hh>
 #include <sstream>
-#include <cstdarg>
-#include <math.h>
-#include <string>
-#include <vector>
-#include <iostream>
-#include <cstring>
 #include <nodesize.hh>
 
 using namespace std;
@@ -176,7 +170,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       outs<<"\\label{No Caption.}\n";
       outs<<"\\end{figure}\n";
     }
-  lastPlaced=this;
+  //  lastPlaced=this;
   return c;
 }
 
@@ -194,7 +188,7 @@ coordinate nontermnode::place(ofstream &outs,int draw, int drawrails,
     }
   c.x = start.x+myWidth;
   c.y = start.y;
-  lastPlaced=this;
+  //  lastPlaced=this;
   return c;
 }
 
@@ -206,7 +200,7 @@ coordinate nullnode::place(ofstream &outs,int draw, int drawrails,
   coordinate c;
   if(draw)
     outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
-  lastPlaced=this;
+  //  lastPlaced=this;
   return start;
 }
 
@@ -255,7 +249,7 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
   ea = nodes[0]->east();
   wa = nodes[0]->west();
 
-  lastPlaced=this;
+  //  lastPlaced=this;
   return lastpoint;
 }
 

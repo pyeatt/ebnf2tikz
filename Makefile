@@ -1,5 +1,5 @@
 
-OBJS=lexer.o parser.o driver.o graph.o optimize.o output.o main.o
+OBJS=lexer.o parser.o driver.o graph.o optimize.o subsume.o output.o main.o
 CSRC= $(patsubst %.o,%.cc,$(OBJS))
 DEPENDFLAGS=-M
 CFLAGS=-I. -c -Wall -g 

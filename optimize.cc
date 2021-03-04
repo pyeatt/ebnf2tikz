@@ -1,12 +1,5 @@
 // Larry Pyeatt
 #include <graph.hh>
-#include <cstdarg>
-#include <math.h>
-#include <string>
-#include <vector>
-#include <iostream>
-#include <cstring>
-#include <sstream>
 #include <nodesize.hh>
 #include <algorithm>    // std::find
 using namespace std;
