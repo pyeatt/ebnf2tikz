@@ -120,6 +120,38 @@ int multinode::liftConcats(int depth)
   return count;
 }
 
+int multinode::mergeConcats(int depth)
+{
+  int sum=0;
+  for(auto i = nodes.begin();i!=nodes.end();i++)
+    sum += (*i)->mergeConcats(depth+1);
+  return sum;
+}    
+
+int multinode::mergeChoices(int depth)
+{
+  int sum=0;
+  for(auto i = nodes.begin();i!=nodes.end();i++)
+    sum += (*i)->mergeChoices(depth+1);
+  return sum;
+}
+
+int multinode::analyzeOptLoops(int depth)
+{
+  int sum=0;
+  for(auto i = nodes.begin();i!=nodes.end();i++)
+    sum += (*i)->analyzeOptLoops(depth+1);
+  return sum;
+}
+
+int multinode::analyzeNonOptLoops(int depth)
+{
+  int sum=0;
+  for(auto i = nodes.begin();i!=nodes.end();i++)
+      sum += (*i)->analyzeNonOptLoops(depth+1);
+  return sum;
+}
+
 // ------------------------------------------------------------------------
 
 void productionnode::optimize()

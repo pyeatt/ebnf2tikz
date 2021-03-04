@@ -32,10 +32,10 @@ using namespace std;
 // When the parser creates a choicenode or a loopnode,, it also
 // creates the railnodes and inserts them into the current concat.
 // During optimization, adjacent rails can be merged if they are
-// compatible. During placement, the choicenode or loopnode will place
-// all of its children, then connect them to the rails.  We can merge
-// consecutive left choice rails, Consecutive right choice rails, and
-// right choice rails followed by right loop rails.
+// compatible.  We can merge consecutive left choice rails,
+// Consecutive right choice rails, and right choice rails followed by
+// right loop rails if the first choice is nullnode and the loop
+// repeat is nullnode.
 
 string latexwrite(string fontspec,string s);
 string nextCoord();
@@ -55,11 +55,10 @@ protected:
   typedef enum {GRAMMAR, CHOICE, TERMINAL, NONTERM, CONCAT,
     NULLNODE, LOOP, NEWLINE, PRODUCTION, RAIL, ROW, UNKNOWN} nodetype;
 
-  nodetype type;
-  
-  //static node *lastPlaced; // the last thing that was drawn
-  string ea,wa,nodename;   // east and west attachment points, and node name
   static nodesizes* sizes;
+  nodetype type;
+  string nodename;
+  string ea,wa;   // east and west attachment points
   float myWidth,myHeight;
   node* parent;
   node* previous;
@@ -82,27 +81,9 @@ protected:
 
 public:
   node();
-  node(const node &original){
-    type = original.type;
-    //    nodename = original.nodename;
-    nodename = nextNode();;
-    ea   = nodename+".east";
-    wa   = nodename+".west";
-    myWidth = original.myWidth;
-    myHeight = original.myHeight;
-    parent = NULL;
-    previous = NULL;
-    next = NULL;
-    leftrail = NULL;
-    rightrail = NULL;
-    beforeskip = original.beforeskip;
-    drawtoprev = original.drawtoprev;
-    dead = 0;
-    //parent = original.parent;
-  }
+  node(const node &original);
   virtual node* clone() const = 0;
   virtual ~node();
-
   virtual void setParent(node* p){parent = p;}
   virtual void setPrevious(node* p){previous = p;}
   virtual void setNext(node* p){next = p;}
@@ -110,24 +91,18 @@ public:
   virtual void setRightRail(railnode* p){rightrail = p;}
   railnode* getLeftRail(){return leftrail;}
   railnode* getRightRail(){return rightrail;}
-
-
   virtual void drawToLeftRail(ofstream &outs, railnode* p,vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p,vraildir join);
-
   void makeDead(){dead = 1;}
   int isDead(){return dead;}
-
   void setBeforeSkip(float s){beforeskip=s;}
   void setDrawToPrev(int d){drawtoprev=d;}
   float getBeforeSkip(){return beforeskip;}
   int getDrawToPrev(){return drawtoprev;}
-
   node* getParent(){return parent;}
   node* getNext(){return next;}
   node* getPrevious(){return previous;}
-  
-  // call this static member function to load the row and colum widths
+    // call this static member function to load the row and colum widths
   // and the node sizes before calling the place(...) function on the
   // top level (graph) node.
   static void loadData(string filename) {
@@ -137,7 +112,6 @@ public:
   static void deleteData() {
     delete sizes;
   }
-
   int is_choice(){return type==CHOICE;}
   int is_terminal(){return type==TERMINAL;}
   int is_nonterm(){return type==NONTERM;}
@@ -148,13 +122,10 @@ public:
   int is_production(){return type==PRODUCTION;}
   int is_newline(){return type==NEWLINE;}
   int is_rail(){return type==RAIL;}
-
   string east(){return ea;}
   string west(){return wa;}
-  
   virtual int rail_left(){return 0;}
   virtual int rail_right(){return 0;}
-
   // start at start, lay yourself out, and return the coordinate that
   // you end at.  The "draw" argument tells whether or not to actually
   // emit tikz code.  The compiler will call this method twice for
@@ -208,54 +179,30 @@ protected:
   node* body;
 public:
   singlenode(node *p);
-  singlenode(const singlenode &original):node(original)
-  {
-    body = original.body->clone();
-    ea = body->east();
-    wa = body->west();
-  }
-  virtual singlenode* clone() const {
-    return new singlenode(*this);
-  }
-  virtual void forgetChild(int n){
-    if(n==0)
-      body=NULL;
-    else
-      cout<<"singlenode forgetChild bad index\n";
-  }
-
+  singlenode(const singlenode &original);
+  virtual singlenode* clone() const;
+  virtual void forgetChild(int n);
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
-  virtual void mergeRails(){
-    body->mergeRails();
-  }
-
+  virtual void mergeRails(){body->mergeRails();}
   virtual ~singlenode(){if(body != NULL) delete body;}
-  virtual int mergeConcats(int depth){return body->mergeConcats(depth+1);}
+  virtual int mergeConcats(int depth){
+    return body->mergeConcats(depth+1);}
   virtual int liftConcats(int depth);
-  virtual int mergeChoices(int depth){return body->mergeChoices(depth+1);}
-  virtual int analyzeOptLoops(int depth){return body->analyzeOptLoops(depth+1);}
-  virtual int analyzeNonOptLoops(int depth){return body->analyzeNonOptLoops(depth+1);}
-
-  //  virtual int liftOptionChoice(int depth);
+  virtual int mergeChoices(int depth){
+    return body->mergeChoices(depth+1);}
+  virtual int analyzeOptLoops(int depth){
+    return body->analyzeOptLoops(depth+1);}
+  virtual int analyzeNonOptLoops(int depth){
+    return body->analyzeNonOptLoops(depth+1);}
   virtual int numChildren(){return 1;}
   virtual node* getChild(int n){return body;}
-  virtual int operator ==(node &r){
-    if(same_type(r))
-      return *body == *(r.getChild(0));
-    return 0;
-  }
+  virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
   virtual node* subsume(string name, node *replacement);
-  virtual void setParent(node* p){
-    parent = p;
-    body->setParent(this);
-  }
+  virtual void setParent(node* p);
   virtual void setPrevious(node *n){previous = n;body->setPrevious(n);}
   virtual void setNext(node *n) {next = n;body->setNext(n);}
-
-
-
 };
 
 // ------------------------------------------------------------------------
@@ -269,15 +216,9 @@ protected:
                           // of bottom child.  Otherwise it is even with
                           // bottom of bottom child.
 public:
-  railnode():node(){type=RAIL;}//beforeskip=0;}
-  railnode(vrailside s,vraildir d):node(){
-    type=RAIL;side = s; direction = d;}
-  railnode(const railnode &original):node(original){
-    side=original.side;
-    direction=original.direction;
-    top = original.top;
-    bottom = original.bottom;
-  }
+  railnode();
+  railnode(vrailside s,vraildir d);
+  railnode(const railnode &original);
   virtual railnode* clone() const {return new railnode(*this);}
   virtual ~railnode(){};
   virtual void setBottom(coordinate b){bottom = b;}
@@ -285,18 +226,11 @@ public:
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  virtual int operator ==(node &r){
-    if(!same_type(r))
-      return 0;
-    railnode &rt = dynamic_cast<railnode&>(r);
-    return (side == rt.side && direction == rt.direction);
-  }
+  virtual int operator ==(node &r);
   virtual int operator !=(node &r){return !(*this == r);}
   virtual vraildir getRailDir(){return direction;}
   virtual void setRailDir(vraildir d){direction = d;}
-
 };
-
 
 // ------------------------------------------------------------------------
 // nodes with multiple children
@@ -307,87 +241,30 @@ protected:
 public:
   multinode(node *p);
   multinode(const multinode &original);
-  virtual multinode* clone() const {
-    multinode*m=new multinode(*this);
-    return m;
-  }
-  virtual void forgetChild(int n){
-    vector<node*>::iterator i=nodes.begin()+n;
-    nodes.erase(i);
-  }
-  virtual ~multinode(){
-    for(auto i = nodes.begin();i!=nodes.end();i++)
-      delete (*i);
-  }
+  virtual multinode* clone() const;
+  virtual void forgetChild(int n);
+  virtual ~multinode();
   virtual void mergeRails();
-  virtual void insert(node *node){
-    nodes.push_back(node);
-    ea = node->east();
-  }
-  virtual void insertFirst(node *node){
-    node->setPrevious(nodes.front()->getPrevious());
-    node->setNext(nodes.front());
-    node->setParent(this);
-    nodes.front()->setPrevious(node);
-    nodes.insert(nodes.begin(),node);
-    wa = node->west();
-  }
+  virtual void insert(node *node);
+  virtual void insertFirst(node *node);
   virtual int numChildren(){return nodes.size();}
   virtual node* getChild(int n){return nodes[n];}
-
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
-  
-  virtual int mergeConcats(int depth){
-    int sum=0;
-    for(auto i = nodes.begin();i!=nodes.end();i++)
-      sum += (*i)->mergeConcats(depth+1);
-    return sum;
-  }    
-  virtual int liftConcats(int depth);
-  virtual int mergeChoices(int depth){
-    int sum=0;
-    for(auto i = nodes.begin();i!=nodes.end();i++)
-      sum += (*i)->mergeChoices(depth+1);
-    return sum;
-  }
-  virtual int analyzeOptLoops(int depth){
-    int sum=0;
-    for(auto i = nodes.begin();i!=nodes.end();i++)
-      sum += (*i)->analyzeOptLoops(depth+1);
-    return sum;
-  }
-  virtual int analyzeNonOptLoops(int depth){
-    int sum=0;
-    for(auto i = nodes.begin();i!=nodes.end();i++)
-      sum += (*i)->analyzeNonOptLoops(depth+1);
-    return sum;
-  }
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   //  virtual int liftOptionChoice(int depth);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
   virtual node* subsume(string name, node *replacement);
-  virtual void setParent(node* p){
-    node::setParent(p);
-    for(auto i=nodes.begin(); i!=nodes.end(); i++)
-      (*i)->setParent(this);
-  }
-  virtual void setPrevious(node* p){
-    node::setPrevious(p);
-    for(auto i=nodes.begin(); i!=nodes.end(); i++) {
-      (*i)->setDrawToPrev(0);
-      (*i)->setPrevious(NULL);
-    }
-  }
-  virtual void setNext(node* p){
-    node::setNext(p);
-    for(auto i=nodes.begin(); i!=nodes.end(); i++) {
-      (*i)->setDrawToPrev(0);
-      (*i)->setNext(NULL);
-    }
-  }
+  virtual void setParent(node* p);
+  virtual void setPrevious(node* p);
+  virtual void setNext(node* p);
+  virtual int liftConcats(int depth);
+  virtual int mergeConcats(int depth);
+  virtual int mergeChoices(int depth);
+  virtual int analyzeOptLoops(int depth);
+  virtual int analyzeNonOptLoops(int depth);
 };
 
 // ------------------------------------------------------------------------
@@ -399,18 +276,10 @@ protected:
   string str;
 public:
   nontermnode(string s);
-  nontermnode(const nontermnode &original):node(original)
-  {
-    style = original.style;
-    format = original.format;
-    str = original.str;
-  }
-  virtual nontermnode* clone() const {
-    return new nontermnode(*this);
-  }
+  nontermnode(const nontermnode &original);
+  virtual nontermnode* clone() const;
   virtual ~nontermnode(){}
   virtual void forgetChild(int n){}
-
   virtual void dump(int depth) const;
   virtual string texName() {return latexwrite(format,str);}
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
@@ -419,50 +288,36 @@ public:
   virtual int mergeChoices(int depth){return 0;}
   virtual int liftConcats(int depth){return 0;}
   virtual node* getChild(int n){return NULL;}
-  //  virtual int liftOptionChoice(int depth){return 0;}
   virtual int analyzeOptLoops(int depth){return 0;}
   virtual int analyzeNonOptLoops(int depth){return 0;}
-
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
-
-  virtual int operator ==(node &r) {
-    if(same_type(r)) {
-	nontermnode &n=(nontermnode&) r ;
-	return (style == n.style) && (format == n.format) && (str == n.str);
-    }
-    return 0;
-  }
+  virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
   virtual node* subsume(string name, node *replacement);
 };  
-
 
 // ------------------------------------------------------------------------
 
 class termnode:public nontermnode{
 public:
   termnode(string s);
-  termnode(const termnode &original):nontermnode(original){}
-  virtual termnode* clone() const {
-    return new termnode(*this);
-  }
+  termnode(const termnode &original);
+  virtual termnode* clone() const;
   virtual ~termnode(){}
 };
 
 // ------------------------------------------------------------------------
 // this node type provides a placeholder to indicate that I need to
 // draw a line, but there is nothing really on it.  It is a node with
-// zeo width and height. When drawn, in just emits a coordinate.  Its
+// zero width and height. When drawn, in just emits a coordinate.  Its
 // north(), south(), east() and west() just refer to that coordinate.
 // This simplifies the code in choicenode.place() and loopnode.place().
 class nullnode:public nontermnode{
 public:
   nullnode(string s);
-  nullnode(const nullnode &original):nontermnode(original){}
-  virtual nullnode* clone() const {
-    return new nullnode(*this);
-  }
+  nullnode(const nullnode &original);
+  virtual nullnode* clone() const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
 };
@@ -470,14 +325,10 @@ public:
 // ------------------------------------------------------------------------
 class newlinenode:public railnode{
   float lineheight;
-  
 public:
   newlinenode();
-  newlinenode(const newlinenode &original):railnode(original){drawtoprev=0;
-    lineheight=original.lineheight;}
-  virtual newlinenode* clone() const {
-    return new newlinenode(*this);
-  }
+  newlinenode(const newlinenode &original);
+  virtual newlinenode* clone() const;
   virtual ~newlinenode(){}
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
@@ -488,44 +339,27 @@ public:
 };
 
 // ------------------------------------------------------------------------
-// A rownode contains expressions that are drawn across the page.
+// A rownode contains expressions that are drawn across the page.  The
+// child is usually a concatnode.
 class rownode:public singlenode{
 public:
-  rownode(node *p):singlenode(p){
-    type=ROW;drawtoprev=0;beforeskip=sizes->colsep;p->setDrawToPrev(0);}
-  rownode(const rownode &original):singlenode(original){
-    drawtoprev=original.drawtoprev;}
-  virtual rownode* clone() const {
-    return new rownode(*this);
-  }
+  rownode(node *p);
+  rownode(const rownode &original);
+  virtual rownode* clone() const;
   virtual ~rownode(){}
-
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  
-  // virtual void setPrevious(node *p) {
-  //   body->setPrevious(getPrevious());
-  // }
-  // virtual void setNext(node *p) {
-  //   body->setNext(getNext());
-  // }
-
 };
 
 // ------------------------------------------------------------------------
 
 class choicenode:public multinode{
 public:
-  choicenode(node *p):multinode(p){type=CHOICE;p->setDrawToPrev(0);drawtoprev=0;}
-  choicenode(const choicenode &original):multinode(original){}
-  virtual choicenode* clone() const {
-    return new choicenode(*this);
-  }
-  virtual void insert(node *node){
-    nodes.push_back(node);
-    node->setDrawToPrev(0);
-  }
+  choicenode(node *p);
+  choicenode(const choicenode &original);
+  virtual choicenode* clone() const;
+  virtual void insert(node *node);
   virtual ~choicenode(){}
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
@@ -537,37 +371,15 @@ public:
 
 class loopnode:public multinode{
 public:
-  loopnode(node *node):multinode(node){
-    type=LOOP;
-    // initialize repeat part to nullnode
-    nodes.push_back(new nullnode(nextNode()));
-  }
-  // should make deep copy of body
-  loopnode(const loopnode &original):multinode(original) {}
-  virtual loopnode* clone() const {
-    return new loopnode(*this);
-  }
+  loopnode(node *node);
+  loopnode(const loopnode &original);
+  loopnode* clone() const;
   virtual ~loopnode(){}
-  
-  //  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
-  // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
-
-  node* getRepea(){
-    return nodes[0];
-  }
-  void setRepeat(node *r){
-    if(nodes[1] != NULL)
-      delete nodes[1];
-    nodes[1]=r;
-  } 
-  node* getBody(){
-    return nodes[0];
-  }
-  void setBody(node *r){
-    if(nodes[0] != NULL)
-      delete nodes[0];
-    nodes[0]=r;
-  }
+  virtual void dump(int depth) const;
+  node* getRepeat();
+  void setRepeat(node *r);
+  node* getBody();
+  void setBody(node *r);
 };
 
 // ------------------------------------------------------------------------
@@ -579,23 +391,12 @@ private:
 			   vector<node*> &childnodes,
 			   vector<node*>::iterator &wherec);
 public:
-  concatnode(node *p):multinode(p){type=CONCAT;drawtoprev=0;}//beforeskip=0;}
-  concatnode(const concatnode &original):multinode(original){
-    ea=nodes.back()->east();}
-  virtual concatnode* clone() const {
-    return new concatnode(*this);
-  }
+  concatnode(node *p);
+  concatnode(const concatnode &original);
+  virtual concatnode* clone() const;
   virtual ~concatnode(){}
-  
   virtual void dump(int depth) const;
-  virtual void insert(node* p){
-    multinode::insert(p);
-    //drawtoprev = 1;
-    if(p->is_null() || p->is_nonterm() || p->is_terminal())
-      p->setDrawToPrev(1);
-    else
-      p->setDrawToPrev(0);
-  }
+  virtual void insert(node* p);
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   virtual int rail_left(){return nodes.front()->rail_left();};
@@ -603,27 +404,11 @@ public:
   virtual int mergeConcats(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
-
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
   virtual void mergeRails();
-
-  virtual void setPrevious(node* p){
-    node::setPrevious(p);
-    for(auto i=nodes.begin()+1; i!=nodes.end(); i++)
-      {
-	(*i)->setPrevious(*(i-1));
-	//	(*i)->setDrawToPrev(1);
-      }
-    nodes.front()->setPrevious(getPrevious());
-    //   nodes.front()->setDrawToPrev(1);
-  }
-  virtual void setNext(node* p){
-    node::setNext(p);
-    for(auto i=nodes.begin(); i!=nodes.end()-1; i++)
-      (*i)->setNext(*(i+1));
-    nodes.back()->setNext(getNext());
-  }
+  virtual void setPrevious(node* p);
+  virtual void setNext(node* p);
 };
 
 // ------------------------------------------------------------------------
@@ -634,14 +419,8 @@ private:
   int subsume_spec;
 public:
   productionnode(int subsumespec,string s,node *p);
-  productionnode(const productionnode &original):singlenode(original)
-  {
-    name = original.name;
-    subsume_spec = original.subsume_spec;
-  }
-  virtual productionnode* clone() const {
-    return new productionnode(*this);
-  }
+  productionnode(const productionnode &original);
+  virtual productionnode* clone() const;
   virtual ~productionnode(){}
   virtual int getSubsume(){return subsume_spec;}
   virtual string getName(){return name;}
@@ -650,9 +429,6 @@ public:
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  // void setParent(node *n){parent = n;body->setParent(this);}
-  // void setNext(){body->setNext(NULL);}
-  // void setPrevious(){body->setPrevious(NULL);}
 };
 
 // ------------------------------------------------------------------------
@@ -662,39 +438,17 @@ private:
   vector<productionnode*> productions;
 public:
   grammar(node *p){productions.push_back((productionnode*)p);}
-  ~grammar() {
-    for(auto i=productions.begin();i!=productions.end();i++)
-      delete (*i);
-  }
-  void insert(productionnode *node) {
-    productions.push_back(node);
-  }
-  void dump() const {
-    for(auto i=productions.begin();i!=productions.end();i++)
-      (*i)->dump(0);
-  }
+  ~grammar();
+  void insert(productionnode *node) {productions.push_back(node);}
+  void dump() const;
   void optimize();
   void subsume();
   void place(ofstream &outs);
   void mergeRails();
-  void setParent() {
-    for(auto i=productions.begin();i!=productions.end();i++)
-      (*i)->setParent(NULL);
-  }
-  void setPrevious() {
-    for(auto i=productions.begin();i!=productions.end();i++)
-      (*i)->setPrevious(NULL);
-  }
-  void setNext() {
-    for(auto i=productions.begin();i!=productions.end();i++)
-      (*i)->setNext(NULL);
-  }
-  
+  void setParent();
+  void setPrevious();
+  void setNext();
 };
-
-
-
-
 
 #endif
 

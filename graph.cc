@@ -91,22 +91,39 @@ string nextFit(){
 
 // assign node names as we create the nodes
 node::node(){
-  //lastPlaced=NULL;
+  type = UNKNOWN;
   nodename=nextNode();
   ea=nodename+".east";
   wa=nodename+".west";
+  myWidth = 0;
+  myHeight = 0;
   parent = NULL;
   previous = NULL;
   next = NULL;
-  leftrail = NULL;
-  rightrail = NULL;
-  type = UNKNOWN;
-  myWidth = 0;
-  myHeight = 0;
   beforeskip = sizes->colsep;
   drawtoprev = 1;
+  leftrail = NULL;
+  rightrail = NULL;
   dead = 0;
 };
+
+node::node(const node &original){
+  type = original.type;
+  nodename = nextNode();;
+  ea   = nodename+".east";
+  wa   = nodename+".west";
+  myWidth = original.myWidth;
+  myHeight = original.myHeight;
+  parent = NULL;
+  previous = NULL;
+  next = NULL;
+  beforeskip = original.beforeskip;
+  drawtoprev = original.drawtoprev;
+  leftrail = NULL;
+  rightrail = NULL;
+  dead = 0;
+}
+
 node::~node(){};
 
 
@@ -117,6 +134,39 @@ singlenode::singlenode(node *p):node()
   body=p;
   ea=p->east(); 
   wa=p->west();
+}
+
+singlenode::singlenode(const singlenode &original):node(original)
+{
+  body = original.body->clone();
+  ea = body->east();
+  wa = body->west();
+}
+
+singlenode* singlenode::clone() const
+{
+  return new singlenode(*this);
+}
+
+void singlenode::forgetChild(int n)
+{
+  if(n==0)
+    body=NULL;
+  else
+    cout<<"singlenode forgetChild bad index\n";
+}
+
+int singlenode::operator ==(node &r)
+{
+  if(same_type(r))
+    return *body == *(r.getChild(0));
+  return 0;
+}
+
+void singlenode::setParent(node* p)
+{
+  parent = p;
+  body->setParent(this);
 }
 
 // ------------------------------------------------------------------------
@@ -140,7 +190,23 @@ multinode::multinode(const multinode &original):node(original)
     wa = nodes.front()->west();
   }
 
+multinode::~multinode()
+{
+  for(auto i = nodes.begin();i!=nodes.end();i++)
+    delete (*i);
+}
 
+multinode* multinode::clone() const
+{
+  multinode*m=new multinode(*this);
+  return m;
+}
+
+void multinode::forgetChild(int n)
+{
+  vector<node*>::iterator i=nodes.begin()+n;
+  nodes.erase(i);
+}
 
 multinode::multinode(node *p):node(){
   nodes.push_back(p);
@@ -149,6 +215,46 @@ multinode::multinode(node *p):node(){
   drawtoprev=0;
 };
 
+void multinode::insert(node *node)
+{
+  nodes.push_back(node);
+  ea = node->east();
+}
+
+void multinode::insertFirst(node *node)
+{
+  node->setPrevious(nodes.front()->getPrevious());
+  node->setNext(nodes.front());
+  node->setParent(this);
+  nodes.front()->setPrevious(node);
+  nodes.insert(nodes.begin(),node);
+  wa = node->west();
+}
+
+void multinode::setParent(node* p)
+{
+  node::setParent(p);
+  for(auto i=nodes.begin(); i!=nodes.end(); i++)
+    (*i)->setParent(this);
+}
+
+void multinode::setPrevious(node* p)
+{
+  node::setPrevious(p);
+  for(auto i=nodes.begin(); i!=nodes.end(); i++) {
+    (*i)->setDrawToPrev(0);
+    (*i)->setPrevious(NULL);
+  }
+}
+
+void multinode::setNext(node* p)
+{
+  node::setNext(p);
+  for(auto i=nodes.begin(); i!=nodes.end(); i++) {
+    (*i)->setDrawToPrev(0);
+    (*i)->setNext(NULL);
+  }
+}
 
 int multinode::operator == (node &r)
 {
@@ -173,6 +279,24 @@ int multinode::operator == (node &r)
 
 // ------------------------------------------------------------------------
 
+rownode::rownode(node *p):singlenode(p)
+{
+  type=ROW;
+  drawtoprev=0;
+  beforeskip=sizes->colsep;
+  p->setDrawToPrev(0);
+}
+
+rownode::rownode(const rownode &original):singlenode(original)
+{
+  drawtoprev=original.drawtoprev;
+}
+
+rownode* rownode::clone() const
+{
+  return new rownode(*this);
+}
+
 void rownode::dump(int depth) const
 {
   int i;
@@ -185,10 +309,23 @@ void rownode::dump(int depth) const
 
 // ------------------------------------------------------------------------
 
-productionnode::productionnode(int subsumptionspec,string s,node *p):singlenode(p){
+productionnode::productionnode(int subsumptionspec,string s,node *p):
+  singlenode(p){
   name = s;
   subsume_spec = subsumptionspec;
   type=PRODUCTION;
+}
+
+productionnode::productionnode(const productionnode &original):
+  singlenode(original)
+{
+  name = original.name;
+  subsume_spec = original.subsume_spec;
+}
+
+productionnode* productionnode::clone() const
+{
+  return new productionnode(*this);
 }
 
 void productionnode::dump(int depth) const
@@ -198,6 +335,57 @@ void productionnode::dump(int depth) const
   body->dump(1);
 }
 
+// ------------------------------------------------------------------------
+loopnode::loopnode(node *node):multinode(node)
+{
+  type=LOOP;
+  // initialize repeat part to nullnode
+  nodes.push_back(new nullnode(nextNode()));
+}
+
+// should make deep copy of body
+loopnode::loopnode(const loopnode &original):multinode(original)
+{
+}
+
+loopnode* loopnode::clone() const
+{
+  return new loopnode(*this);
+}
+
+node* loopnode::getRepeat()
+{
+  return nodes[0];
+}
+
+void loopnode::setRepeat(node *r)
+{
+  if(nodes[1] != NULL)
+    delete nodes[1];
+  nodes[1]=r;
+} 
+
+node* loopnode::getBody()
+{
+  return nodes[0];
+}
+
+void loopnode::dump(int depth) const
+{ int i;
+  for(i=0;i<depth;i++)
+    cout<<"  ";
+  cout << "loop";
+  node::dump(depth);
+  for(auto j=nodes.begin();j!=nodes.end();j++)
+    (*j)->dump(depth+1);
+}
+
+  void loopnode::setBody(node *r)
+{
+  if(nodes[0] != NULL)
+    delete nodes[0];
+  nodes[0]=r;
+}
 
 // ------------------------------------------------------------------------
 
@@ -212,6 +400,18 @@ nontermnode::nontermnode(string s):node()
   type=NONTERM;
 }
 
+nontermnode::nontermnode(const nontermnode &original):node(original)
+{
+  style = original.style;
+  format = original.format;
+  str = original.str;
+}
+
+nontermnode* nontermnode::clone() const
+{
+  return new nontermnode(*this);
+}
+
 void nontermnode::dump(int depth) const
 { int i;
   for(i=0;i<depth;i++)
@@ -220,7 +420,36 @@ void nontermnode::dump(int depth) const
   node::dump(depth);
 }  
 
+int nontermnode::operator ==(node &r)
+{
+  if(same_type(r)) {
+    nontermnode &n=(nontermnode&) r ;
+    return (style == n.style) && (format == n.format) && (str == n.str);
+  }
+  return 0;
+}
+
 // ------------------------------------------------------------------------
+
+railnode::railnode():node()
+{
+  type=RAIL;
+}//beforeskip=0;}
+
+railnode::railnode(vrailside s,vraildir d):node()
+{
+  type=RAIL;
+  side = s;
+  direction = d;
+}
+
+railnode::railnode(const railnode &original):node(original)
+{
+  side=original.side;
+  direction=original.direction;
+  top = original.top;
+  bottom = original.bottom;
+}
 
 void railnode::dump(int depth) const
 { int i;
@@ -229,6 +458,15 @@ void railnode::dump(int depth) const
   cout<<"rail";
   node::dump(depth);
 }  
+
+int railnode::operator ==(node &r)
+{
+  if(!same_type(r))
+    return 0;
+  railnode &rt = dynamic_cast<railnode&>(r);
+  return (side == rt.side && direction == rt.direction);
+}
+
 
 // ------------------------------------------------------------------------
 termnode::termnode(string s):nontermnode(s)
@@ -239,6 +477,16 @@ termnode::termnode(string s):nontermnode(s)
   format="railtermname";
   type = TERMINAL;
 }
+
+termnode::termnode(const termnode &original):nontermnode(original)
+{
+}
+
+termnode* termnode::clone() const
+{
+  return new termnode(*this);
+}
+
 
 // ------------------------------------------------------------------------
 nullnode::nullnode(string s):nontermnode(s)
@@ -255,7 +503,35 @@ nullnode::nullnode(string s):nontermnode(s)
   wa = nodename;
 }
 
+nullnode::nullnode(const nullnode &original):nontermnode(original)
+{
+}
+
+nullnode* nullnode::clone() const
+{
+  return new nullnode(*this);
+}
+
 // ------------------------------------------------------------------------
+
+choicenode::choicenode(node *p):multinode(p)
+{
+}
+
+choicenode::choicenode(const choicenode &original):multinode(original)
+{
+}
+
+choicenode* choicenode::clone() const
+{
+  return new choicenode(*this);
+}
+
+void choicenode::insert(node *node)
+{
+  nodes.push_back(node);
+  node->setDrawToPrev(0);
+}
 
 void choicenode::dump(int depth) const
 { int i;
@@ -267,9 +543,7 @@ void choicenode::dump(int depth) const
     (*j)->dump(depth+1);
 }
 
-
 // ------------------------------------------------------------------------
-
 
 newlinenode::newlinenode():railnode()
 {
@@ -285,6 +559,18 @@ newlinenode::newlinenode():railnode()
   beforeskip = 0;
 }
 
+newlinenode::newlinenode(const newlinenode &original):
+  railnode(original)
+{
+  drawtoprev=0;
+  lineheight=original.lineheight;
+}
+
+newlinenode* newlinenode::clone() const
+{
+  return new newlinenode(*this);
+}
+
 void newlinenode::dump(int depth) const
 { int i;
   for(i=0;i<depth;i++)
@@ -296,6 +582,22 @@ void newlinenode::dump(int depth) const
 
 // ------------------------------------------------------------------------
 
+concatnode::concatnode(node *p):multinode(p)
+{
+  type=CONCAT;
+  drawtoprev=0;
+}
+
+concatnode::concatnode(const concatnode &original):multinode(original)
+{
+  ea=nodes.back()->east();
+}
+
+concatnode* concatnode::clone() const
+{
+  return new concatnode(*this);
+}
+
 void concatnode::dump(int depth) const
 { int i;
   for(i=0;i<depth;i++)
@@ -306,3 +608,63 @@ void concatnode::dump(int depth) const
     (*j)->dump(depth+1);
 }
 
+void concatnode::setPrevious(node* p)
+{
+  node::setPrevious(p);
+  for(auto i=nodes.begin()+1; i!=nodes.end(); i++)
+    {
+      (*i)->setPrevious(*(i-1));
+      //	(*i)->setDrawToPrev(1);
+    }
+  nodes.front()->setPrevious(getPrevious());
+  //   nodes.front()->setDrawToPrev(1);
+}
+void concatnode::setNext(node* p)
+{
+  node::setNext(p);
+  for(auto i=nodes.begin(); i!=nodes.end()-1; i++)
+    (*i)->setNext(*(i+1));
+  nodes.back()->setNext(getNext());
+}
+
+void concatnode::insert(node* p)
+{
+  multinode::insert(p);
+  //drawtoprev = 1;
+  if(p->is_null() || p->is_nonterm() || p->is_terminal())
+    p->setDrawToPrev(1);
+  else
+    p->setDrawToPrev(0);
+}
+
+// ------------------------------------------------------------------------
+
+grammar::~grammar()
+{
+  for(auto i=productions.begin();i!=productions.end();i++)
+    delete (*i);
+}
+  
+void grammar::dump() const
+{
+  for(auto i=productions.begin();i!=productions.end();i++)
+    (*i)->dump(0);
+}
+
+void grammar::setParent()
+{
+  for(auto i=productions.begin();i!=productions.end();i++)
+    (*i)->setParent(NULL);
+}
+
+void grammar::setPrevious()
+{
+  for(auto i=productions.begin();i!=productions.end();i++)
+    (*i)->setPrevious(NULL);
+}
+
+void grammar::setNext()
+{
+  for(auto i=productions.begin();i!=productions.end();i++)
+    (*i)->setNext(NULL);
+}

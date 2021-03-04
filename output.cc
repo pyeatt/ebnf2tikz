@@ -292,16 +292,24 @@ coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
     outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
     outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
     outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
-    line(outs,2,
-	 ((railnode*)previous)->rawName()+"linebottom",
-	 nodename+"linetop",
-	 nodename+"linebottom",
-	 ((railnode*)next)->rawName()+"linebottom");
-    // line(outs,4,
-    // 	 ((railnode*)previous)->rawName()+"linebottom",
-    // 	 nodename+"linetop",
-    // 	 nodename+"linebottom",
-    // 	 ((railnode*)next)->rawName()+"linebottom");
+    stringstream s;
+    s<<"+right:"<<sizes->colsep<<"pt";
+
+    // if(next->is_rail() &&
+    //    (((railnode*)next)->getRailDir() == UP ||
+    // 	((railnode*)next)->getRailDir() == STARTNEWLINEUP))
+    //   line(outs,5,
+    // 	   ((railnode*)previous)->rawName()+"linebottom",
+    // 	   nodename+"linetop",
+    // 	   nodename+"linebottom",
+    // 	   ((railnode*)next)->rawName(),
+    // 	   s.str());
+    // else
+      line(outs,4,
+	   ((railnode*)previous)->rawName()+"linebottom",
+	   nodename+"linetop",
+	   nodename+"linebottom",
+	   ((railnode*)next)->rawName()+"linetop");
   }
   return bottom;
 }
@@ -379,6 +387,7 @@ void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join){
 	  stringstream s;
 	  s<<"+right:"<<sizes->colsep<<"pt";
 	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
+	  //line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),p->rawName()+"linebottom");
 	}
       else
 	line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
@@ -407,8 +416,12 @@ void multinode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join){
   if(p==NULL)
     {
       p = leftrail;
-      join = leftrail->getRailDir();
-      line(outs,2,nodes.front()->west(),nodes.front()->west()+"-|"+leftrail->east());
+      if(p != NULL)
+	{
+	  join = leftrail->getRailDir();
+	  line(outs,2,nodes.front()->west(),
+	       nodes.front()->west()+"-|"+leftrail->east());
+	}
       nodes.front()->drawToLeftRail(outs,NULL,join);
     }
   else
@@ -425,8 +438,12 @@ void multinode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
   if(p==NULL)
     {
       p = rightrail;
-      join = rightrail->getRailDir();
-      line(outs,2,nodes.front()->east(),nodes.front()->east()+"-|"+rightrail->west());
+      if(p != NULL)
+	{
+	  join = rightrail->getRailDir();
+	  line(outs,2,nodes.front()->east(),
+	       nodes.front()->east()+"-|"+rightrail->west());
+	}
       nodes.front()->drawToRightRail(outs,NULL,join);
     }
   else
