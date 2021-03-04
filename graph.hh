@@ -228,19 +228,7 @@ public:
     return 0;
   }
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
-  virtual node* subsume(string name, node *replacement){
-    node* tmp;
-    tmp = body->subsume(name,replacement);
-    if(tmp != body)
-      {
-	tmp->setParent(this);
-	tmp->setPrevious(body->getPrevious());
-	tmp->setNext(body->getNext());
-	delete body;
-	body = tmp;
-      }
-    return this;
-  }
+  virtual node* subsume(string name, node *replacement);
   virtual void setParent(node* p){
     parent = p;
     body->setParent(this);
@@ -302,30 +290,7 @@ protected:
   vector<node*> nodes;
 public:
   multinode(node *p);
-  multinode(const multinode &original):node(original)
-  { // clone all of the child nodes;
-    for(auto i=original.nodes.begin();i!=original.nodes.end();i++)
-      {
-	nodes.push_back((*i)->clone());
-	if(i != original.nodes.begin() &&
-	   ((nodes.back()->is_choice() || nodes.back()->is_loop() ||
-	     nodes.back()->is_concat()))
-	   && (*(i-1))->is_rail())
-	  nodes.back()->setLeftRail((railnode*)*(nodes.end()-2));
-	if(i != original.nodes.begin() && nodes.back()->is_rail() &&
-	   ((*(i-1))->is_choice() || (*(i-1))->is_loop() ||
-	    (*(i-1))-> is_concat()))
-	  (*(nodes.end()-2))->setRightRail((railnode*)nodes.back());
-      }
-    ea = nodes.front()->east();
-    wa = nodes.front()->west();
-  }
-
-  virtual void mergeRails(){
-    for(auto i=nodes.begin();i!=nodes.end();i++)
-      (*i)->mergeRails();
-  }
-  
+  multinode(const multinode &original);
   virtual multinode* clone() const {
     multinode*m=new multinode(*this);
     return m;
@@ -338,6 +303,7 @@ public:
     for(auto i = nodes.begin();i!=nodes.end();i++)
       delete (*i);
   }
+  virtual void mergeRails();
   virtual void insert(node *node){
     nodes.push_back(node);
     ea = node->east();
@@ -352,15 +318,6 @@ public:
   }
   virtual int numChildren(){return nodes.size();}
   virtual node* getChild(int n){return nodes[n];}
-
-  // virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join){
-  //   for(auto i = nodes.begin();i!=nodes.end();i++)
-  //     (*i)->drawToLeftRail(p, join);
-  // }
-  // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join){
-  //   for(auto i = nodes.begin();i!=nodes.end();i++)
-  //     (*i)->drawToRightRail(p, join);
-  // }
 
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
@@ -395,23 +352,7 @@ public:
   //  virtual int liftOptionChoice(int depth);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
-  virtual node* subsume(string name, node *replacement){
-    node *tmp;
-    for(auto i = nodes.begin();i!=nodes.end();i++)
-      {
-	tmp = (*i)->subsume(name,replacement);
-	if(tmp != (*i))
-	  {
-	    tmp->setParent(this);
-	    tmp->setPrevious((*i)->getPrevious());
-	    tmp->setNext((*i)->getNext());
-	    tmp->setDrawToPrev((*i)->getDrawToPrev());
-	    delete (*i);
-	    (*i) = tmp;
-	  }
-      }
-    return this;
-  }
+  virtual node* subsume(string name, node *replacement);
   virtual void setParent(node* p){
     node::setParent(p);
     for(auto i=nodes.begin(); i!=nodes.end(); i++)
