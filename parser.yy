@@ -115,8 +115,8 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
      
-     g->dump();
-     cout<<"Starting subsume\n";
+     // g->dump();
+     // cout<<"Starting subsume\n";
      
      g->subsume();
      g->optimize();

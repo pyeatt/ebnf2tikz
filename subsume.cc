@@ -57,10 +57,20 @@ node* multinode::subsume(string name, node *replacement){
 // ------------------------------------------------------------------------
 
 node* productionnode::subsume(string name, node *replacement) {
-  cout<<"subsuming"<<endl;
-  replacement->getParent()->dump(2);
+  node *tmp;
+  // Production nodes always contain a concat with two leading
+  // nullnodes followed by a rownode We only want to take the actual
+  // production, which is the child of the third child.
   replacement = new concatnode(replacement->getChild(2)->getChild(0));
-  return body->subsume(name,replacement);
+  tmp = body->subsume(name,replacement);
+  replacement->forgetChild(0);
+  delete replacement;
+  if(tmp != body)
+    {
+      delete body;
+      body = tmp;
+    }
+  return this;
 }
 
 // ------------------------------------------------------------------------

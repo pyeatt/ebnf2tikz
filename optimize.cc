@@ -87,7 +87,7 @@ int multinode::liftConcats(int depth)
     {
       if((*i)->is_concat() && (*i)->numChildren() == 1)
 	{
-	  cout << "MULTINODE LIFTING CONCAT\n";
+	  // cout << "MULTINODE LIFTING CONCAT\n";
 	  node *child = (*i)->getChild(0);
 	  (*i)->forgetChild(0);
 	  delete *i;
@@ -106,15 +106,15 @@ void productionnode::optimize()
   //  do {
     changes = 0;
     tmp = body-> analyzeNonOptLoops(0);
-    cout <<"-----------------\n";
-    cout << latexwrite("emph",name) <<endl;
-    cout<<tmp<<" non-optional loops modified\n";
+    //cout <<"-----------------\n";
+    //cout << latexwrite("emph",name) <<endl;
+    //cout<<tmp<<" non-optional loops modified\n";
     changes += tmp;
     //}while(tmp > 0);
     
      do{
     tmp = body-> analyzeOptLoops(0);
-    cout<<tmp<<" optional loops modified\n";
+    //cout<<tmp<<" optional loops modified\n";
     changes += tmp;
      }while(tmp > 0);
       
@@ -122,21 +122,21 @@ void productionnode::optimize()
     // if a child of a choice is a choice, merge it with the parent
     tmp = body->mergeChoices(0);
     changes += tmp;
-    cout<<tmp<<" choices merged\n";
+    //cout<<tmp<<" choices merged\n";
   }while(tmp > 0);
       
   do{
     // combine consecutive concants
     tmp = body->mergeConcats(0);
     changes += tmp;
-    cout<<tmp<<" concats merged\n";
+    //cout<<tmp<<" concats merged\n";
     // if a child of a concat is a concat, lift the child
     tmp += body->liftConcats(0);
     changes += tmp;
-    cout<<tmp<<" concats lifted\n";	
+    //cout<<tmp<<" concats lifted\n";	
   }while(tmp > 0);
   
-cout <<"-----------------\n";
+  //cout <<"-----------------\n";
 };
 
 // ------------------------------------------------------------------------
