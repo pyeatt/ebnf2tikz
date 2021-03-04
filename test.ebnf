@@ -39,7 +39,7 @@ choices =
 
 
 toollist =
- tool,{ ',', tool };
+ '(' \\ tool, { ',', tool } \\ ')';
 
 subsume
 tool =

@@ -105,32 +105,36 @@ node* wrapChoice(node *n) {
 // Define the grammar: A grammar is a list of productions
 grammar : productions {
      grammar *g = $1;
-     g->dump();
+     //g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();
      g->optimize();
-     g->dump();
+     //g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();
+     
+     g->dump();
+     cout<<"Starting subsume\n";
+     
      g->subsume();
      g->optimize();
 
      g->setParent();
      g->setPrevious();
      g->setNext();
-     
-     // let everyoune know their parent, and if they are in a concat,
-     // who is previous and who is next.
      g->mergeRails();
-     g->dump();
+
+     //g->dump();
      
      g->setParent();
      g->setPrevious();
      g->setNext();
      
      g->place(drv.outs());
+
+     delete g;
   } ;
 
 productions: productions production {

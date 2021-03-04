@@ -1,12 +1,6 @@
 
 #include <graph.hh>
 #include <sstream>
-#include <cstdarg>
-#include <math.h>
-#include <string>
-#include <vector>
-#include <iostream>
-#include <cstring>
 #include <nodesize.hh>
 
 using namespace std;
@@ -44,7 +38,7 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth)
 {
   
-  top = start + coordinate(0,-sizes.rowsep);
+  top = start + coordinate(0,-sizes->rowsep);
 
   if(side == LEFT)
     {
@@ -52,22 +46,22 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 	{
 	  // left newline rails have top and bottom inverted... makes
 	  // everything easier
-	  top = start + coordinate(0, sizes.colsep);
+	  top = start + coordinate(0, sizes->colsep);
 	  bottom = top;
 	}
       else
 	{
-	  top = start - coordinate(0,sizes.colsep);
-	  bottom = start -  coordinate(0, sizes.rowsep);
+	  top = start - coordinate(0,sizes->colsep);
+	  bottom = start -  coordinate(0, sizes->rowsep);
 	}
     }
   else
     {
-      top = start - coordinate(0,sizes.rowsep);
-      bottom = start - coordinate(0, sizes.colsep);
+      top = start - coordinate(0,sizes->rowsep);
+      bottom = start - coordinate(0, sizes->colsep);
       // bottom = start - coordinate(0,previous->height());
       // bottom = bottom +
-      // 	coordinate(0, sizes.colsep +
+      // 	coordinate(0, sizes->colsep +
       // 		   previous->getChild(previous->numChildren()-1)->height());
     }
 
@@ -81,12 +75,12 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
       // if(side==LEFT)
       // 	{
        if(direction==DOWN) {
-	  s<<"+west:"<<sizes.colsep<<"pt";
+	  s<<"+west:"<<sizes->colsep<<"pt";
 	  line(outs,3,nodename+"linetop",nodename,s.str());
 	}
 
       if(direction==UP) {
-	  s<<"+east:"<<sizes.colsep<<"pt";
+	  s<<"+east:"<<sizes->colsep<<"pt";
 	  line(outs,3,nodename+"linetop",nodename,s.str());
 	}
 
@@ -95,12 +89,12 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
       // 	{
       // 	  if(direction==DOWN)
       // 	    {
-      // 	      s<<"+east:"<<sizes.colsep<<"pt";
+      // 	      s<<"+east:"<<sizes->colsep<<"pt";
       // 	      line(outs,3,nodename+"linetop",nodename,s.str());
       // 	    }
       // 	  else
       // 	    {
-      // 	      s<<"+west:"<<sizes.colsep<<"pt";
+      // 	      s<<"+west:"<<sizes->colsep<<"pt";
       // 	      line(outs,3,nodename+"linetop",nodename,s.str());
       // 	    }
       // 	}
@@ -154,7 +148,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   string coord=nextCoord();
   string coord2=nextCoord();
 
-  c = start+coordinate(0.0,-1.5*sizes.minsize);
+  c = start+coordinate(0.0,-1.5*sizes->minsize);
 
   if(drawrails)
     {
@@ -176,7 +170,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       outs<<"\\label{No Caption.}\n";
       outs<<"\\end{figure}\n";
     }
-  lastPlaced=this;
+  //  lastPlaced=this;
   return c;
 }
 
@@ -194,7 +188,7 @@ coordinate nontermnode::place(ofstream &outs,int draw, int drawrails,
     }
   c.x = start.x+myWidth;
   c.y = start.y;
-  lastPlaced=this;
+  //  lastPlaced=this;
   return c;
 }
 
@@ -206,7 +200,7 @@ coordinate nullnode::place(ofstream &outs,int draw, int drawrails,
   coordinate c;
   if(draw)
     outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
-  lastPlaced=this;
+  //  lastPlaced=this;
   return start;
 }
 
@@ -236,18 +230,18 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
 	  maxwidth = curwidth;
 	  widest = (*i);
 	}
-      height = (*i)->height() + sizes.rowsep;
+      height = (*i)->height() + sizes->rowsep;
       totalheight += height;
     }
 
-  setheight(totalheight - sizes.rowsep);
+  setheight(totalheight - sizes->rowsep);
   setwidth(maxwidth);
   current = start;
   for(auto i=nodes.begin();i!=nodes.end();i++)
     {
       c = current + coordinate((maxwidth-(*i)->width())/2,0);
       (*i)->place(outs, draw, drawrails, c, this, depth+1);
-      current = current - coordinate(0,sizes.rowsep+(*i)->height());
+      current = current - coordinate(0,sizes->rowsep+(*i)->height());
     }
 
   lastpoint=start + coordinate(widest->width(),0);
@@ -255,7 +249,7 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
   ea = nodes[0]->east();
   wa = nodes[0]->west();
 
-  lastPlaced=this;
+  //  lastPlaced=this;
   return lastpoint;
 }
 
@@ -265,13 +259,13 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
 coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
 			      coordinate start,node *parent, int depth)
 {
-  myWidth = -previous->getPrevious()->width() + sizes.colsep;
+  myWidth = -previous->getPrevious()->width() + sizes->colsep;
   myHeight = previous->getPrevious()->height();
   // for newline nodes, top is actually the right-hand side, and
   // bottom is the left-hand side.  The previous and next will always
   // be rails.
   top = start - coordinate(0, previous->getPrevious()->height());
-  bottom = coordinate(sizes.colsep,top.y);
+  bottom = coordinate(sizes->colsep,top.y);
   if(draw) {
     outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
     outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
@@ -313,7 +307,7 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
     if((*j)->height() > rowheight)
       rowheight = (*j)->height();
     if((*j)->is_newline()) {
-      current = current - coordinate(linewidth,(*j)->height() + 3*sizes.rowsep - 2);
+      current = current - coordinate(linewidth,(*j)->height() + 3*sizes->rowsep - 2);
       if(linewidth > myWidth)
 	myWidth = linewidth;
       myHeight += rowheight;
@@ -356,12 +350,12 @@ void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join){
   if(p != NULL)
     {
       // stringstream s;
-      // s<<"+up:"<<sizes.colsep<<"pt";
+      // s<<"+up:"<<sizes->colsep<<"pt";
       // line(outs,3,wa,wa+"-|"+p->rawName(),s.str());
       if(join == STARTNEWLINEUP)
 	{
 	  stringstream s;
-	  s<<"+right:"<<sizes.colsep<<"pt";
+	  s<<"+right:"<<sizes->colsep<<"pt";
 	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
 	}
       else
@@ -376,7 +370,7 @@ void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
       // if(join == STARTNEWLINEDOWN)
       // 	{
       // 	  stringstream s;
-      // 	  s<<"+left:"<<sizes.colsep<<"pt";
+      // 	  s<<"+left:"<<sizes->colsep<<"pt";
       // 	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
       // 	}
       // else

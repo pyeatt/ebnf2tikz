@@ -96,6 +96,8 @@ int main(int argc, char** argv) {
     std::cout << "Parser returned " << drv.result << endl;
 
   outfile.close();
+
+  node::deleteData();
   
   return drv.result;
 
