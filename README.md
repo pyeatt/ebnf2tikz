@@ -5,7 +5,7 @@ Author: Larry D. Pyeatt
 February, 2021
 
 ## What Does It Do?
-An optimizing compiler to convert (possibly annotated) <a href=https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>Extended Backus–Naur  Form</a> (EBNF) to railroad diagrams expressed as LaTeX <a href=https://en.wikipedia.org/wiki/PGF/TikZ> TikZ</a> commands.
+It is an optimizing compiler that converts (possibly annotated) <a href=https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>Extended Backus–Naur  Form</a> (EBNF) to railroad diagrams expressed as LaTeX <a href=https://en.wikipedia.org/wiki/PGF/TikZ> TikZ</a> commands.
 
 For example, if  you feed a file containing the following annotated EBNF into ebnf2tikz:
 ```ebnf
@@ -96,10 +96,10 @@ Then you can just include the TikZ code in your LaTeX document, and it will draw
 
 ## About the Code
 
-This is a work in progress.  There are still a couple of bugs that I am aware of, but nothing major.
-I have not really started working on newlines, so the diagrams can easily become wider than the space available.  
-
-
+This is a work in progress.  There are still a couple of bugs that I am aware of, but
+nothing major.  Some of the line drawing is not quite right, especially involving choice
+or loop nodes before and after newlines, and choices inside loops.  I should have that
+fixed in a few days.
 
 Originally, I planned to have TikZ do most of the work.  However,
 while I could get it to do small diagrams, it failed miserably when
