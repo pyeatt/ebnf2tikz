@@ -1,14 +1,8 @@
 // Larry Pyeatt
 #include <graph.hh>
-#include <cstdarg>
-#include <math.h>
-#include <string>
-#include <vector>
-#include <iostream>
-#include <cstring>
 #include <sstream>
 #include <nodesize.hh>
-#include <algorithm>    // std::find
+#include <cstring>
 using namespace std;
 
 
@@ -20,7 +14,7 @@ string nextFit();
 string stripSpecial(string s);
 
 nodesizes* node::sizes;
-node* node::lastPlaced;
+//node* node::lastPlaced;
 
 string stripSpecial(string s)
 {
@@ -73,23 +67,9 @@ string nextFit(){
 
 // ------------------------------------------------------------------------
 
-void grammar::subsume()
-{
-  string name;
-  // look for productions that are marked for subsumption
-  for(auto i=productions.begin();i!=productions.end();i++)
-    if((*i)->getSubsume()) {
-      name = (*i)->getName();
-      for(auto j=productions.begin();j!=productions.end();j++)
-	if(j != i)
-	  (*j)->subsume(name,(*i)->getChild(0));
-    }
-}
-
-// ------------------------------------------------------------------------
 // assign node names as we create the nodes
 node::node(){
-  lastPlaced=NULL;
+  //lastPlaced=NULL;
   nodename=nextNode();
   ea=nodename+".east";
   wa=nodename+".west";
@@ -116,21 +96,6 @@ singlenode::singlenode(node *p):node()
   ea=p->east(); 
   wa=p->west();
 }
-
-node* singlenode::subsume(string name, node *replacement){
-  node* tmp;
-  tmp = body->subsume(name,replacement);
-  if(tmp != body)
-    {
-      tmp->setParent(this);
-      tmp->setPrevious(body->getPrevious());
-      tmp->setNext(body->getNext());
-      delete body;
-      body = tmp;
-    }
-  return this;
-}
-
 
 // ------------------------------------------------------------------------
 
@@ -184,24 +149,6 @@ int multinode::operator == (node &r)
   return 0;
 }
 
-node* multinode::subsume(string name, node *replacement){
-  node *tmp;
-  for(auto i = nodes.begin();i!=nodes.end();i++)
-    {
-      tmp = (*i)->subsume(name,replacement);
-      if(tmp != (*i))
-	{
-	  tmp->setParent(this);
-	  tmp->setPrevious((*i)->getPrevious());
-	  tmp->setNext((*i)->getNext());
-	  tmp->setDrawToPrev((*i)->getDrawToPrev());
-	  delete (*i);
-	  (*i) = tmp;
-	}
-    }
-    return this;
-}
-
 // ------------------------------------------------------------------------
 
 void rownode::dump(int depth) const
@@ -228,8 +175,6 @@ void productionnode::dump(int depth) const
   cout << "production: "<<name<<endl;
   body->dump(1);
 }
-
-
 
 // ------------------------------------------------------------------------
 

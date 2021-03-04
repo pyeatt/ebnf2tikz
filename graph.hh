@@ -1,12 +1,7 @@
 #ifndef GRAPH_HH
 #define GRAPH_HH
 
-#include <cstdarg>
-#include <math.h>
-#include <string>
 #include <vector>
-#include <iostream>
-#include <cstring>
 #include <nodesize.hh>
 
 using namespace std;
@@ -40,7 +35,7 @@ protected:
 
   nodetype type;
   
-  static node *lastPlaced; // the last thing that was drawn
+  //static node *lastPlaced; // the last thing that was drawn
   string ea,wa,nodename;   // east and west attachment points, and node name
   static nodesizes* sizes;
   float myWidth,myHeight;
@@ -145,7 +140,8 @@ public:
   // the object.  The second time will be to actually emit code.
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth){
-    lastPlaced=this;return start;}
+    //lastPlaced=this;
+    return start;}
   
   virtual void insert(node*){}
   virtual void mergeRails(){}
@@ -418,12 +414,7 @@ public:
     return 0;
   }
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
-  virtual node* subsume(string name, node *replacement){
-    if(name == str)
-      return replacement->clone(); // return deep copy of replacement
-    else
-      return this;                 // or pointer to this
-  }
+  virtual node* subsume(string name, node *replacement);
 };  
 
 
@@ -635,12 +626,7 @@ public:
   virtual int getSubsume(){return subsume_spec;}
   virtual string getName(){return name;}
   void optimize();
-  virtual node* subsume(string name, node *replacement) {
-    cout<<"subsuming"<<endl;
-    replacement->getParent()->dump(2);
-    replacement = new concatnode(replacement->getChild(2)->getChild(0));
-    return body->subsume(name,replacement);
-  }
+  virtual node* subsume(string name, node *replacement);
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
