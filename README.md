@@ -96,10 +96,10 @@ Then you can just include the TikZ code in your LaTeX document, and it will draw
 
 ## About the Code
 
-This is a work in progress.  There are still a couple of bugs that I am aware of, but nothing major.
-I have not really started working on newlines, so the diagrams can easily become wider than the space available.  
-
-
+This is a work in progress.  There are still a couple of bugs that I am aware of, but
+nothing major.  Some of the line drawing is not quite right, especially involving choice
+or loop nodes before and after newlines, and choices inside loops.  I should have that
+fixed in a few days.
 
 Originally, I planned to have TikZ do most of the work.  However,
 while I could get it to do small diagrams, it failed miserably when
