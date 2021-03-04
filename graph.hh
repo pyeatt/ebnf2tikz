@@ -256,15 +256,13 @@ public:
     top = original.top;
     bottom = original.bottom;
   }
+  virtual railnode* clone() const {return new railnode(*this);}
+  virtual ~railnode(){};
   virtual void setBottom(coordinate b){bottom = b;}
   virtual coordinate getBottom(){return bottom;}
-  virtual railnode* clone() const {
-    return new railnode(*this);
-  }
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  virtual ~railnode(){};
   virtual int operator ==(node &r){
     if(!same_type(r))
       return 0;
