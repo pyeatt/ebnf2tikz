@@ -36,7 +36,6 @@ using namespace std;
 // Consecutive right choice rails, and right choice rails followed by
 // right loop rails if the first choice is nullnode and the loop
 // repeat is nullnode.
-
 string latexwrite(string fontspec,string s);
 string nextCoord();
 string nextNode();
@@ -54,7 +53,6 @@ class node {
 protected:
   typedef enum {GRAMMAR, CHOICE, TERMINAL, NONTERM, CONCAT,
     NULLNODE, LOOP, NEWLINE, PRODUCTION, RAIL, ROW, UNKNOWN} nodetype;
-
   static nodesizes* sizes;
   nodetype type;
   string nodename;
@@ -67,18 +65,14 @@ protected:
   int drawtoprev;
   railnode *leftrail,*rightrail;
   int dead;
-
   coordinate location; // where to draw the east point of the thing
-  
   // use a variadic function to draw lines.  first argument is the
   // number of points in the line, The remaining arguments are the
   // tikz coordinates of things you want connected (eg "node1.east",
   // "coord3", "10,10", etc
   template <class ... Args>
   void line(ofstream &outs, Args ... args);
-
   int same_type(node &r){return type == r.type;}
-
 public:
   node();
   node(const node &original);
@@ -124,8 +118,6 @@ public:
   int is_rail(){return type==RAIL;}
   string east(){return ea;}
   string west(){return wa;}
-  virtual int rail_left(){return 0;}
-  virtual int rail_right(){return 0;}
   // start at start, lay yourself out, and return the coordinate that
   // you end at.  The "draw" argument tells whether or not to actually
   // emit tikz code.  The compiler will call this method twice for
@@ -138,18 +130,7 @@ public:
   
   virtual void insert(node*){}
   virtual void mergeRails(){}
-    
-  virtual void dump(int depth) const {
-    cout << " " <<nodename <<" :";
-    if(leftrail != NULL)
-      cout<<" leftrail="<<((node*)leftrail)->rawName();
-    if(rightrail != NULL)
-      cout<<" rightrail="<<((node*)rightrail)->rawName();
-    cout<<" drawtoprev="<<drawtoprev<<endl;
-      //<<ea<<" "<<wa<<
-      //" width="<<myWidth<<" height="<<myHeight<<" beforeskip="<<beforeskip<<
-  }
-
+  virtual void dump(int depth) const;
   virtual string texName() { return "";};
   virtual string rawName() { return nodename;};
   float width(){return myWidth;}
@@ -158,7 +139,6 @@ public:
   void setheight(float h){myHeight=h;}
   virtual int mergeConcats(int depth);
   virtual int liftConcats(int depth);
-  //  virtual int liftOptionChoice(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
   virtual int mergeChoices(int depth);
@@ -399,8 +379,6 @@ public:
   virtual void insert(node* p);
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  virtual int rail_left(){return nodes.front()->rail_left();};
-  virtual int rail_right(){return nodes.back()->rail_right();};
   virtual int mergeConcats(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
