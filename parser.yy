@@ -137,7 +137,7 @@ grammar : productions {
      // g->dump();
      // cout<<"Starting subsume\n";
      
-//     g->subsume();
+     g->subsume();
      g->optimize();
 
      g->setParent();

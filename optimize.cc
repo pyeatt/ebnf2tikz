@@ -1,23 +1,23 @@
 /* 
-ebnf2tikz
-    An optimizing compiler to convert (possibly annotated) Extended
-    Backus–Naur Form (EBNF) to railroad diagrams expressed as LaTeX
-    TikZ commands.
+   ebnf2tikz
+   An optimizing compiler to convert (possibly annotated) Extended
+   Backus–Naur Form (EBNF) to railroad diagrams expressed as LaTeX
+   TikZ commands.
     
-    Copyright (C) 2021  Larry D. Pyeatt
+   Copyright (C) 2021  Larry D. Pyeatt
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 // Larry Pyeatt
@@ -148,7 +148,7 @@ int multinode::analyzeNonOptLoops(int depth)
 {
   int sum=0;
   for(auto i = nodes.begin();i!=nodes.end();i++)
-      sum += (*i)->analyzeNonOptLoops(depth+1);
+    sum += (*i)->analyzeNonOptLoops(depth+1);
   return sum;
 }
 
@@ -158,19 +158,19 @@ void productionnode::optimize()
 {
   int changes=0,tmp;
   //  do {
-    changes = 0;
-    tmp = body-> analyzeNonOptLoops(0);
-    //cout <<"-----------------\n";
-    //cout << latexwrite("emph",name) <<endl;
-    //cout<<tmp<<" non-optional loops modified\n";
-    changes += tmp;
-    //}while(tmp > 0);
+  changes = 0;
+  tmp = body-> analyzeNonOptLoops(0);
+  //cout <<"-----------------\n";
+  //cout << latexwrite("emph",name) <<endl;
+  //cout<<tmp<<" non-optional loops modified\n";
+  changes += tmp;
+  //}while(tmp > 0);
     
-     do{
+  do{
     tmp = body-> analyzeOptLoops(0);
     //cout<<tmp<<" optional loops modified\n";
     changes += tmp;
-     }while(tmp > 0);
+  }while(tmp > 0);
       
   do{
     // if a child of a choice is a choice, merge it with the parent
@@ -350,10 +350,10 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
   while(wherec != childnodes.begin() &&
 	wherep != parentnodes.begin() &&
 	*(*wherep) == *(*wherec)) {
-      wherep--;
-      wherec--;
-      numnodes++;
-    }
+    wherep--;
+    wherec--;
+    numnodes++;
+  }
   // The previous loop could have ended because it hit the end
   // of one list or the other. Adjust count, if needed.
   if((wherec == childnodes.begin() ||
@@ -363,9 +363,9 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
   // The previous loop may have ended because of a mismatch. If
   // so, then move both forward one item.
   if(*(*wherep) != *(*wherec)) {
-      wherep++;
-      wherec++;
-    }	  
+    wherep++;
+    wherec++;
+  }	  
   // delete matching nodes from this concat
   for(int count=0;count<numnodes;count++) {
     (*wherep)->makeDead();
@@ -441,9 +441,6 @@ int concatnode::analyzeOptLoops(int depth)
   
   // find loops and try to make them better
   for(i = nodes.begin()+1;i!=nodes.end();i++) {
-    //cout << "EXAMINING:\n";
-    //(*i)->dump(2);
-    //cout << "---------\n";
     // An optionnode is a choicenode with exactly two children, where
     // the first child is a nullnode. We want to find optionnodes where
     // the second child is a concat containing a loop between two rails..
@@ -466,9 +463,6 @@ int concatnode::analyzeOptLoops(int depth)
 	}
       else
 	gp = NULL;
-
-
-      
       // Get the loopnode that we are interested in;
       loop = (loopnode*)(*i)->getChild(1)->getChild(1);
       // is loop body a concat?
@@ -536,9 +530,7 @@ int concatnode::analyzeOptLoops(int depth)
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
-	    // the remaining nodes into it IN REVERSE ORDER.  But,
-	    // if I find a rail, then I need to find the matching
-	    // rail and keep them in order.
+	    // the remaining nodes into it IN REVERSE ORDER. 
 	    if(gp == NULL)
 	      j = (child->nodes.end()-1);
 	    if(j == child->nodes.end())
@@ -555,6 +547,7 @@ int concatnode::analyzeOptLoops(int depth)
 	    for(int k=0;k<delcount+1;k++)
 	      j = child->nodes.erase(j);
 	    // replace the loop repeat node with the new concat
+	    delete loop->nodes[0];
 	    loop->nodes[0] = loop->nodes[1];
 	    loop->nodes[1] = c;
 	  }
@@ -589,197 +582,199 @@ int concatnode::analyzeOptLoops(int depth)
 
 
 
-    // sequence_a followed by loop containing optional separator and sequence_a
-    // analyze non optionloops
-    int concatnode::analyzeNonOptLoops(int depth)
-    {
-      int sum = 0;
-      vector<node*>::iterator i, prev, j, child_last;
-      concatnode *child;
-      loopnode *loop;
-      int numnodes;
-      // do analyzeLoops on everything beneath this concat
-      for(i = nodes.begin();i!=nodes.end();i++)
-	sum += (*i)->analyzeNonOptLoops(depth+1);
+// sequence_a followed by loop containing optional separator and sequence_a
+// analyze non optionloops
+int concatnode::analyzeNonOptLoops(int depth)
+{
+  int sum = 0;
+  vector<node*>::iterator i, prev, j, child_last;
+  concatnode *child;
+  loopnode *loop;
+  int numnodes;
+  // do analyzeLoops on everything beneath this concat
+  for(i = nodes.begin();i!=nodes.end();i++)
+    sum += (*i)->analyzeNonOptLoops(depth+1);
   
-      // find loops and try to make them better
-      for(i = nodes.begin()+1;i!=nodes.end();i++) {
-	// looking for concat containing a loop
-	if((*i)->is_concat() &&
-	   (*i)->numChildren() == 3 &&
-	   (*i)->getChild(0)->is_rail() &&
-	   (*i)->getChild(1)->is_loop() &&
-	   (*i)->getChild(2)->is_rail()) { 
-	  // Found a loop node.  Can we rebuild it?
-	  sum++;
-	  // get an iterator to the node preceding "this" in its parent's nodes
-	  prev = i-1;	            
-	  loop = (loopnode*)(*i)->getChild(1);
-	  // is loop body a conca?
-	  if(loop->getChild(0)->is_concat()) {
-	    // Loop body is a concat.  Working back from the end of the
-	    // child, find the first node that does not match a
-	    // corresponding node in this concat. call findAndDelete... to
-	    // do all of that and delete matching fram the parent
-	    child = (concatnode*)loop->getChild(0);
-	    numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
-	    // If there were matching nodes, then we can move stuff around
-	    if(numnodes > 0) {
-	      // If there is only one node left in the child concat,
-	      // if(numnodes == 1) {
-	      //   // then move it to the repeat part.
-	      //   loop->nodes[1]=(*(j-1));
-	      //   child = (concatnode*)loop->getChild(0);
-	      //   j = child->nodes.erase(j-1);
-	      //   // if child only has one remaining node, then replace it
-	      //   // with its one child and delete it.
-	      //   if(child->nodes.size()==1) {
-	      //     loop->nodes[0] = child->nodes[0];
-	      //     child->nodes.clear();
-	      //     delete child;
-	      //   }
-	      // }
-	      // else {
-	      int delcount = 0;
-	      // If there is more than one node left in the child
-	      // concat, then create a new concat node and move all of
-	      // the remaining nodes into it IN REVERSE ORDER.
+  // find loops and try to make them better
+  for(i = nodes.begin()+1;i!=nodes.end();i++) {
+    // looking for concat containing a loop
+    if((*i)->is_concat() &&
+       (*i)->numChildren() == 3 &&
+       (*i)->getChild(0)->is_rail() &&
+       (*i)->getChild(1)->is_loop() &&
+       (*i)->getChild(2)->is_rail()) { 
+      // Found a loop node.  Can we rebuild it?
+      sum++;
+      // get an iterator to the node preceding "this" in its parent's nodes
+      prev = i-1;	            
+      loop = (loopnode*)(*i)->getChild(1);
+      // is loop body a conca?
+      if(loop->getChild(0)->is_concat()) {
+	// Loop body is a concat.  Working back from the end of the
+	// child, find the first node that does not match a
+	// corresponding node in this concat. call findAndDelete... to
+	// do all of that and delete matching fram the parent
+	child = (concatnode*)loop->getChild(0);
+	numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
+	// If there were matching nodes, then we can move stuff around
+	if(numnodes > 0) {
+	  // If there is only one node left in the child concat,
+	  // if(numnodes == 1) {
+	  //   // then move it to the repeat part.
+	  //   loop->nodes[1]=(*(j-1));
+	  //   child = (concatnode*)loop->getChild(0);
+	  //   j = child->nodes.erase(j-1);
+	  //   // if child only has one remaining node, then replace it
+	  //   // with its one child and delete it.
+	  //   if(child->nodes.size()==1) {
+	  //     loop->nodes[0] = child->nodes[0];
+	  //     child->nodes.clear();
+	  //     delete child;
+	  //   }
+	  // }
+	  // else {
+	  int delcount = 0;
+	  // If there is more than one node left in the child
+	  // concat, then create a new concat node and move all of
+	  // the remaining nodes into it IN REVERSE ORDER.
+	  j--;
+	  concatnode *c = new concatnode(*j);
+	  while(j!= child->nodes.begin())
+	    {
 	      j--;
-	      concatnode *c = new concatnode(*j);
-	      while(j!= child->nodes.begin())
-		{
-		  j--;
-		  c->insert(*j);
-		  delcount++;
-		} 
-	      // replace the loop repeat node with the new concat
-	      loop->setRepeat(c);
-	      // erase the nodes that were moved from the child concat
-	      for(int i=0;i<delcount+1;i++)
-		j = child->nodes.erase(j);
-	      //}
-	    }
-	  }
-	  else {
-	    // loop body is NOT a concat.
-	    // if loop body matches previous item in this concat
-	    if(*(loop->getChild(0)) == **prev)
-	      {
-		//   erase previous item in this concat
-		delete *prev;
-		i = nodes.erase(prev);
-	      }
-	  }
-
+	      c->insert(*j);
+	      delcount++;
+	    } 
+	  // replace the loop repeat node with the new concat
+	  loop->setRepeat(c);
+	  // erase the nodes that were moved from the child concat
+	  for(int i=0;i<delcount+1;i++)
+	    j = child->nodes.erase(j);
+	  //}
 	}
       }
-  
-      // bury the dead
-      // i = nodes.begin();
-      // while(i!=nodes.end())
-      //   {
-      //     if((*i)->isDead())
-      // 	{
-      // 	  if(i != nodes.end()-1)
-      // 	    (*(i+1))->setLeftRail((*i)->getLeftRail());
-      // 	  if(i != nodes.begin())
-      // 	    (*(i-1))->setRightRail((*i)->getRightRail());
-      // 	  delete (*i);
-      // 	  i = nodes.erase(i);
-      // 	}
-      //     else
-      // 	i++;
-      //   }
-      return sum;
+      else {
+	// loop body is NOT a concat.
+	// if loop body matches previous item in this concat
+	if(*(loop->getChild(0)) == **prev)
+	  {
+	    //   erase previous item in this concat
+	    delete *prev;
+	    i = nodes.erase(prev);
+	  }
+      }
+
     }
-
-
-
-    void concatnode::mergeRails(){
-      railnode *newrail;
-      railnode *oldrail;
-      // if(nodes[0]->is_rail() && nodes[1]->is_choice())
-      //   {
-      //     cout << "searching for left rail\n";
-      //     oldrail = (railnode*)nodes[0];
-      //     p = parent;
-      //     while(p != NULL && p->getLeftRail() == NULL)
-      // 	{
-      // 	  cout << "checking parent "<<p<<endl;
-      // 	  p = p->getParent();
-      // 	}
-      
-      //     //newrail = findLeftRail(parent);
-      //     if(p != NULL && p->getLeftRail() != NULL)
-      // 	{
-      // 	  newrail = p->getLeftRail();
-      // 	  if(newrail->getRailDir() == oldrail->getRailDir())
-      // 	    {
-      // 	      cout <<"replacing left rail\n";
-      // 	      nodes.erase(nodes.begin());
-      // 	      nodes[0]->setLeftRail(p->getLeftRail());
-      // 	    }
-      // 	}
-      //   }
+  }
   
-      if((*(nodes.begin()))->is_rail() && (*(nodes.begin()+1))->is_choice())
-	{
-	  oldrail = (railnode*)(*(nodes.begin()));
-	  newrail = parent->getLeftRail();
-	  if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
-	    {
-	      newrail->setBottom(oldrail->getBottom());
-	      nodes.erase(nodes.begin());
-	      (*(nodes.begin()))->setLeftRail(newrail);
-	    }
-	}
+  // bury the dead
+  // i = nodes.begin();
+  // while(i!=nodes.end())
+  //   {
+  //     if((*i)->isDead())
+  // 	{
+  // 	  if(i != nodes.end()-1)
+  // 	    (*(i+1))->setLeftRail((*i)->getLeftRail());
+  // 	  if(i != nodes.begin())
+  // 	    (*(i-1))->setRightRail((*i)->getRightRail());
+  // 	  delete (*i);
+  // 	  i = nodes.erase(i);
+  // 	}
+  //     else
+  // 	i++;
+  //   }
+  return sum;
+}
 
-      if((*(nodes.end()-1))->is_rail() && (*(nodes.end()-2))->is_choice())
+void concatnode::mergeRails(){
+  railnode *newrail;
+  railnode *oldrail;
+  // if(nodes[0]->is_rail() && nodes[1]->is_choice())
+  //   {
+  //     cout << "searching for left rail\n";
+  //     oldrail = (railnode*)nodes[0];
+  //     p = parent;
+  //     while(p != NULL && p->getLeftRail() == NULL)
+  // 	{
+  // 	  cout << "checking parent "<<p<<endl;
+  // 	  p = p->getParent();
+  // 	}
+      
+  //     //newrail = findLeftRail(parent);
+  //     if(p != NULL && p->getLeftRail() != NULL)
+  // 	{
+  // 	  newrail = p->getLeftRail();
+  // 	  if(newrail->getRailDir() == oldrail->getRailDir())
+  // 	    {
+  // 	      cout <<"replacing left rail\n";
+  // 	      nodes.erase(nodes.begin());
+  // 	      nodes[0]->setLeftRail(p->getLeftRail());
+  // 	    }
+  // 	}
+  //   }
+  
+  if((*(nodes.begin()))->is_rail() && (*(nodes.begin()+1))->is_choice())
+    {
+      oldrail = (railnode*)(*(nodes.begin()));
+      newrail = parent->getLeftRail();
+      if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  oldrail = (railnode*)(*(nodes.end()-1));
-	  newrail = parent->getRightRail();
-	  if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
-	    {
-	      newrail->setBottom(oldrail->getBottom());
-	      nodes.erase(nodes.end()-1);
-	      (*(nodes.end()-1))->setRightRail(newrail);
-	    }
-	}
-
-      if(parent->is_row() && parent->getLeftRail() != NULL &&
-	 nodes.front()->is_rail())
-	{
-	  oldrail = (railnode*)nodes.front();
-	  newrail = parent->getLeftRail();
-	  if(oldrail->getRailDir() == UP)
-	    newrail->setRailDir(STARTNEWLINEUP);
-	  else
-	    newrail->setRailDir(STARTNEWLINEDOWN);
+	  newrail->setBottom(oldrail->getBottom());
+	  delete nodes.front();
 	  nodes.erase(nodes.begin());
 	  (*(nodes.begin()))->setLeftRail(newrail);
-	  setLeftRail(newrail);
 	}
-
-      if(parent->is_row() && parent->getRightRail() != NULL &&
-	 nodes.back()->is_rail())
-	{
-	  oldrail = (railnode*)nodes.back();
-	  newrail = parent->getRightRail();
-	  // if(oldrail->getRailDir() == UP)
-	  // 	newrail->setRailDir(STARTNEWLINEUP);
-	  // else
-	  // 	newrail->setRailDir(STARTNEWLINEDOWN);
-	  //      newrail->setRailDir(oldrail->getRailDir());
-	  if(oldrail->getRailDir() == UP)
-	    newrail->setRailDir(STARTNEWLINEUP);
-	  else
-	    newrail->setRailDir(STARTNEWLINEDOWN);
-
-	  newrail->setDrawToPrev(0);
-	  nodes.erase(nodes.end()-1);
-	  nodes.back()->setRightRail(newrail);
-	  setRightRail(newrail);
-	}
-
-      multinode::mergeRails();
     }
+
+  if((*(nodes.end()-1))->is_rail() && (*(nodes.end()-2))->is_choice())
+    {
+      oldrail = (railnode*)(*(nodes.end()-1));
+      newrail = parent->getRightRail();
+      if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
+	{
+	  newrail->setBottom(oldrail->getBottom());
+	  delete nodes.back();
+	  nodes.erase(nodes.end()-1);
+	  (*(nodes.end()-1))->setRightRail(newrail);
+	}
+    }
+
+  if(parent->is_row() && parent->getLeftRail() != NULL &&
+     nodes.front()->is_rail())
+    {
+      oldrail = (railnode*)nodes.front();
+      newrail = parent->getLeftRail();
+      if(oldrail->getRailDir() == UP)
+	newrail->setRailDir(STARTNEWLINEUP);
+      else
+	newrail->setRailDir(STARTNEWLINEDOWN);
+      delete nodes.front();
+      nodes.erase(nodes.begin());
+      (*(nodes.begin()))->setLeftRail(newrail);
+      setLeftRail(newrail);
+    }
+
+  if(parent->is_row() && parent->getRightRail() != NULL &&
+     nodes.back()->is_rail())
+    {
+      oldrail = (railnode*)nodes.back();
+      newrail = parent->getRightRail();
+      // if(oldrail->getRailDir() == UP)
+      // 	newrail->setRailDir(STARTNEWLINEUP);
+      // else
+      // 	newrail->setRailDir(STARTNEWLINEDOWN);
+      //      newrail->setRailDir(oldrail->getRailDir());
+      if(oldrail->getRailDir() == UP)
+	newrail->setRailDir(STARTNEWLINEUP);
+      else
+	newrail->setRailDir(STARTNEWLINEDOWN);
+
+      newrail->setDrawToPrev(0);
+      delete nodes.back();
+      nodes.erase(nodes.end()-1);
+      nodes.back()->setRightRail(newrail);
+      setRightRail(newrail);
+    }
+
+  multinode::mergeRails();
+}
