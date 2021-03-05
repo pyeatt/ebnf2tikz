@@ -138,7 +138,7 @@ singlenode::singlenode(node *p):node()
 
 singlenode::singlenode(const singlenode &original):node(original)
 {
-  //  delete body;
+  delete body;
   body = original.body->clone();
   ea = body->east();
   wa = body->west();
