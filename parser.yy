@@ -149,7 +149,7 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
 
-//     g->dump();
+          g->dump();
 
      g->place(drv.outs());
 

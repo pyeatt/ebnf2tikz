@@ -8,8 +8,8 @@ newlines =
 simple =
          [ a  | b | c | d ] ;
 
-simple =
-  b, { a , b } ;
+// simple =
+//   b, { a , b } ;
 
  optionchoice =
   b,  [ a | b ], c;
@@ -23,8 +23,8 @@ subsume
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
     
-character_literal =
-    "'", graphic_character, "'" ;
+// character_literal =
+//     "'", graphic_character, "'" ;
 
 subsume
 choices =
@@ -53,7 +53,7 @@ nolist=
   a , b , [c , "d" ] , e , f ;
 
 list =
-  a, 'b', c,  this | that_one | 'and' ,  the, other;
+  a, 'b', c \\  this | that_one | 'and' ,  the, other;
 
 list =
   a, 'b', (c , this | that_one,  'and',   the ),other;
