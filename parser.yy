@@ -124,7 +124,7 @@ node* wrapChoice(node *n) {
 // Define the grammar: A grammar is a list of productions
 grammar : productions {
      grammar *g = $1;
-     //g->dump();
+//     g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();
@@ -137,7 +137,7 @@ grammar : productions {
      // g->dump();
      // cout<<"Starting subsume\n";
      
-     g->subsume();
+//     g->subsume();
      g->optimize();
 
      g->setParent();
@@ -149,7 +149,7 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
 
-     g->dump();
+//     g->dump();
 
      g->place(drv.outs());
 

@@ -119,8 +119,8 @@ node::node(const node &original){
   next = NULL;
   beforeskip = original.beforeskip;
   drawtoprev = original.drawtoprev;
-  leftrail = NULL;
-  rightrail = NULL;
+  leftrail = original.leftrail;
+  rightrail = original.leftrail;
   dead = 0;
 }
 
@@ -138,9 +138,13 @@ singlenode::singlenode(node *p):node()
 
 singlenode::singlenode(const singlenode &original):node(original)
 {
+  //  delete body;
   body = original.body->clone();
   ea = body->east();
   wa = body->west();
+  // body->setLeftRail(leftrail);
+  // body->setRightRail(rightrail);
+  body->setParent(this); 
 }
 
 singlenode* singlenode::clone() const
@@ -516,6 +520,7 @@ nullnode* nullnode::clone() const
 
 choicenode::choicenode(node *p):multinode(p)
 {
+  type = CHOICE;
 }
 
 choicenode::choicenode(const choicenode &original):multinode(original)
