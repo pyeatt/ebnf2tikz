@@ -343,6 +343,8 @@ public:
   virtual ~choicenode(){}
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
+  void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
+  void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
 };

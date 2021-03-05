@@ -92,19 +92,19 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
       outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
       outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
       outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
-      line(outs,nodename+"linetop",nodename+"linebottom");
+      // line(outs,nodename+"linetop",nodename+"linebottom");
       stringstream s;
       // if(side==LEFT)
-      // 	{
-       if(direction==DOWN) {
-	  s<<"+west:"<<sizes->colsep<<"pt";
-	  line(outs,nodename+"linetop",nodename,s.str());
-	}
+      // // 	{
+      //  if(direction==DOWN) {
+      // 	  s<<"+west:"<<sizes->colsep<<"pt";
+      // 	  line(outs,nodename+"linetop",nodename,s.str());
+      // 	}
 
-      if(direction==UP) {
-	  s<<"+east:"<<sizes->colsep<<"pt";
-	  line(outs,nodename+"linetop",nodename,s.str());
-	}
+      // if(direction==UP) {
+      // 	  s<<"+east:"<<sizes->colsep<<"pt";
+      // 	  line(outs,nodename+"linetop",nodename,s.str());
+      // 	}
 
       // }
       // else
@@ -305,7 +305,9 @@ coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
     // 	   ((railnode*)next)->rawName(),
     // 	   s.str());
     // else
-      line(outs,
+
+
+    line(outs,
 	   ((railnode*)previous)->rawName()+"linebottom",
 	   nodename+"linetop",
 	   nodename+"linebottom",
@@ -348,11 +350,11 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
     if(draw && (*j)->getDrawToPrev() && (*j)->getPrevious() != NULL) {
       if(j==nodes.begin()) {
 	if(! (parent->is_row() && parent->getLeftRail()!=NULL)) {
-	  line(outs,previous->east(),(*j)->west());
+	  //line(outs,previous->east(),(*j)->west());
 	}
       }
-      else 
-	line(outs,(*j)->getPrevious()->east(),(*j)->west());
+      // else 
+	// line(outs,(*j)->getPrevious()->east(),(*j)->west());
     }
   }
   if(linewidth > myWidth)
@@ -382,15 +384,15 @@ void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join){
       // stringstream s;
       // s<<"+up:"<<sizes->colsep<<"pt";
       // line(outs,3,wa,wa+"-|"+p->rawName(),s.str());
-      if(join == STARTNEWLINEUP)
-	{
-	  stringstream s;
-	  s<<"+right:"<<sizes->colsep<<"pt";
-	  line(outs,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
-	  //line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),p->rawName()+"linebottom");
-	}
-      else
-	line(outs,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
+      // if(join == STARTNEWLINEUP)
+      // 	{
+      // 	  stringstream s;
+      // 	  s<<"+right:"<<sizes->colsep<<"pt";
+      // 	  line(outs,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
+      // 	  // //line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),p->rawName()+"linebottom");
+      // 	}
+      //  else
+       line(outs,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
     }
 }
 
@@ -405,7 +407,7 @@ void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
       // 	  line(outs,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
       // 	}
       // else
-      line(outs,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
+      // line(outs,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
     }
 }
 
@@ -420,7 +422,7 @@ void multinode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join){
 	{
 	  join = leftrail->getRailDir();
 	  line(outs,nodes.front()->west(),
-	       nodes.front()->west()+"-|"+leftrail->east());
+	  //   nodes.front()->west()+"-|"+leftrail->east());
 	}
       nodes.front()->drawToLeftRail(outs,NULL,join);
     }
@@ -441,8 +443,8 @@ void multinode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
       if(p != NULL)
 	{
 	  join = rightrail->getRailDir();
-	  line(outs,nodes.front()->east(),
-	       nodes.front()->east()+"-|"+rightrail->west());
+	  // line(outs,nodes.front()->east(),
+	  //   nodes.front()->east()+"-|"+rightrail->west());
 	}
       nodes.front()->drawToRightRail(outs,NULL,join);
     }
@@ -451,6 +453,74 @@ void multinode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
   // skip first child
   for(auto i = nodes.begin()+1;i!=nodes.end();i++)
     (*i)->drawToRightRail(outs,p,join);
+}
+
+void choicenode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join){
+  // if p is NULL then override with our own rails, and do straight
+  // entry for first child
+  stringstream s,s2;
+  //if(p==NULL)
+    {
+      p = leftrail;
+      if(p != NULL)
+	join = p->getRailDir();
+    }
+
+  if(parent->is_concat() &&
+     parent->getParent()->is_row() &&
+     parent->getParent()->getPrevious()->getPrevious()->is_newline())
+    { // if choice follows newline, draw first child's rail entry up
+      s<<"+up:"<<sizes->colsep<<"pt";
+      line(outs,nodes.front()->west(),p->rawName(),s.str());
+    }
+  else
+    { 
+      if(parent->is_concat() &&
+	 parent->getParent()->is_choice() &&
+	 this != ((choicenode*)parent->getParent())->nodes.front())
+	{ // if choice embedded in another choice, draw first child's
+	  // rail entry up
+	  line(outs,nodes.front()->west(),
+	       nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+	}
+      else
+	{ // If inside a loop, and the loop follows a newline, then
+	  // use an 's' shaped rail entry 
+	  s<<"++left:"<<sizes->colsep<<"pt";
+	  s2<<"+up:"<<sizes->colsep<<"pt";
+	  line(outs,nodes.front()->west(),p->rawName(),s.str(),s2.str());
+
+	  // otherwise, use straight rail entry, unless I'm inside a
+	  // loop, and the loop follows
+	  //s<<"+left:"<<sizes->colsep<<"pt";
+	  //line(outs,nodes.front()->west(),p->rawName(),s.str());
+	}
+    }
+  // skip first child
+  for(auto i = nodes.begin()+1;i!=nodes.end();i++)
+    (*i)->drawToLeftRail(outs,p,join);
+
+}
+
+void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
+  // if p is NULL then override with our own rails, and do straight
+  // entry for first child
+  // if(p==NULL)
+  //   {
+  //     p = rightrail;
+  //     if(p != NULL)
+  // 	{
+  // 	  join = rightrail->getRailDir();
+  // 	  // line(outs,nodes.front()->east(),
+  // 	  //   nodes.front()->east()+"-|"+rightrail->west());
+  // 	}
+  //     nodes.front()->drawToRightRail(outs,NULL,join);
+  //   }
+  // else
+  //   nodes.front()->drawToRightRail(outs,p,join);
+  // // skip first child
+  // for(auto i = nodes.begin()+1;i!=nodes.end();i++)
+  //   (*i)->drawToRightRail(outs,p,join);
 }
 
 void concatnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join){
@@ -503,4 +573,5 @@ void singlenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
     }
   body->drawToRightRail(outs,p,join);
 }
+
 
