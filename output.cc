@@ -30,7 +30,7 @@ using namespace std;
 
 // Variadic function for drawing lines
 template <class ... Args>
-void node::line(ofstream &outs,const int numpts, Args ... args)
+void node::line(ofstream &outs, Args ... args)
 {
   vector<string> list = {args...};
   if(list.size() > 1)
@@ -92,18 +92,18 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
       outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
       outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
       outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
-      line(outs,2,nodename+"linetop",nodename+"linebottom");
+      line(outs,nodename+"linetop",nodename+"linebottom");
       stringstream s;
       // if(side==LEFT)
       // 	{
        if(direction==DOWN) {
 	  s<<"+west:"<<sizes->colsep<<"pt";
-	  line(outs,3,nodename+"linetop",nodename,s.str());
+	  line(outs,nodename+"linetop",nodename,s.str());
 	}
 
       if(direction==UP) {
 	  s<<"+east:"<<sizes->colsep<<"pt";
-	  line(outs,3,nodename+"linetop",nodename,s.str());
+	  line(outs,nodename+"linetop",nodename,s.str());
 	}
 
       // }
@@ -305,7 +305,7 @@ coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
     // 	   ((railnode*)next)->rawName(),
     // 	   s.str());
     // else
-      line(outs,4,
+      line(outs,
 	   ((railnode*)previous)->rawName()+"linebottom",
 	   nodename+"linetop",
 	   nodename+"linebottom",
@@ -348,11 +348,11 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
     if(draw && (*j)->getDrawToPrev() && (*j)->getPrevious() != NULL) {
       if(j==nodes.begin()) {
 	if(! (parent->is_row() && parent->getLeftRail()!=NULL)) {
-	  line(outs,2,previous->east(),(*j)->west());
+	  line(outs,previous->east(),(*j)->west());
 	}
       }
       else 
-	line(outs,2,(*j)->getPrevious()->east(),(*j)->west());
+	line(outs,(*j)->getPrevious()->east(),(*j)->west());
     }
   }
   if(linewidth > myWidth)
@@ -386,11 +386,11 @@ void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join){
 	{
 	  stringstream s;
 	  s<<"+right:"<<sizes->colsep<<"pt";
-	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
+	  line(outs,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
 	  //line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),p->rawName()+"linebottom");
 	}
       else
-	line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
+	line(outs,wa,wa+"-|"+p->rawName(),p->rawName()+"linetop");
     }
 }
 
@@ -402,10 +402,10 @@ void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
       // 	{
       // 	  stringstream s;
       // 	  s<<"+left:"<<sizes->colsep<<"pt";
-      // 	  line(outs,3,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
+      // 	  line(outs,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
       // 	}
       // else
-      line(outs,3,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
+      line(outs,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
     }
 }
 
@@ -419,7 +419,7 @@ void multinode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join){
       if(p != NULL)
 	{
 	  join = leftrail->getRailDir();
-	  line(outs,2,nodes.front()->west(),
+	  line(outs,nodes.front()->west(),
 	       nodes.front()->west()+"-|"+leftrail->east());
 	}
       nodes.front()->drawToLeftRail(outs,NULL,join);
@@ -441,7 +441,7 @@ void multinode::drawToRightRail(ofstream &outs, railnode* p, vraildir join){
       if(p != NULL)
 	{
 	  join = rightrail->getRailDir();
-	  line(outs,2,nodes.front()->east(),
+	  line(outs,nodes.front()->east(),
 	       nodes.front()->east()+"-|"+rightrail->west());
 	}
       nodes.front()->drawToRightRail(outs,NULL,join);

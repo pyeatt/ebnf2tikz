@@ -75,7 +75,7 @@ protected:
   // tikz coordinates of things you want connected (eg "node1.east",
   // "coord3", "10,10", etc
   template <class ... Args>
-  void line(ofstream &outs, const int numpts, Args ... args);
+  void line(ofstream &outs, Args ... args);
 
   int same_type(node &r){return type == r.type;}
 
