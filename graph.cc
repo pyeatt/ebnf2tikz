@@ -132,9 +132,10 @@ void node::dump(int depth) const
     cout<<" leftrail="<<((node*)leftrail)->rawName();
   if(rightrail != NULL)
     cout<<" rightrail="<<((node*)rightrail)->rawName();
-  cout<<" drawtoprev="<<drawtoprev<<endl;
-      //<<ea<<" "<<wa<<
-      //" width="<<myWidth<<" height="<<myHeight<<" beforeskip="<<beforeskip<<
+  cout<<" drawtoprev="<<drawtoprev<<" beforeskip="<<beforeskip<<" width="<<myWidth<< " height="<<myHeight<<" "<<ea<<" "<<wa<<endl;
+      
+      //
+      //" 
 }
 
 // ------------------------------------------------------------------------
@@ -467,8 +468,10 @@ void railnode::dump(int depth) const
 { int i;
   for(i=0;i<depth;i++)
     cout<<"  ";
-  cout<<"rail";
-  node::dump(depth);
+  cout<<"rail ";
+  cout<<" "<<vrailStr(direction);
+ node::dump(depth);
+  
 }  
 
 int railnode::operator ==(node &r)
@@ -563,7 +566,7 @@ newlinenode::newlinenode():railnode()
   ea = nodename;
   wa = nodename;
   drawtoprev = 0;
-  beforeskip = 0;
+  //beforeskip = 0;
 }
 
 newlinenode::newlinenode(const newlinenode &original):

@@ -46,11 +46,30 @@ string stripSpecial(string s);
 // ------------------------------------------------------------------------
 
 typedef enum {LEFT,RIGHT} vrailside;
-typedef enum {UP,DOWN,STARTNEWLINEUP,STARTNEWLINEDOWN} vraildir;
+//typedef enum {UP,DOWN,STARTNEWLINEUP,STARTNEWLINEDOWN} vraildir;
+typedef enum {UP,DOWN} vraildir;
 class railnode;
 // base class for all nodes in the parse tree
 class node {
 protected:
+  static string vrailStr(vraildir d)
+  {
+    switch (d)
+      {
+      case UP:
+	return "UP";
+      case DOWN:
+	return "DOWN";
+      // case STARTNEWLINEUP:
+      // 	return "STARTNEWLINEUP";
+      // case STARTNEWLINEDOWN:
+      // 	return "STARTNEWLINEDOWN";
+      default:
+	cerr<<"BAD VALUE for vraildir"<<endl;
+	exit(4);
+      }
+    return "";
+  }
   typedef enum {GRAMMAR, CHOICE, TERMINAL, NONTERM, CONCAT,
     NULLNODE, LOOP, NEWLINE, PRODUCTION, RAIL, ROW, UNKNOWN} nodetype;
   static nodesizes* sizes;
@@ -85,8 +104,8 @@ public:
   virtual void setRightRail(railnode* p){rightrail = p;}
   railnode* getLeftRail(){return leftrail;}
   railnode* getRightRail(){return rightrail;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,vraildir join);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,vraildir join);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,vraildir join,int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,vraildir join, int drawself);
   void makeDead(){dead = 1;}
   int isDead(){return dead;}
   void setBeforeSkip(float s){beforeskip=s;}
@@ -106,6 +125,8 @@ public:
   static void deleteData() {
     delete sizes;
   }
+  static float getColSep(){return sizes->colsep;}
+  
   int is_choice(){return type==CHOICE;}
   int is_terminal(){return type==TERMINAL;}
   int is_nonterm(){return type==NONTERM;}
@@ -162,8 +183,8 @@ public:
   singlenode(const singlenode &original);
   virtual singlenode* clone() const;
   virtual void forgetChild(int n);
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual void mergeRails(){body->mergeRails();}
   virtual ~singlenode(){if(body != NULL) delete body;}
   virtual int mergeConcats(int depth){
@@ -229,8 +250,8 @@ public:
   virtual void insertFirst(node *node);
   virtual int numChildren(){return nodes.size();}
   virtual node* getChild(int n){return nodes[n];}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
+  // virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   //  virtual int liftOptionChoice(int depth);
@@ -270,8 +291,8 @@ public:
   virtual node* getChild(int n){return NULL;}
   virtual int analyzeOptLoops(int depth){return 0;}
   virtual int analyzeNonOptLoops(int depth){return 0;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} // not efficient
   virtual node* subsume(string name, node *replacement);
@@ -322,6 +343,8 @@ public:
 // A rownode contains expressions that are drawn across the page.  The
 // child is usually a concatnode.
 class rownode:public singlenode{
+private:
+  string coordname;
 public:
   rownode(node *p);
   rownode(const rownode &original);
@@ -343,8 +366,8 @@ public:
   virtual ~choicenode(){}
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
-  void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
-  void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
 };
@@ -358,6 +381,8 @@ public:
   loopnode* clone() const;
   virtual ~loopnode(){}
   virtual void dump(int depth) const;
+  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   node* getRepeat();
   void setRepeat(node *r);
   node* getBody();
@@ -384,8 +409,8 @@ public:
   virtual int mergeConcats(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual void mergeRails();
   virtual void setPrevious(node* p);
   virtual void setNext(node* p);
