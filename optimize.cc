@@ -712,69 +712,76 @@ void concatnode::mergeRails(){
   // 	    }
   // 	}
   //   }
-  
-  if((*(nodes.begin()))->is_rail() && (*(nodes.begin()+1))->is_choice())
+
+
+  // We can merge rails if this concat begins with a rail followed by
+  // a choice or loop, and it is one of the children inside a choice
+  // or loop with matching left rail.
+  if((*(nodes.begin()))->is_rail() &&
+     ((*(nodes.begin()+1))->is_choice() || (*(nodes.begin()+1))->is_loop()))
     {
       oldrail = (railnode*)(*(nodes.begin()));
       newrail = parent->getLeftRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  newrail->setBottom(oldrail->getBottom());
+	  //newrail->setBottom(oldrail->getBottom());
 	  delete nodes.front();
 	  nodes.erase(nodes.begin());
 	  (*(nodes.begin()))->setLeftRail(newrail);
 	}
     }
 
-  if((*(nodes.end()-1))->is_rail() && (*(nodes.end()-2))->is_choice())
+  // We can merge rails if this concat ends with a a choice or loop
+  // followed by a rail, and it is one of the children inside a choice
+  // or loop with matching right rail.
+  if((*(nodes.end()-1))->is_rail() &&
+     ((*(nodes.end()-2))->is_choice() || (*(nodes.end()-2))->is_loop()))
     {
       oldrail = (railnode*)(*(nodes.end()-1));
       newrail = parent->getRightRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  newrail->setBottom(oldrail->getBottom());
+	  //newrail->setBottom(oldrail->getBottom());
 	  delete nodes.back();
 	  nodes.erase(nodes.end()-1);
 	  (*(nodes.end()-1))->setRightRail(newrail);
 	}
     }
 
-  if(parent->is_row() && parent->getLeftRail() != NULL &&
-     nodes.front()->is_rail())
-    {
-      oldrail = (railnode*)nodes.front();
-      newrail = parent->getLeftRail();
-      if(oldrail->getRailDir() == UP)
-	newrail->setRailDir(STARTNEWLINEUP);
-      else
-	newrail->setRailDir(STARTNEWLINEDOWN);
-      delete nodes.front();
-      nodes.erase(nodes.begin());
-      (*(nodes.begin()))->setLeftRail(newrail);
-      setLeftRail(newrail);
-    }
+  // if(parent->is_row() && parent->getLeftRail() != NULL &&
+  //    nodes.front()->is_rail())
+  //   {
+  //     nodes.front()->setBeforeSkip(0);
+  //     // oldrail = (railnode*)nodes.front();
+  //     // newrail = parent->getLeftRail();
+  //     // newrail->setRailDir(oldrail->getRailDir());
+  //     // nodes.erase(nodes.begin());
+  //     // (*(nodes.begin()))->setLeftRail(newrail);
+  //     // setLeftRail(newrail);
+  //   }
 
-  if(parent->is_row() && parent->getRightRail() != NULL &&
-     nodes.back()->is_rail())
-    {
-      oldrail = (railnode*)nodes.back();
-      newrail = parent->getRightRail();
-      // if(oldrail->getRailDir() == UP)
-      // 	newrail->setRailDir(STARTNEWLINEUP);
-      // else
-      // 	newrail->setRailDir(STARTNEWLINEDOWN);
-      //      newrail->setRailDir(oldrail->getRailDir());
-      if(oldrail->getRailDir() == UP)
-	newrail->setRailDir(STARTNEWLINEUP);
-      else
-	newrail->setRailDir(STARTNEWLINEDOWN);
+  // if(parent->is_row() && parent->getRightRail() != NULL &&
+  //    nodes.back()->is_rail())
+  //   {
+  //     oldrail = (railnode*)nodes.back();
+  //     newrail = parent->getRightRail();
+  //     // if(oldrail->getRailDir() == UP)
+  //     // 	newrail->setRailDir(STARTNEWLINEUP);
+  //     // else
+  //     // 	newrail->setRailDir(STARTNEWLINEDOWN);
+  //     //      newrail->setRailDir(oldrail->getRailDir());
+  //     newrail->setRailDir(oldrail->getRailDir());
+  //     // if(oldrail->getRailDir() == UP)
+  //     // 	newrail->setRailDir(STARTNEWLINEUP);
+  //     // else
+  //     // 	newrail->setRailDir(STARTNEWLINEDOWN);
 
-      newrail->setDrawToPrev(0);
-      delete nodes.back();
-      nodes.erase(nodes.end()-1);
-      nodes.back()->setRightRail(newrail);
-      setRightRail(newrail);
-    }
+  //     newrail->setDrawToPrev(0);
+  //     delete nodes.back();
+  //     nodes.erase(nodes.end()-1);
+  //     nodes.back()->setRightRail(newrail);
+  //     setRightRail(newrail);
+  //   }
 
   multinode::mergeRails();
 }
