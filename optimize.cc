@@ -80,7 +80,6 @@ int singlenode::liftConcats(int depth)
   int count = body->liftConcats(depth+1);
   if(body->is_concat() && body->numChildren() == 1)
     {
-      cout << "SINGLNODE LIFTING CONCAT\n";
       node *child = body->getChild(0);
       body->forgetChild(0);
       delete body;
@@ -109,7 +108,6 @@ int multinode::liftConcats(int depth)
     {
       if((*i)->is_concat() && (*i)->numChildren() == 1)
 	{
-	  // cout << "MULTINODE LIFTING CONCAT\n";
 	  node *child = (*i)->getChild(0);
 	  (*i)->forgetChild(0);
 	  delete *i;
@@ -189,7 +187,8 @@ void productionnode::optimize()
     changes += tmp;
     //cout<<tmp<<" concats lifted\n";	
   }while(tmp > 0);
-  
+
+  body->fixSkips();
   //cout <<"-----------------\n";
 };
 
@@ -214,6 +213,7 @@ int choicenode::mergeChoices(int depth)
 	 (*i)->getChild(1)->is_choice() &&
 	 (*i)->getChild(2)->is_rail())
 	{
+	  cout<<"MERGING CHOICE " << (*i)->getChild(1)->rawName()<<" into "<< rawName()<<endl;
 	  // get pointed to node at i
 	  cp = dynamic_cast<concatnode*>(*i);
 	  ip = dynamic_cast<choicenode*>(cp->getChild(1));
@@ -326,6 +326,12 @@ int concatnode::mergeConcats(int depth){
 	  i++;
       }
   }
+
+  // if(parent != NULL && parent->is_row() &&
+  //    parent->getPrevious() != NULL && parent->getPrevious()->is_newline() &&
+  //    nodes[0]->is_rail() && nodes[1]->is_loop())
+  //   nodes[1]->setBeforeSkip(0);
+  
   return sum;
 }
 
@@ -375,6 +381,7 @@ int concatnode::findAndDeleteMatches(vector<node*> &parentnodes,
   return numnodes;
 }
 
+// does not need to be a member, so just make it static.
 static void moveLoop(loopnode *loop, vector<node*>::iterator i)
 {
   choicenode *option = (choicenode *)*i;
@@ -404,6 +411,25 @@ static void moveLoop(loopnode *loop, vector<node*>::iterator i)
   // free the option node
   delete option;
 }
+
+static void flipChoiceRails(node *j){
+  concatnode *c=(concatnode*)j;
+  if(j->is_concat())
+    {
+      for(int i = 0; i < c->numChildren(); i++)
+	if(c->getChild(i)->is_rail())
+	  switch(((railnode*)c->getChild(i))->getRailDir())
+	    {
+	    case DOWN:
+	      ((railnode*)c->getChild(i))->setRailDir(UP);
+	      break;
+	    case UP:
+	      ((railnode*)c->getChild(i))->setRailDir(DOWN);
+	      break;
+	    }
+    }
+};
+
 
 // analyze optionloops
 // nodea followed by optionnode followed by loop
@@ -500,8 +526,10 @@ int concatnode::analyzeOptLoops(int depth)
 	    // rail and keep them in order.
 	    j--;
 	    concatnode *c = new concatnode(*j);
+	    flipChoiceRails(*j);
 	    do {
 	      j--;
+	      flipChoiceRails(*j);
 	      c->insert(*j);
 	      delcount++;
 	    } while(j!= child->nodes.begin());
@@ -536,9 +564,11 @@ int concatnode::analyzeOptLoops(int depth)
 	    if(j == child->nodes.end())
 	      j--;
 	    concatnode *c = new concatnode(*j);
+	    flipChoiceRails(*j);
 	    do
 	      {
 		j--;
+		flipChoiceRails(*j);
 		c->insert(*j);
 		delcount++;
 	      }
@@ -574,8 +604,23 @@ int concatnode::analyzeOptLoops(int depth)
 	}
       }
       moveLoop(loop,i);
+      
     }
+    
+  // if our first child is a rail and second child is a loop, and our
+  // parent is a row following a newline, then change the rail's
+  // beforeskip to zero.
+  if(nodes[0]->is_rail() &&
+     nodes[1]->is_loop() &&
+     parent->is_row() &&
+     parent->getPrevious()->is_newline())
+    nodes[0]->setBeforeSkip(0);
+  
   }
+  // if the loop body is a concat, change its beforeskip
+  // if(parent->is_loop())
+  //   nodes[0]->setBeforeSkip(0);
+
   return sum;
 }
 
@@ -612,36 +657,22 @@ int concatnode::analyzeNonOptLoops(int depth)
       if(loop->getChild(0)->is_concat()) {
 	// Loop body is a concat.  Working back from the end of the
 	// child, find the first node that does not match a
-	// corresponding node in this concat. call findAndDelete... to
+	// corresponding node in this concat. call findAndDelete to
 	// do all of that and delete matching fram the parent
 	child = (concatnode*)loop->getChild(0);
 	numnodes = findAndDeleteMatches(nodes,prev,child->nodes,j);
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
-	  // If there is only one node left in the child concat,
-	  // if(numnodes == 1) {
-	  //   // then move it to the repeat part.
-	  //   loop->nodes[1]=(*(j-1));
-	  //   child = (concatnode*)loop->getChild(0);
-	  //   j = child->nodes.erase(j-1);
-	  //   // if child only has one remaining node, then replace it
-	  //   // with its one child and delete it.
-	  //   if(child->nodes.size()==1) {
-	  //     loop->nodes[0] = child->nodes[0];
-	  //     child->nodes.clear();
-	  //     delete child;
-	  //   }
-	  // }
-	  // else {
 	  int delcount = 0;
-	  // If there is more than one node left in the child
-	  // concat, then create a new concat node and move all of
+	  // Create a new concat node and move all of
 	  // the remaining nodes into it IN REVERSE ORDER.
 	  j--;
 	  concatnode *c = new concatnode(*j);
+	  flipChoiceRails(*j);
 	  while(j!= child->nodes.begin())
 	    {
 	      j--;
+	      flipChoiceRails(*j);
 	      c->insert(*j);
 	      delcount++;
 	    } 
@@ -650,7 +681,6 @@ int concatnode::analyzeNonOptLoops(int depth)
 	  // erase the nodes that were moved from the child concat
 	  for(int i=0;i<delcount+1;i++)
 	    j = child->nodes.erase(j);
-	  //}
 	}
       }
       else {
@@ -663,26 +693,21 @@ int concatnode::analyzeNonOptLoops(int depth)
 	    i = nodes.erase(prev);
 	  }
       }
-
+      
+      // // if the loop body is a concat, change its beforeskip
+      // if(loop->getChild(0)->is_concat())
+      // 	{
+      // 	  loop->getChild(0)->setBeforeSkip(0);
+      // 	  loop->getChild(0)->getChild(0)->setBeforeSkip(0);
+      // 	  //(*i)->getChild(0)->setBeforeSkip(0);
+      // 	  //(*i)->getChild(0)->getChild(0)->setBeforeSkip(0);
+      // 	}
     }
   }
   
-  // bury the dead
-  // i = nodes.begin();
-  // while(i!=nodes.end())
-  //   {
-  //     if((*i)->isDead())
-  // 	{
-  // 	  if(i != nodes.end()-1)
-  // 	    (*(i+1))->setLeftRail((*i)->getLeftRail());
-  // 	  if(i != nodes.begin())
-  // 	    (*(i-1))->setRightRail((*i)->getRightRail());
-  // 	  delete (*i);
-  // 	  i = nodes.erase(i);
-  // 	}
-  //     else
-  // 	i++;
-  //   }
+  // if(parent->is_loop())
+  //   nodes[0]->setBeforeSkip(0);
+
   return sum;
 }
 
@@ -747,6 +772,8 @@ void concatnode::mergeRails(){
 	  (*(nodes.end()-1))->setRightRail(newrail);
 	}
     }
+  // if(parent->is_loop())
+  //   nodes[0]->setBeforeSkip(0);
 
   // if(parent->is_row() && parent->getLeftRail() != NULL &&
   //    nodes.front()->is_rail())

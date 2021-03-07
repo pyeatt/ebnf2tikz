@@ -8,8 +8,11 @@ newlines =
 simple =
          [ a  | b | c | d ] ;
 
-// simple =
-//   b, { a , b } ;
+simple =
+  b, { a , b } ;
+
+character_literal =
+    "'", graphic_character, "'" ;
 
  optionchoice =
   b,  [ a | b ], c;
@@ -23,9 +26,6 @@ subsume
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
     
-// character_literal =
-//     "'", graphic_character, "'" ;
-
 subsume
 choices =
     simple_expression |

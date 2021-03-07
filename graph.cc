@@ -345,7 +345,8 @@ void productionnode::dump(int depth) const
 { 
   depth=0;
   cout << "production: "<<name<<endl;
-  body->dump(1);
+  if(!subsume_spec)
+    body->dump(1);
 }
 
 // ------------------------------------------------------------------------
