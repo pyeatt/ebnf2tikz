@@ -126,7 +126,7 @@ public:
     delete sizes;
   }
   static float getColSep(){return sizes->colsep;}
-  
+
   int is_choice(){return type==CHOICE;}
   int is_terminal(){return type==TERMINAL;}
   int is_nonterm(){return type==NONTERM;}
@@ -148,6 +148,8 @@ public:
 			   coordinate start,node *parent, int depth){
     //lastPlaced=this;
     return start;}
+
+  virtual void fixSkips(){}
   
   virtual void insert(node*){}
   virtual void mergeRails(){}
@@ -204,6 +206,7 @@ public:
   virtual void setParent(node* p);
   virtual void setPrevious(node *n){previous = n;body->setPrevious(n);}
   virtual void setNext(node *n) {next = n;body->setNext(n);}
+  virtual void fixSkips();
 };
 
 // ------------------------------------------------------------------------
@@ -266,6 +269,7 @@ public:
   virtual int mergeChoices(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
+  virtual void fixSkips();
 };
 
 // ------------------------------------------------------------------------
@@ -370,6 +374,7 @@ public:
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
+  virtual void fixSkips();
 };
 
 // ------------------------------------------------------------------------
@@ -387,6 +392,7 @@ public:
   void setRepeat(node *r);
   node* getBody();
   void setBody(node *r);
+  virtual void fixSkips();
 };
 
 // ------------------------------------------------------------------------
@@ -414,6 +420,7 @@ public:
   virtual void mergeRails();
   virtual void setPrevious(node* p);
   virtual void setNext(node* p);
+  virtual void fixSkips();
 };
 
 // ------------------------------------------------------------------------

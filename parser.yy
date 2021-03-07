@@ -138,6 +138,7 @@ grammar : productions {
      // g->dump();
      // cout<<"Starting subsume\n";
      
+     g->optimize();
      g->subsume();
      g->optimize();
 
@@ -145,14 +146,14 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
      g->mergeRails();
+     g->optimize();
 
      g->setParent();
      g->setPrevious();
      g->setNext();
 
-     g->place(drv.outs());
-
      g->dump();
+     g->place(drv.outs());
 
      delete g;
   } ;
@@ -217,6 +218,10 @@ rows :
       $3 = wrapChoice($3);
       newlinenode *n = new newlinenode();
       rownode *row = new rownode($3);
+      row->setBeforeSkip(0);
+      $3->setBeforeSkip(0);
+      // if($3->getChild(0) != NULL)
+      //   $3->getChild(0)->setBeforeSkip(0);
       if($1->is_concat())
         {
 	   $$ = $1;
@@ -259,6 +264,9 @@ rows :
     expression {
       $1 = wrapChoice($1);
       $$ = new rownode($1);
+      $$->setBeforeSkip(0);
+      $1->setBeforeSkip(0);
+      $1->setDrawToPrev(1);
       $$->setDrawToPrev(1);
      } ;
   
