@@ -332,8 +332,9 @@ productionnode::productionnode(annotmap *a,string s,node *p):
 	subsume_spec = NULL;
       else
 	{
+	  
 	  if(reg == "emusbussubsume")
-	    reg == name;
+	    reg = name;
 	  subsume_spec = new regex_t;
 	  if(regcomp(subsume_spec,reg.c_str(),REG_EXTENDED))
 	    {
