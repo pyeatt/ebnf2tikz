@@ -44,10 +44,13 @@ ebnf2tikz
 %code {
 #include <iostream>
 using namespace std;
-#include "annot_driver.hh"
 #include "annot_lexer.hh"
 #include "nodesize.hh"
 
+// Give Flex the prototype of yylex
+#define YY_DECL annot::parser::symbol_type annotlex (annotmap *m)
+// declare yylex here
+YY_DECL;
 
 annot::location loc;
   
