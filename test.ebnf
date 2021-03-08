@@ -11,6 +11,9 @@ simple =
 simple =
   b, { a , b } ;
 
+character_literal =
+    "'", graphic_character, "'" ;
+
  optionchoice =
   b,  [ a | b ], c;
 
@@ -23,9 +26,6 @@ subsume
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
     
-character_literal =
-    "'", graphic_character, "'" ;
-
 subsume
 choices =
     simple_expression |
@@ -53,7 +53,7 @@ nolist=
   a , b , [c , "d" ] , e , f ;
 
 list =
-  a, 'b', c,  this | that_one | 'and' ,  the, other;
+  a, 'b', c \\  this | that_one | 'and' ,  the, other;
 
 list =
   a, 'b', (c , this | that_one,  'and',   the ),other;
