@@ -20,10 +20,9 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Larry Pyeatt
 #include <graph.hh>
 #include <nodesize.hh>
-#include <algorithm>    // std::find
+#include <algorithm> 
 using namespace std;
 
 
@@ -188,7 +187,6 @@ void productionnode::optimize()
     //cout<<tmp<<" concats lifted\n";	
   }while(tmp > 0);
 
-  body->fixSkips();
   //cout <<"-----------------\n";
 };
 
@@ -213,7 +211,6 @@ int choicenode::mergeChoices(int depth)
 	 (*i)->getChild(1)->is_choice() &&
 	 (*i)->getChild(2)->is_rail())
 	{
-	  cout<<"MERGING CHOICE " << (*i)->getChild(1)->rawName()<<" into "<< rawName()<<endl;
 	  // get pointed to node at i
 	  cp = dynamic_cast<concatnode*>(*i);
 	  ip = dynamic_cast<choicenode*>(cp->getChild(1));
@@ -326,12 +323,6 @@ int concatnode::mergeConcats(int depth){
 	  i++;
       }
   }
-
-  // if(parent != NULL && parent->is_row() &&
-  //    parent->getPrevious() != NULL && parent->getPrevious()->is_newline() &&
-  //    nodes[0]->is_rail() && nodes[1]->is_loop())
-  //   nodes[1]->setBeforeSkip(0);
-  
   return sum;
 }
 
@@ -506,7 +497,6 @@ int concatnode::analyzeOptLoops(int depth)
 	// If there were matching nodes, then we can move stuff around
 	if(numnodes > 0) {
 	  // THERE WERE MATCHING NODES
-	  //cout << "THERE WERE MATCHING NODES"<<endl;
 	  // If there is only one node left in the child concat,
 	  if(j-1 == child->nodes.begin()) {
 	    // CHILD HAS ONE REMAINING NODE
@@ -517,7 +507,6 @@ int concatnode::analyzeOptLoops(int depth)
 	  }
 	  else {
 	    // CHILD HAS MULTIPLE REMAINING NODES
-	    //cout << "CHILD HAS MULTIPLE REMAINING NODES"<<endl;
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
@@ -542,7 +531,6 @@ int concatnode::analyzeOptLoops(int depth)
 	}
 	else {
 	  // THERE WERE NO MATCHING NODES
-	  //cout << "THERE WERE NO MATCHING NODES"<<endl;
 	  // If there is only one node left in the child concat,
 	  if(child->numChildren()==1) {
 	    // CHILD HAS ONE REMAINING NODE
@@ -554,7 +542,6 @@ int concatnode::analyzeOptLoops(int depth)
 	  }
 	  else {
 	    // CHILD HAS MULTIPLE REMAINING NODES
-	    //cout << "CHILD HAS MULTIPLE REMAINING NODES"<<endl;
 	    int delcount = 0;
 	    // If there is more than one node left in the child
 	    // concat, then create a new concat node and move all of
@@ -583,8 +570,6 @@ int concatnode::analyzeOptLoops(int depth)
 	  }
 	}
       }
-
-
       else {
 	// loop body is NOT a concat.
 	// if loop body matches previous item in this concat
@@ -604,7 +589,6 @@ int concatnode::analyzeOptLoops(int depth)
 	}
       }
       moveLoop(loop,i);
-      
     }
     
   // if our first child is a rail and second child is a loop, and our
@@ -617,14 +601,8 @@ int concatnode::analyzeOptLoops(int depth)
     nodes[0]->setBeforeSkip(0);
   
   }
-  // if the loop body is a concat, change its beforeskip
-  // if(parent->is_loop())
-  //   nodes[0]->setBeforeSkip(0);
-
   return sum;
 }
-
-
 
 
 // sequence_a followed by loop containing optional separator and sequence_a
@@ -693,15 +671,6 @@ int concatnode::analyzeNonOptLoops(int depth)
 	    i = nodes.erase(prev);
 	  }
       }
-      
-      // // if the loop body is a concat, change its beforeskip
-      // if(loop->getChild(0)->is_concat())
-      // 	{
-      // 	  loop->getChild(0)->setBeforeSkip(0);
-      // 	  loop->getChild(0)->getChild(0)->setBeforeSkip(0);
-      // 	  //(*i)->getChild(0)->setBeforeSkip(0);
-      // 	  //(*i)->getChild(0)->getChild(0)->setBeforeSkip(0);
-      // 	}
     }
   }
   
@@ -714,31 +683,6 @@ int concatnode::analyzeNonOptLoops(int depth)
 void concatnode::mergeRails(){
   railnode *newrail;
   railnode *oldrail;
-  // if(nodes[0]->is_rail() && nodes[1]->is_choice())
-  //   {
-  //     cout << "searching for left rail\n";
-  //     oldrail = (railnode*)nodes[0];
-  //     p = parent;
-  //     while(p != NULL && p->getLeftRail() == NULL)
-  // 	{
-  // 	  cout << "checking parent "<<p<<endl;
-  // 	  p = p->getParent();
-  // 	}
-      
-  //     //newrail = findLeftRail(parent);
-  //     if(p != NULL && p->getLeftRail() != NULL)
-  // 	{
-  // 	  newrail = p->getLeftRail();
-  // 	  if(newrail->getRailDir() == oldrail->getRailDir())
-  // 	    {
-  // 	      cout <<"replacing left rail\n";
-  // 	      nodes.erase(nodes.begin());
-  // 	      nodes[0]->setLeftRail(p->getLeftRail());
-  // 	    }
-  // 	}
-  //   }
-
-
   // We can merge rails if this concat begins with a rail followed by
   // a choice or loop, and it is one of the children inside a choice
   // or loop with matching left rail.
@@ -749,13 +693,11 @@ void concatnode::mergeRails(){
       newrail = parent->getLeftRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  //newrail->setBottom(oldrail->getBottom());
 	  delete nodes.front();
 	  nodes.erase(nodes.begin());
 	  (*(nodes.begin()))->setLeftRail(newrail);
 	}
     }
-
   // We can merge rails if this concat ends with a a choice or loop
   // followed by a rail, and it is one of the children inside a choice
   // or loop with matching right rail.
@@ -766,49 +708,10 @@ void concatnode::mergeRails(){
       newrail = parent->getRightRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
-	  //newrail->setBottom(oldrail->getBottom());
 	  delete nodes.back();
 	  nodes.erase(nodes.end()-1);
 	  (*(nodes.end()-1))->setRightRail(newrail);
 	}
     }
-  // if(parent->is_loop())
-  //   nodes[0]->setBeforeSkip(0);
-
-  // if(parent->is_row() && parent->getLeftRail() != NULL &&
-  //    nodes.front()->is_rail())
-  //   {
-  //     nodes.front()->setBeforeSkip(0);
-  //     // oldrail = (railnode*)nodes.front();
-  //     // newrail = parent->getLeftRail();
-  //     // newrail->setRailDir(oldrail->getRailDir());
-  //     // nodes.erase(nodes.begin());
-  //     // (*(nodes.begin()))->setLeftRail(newrail);
-  //     // setLeftRail(newrail);
-  //   }
-
-  // if(parent->is_row() && parent->getRightRail() != NULL &&
-  //    nodes.back()->is_rail())
-  //   {
-  //     oldrail = (railnode*)nodes.back();
-  //     newrail = parent->getRightRail();
-  //     // if(oldrail->getRailDir() == UP)
-  //     // 	newrail->setRailDir(STARTNEWLINEUP);
-  //     // else
-  //     // 	newrail->setRailDir(STARTNEWLINEDOWN);
-  //     //      newrail->setRailDir(oldrail->getRailDir());
-  //     newrail->setRailDir(oldrail->getRailDir());
-  //     // if(oldrail->getRailDir() == UP)
-  //     // 	newrail->setRailDir(STARTNEWLINEUP);
-  //     // else
-  //     // 	newrail->setRailDir(STARTNEWLINEDOWN);
-
-  //     newrail->setDrawToPrev(0);
-  //     delete nodes.back();
-  //     nodes.erase(nodes.end()-1);
-  //     nodes.back()->setRightRail(newrail);
-  //     setRightRail(newrail);
-  //   }
-
   multinode::mergeRails();
 }

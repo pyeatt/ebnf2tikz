@@ -125,34 +125,40 @@ node* wrapChoice(node *n) {
 // Define the grammar: A grammar is a list of productions
 grammar : productions {
      grammar *g = $1;
-//     g->dump();
+
      g->setParent();
      g->setPrevious();
      g->setNext();
      g->optimize();
-     //g->dump();
+
      g->setParent();
      g->setPrevious();
      g->setNext();
-     
-     // g->dump();
-     // cout<<"Starting subsume\n";
-     
-     g->optimize();
      g->subsume();
+
+     g->setParent();
+     g->setPrevious();
+     g->setNext();
      g->optimize();
 
      g->setParent();
      g->setPrevious();
      g->setNext();
      g->mergeRails();
+
+     g->setParent();
+     g->setPrevious();
+     g->setNext();
      g->optimize();
 
      g->setParent();
      g->setPrevious();
      g->setNext();
+     g->fixSkips();
 
-     g->dump();
+     g->setParent();
+     g->setPrevious();
+     g->setNext();
      g->place(drv.outs());
 
      delete g;
@@ -229,10 +235,7 @@ rows :
  	   // beforeskip for the newline to zero
 	   node *lr = $1->getChild($1->numChildren()-1)->getChild(0);
 	   if(lr->is_concat() && lr->getChild(lr->numChildren()-1)->is_rail())
-	     {
-	       cout<<"found newline following rail\n";
-	       n->setBeforeSkip(0);
-	     }
+	     n->setBeforeSkip(0);
 	}
       else
         {

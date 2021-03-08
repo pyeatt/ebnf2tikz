@@ -48,7 +48,7 @@ ebnf2tikz
 
 %{
   // A handy shortcut to the location held by the driver.
-  yy::location& loc = drv.location;
+  yy::location& loc = drv.get_location();
   // Code run each time yylex is called.
   loc.step ();
 %}
