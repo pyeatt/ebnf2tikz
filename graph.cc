@@ -322,18 +322,39 @@ void rownode::dump(int depth) const
 
 // ------------------------------------------------------------------------
 
-productionnode::productionnode(int subsumptionspec,string s,node *p):
+productionnode::productionnode(annotmap *a,string s,node *p):
   singlenode(p){
+  if(a != NULL)
+    {
+      annotations = a;
+      string reg = (*a)["subsume"];
+      if(reg == "")
+	subsume_spec = NULL;
+      else
+	{
+	  subsume_spec = new regex_t;
+	  if(regcomp(subsume_spec,reg.c_str(),REG_EXTENDED))
+	    {
+	      cerr<<"Unable to interpret regular expression '"<<reg<<"'\n";
+	      exit(2);
+	    }
+	}
+    }
+  else
+    {
+      subsume_spec=NULL;
+      annotations=NULL;
+    }
   name = s;
-  subsume_spec = subsumptionspec;
   type=PRODUCTION;
 }
 
 productionnode::productionnode(const productionnode &original):
   singlenode(original)
 {
-  name = original.name;
+  annotations = original.annotations;
   subsume_spec = original.subsume_spec;
+  name = original.name;
 }
 
 productionnode* productionnode::clone() const

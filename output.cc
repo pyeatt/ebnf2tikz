@@ -102,15 +102,15 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 void grammar::place(ofstream &outs)
 {
   for(auto i=productions.begin();i!=productions.end();i++)
-    {
-      // place everything
-      (*i)->place(outs, 0, 0, coordinate(0,0), NULL, 0);
-      // draw rails
-      (*i)->place(outs, 0, 1, coordinate(0,0), NULL, 0);
-      // draw everything else
-      (*i)->place(outs, 1, 0, coordinate(0,0), NULL, 0);
-    }
-  
+    if((*i)->getSubsume() == NULL)
+      {
+	// place everything
+	(*i)->place(outs, 0, 0, coordinate(0,0), NULL, 0);
+	// draw rails
+	(*i)->place(outs, 0, 1, coordinate(0,0), NULL, 0);
+	// draw everything else
+	(*i)->place(outs, 1, 0, coordinate(0,0), NULL, 0);
+      }
 }
 
 // ------------------------------------------------------------------------
@@ -183,7 +183,15 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       body->drawToRightRail(outs,NULL,UP,1);
       outs<<"\\end{tikzpicture}\n";
       outs<<"}\n";
-      outs<<"\\caption{No Caption.}\n";
+      string caption("No Caption.");
+      if(annotations != NULL)
+	{
+	  cout<<"setting caption\n";
+	  caption = (*annotations)["caption"];
+	  if(caption == "")
+	    caption = "No Caption.";
+	}
+      outs<<"\\caption{"<<caption<<"}\n";
       outs<<"\\label{No Caption.}\n";
       outs<<"\\end{figure}\n";
     }
@@ -684,7 +692,7 @@ void concatnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 	line(outs,nodes.back()->east(),p->rawName(),s.str());
       }
   }
-  nodes.back()->drawToRightRail(outs,p,join,0);
+  nodes.back()->drawToRightRail(outs,p,join,1);
   // have all remaining children connect their internal rails
   for(auto i = nodes.begin();i != nodes.end()-1;i++)
     (*i)->drawToRightRail(outs,NULL,join,1);

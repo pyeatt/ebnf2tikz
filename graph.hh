@@ -23,7 +23,9 @@ ebnf2tikz
 #ifndef GRAPH_HH
 #define GRAPH_HH
 
+#include <map>
 #include <vector>
+#include <regex.h>
 #include <nodesize.hh>
 
 using namespace std;
@@ -45,10 +47,13 @@ string stripSpecial(string s);
 
 // ------------------------------------------------------------------------
 
+typedef map<string,string> annotmap; 
+typedef pair<string,string> annot_t ;
 typedef enum {LEFT,RIGHT} vrailside;
 //typedef enum {UP,DOWN,STARTNEWLINEUP,STARTNEWLINEDOWN} vraildir;
 typedef enum {UP,DOWN} vraildir;
 class railnode;
+
 // base class for all nodes in the parse tree
 class node {
 protected:
@@ -166,7 +171,7 @@ public:
   virtual node* getChild(int n){return NULL;}
   virtual int operator ==(node &r){return 0;}
   virtual int operator !=(node &r){return 1;}
-  virtual node* subsume(string name, node *replacement){return this;}
+  virtual node* subsume(regex_t* name, node *replacement){return this;}
   virtual void forgetChild(int n){};
 };
 
@@ -200,7 +205,7 @@ public:
   virtual node* getChild(int n){return body;}
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} 
-  virtual node* subsume(string name, node *replacement);
+  virtual node* subsume(regex_t* name, node *replacement);
   virtual void setParent(node* p);
   virtual void setPrevious(node *n){previous = n;body->setPrevious(n);}
   virtual void setNext(node *n) {next = n;body->setNext(n);}
@@ -255,7 +260,7 @@ public:
 			   coordinate start,node *parent, int depth);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} 
-  virtual node* subsume(string name, node *replacement);
+  virtual node* subsume(regex_t* name, node *replacement);
   virtual void setParent(node* p);
   virtual void setPrevious(node* p);
   virtual void setNext(node* p);
@@ -296,7 +301,7 @@ public:
 			       vraildir join, int drawself);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} 
-  virtual node* subsume(string name, node *replacement);
+  virtual node* subsume(regex_t* name, node *replacement);
 };  
 
 // ------------------------------------------------------------------------
@@ -429,16 +434,17 @@ public:
 class productionnode:public singlenode{
 private:
   string name;
-  int subsume_spec;
+  annotmap *annotations;
+  regex_t *subsume_spec;
 public:
-  productionnode(int subsumespec,string s,node *p);
+  productionnode(annotmap *subsumespec,string s,node *p);
   productionnode(const productionnode &original);
   virtual productionnode* clone() const;
   virtual ~productionnode(){}
-  virtual int getSubsume(){return subsume_spec;}
+  virtual regex_t* getSubsume(){return subsume_spec;}
   virtual string getName(){return name;}
   void optimize();
-  virtual node* subsume(string name, node *replacement);
+  virtual node* subsume(regex_t* name, node *replacement);
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
