@@ -1,5 +1,5 @@
 
-OBJS=lexer.o parser.o driver.o graph.o optimize.o subsume.o output.o main.o
+OBJS=lexer.o parser.o driver.o graph.o optimize.o subsume.o output.o annot_lexer.o annot_parser.o main.o
 CSRC= $(patsubst %.o,%.cc,$(OBJS))
 DEPENDFLAGS=-M
 CFLAGS=-I. -c -Wall -g 
@@ -17,16 +17,25 @@ parser.hh: parser.yy
 lexer.cc: lexer.ll parser.cc parser.hh
 	flex -o lexer.cc lexer.ll
 
+annot_parser.cc: annot_parser.yy
+	bison -d --locations -o annot_parser.cc annot_parser.yy 
+
+annot_parser.hh: annot_parser.yy
+	bison -d --locations -o annot_parser.cc annot_parser.yy
+
+annot_lexer.cc: annot_lexer.ll annot_parser.cc annot_parser.hh
+	flex --header-file=annot_lexer.hh -P annot -o annot_lexer.cc annot_lexer.ll
+
 .cc.o:
 	$(CC) $(DEFINES) $(CFLAGS) $(INCLUDES) $<
 
 clean:
-	rm -f lexer.cc parser.hh parser.cc ebnf2tikz location.hh $(OBJS) *~ bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex
+	rm -f lexer.cc parser.hh parser.cc annot_lexer.hh annot_lexer.cc annot_parser.hh annot_parser.cc ebnf2tikz location.hh annot_location.hh $(OBJS) *~ bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex
 
 realclean: clean
 	rm -f .depend
 
-depend: parser.cc lexer.cc parser.hh
+depend: parser.cc lexer.cc parser.hh annot_parser.cc annot_lexer.cc annot_parser.hh
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) $(DEPENDFLAGS) $(CSRC) > .depend
 
 # if we have a .depend file, include it

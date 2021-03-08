@@ -31,6 +31,7 @@ ebnf2tikz
   #include <assert.h>
   #include "graph.hh"
   class driver;
+  annotmap *scanAnnot(string &s);
 }
 // The parsing context.
 %param { driver& drv }
@@ -42,6 +43,7 @@ ebnf2tikz
 #include <iostream>
 using namespace std;
 #include "driver.hh"
+#include "annot_lexer.hh"
 #include "nodesize.hh"
 
 node* wrapChoice(node *n) {
@@ -79,11 +81,11 @@ node* wrapChoice(node *n) {
   LBRACE    "{"
   RBRACE    "}"
   NEWLINE   "\\\\"
-  SUBSUME   "subsume"
 ;			
-%token	<std::string> UNEXP "charaacter"
+%token	<std::string> UNEXP "character"
 %token	<std::string> TERM  "terminal"
 %token	<std::string> STRING "nonterminal"
+%token	<std::string> ANNOTATION "annotation"
 %token END 0 "end of file"
 
 %printer { yyo << $$; } <*>;
@@ -103,7 +105,7 @@ node* wrapChoice(node *n) {
 %nterm <productionnode*> production;
 %nterm <grammar*> productions;
 %nterm <grammar*> grammar;
-%nterm <int> annotations;
+%nterm <annotmap*> annotations;
 %nterm <node*> expression;
 %nterm <node*> primary;
 %nterm <node*> rows;
@@ -200,9 +202,6 @@ production: annotations STRING EQUAL rows SEMICOLON
 
 // I would like to support these options for annotations:
 //
-// subsume            // replace all nonterms exactly matching this productinon
-                      // with this production, and do not produce seperate figure
-		      // for this production.
 // subsume as <regex> // using regex... replace all nonterms matching this
                       // regex with thi production, and do not produce seperate
 		      // figure for this production.
@@ -211,11 +210,14 @@ production: annotations STRING EQUAL rows SEMICOLON
 // replace x with y   // in the following production, replace notterm x with
                       // production y 
 // caption "chars"    // set the caption for the LaTeX figure
-annotations : SUBSUME{
-    $$=1;
+
+annotations : ANNOTATION {
+    map<string,string> *a;
+    a = scanAnnot($1);
+    $$ = a;
   } |
   {
-      $$=0;
+      $$=NULL;
   } ;
 
 // this is how we handle manual newline "\\" in the input
@@ -358,7 +360,8 @@ primary:
   } ;
     
 %%
-    
+
+
 void yy::parser::error (const location_type& l, const std::string& m)
 {
   cerr << m << " at line "<< l.end.line << " column " <<

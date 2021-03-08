@@ -17,23 +17,25 @@ character_literal =
  optionchoice =
   b,  [ a | b ], c;
 
+<<-- caption "Syntax for the case statement." -->>
 case_statement =
     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
     { ',' , case_statement_alternative } \\
     'end', 'case', [ label ] ,';' ;
 
-subsume
+<<-- subsume as "case_statement_alternative";
+caption "Syntax for the case statement alternawive" -->>
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
     
-subsume
-choices =
+<<-- subsume as "choice" -->>
+choice =
     simple_expression |
     discrete_range |
     simple_name |
     'others' ;
 
-subsume
+<<-- subsume as "choices"; caption "choices" -->>
 choices =
     choice, { '|', choice } ;
 
@@ -41,11 +43,11 @@ choices =
 toollist =
  '(' \\ tool, { ',', tool } \\ ')';
 
-subsume
+<<-- subsume as "tool" -->>
 tool =
   'hammer' | 'screwdriver' | saw;
 
-subsume
+<<-- subsume as "saw" -->>
 saw =
    ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
 

@@ -29,20 +29,19 @@ using namespace std;
 
 void grammar::subsume()
 {
-  string name;
+  regex_t *name;
   // look for productions that are marked for subsumption
   for(auto i=productions.begin();i!=productions.end();i++)
-    if((*i)->getSubsume()) {
-      name = (*i)->getName();
+    if((name = (*i)->getSubsume()) != NULL) {
       for(auto j=productions.begin();j!=productions.end();j++)
-	if(j != i)
+	if(*j != *i)
 	  (*j)->subsume(name,(*i)->getChild(0));
     }
 }
 
 // ------------------------------------------------------------------------
 
-node* singlenode::subsume(string name, node *replacement){
+node* singlenode::subsume(regex_t* name, node *replacement){
   node* tmp;
   tmp = body->subsume(name,replacement);
   if(tmp != body)
@@ -59,7 +58,7 @@ node* singlenode::subsume(string name, node *replacement){
 
 // ------------------------------------------------------------------------
 
-node* multinode::subsume(string name, node *replacement){
+node* multinode::subsume(regex_t* name, node *replacement){
   node *tmp;
   for(auto i = nodes.begin();i!=nodes.end();i++)
     {
@@ -74,13 +73,12 @@ node* multinode::subsume(string name, node *replacement){
 	  tmp->setBeforeSkip(0);
 	  delete (*i);
 	  (*i) = tmp;
-
 	}
     }
-  if(is_concat() && parent != NULL && parent->is_row() &&
-     parent->getPrevious() != NULL && parent->getPrevious()->is_newline() &&
-     nodes[0]->is_rail() && nodes[1]->is_loop())
-      nodes[1]->setBeforeSkip(0);
+  // if(is_concat() && parent != NULL && parent->is_row() &&
+  //    parent->getPrevious() != NULL && parent->getPrevious()->is_newline() &&
+  //    nodes[0]->is_rail() && nodes[1]->is_loop())
+  //     nodes[1]->setBeforeSkip(0);
 
 
     return this;
@@ -88,7 +86,7 @@ node* multinode::subsume(string name, node *replacement){
 
 // ------------------------------------------------------------------------
 
-node* productionnode::subsume(string name, node *replacement) {
+node* productionnode::subsume(regex_t* name, node *replacement) {
   node *tmp;
   // Production nodes always contain a concat with two leading
   // nullnodes followed by a rownode We only want to take the actual
@@ -106,9 +104,11 @@ node* productionnode::subsume(string name, node *replacement) {
 }
 
 // ------------------------------------------------------------------------
+#define ARRAY_SIZE(arr) (sizeof((arr)) / sizeof((arr)[0]))
 
-node* nontermnode::subsume(string name, node *replacement){
-  if(name == str)
+node* nontermnode::subsume(regex_t* name, node *replacement){
+  regmatch_t  pmatch[1];
+  if(!regexec(name, str.c_str(), ARRAY_SIZE(pmatch), pmatch, 0))
     return replacement->clone(); // return deep copy of replacement
   else
     return this;                 // or pointer to this

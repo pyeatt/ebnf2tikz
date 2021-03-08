@@ -22,7 +22,6 @@ ebnf2tikz
 
 #ifndef DRIVER_HH
 #define DRIVER_HH
-#include <string>
 #include <set>
 #include <fstream>
 #include "graph.hh"
@@ -30,9 +29,8 @@ ebnf2tikz
 
 using namespace std;
 
-// Give Flex the prototype of yylex 
-# define YY_DECL yy::parser::symbol_type yylex (driver& drv)
-
+// Give Flex the prototype of yylex
+#define YY_DECL yy::parser::symbol_type yylex (driver& drv)
 // declare yylex here
 YY_DECL;
 
@@ -66,6 +64,7 @@ public:
   
   int parse (const char *f,int opt, int fig);
   void scan_begin ();
+  void scan_begin (stringstream &s);
   void scan_end ();
   int get_result(){return result;}
   yy::location &get_location(){return location;}

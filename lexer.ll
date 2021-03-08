@@ -44,6 +44,9 @@ ebnf2tikz
   # define YY_USER_ACTION  loc.columns (yyleng);
 %}
 
+
+%Start	A B C d
+
 %%
 
 %{
@@ -62,29 +65,34 @@ ebnf2tikz
 \/\/.*\n                  {}
 ---.*\n                   {}
 
-subsume			  {return yy::parser::make_SUBSUME(loc);}
-
 "\\\\"                    {return yy::parser::make_NEWLINE(loc);}
 
 \'[^']*\'		  {return yy::parser::make_TERM (yytext,loc);}
 \"[^"]*\"		  {return yy::parser::make_TERM (yytext,loc);}
 
 
-"="                        {return yy::parser::make_EQUAL(loc);}
-";"                        {return yy::parser::make_SEMICOLON(loc);}
-"\|"                       {return yy::parser::make_PIPE(loc);}
-"\["                       {return yy::parser::make_LBRACK(loc);}
-"\]"                       {return yy::parser::make_RBRACK(loc);}
-"\("                       {return yy::parser::make_LPAREN(loc);}
-"\)"                       {return yy::parser::make_RPAREN(loc);}
-"\{"                       {return yy::parser::make_LBRACE(loc);}
-"\}"                       {return yy::parser::make_RBRACE(loc);}
-","                        {return yy::parser::make_COMMA(loc);}
+"="                       {return yy::parser::make_EQUAL(loc);}
+";"                       {return yy::parser::make_SEMICOLON(loc);}
+"\|"                      {return yy::parser::make_PIPE(loc);}
+"\["                      {return yy::parser::make_LBRACK(loc);}
+"\]"                      {return yy::parser::make_RBRACK(loc);}
+"\("                      {return yy::parser::make_LPAREN(loc);}
+"\)"                      {return yy::parser::make_RPAREN(loc);}
+"\{"                      {return yy::parser::make_LBRACE(loc);}
+"\}"                      {return yy::parser::make_RBRACE(loc);}
+","                       {return yy::parser::make_COMMA(loc);}
 
 
 [a-zA-Z][a-zA-Z0-9_]*     {return yy::parser::make_STRING(yytext,loc);}
 
-.                         {return yy::parser::make_UNEXP(yytext,loc);}
+"<<--"	      {BEGIN A;yymore();}
+<A>[^-]*      {yymore();}
+<Q>"-"[^-]    {yymore();}
+<A>"--"[^>]   {yymore();}
+<A>"-->"[^>]  {yymore();}
+<A>"-->>"     {BEGIN 0;return yy::parser::make_ANNOTATION(yytext,loc);}
+
+.             {return yy::parser::make_UNEXP(yytext,loc);}
 
 %%
 
