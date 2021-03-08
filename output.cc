@@ -78,53 +78,22 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 	}
     }
   else
-    {
-      top = start - coordinate(0,sizes->rowsep);
-      bottom = start - coordinate(0, sizes->colsep);
-      // bottom = start - coordinate(0,previous->height());
-      // bottom = bottom +
-      // 	coordinate(0, sizes->colsep +
-      // 		   previous->getChild(previous->numChildren()-1)->height());
-    }
-
+    if(next != NULL && next->is_newline())
+      {
+	top = start - coordinate(0,sizes->rowsep);
+	bottom = start - coordinate(0, sizes->colsep);
+      }
+    else
+      {
+	top = start - coordinate(0,sizes->rowsep);
+	bottom = start - coordinate(0, sizes->colsep);
+      }
+  
   if(drawrails)
     {
       outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
       outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
       outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
-
-      // draw the entry to top of the rail
-      stringstream s;
-      if(previous != NULL && previous->is_newline())
-	{
-	}
-      else
-	{
-	if(side==LEFT)
-	  {
-	    if(direction==DOWN)
-	      {
-		s<<"+west:"<<0.5*sizes->colsep<<"pt";
-		//line(outs,nodename+"linetop",nodename,s.str());
-	      }
-	    else {
-	      s<<"+east:"<<0.5*sizes->colsep<<"pt";
-	      //line(outs,nodename+"linetop",nodename,s.str());
-	    }
-	  }
-      // else
-      // 	{
-      // 	  if(direction==DOWN)
-      // 	    {
-      // 	      s<<"+east:"<<sizes->colsep<<"pt";
-      // 	      line(outs,3,nodename+"linetop",nodename,s.str());
-      // 	    }
-      // 	  else
-      // 	    {
-      // 	      s<<"+west:"<<sizes->colsep<<"pt";
-      // 	      line(outs,3,nodename+"linetop",nodename,s.str());
-      // 	    }
-      	}
     }
   return start;
 }
@@ -330,23 +299,6 @@ coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
     outs<<"\\coordinate ("<<nodename<<") at "<<start<<";\n";
     outs<<"\\coordinate ("<<nodename+"linetop"<<") at "<<top<<";\n";
     outs<<"\\coordinate ("<<nodename+"linebottom"<<") at "<<bottom<<";\n";
-
-    // if(next->is_rail() &&
-    //    (((railnode*)next)->getRailDir() == UP ||
-    // 	((railnode*)next)->getRailDir() == STARTNEWLINEUP))
-    //   line(outs,5,
-    // 	   ((railnode*)previous)->rawName()+"linebottom",
-    // 	   nodename+"linetop",
-    // 	   nodename+"linebottom",
-    // 	   ((railnode*)next)->rawName(),
-    // 	   s.str());
-    // else
-
-    // line(outs,
-    // 	   ((railnode*)previous)->rawName()+"linebottom",
-    // 	   nodename+"linetop",
-    // 	   nodename+"linebottom",
-    // 	   ((railnode*)next)->rawName()+"linetop");
   }
   if(draw)
     {
@@ -434,8 +386,15 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
   if(linewidth > myWidth)
     myWidth = linewidth;
   myHeight += rowheight;
-  ea=nodes.back()->east();
-  wa=nodes.front()->west();
+  auto i = nodes.begin();
+  while(i != nodes.end()-1 && (*i)->is_rail())
+    i++;
+  wa=(*i)->west();
+  i = nodes.end()-1;
+  while(i != nodes.begin() && (*i)->is_rail())
+    i--;
+  ea=(*i)->east();
+
   return current;
 }
 
@@ -455,76 +414,32 @@ void node::drawToRightRail(ofstream &outs, railnode* p,vraildir join,
   
 void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join,
 			  int drawself){
-  //cout << "basic node "<<nodename<<" drawing to left rail "<<p<<' '<<join<<"\n";
   if(p != NULL && drawself && !parent->is_concat())
     {
       stringstream s;
-      s<<"+up:"<<sizes->colsep<<"pt";
+      if(join == UP)
+	s<<"+down:"<<sizes->colsep<<"pt";
+      else
+	s<<"+up:"<<sizes->colsep<<"pt";
       line(outs,wa,wa+"-|"+p->rawName(),s.str());
     }
 }
 
 void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 			  int drawself){
-  //cout << "basic node "<<nodename<<" drawing to right rail "<<p<<' '<<join<<"\n";
-  if(p != NULL && drawself)
+
+  if(p != NULL && drawself && !parent->is_concat())
     {
-      // if(join == STARTNEWLINEDOWN)
-      // 	{
-      // 	  stringstream s;
-      // 	  s<<"+left:"<<sizes->colsep<<"pt";
-      // 	  line(outs,wa,wa+"-|"+p->rawName(),p->rawName(),s.str());
-      // 	}
-      // else
-      // line(outs,ea,ea+"-|"+p->rawName(),p->rawName()+"linetop");
+      stringstream s;
+      if(join == UP)
+	s<<"+up:"<<sizes->colsep<<"pt";
+      else
+	s<<"+down:"<<sizes->colsep<<"pt";
+      line(outs,ea,ea+"-|"+p->rawName(),s.str());
     }
 }
 
 
-// void multinode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
-// 			  int drawself){
-//   // if p is NULL then override with our own rails, and do straight
-//   // entry for first child
-//   if(p==NULL)
-//     {
-//       p = leftrail;
-//       if(p != NULL)
-// 	{
-// 	  join = leftrail->getRailDir();
-// 	  //line(outs,nodes.front()->west(),
-// 	       //   nodes.front()->west()+"-|"+leftrail->east());
-// 	}
-//       nodes.front()->drawToLeftRail(outs,NULL,join,1);
-//     }
-//   else
-//     nodes.front()->drawToLeftRail(outs,p,join,0);
-//   // skip first child
-//   for(auto i = nodes.begin()+1;i!=nodes.end();i++)
-//     (*i)->drawToLeftRail(outs,p,join,1);
-
-// }
-
-// void multinode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
-// 			  int drawself){
-//   // if p is NULL then override with our own rails, and do straight
-//   // entry for first child
-//   if(p==NULL)
-//     {
-//       p = rightrail;
-//       if(p != NULL)
-// 	{
-// 	  join = rightrail->getRailDir();
-// 	  // line(outs,nodes.front()->east(),
-// 	  //   nodes.front()->east()+"-|"+rightrail->west());
-// 	}
-//       nodes.front()->drawToRightRail(outs,NULL,join,1);
-//     }
-//   else
-//     nodes.front()->drawToRightRail(outs,p,join,1);
-//   // skip first child
-//   for(auto i = nodes.begin()+1;i!=nodes.end();i++)
-//     (*i)->drawToRightRail(outs,p,join,1);
-// }
 
 void choicenode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 			  int drawself){
@@ -692,40 +607,155 @@ void concatnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 
 void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 			  int drawself){
+  stringstream s;
   // if p is NULL then override with our own rails, and do straight
   // entry for first child
-  // if(p==NULL)
-  //   {
-  //     p = rightrail;
-  //     if(p != NULL)
-  // 	{
-  // 	  join = rightrail->getRailDir();
-  // 	  // line(outs,nodes.front()->east(),
-  // 	  //   nodes.front()->east()+"-|"+rightrail->west());
-  // 	}
-  //     nodes.front()->drawToRightRail(outs,NULL,join);
-  //   }
-  // else
-  //   nodes.front()->drawToRightRail(outs,p,join);
-  // // skip first child
-  // for(auto i = nodes.begin()+1;i!=nodes.end();i++)
-  //   (*i)->drawToRightRail(outs,p,join);
+  if(p==NULL)
+    {
+      p = rightrail;
+      if(p != NULL)
+	join = rightrail->getRailDir();
+    }
+
+  
+  //if(next != NULL && next->is_newline())
+  if(parent->is_concat() &&
+     this == parent->getChild(1) &&
+     parent->getParent() != NULL &&
+     parent->getParent()->is_row() &&
+     parent->getParent()->getNext() != NULL &&
+     parent->getParent()->getNext()->is_newline())
+    { // if this choice precedes newline, draw first child's rail entry down
+      s<<"+down:"<<sizes->colsep<<"pt";
+      line(outs,nodes.front()->east(),p->rawName(),s.str());
+      //      line(outs,nodes.front()->east(),p->rawName(),s.str());
+      rightrail->setRailDir(DOWN);
+      join = DOWN;
+      line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),
+	   p->rawName()+"|-"+nodes.front()->east(),
+	  s.str());
+    }
+  else
+    {
+      join=UP;
+      rightrail->setRailDir(UP);
+      line(outs,nodes.front()->east(),rightrail->west());
+      s<<"+right:"<<0.5*sizes->colsep<<"pt";
+      line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),
+	   p->rawName()+"|-"+nodes.front()->east(),
+	   s.str());
+    }
+
+  
+  // skip first and last child.  They are cannected it this function,
+  // and their methods are called separately so that they will not try
+  // to connect themselves, but will only fill in their children.
+  for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
+    (*i)->drawToRightRail(outs,p,join,1);
+  
+  if(nodes.back()->is_concat())
+    nodes.back()->drawToRightRail(outs,p,join,0);
+  if(nodes.front()->is_concat())
+    nodes.front()->drawToRightRail(outs,p,join,0);
+  
+}
+
+void loopnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
+			  int drawself){
+  // if p is NULL then override with our own rails, and do straight
+  // entry for first child
+  stringstream s,s2;
+  if(p==NULL)
+    {
+      p = rightrail;
+      if(p != NULL)
+	join = p->getRailDir();
+    }
+
+  if(drawself)
+    {
+      //TODO: make it so that only the last child of the last child will
+      //actually draw to the top of the rail.
+      // if(parent->is_concat() &&
+      // 	 this == parent->getChild(1) &&
+      // 	 parent->getParent() != NULL &&
+      // 	 parent->getParent()->is_row() &&
+      // 	 parent->getParent()->getNext() != NULL &&
+      // 	 parent->getParent()->getNext()->is_newline())
+      // 	{ // if this choice pre newline, draw first child's rail entry up
+      // 	  s<<"+down:"<<sizes->colsep<<"pt";
+      // 	  line(outs,nodes.front()->east(),p->rawName(),s.str());
+      // 	}
+      // else
+	// {
+	//   if(parent->is_concat() &&
+	//      this == parent->getChild(0) &&
+	//      parent->getParent() != NULL &&
+	//      parent->getParent()->is_choice())
+	//     { // if this is in a concat contained in a choice, draw first
+	//       //  child's rail entry up
+	//       line(outs,nodes.front()->east(),
+	// 	   nodes.front()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
+	//     }
+	//   else
+	//     { 
+	//       // otherwise, use straight rail entry
+	//       s<<"+right:"<<0.5*sizes->colsep<<"pt";
+	//       line(outs,nodes.front()->east(),p->rawName(),s.str());
+	//     }
+	// }
+	
+      line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),
+	   p->rawName()+"|-"+nodes.front()->east(),
+	   nodes.front()->east());
+    }
+  
+  nodes.back()->drawToRightRail(outs,p,join,0);
+  nodes.front()->drawToRightRail(outs,p,join,0);
+
+  
 }
 
 void concatnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 			  int drawself){
-  // draw from last child to my rail
-  if( p!= NULL)
-    nodes.back()->drawToRightRail(outs,p,join,1);
-  else
+  stringstream s;
+  if(p==NULL)
     {
-      if(rightrail != NULL)
-	{
-	  join = rightrail->getRailDir();
-	  nodes.back()->drawToRightRail(outs,rightrail,join,1);
-	}
+      p = rightrail;
+      if(p != NULL)
+	join = p->getRailDir();
     }
-  for(auto i = nodes.begin();i != nodes.end();i++)
+
+  if(drawself && p != NULL)
+    {
+      if(join == DOWN)
+	{
+	  s<<"+down:"<<sizes->colsep<<"pt";
+	  line(outs,nodes.back()->east(),
+	       nodes.back()->east()+"-|"+p->rawName(),s.str());
+	}
+      else
+	if(parent != NULL && parent->is_choice() && this != parent->getChild(0))
+	  { // if this is concat contained in a choice, draw last
+	    //  child's rail entry up, unless join type is DOWN
+	    line(outs,nodes.back()->east(),
+		 nodes.back()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
+	    
+	  }
+	else
+	  {
+	    s<<"+right:"<<0.5*sizes->colsep<<"pt";
+	    line(outs,nodes.back()->east(),p->rawName(),s.str());
+	  }
+    }
+  
+  nodes.back()->drawToRightRail(outs,p,join,0);
+
+    // have all remaining children connect their internal rails
+  for(auto i = nodes.begin();i != nodes.end()-1;i++)
     (*i)->drawToRightRail(outs,NULL,join,1);
 }
 
