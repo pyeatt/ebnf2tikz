@@ -108,6 +108,7 @@ annots :
   } |
   annots SEMICOLON annot {
     (*m)[$3->first] = $3->second;
+    delete $3;
   } ;
 
 annot :
@@ -128,6 +129,7 @@ annotmap *scanAnnot(string &s)
   annot::parser p(m);
   annot_scan_string(s.c_str());
   p.parse();
+  annotlex_destroy();
   return m;
 }
 
