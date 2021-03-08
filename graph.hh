@@ -440,7 +440,15 @@ public:
   productionnode(annotmap *subsumespec,string s,node *p);
   productionnode(const productionnode &original);
   virtual productionnode* clone() const;
-  virtual ~productionnode(){}
+  virtual ~productionnode(){
+    if(annotations != NULL)
+      delete annotations;
+    if(subsume_spec != NULL)
+      {
+	regfree(subsume_spec);
+	delete subsume_spec;
+      }
+  }
   virtual regex_t* getSubsume(){return subsume_spec;}
   virtual string getName(){return name;}
   void optimize();

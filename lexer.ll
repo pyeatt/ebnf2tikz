@@ -45,7 +45,7 @@ ebnf2tikz
 %}
 
 
-%Start	A B C d
+%Start	A 
 
 %%
 
@@ -87,7 +87,7 @@ ebnf2tikz
 
 "<<--"	      {BEGIN A;yymore();}
 <A>[^-]*      {yymore();}
-<Q>"-"[^-]    {yymore();}
+<A>"-"[^-]    {yymore();}
 <A>"--"[^>]   {yymore();}
 <A>"-->"[^>]  {yymore();}
 <A>"-->>"     {BEGIN 0;return yy::parser::make_ANNOTATION(yytext,loc);}
