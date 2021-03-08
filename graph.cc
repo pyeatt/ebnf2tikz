@@ -324,13 +324,15 @@ void rownode::dump(int depth) const
 
 productionnode::productionnode(annotmap *a,string s,node *p):
   singlenode(p){
+  name = s;
+  type=PRODUCTION;
+  subsume_spec=NULL;
+  annotations=NULL;
   if(a != NULL)
     {
       annotations = a;
       string reg = (*a)["subsume"];
-      if(reg == "")
-	subsume_spec = NULL;
-      else
+      if(reg != "")
 	{
 	  
 	  if(reg == "emusbussubsume")
@@ -343,13 +345,6 @@ productionnode::productionnode(annotmap *a,string s,node *p):
 	    }
 	}
     }
-  else
-    {
-      subsume_spec=NULL;
-      annotations=NULL;
-    }
-  name = s;
-  type=PRODUCTION;
 }
 
 productionnode::productionnode(const productionnode &original):
