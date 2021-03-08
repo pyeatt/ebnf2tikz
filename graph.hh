@@ -387,7 +387,7 @@ public:
   virtual ~loopnode(){}
   virtual void dump(int depth) const;
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   node* getRepeat();
   void setRepeat(node *r);
   node* getBody();
