@@ -30,8 +30,13 @@ ebnf2tikz
 # include <cstring>
 # include <string>
 # include "graph.hh"
-# include "annot_driver.hh"
+
 # include "annot_parser.hh"
+
+// Give Flex the prototype of yylex
+#define YY_DECL annot::parser::symbol_type annotlex (annotmap *m)
+// declare yylex here
+YY_DECL;
 
 string stripquotes(string s)
 {
