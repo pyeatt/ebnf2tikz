@@ -36,7 +36,6 @@ string nextFit();
 string stripSpecial(string s);
 
 nodesizes* node::sizes;
-//node* node::lastPlaced;
 
 string stripSpecial(string s)
 {
@@ -126,6 +125,18 @@ node::node(const node &original){
 
 node::~node(){};
 
+void node::dump(int depth) const
+{
+  cout << " " <<nodename <<" :";
+  if(leftrail != NULL)
+    cout<<" leftrail="<<((node*)leftrail)->rawName();
+  if(rightrail != NULL)
+    cout<<" rightrail="<<((node*)rightrail)->rawName();
+  cout<<" drawtoprev="<<drawtoprev<<" beforeskip="<<beforeskip<<" width="<<myWidth<< " height="<<myHeight<<" "<<ea<<" "<<wa<<endl;
+      
+      //
+      //" 
+}
 
 // ------------------------------------------------------------------------
 
@@ -142,8 +153,6 @@ singlenode::singlenode(const singlenode &original):node(original)
   body = original.body->clone();
   ea = body->east();
   wa = body->west();
-  // body->setLeftRail(leftrail);
-  // body->setRightRail(rightrail);
   body->setParent(this); 
 }
 
@@ -336,7 +345,8 @@ void productionnode::dump(int depth) const
 { 
   depth=0;
   cout << "production: "<<name<<endl;
-  body->dump(1);
+  if(!subsume_spec)
+    body->dump(1);
 }
 
 // ------------------------------------------------------------------------
@@ -438,7 +448,7 @@ int nontermnode::operator ==(node &r)
 railnode::railnode():node()
 {
   type=RAIL;
-}//beforeskip=0;}
+}
 
 railnode::railnode(vrailside s,vraildir d):node()
 {
@@ -459,8 +469,10 @@ void railnode::dump(int depth) const
 { int i;
   for(i=0;i<depth;i++)
     cout<<"  ";
-  cout<<"rail";
-  node::dump(depth);
+  cout<<"rail ";
+  cout<<" "<<vrailStr(direction);
+ node::dump(depth);
+  
 }  
 
 int railnode::operator ==(node &r)
@@ -500,10 +512,8 @@ nullnode::nullnode(string s):nontermnode(s)
   format = "null";
   nodename = nextCoord();
   myWidth=0;
-  //myHeight=
   myHeight=1.5*sizes->rowsep;
-  //myHeight=0.5*sizes->minsize;
-  ea = nodename;
+   ea = nodename;
   wa = nodename;
 }
 
@@ -554,14 +564,10 @@ newlinenode::newlinenode():railnode()
 {
   type = NEWLINE;
   nodename = nextCoord();
-  
-  // lineheight=0;
-  // myWidth=0;
-  // myHeight=0;
   ea = nodename;
   wa = nodename;
   drawtoprev = 0;
-  beforeskip = 0;
+  //beforeskip = 0;
 }
 
 newlinenode::newlinenode(const newlinenode &original):
@@ -617,12 +623,8 @@ void concatnode::setPrevious(node* p)
 {
   node::setPrevious(p);
   for(auto i=nodes.begin()+1; i!=nodes.end(); i++)
-    {
-      (*i)->setPrevious(*(i-1));
-      //	(*i)->setDrawToPrev(1);
-    }
+    (*i)->setPrevious(*(i-1));
   nodes.front()->setPrevious(getPrevious());
-  //   nodes.front()->setDrawToPrev(1);
 }
 void concatnode::setNext(node* p)
 {
@@ -635,7 +637,6 @@ void concatnode::setNext(node* p)
 void concatnode::insert(node* p)
 {
   multinode::insert(p);
-  //drawtoprev = 1;
   if(p->is_null() || p->is_nonterm() || p->is_terminal())
     p->setDrawToPrev(1);
   else

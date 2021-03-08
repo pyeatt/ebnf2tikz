@@ -28,6 +28,7 @@ ebnf2tikz
 %define parse.assert
 %code requires {
   #include <string>
+  #include <assert.h>
   #include "graph.hh"
   class driver;
 }
@@ -137,6 +138,7 @@ grammar : productions {
      // g->dump();
      // cout<<"Starting subsume\n";
      
+     g->optimize();
      g->subsume();
      g->optimize();
 
@@ -144,13 +146,13 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
      g->mergeRails();
+     g->optimize();
 
      g->setParent();
      g->setPrevious();
      g->setNext();
 
-//     g->dump();
-
+     g->dump();
      g->place(drv.outs());
 
      delete g;
@@ -180,8 +182,8 @@ production: annotations STRING EQUAL rows SEMICOLON
   c->insert(new nullnode("start2"));
     coordinate start;
     $4->setDrawToPrev(0);
-    // if($4->is_concat())
-    // $4->getChild(0)->setDrawToPrev(1);
+     if($4->is_concat())
+     $4->getChild(0)->setDrawToPrev(1);
     $4=wrapChoice($4);
     c->insert($4);
     c->insert(new nullnode("end1"));
@@ -214,31 +216,57 @@ annotations : SUBSUME{
 rows :
   rows NEWLINE expression {
       $3 = wrapChoice($3);
-      if($1->is_concat())
-	$$ = $1;
-      else
-        $$ = new concatnode($1);
       newlinenode *n = new newlinenode();
       rownode *row = new rownode($3);
-      railnode *r,*l;
-      l = new railnode(RIGHT,DOWN);
-      r = new railnode(LEFT,STARTNEWLINEDOWN);
-      n->setLeftRail(l);
-      n->setRightRail(r);
-      $$->getChild($$->numChildren()-1)->setRightRail(l);
-      row->setLeftRail(r);
-      $$->insert(l);
+      row->setBeforeSkip(0);
+      $3->setBeforeSkip(0);
+      // if($3->getChild(0) != NULL)
+      //   $3->getChild(0)->setBeforeSkip(0);
+      if($1->is_concat())
+        {
+	   $$ = $1;
+ 	   // if the previous row endend in a rail, then set the
+ 	   // beforeskip for the newline to zero
+	   node *lr = $1->getChild($1->numChildren()-1)->getChild(0);
+	   if(lr->is_concat() && lr->getChild(lr->numChildren()-1)->is_rail())
+	     {
+	       cout<<"found newline following rail\n";
+	       n->setBeforeSkip(0);
+	     }
+	}
+      else
+        {
+	  $$ = new concatnode($1);
+          $$->setBeforeSkip(0);
+	}
+	
+	// if the next row begins in a rail, then set beforeskips
+	// appropriately
+       if($3->is_concat())
+       	{ 
+          // beforskip for first child of new row is zero
+	   row->setBeforeSkip(0); // beforeskip for its row is zero
+	   $3->setBeforeSkip(0); // beforeskip for its concat is zero
+	  if($3->getChild(0)->is_rail())
+	    {
+	      $3->getChild(0)->setBeforeSkip(0);
+	      $3->getChild(1)->setBeforeSkip(0);
+	      $3->getChild(1)->getChild(0)->setBeforeSkip(0);
+	    }
+	}
+       else
+         $3->setBeforeSkip(node::getColSep());
+
       $$->insert(n);
-      $$->insert(r);
       $$->insert(row);
-      l->setDrawToPrev(0);
-      r->setDrawToPrev(0);
-//      n->setDrawToPrev(0);
       $$->setDrawToPrev(0);
      } | 
     expression {
       $1 = wrapChoice($1);
       $$ = new rownode($1);
+      $$->setBeforeSkip(0);
+      $1->setBeforeSkip(0);
+      $1->setDrawToPrev(1);
       $$->setDrawToPrev(1);
      } ;
   
