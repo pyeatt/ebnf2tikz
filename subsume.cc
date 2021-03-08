@@ -75,12 +75,6 @@ node* multinode::subsume(regex_t* name, node *replacement){
 	  (*i) = tmp;
 	}
     }
-  // if(is_concat() && parent != NULL && parent->is_row() &&
-  //    parent->getPrevious() != NULL && parent->getPrevious()->is_newline() &&
-  //    nodes[0]->is_rail() && nodes[1]->is_loop())
-  //     nodes[1]->setBeforeSkip(0);
-
-
     return this;
 }
 

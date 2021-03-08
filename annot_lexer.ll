@@ -52,38 +52,39 @@ string stripquotes(string s)
 
 %{
   // Code run each time a pattern is matched.
-  # define YY_USER_ACTION  loc.columns (yyleng);
+  # define YY_USER_ACTION  aloc.columns (yyleng);
 %}
 
 %%
 
 %{
   // A handy shortcut to the location held by the driver.
-  extern annot::location loc;
+  extern annot::location aloc;
   // Code run each time yylex is called.
-  loc.step ();
+  aloc.step ();
 %}
 
-<<EOF>>           {return annot::parser::make_END(loc);}
+<<EOF>>           {return annot::parser::make_END(aloc);}
 
-[ ]	          {loc.step();}
-[\t]              {loc.step();}
-[\n\r]            {loc.lines(yyleng); loc.step();}
+[ ]	          {aloc.step();}
+[\t]              {aloc.step();}
+[\n\r]            {aloc.lines(yyleng); aloc.step();}
 
 \/\/.*\n          {}
 ---.*\n           {}
 
-"<<--"            {return annot::parser::make_ASTART(loc);}
-"-->>"            {return annot::parser::make_AEND(loc);}
+"<<--"            {return annot::parser::make_ASTART(aloc);}
+"-->>"            {return annot::parser::make_AEND(aloc);}
 
-subsume 	  {return annot::parser::make_SUBSUME (loc);}
-as	   	  {return annot::parser::make_AS (loc);}
-caption           {return annot::parser::make_CAPTION (loc);}
+subsume 	  {return annot::parser::make_SUBSUME (aloc);}
+as	   	  {return annot::parser::make_AS (aloc);}
+caption           {return annot::parser::make_CAPTION (aloc);}
+sideways          {return annot::parser::make_SIDEWAYS (aloc);}
 
-\;                {return annot::parser::make_SEMICOLON (loc);}
-\".*\"            {return annot::parser::make_STRING(stripquotes(yytext),loc);}
+\;                {return annot::parser::make_SEMICOLON (aloc);}
+\".*\"            {return annot::parser::make_STRING(stripquotes(yytext),aloc);}
 
-.                 {return annot::parser::make_UNEXP(yytext,loc);}
+.                 {return annot::parser::make_UNEXP(yytext,aloc);}
 
 %%
 

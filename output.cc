@@ -164,12 +164,16 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   coordinate c;
   string coord=nextCoord();
   string coord2=nextCoord();
-
+  string figtype;
   c = start+coordinate(0.0,-1.5*sizes->minsize);
-
+  if(annotations != NULL && (*annotations)["sideways"] == "true")
+    figtype="sidewaysfigure";
+  else
+    figtype="figure";
+  
   if(drawrails)
     {
-      outs<<"\n\\begin{figure}\n";
+      outs<<"\n\\begin{"<<figtype<<"}\n";
       outs<<"\\centerline{\n";
       outs<<"\\begin{tikzpicture}\n";
       outs<<"\\node at "<<start<<"[anchor=west](name){";
@@ -186,14 +190,13 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       string caption("No Caption.");
       if(annotations != NULL)
 	{
-	  cout<<"setting caption\n";
 	  caption = (*annotations)["caption"];
 	  if(caption == "")
 	    caption = "No Caption.";
 	}
       outs<<"\\caption{"<<caption<<"}\n";
       outs<<"\\label{No Caption.}\n";
-      outs<<"\\end{figure}\n";
+      outs<<"\\end{"<<figtype<<"}\n";
     }
   return c;
 }

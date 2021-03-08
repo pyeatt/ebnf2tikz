@@ -47,6 +47,8 @@ using namespace std;
 #include "annot_lexer.hh"
 #include "nodesize.hh"
 
+annot::location aloc;
+
 // Give Flex the prototype of yylex
 #define YY_DECL annot::parser::symbol_type annotlex (annotmap *m)
 // declare yylex here
@@ -65,6 +67,7 @@ annot::location loc;
   SUBSUME   "subsume"
   AS        "as"
   CAPTION   "caption"
+  SIDEWAYS  "sideways"
 ;			
 
 %token	<std::string> UNEXP "character"
@@ -90,6 +93,21 @@ annot::location loc;
 %nterm <annotmap *> annots;
 %nterm <annotmap *> annotations;
 
+// Currently supports these options for annotations:
+//
+// sideways           // create a sidewaysfigure instead of figure
+// caption "chars"    // set the caption for the LaTeX figure
+// subsume            // replace all nonterms matching the name of the
+                      // annotated node
+// subsume as <regex> // using regex... replace all nonterms matching this
+                      // regex with thi production, and do not produce seperate
+		      // figure for this production.
+
+// I may add these if I need them:
+// make figure        // even if subsumed according to the previous rulse,
+                      // produce a figure
+// replace x with y   // in the following production, replace notterm x with
+                      // production y 
 
 %%
 
@@ -112,19 +130,28 @@ annots :
   } ;
 
 annot :
+  SIDEWAYS {
+    $$=new annot_t("sideways","true");
+  } |
+  SUBSUME {
+    $$=new annot_t("subsume","emusbussubsume");
+  } |
   SUBSUME AS STRING {
-    $$=new pair<string,string>("subsume",$3);
+    $$=new annot_t("subsume",$3);
   } |
   CAPTION STRING {
-  $$=new pair<string,string>("caption",$2);
+  $$=new annot_t("caption",$2);
   } ;
 
 
 
 %%
 
-annotmap *scanAnnot(string &s)
+annotmap *scanAnnot(string &s, void *loc)
 {
+  annot::location *lloc = (annot::location*)loc;
+  aloc.initialize(lloc->begin.filename,lloc->begin.line,lloc->begin.column);
+  aloc += *(annot::location *)loc;
   annotmap *m = new annotmap;
   annot::parser p(m);
   annot_scan_string(s.c_str());
@@ -135,9 +162,11 @@ annotmap *scanAnnot(string &s)
 
 
     
-void annot::parser::error (const location_type& l, const std::string& m)
+void annot::parser::error (const annot::location& l, const std::string& m)
 {
-  cerr << m << " at line "<< l.end.line << " column " <<
-		l.end.column << " in "<<*l.begin.filename<<endl;
+  cerr << m << " between "
+  "line "<<l.begin.line << " col "<<l.begin.column<<" and "<<
+  "line "<<l.end.line   << " col "<<l.end.column << " in "<<
+  *l.begin.filename<<endl;
 }
 

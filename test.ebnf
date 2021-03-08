@@ -17,13 +17,15 @@ character_literal =
  optionchoice =
   b,  [ a | b ], c;
 
-<<-- caption "Syntax for the case statement." -->>
+<<-- caption "Syntax for the case statement.";
+     sideways
+-->>
 case_statement =
     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
     { ',' , case_statement_alternative } \\
     'end', 'case', [ label ] ,';' ;
 
-<<-- subsume as "case_statement_alternative";
+<<-- subsume;
 caption "Syntax for the case statement alternawive" -->>
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;

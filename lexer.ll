@@ -52,6 +52,7 @@ ebnf2tikz
 %{
   // A handy shortcut to the location held by the driver.
   yy::location& loc = drv.get_location();
+  yy::location subloc;
   // Code run each time yylex is called.
   loc.step ();
 %}
@@ -85,7 +86,7 @@ ebnf2tikz
 
 [a-zA-Z][a-zA-Z0-9_]*     {return yy::parser::make_STRING(yytext,loc);}
 
-"<<--"	      {BEGIN A;yymore();}
+"<<--"	      {BEGIN A;subloc=loc;yymore();}
 <A>[^-]*      {yymore();}
 <A>"-"[^-]    {yymore();}
 <A>"--"[^>]   {yymore();}
