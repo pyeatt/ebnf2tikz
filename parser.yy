@@ -31,7 +31,7 @@ ebnf2tikz
   #include <assert.h>
   #include "graph.hh"
   class driver;
-  annotmap *scanAnnot(string &s);
+  annotmap *scanAnnot(string &s, void *loc);
 }
 // The parsing context.
 %param { driver& drv }
@@ -44,7 +44,10 @@ ebnf2tikz
 using namespace std;
 #include "driver.hh"
 #include "annot_lexer.hh"
+#include "lexer.hh"
 #include "nodesize.hh"
+
+extern yy::location loc;
 
 node* wrapChoice(node *n) {
   if(n->is_choice()) {
@@ -200,20 +203,10 @@ production: annotations STRING EQUAL rows SEMICOLON
     $$ = new productionnode($1,$2,c);
   } ;
 
-// I would like to support these options for annotations:
-//
-// subsume as <regex> // using regex... replace all nonterms matching this
-                      // regex with thi production, and do not produce seperate
-		      // figure for this production.
-// make figure        // even if subsumed according to the previous rulse,
-                      // produce a figure
-// replace x with y   // in the following production, replace notterm x with
-                      // production y 
-// caption "chars"    // set the caption for the LaTeX figure
 
 annotations : ANNOTATION {
     map<string,string> *a;
-    a = scanAnnot($1);
+    a = scanAnnot($1,&drv.get_location());
     $$ = a;
   } |
   {
@@ -364,7 +357,9 @@ primary:
 
 void yy::parser::error (const location_type& l, const std::string& m)
 {
-  cerr << m << " at line "<< l.end.line << " column " <<
-		l.end.column << " in "<<*l.begin.filename<<endl;
+  cerr << m << " between "
+  "line "<<l.begin.line << " col "<<l.begin.column<<" and "<<
+  "line "<<l.end.line   << " col "<<l.end.column << " in "<<
+  *l.begin.filename<<endl;  
 }
 

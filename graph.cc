@@ -332,6 +332,8 @@ productionnode::productionnode(annotmap *a,string s,node *p):
 	subsume_spec = NULL;
       else
 	{
+	  if(reg == "emusbussubsume")
+	    reg == name;
 	  subsume_spec = new regex_t;
 	  if(regcomp(subsume_spec,reg.c_str(),REG_EXTENDED))
 	    {
@@ -440,6 +442,7 @@ nontermnode::nontermnode(const nontermnode &original):node(original)
   style = original.style;
   format = original.format;
   str = original.str;
+  sizes->getSize(nodename,myWidth,myHeight);
 }
 
 nontermnode* nontermnode::clone() const
