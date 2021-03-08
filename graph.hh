@@ -60,10 +60,6 @@ protected:
 	return "UP";
       case DOWN:
 	return "DOWN";
-      // case STARTNEWLINEUP:
-      // 	return "STARTNEWLINEUP";
-      // case STARTNEWLINEDOWN:
-      // 	return "STARTNEWLINEDOWN";
       default:
 	cerr<<"BAD VALUE for vraildir"<<endl;
 	exit(4);
@@ -104,8 +100,10 @@ public:
   virtual void setRightRail(railnode* p){rightrail = p;}
   railnode* getLeftRail(){return leftrail;}
   railnode* getRightRail(){return rightrail;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,vraildir join,int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,vraildir join, int drawself);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,
+			      vraildir join,int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,
+			       vraildir join, int drawself);
   void makeDead(){dead = 1;}
   int isDead(){return dead;}
   void setBeforeSkip(float s){beforeskip=s;}
@@ -146,7 +144,6 @@ public:
   // the object.  The second time will be to actually emit code.
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth){
-    //lastPlaced=this;
     return start;}
 
   virtual void fixSkips(){}
@@ -169,7 +166,6 @@ public:
   virtual node* getChild(int n){return NULL;}
   virtual int operator ==(node &r){return 0;}
   virtual int operator !=(node &r){return 1;}
-  // subsume will either give back the original node pointer, or a new pointer
   virtual node* subsume(string name, node *replacement){return this;}
   virtual void forgetChild(int n){};
 };
@@ -185,8 +181,10 @@ public:
   singlenode(const singlenode &original);
   virtual singlenode* clone() const;
   virtual void forgetChild(int n);
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,
+			      vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,
+			       vraildir join, int drawself);
   virtual void mergeRails(){body->mergeRails();}
   virtual ~singlenode(){if(body != NULL) delete body;}
   virtual int mergeConcats(int depth){
@@ -201,7 +199,7 @@ public:
   virtual int numChildren(){return 1;}
   virtual node* getChild(int n){return body;}
   virtual int operator ==(node &r);
-  virtual int operator !=(node &r){return  !(*this == r);} // not efficient
+  virtual int operator !=(node &r){return  !(*this == r);} 
   virtual node* subsume(string name, node *replacement);
   virtual void setParent(node* p);
   virtual void setPrevious(node *n){previous = n;body->setPrevious(n);}
@@ -214,7 +212,7 @@ public:
 class railnode:public node{
 protected:
   vrailside side;       // LEFT or RIGHT: Which side of choice/loop is it on?
-  vraildir direction;  // UP or DOWN: Direction of travel down this rail.
+  vraildir direction;   // UP or DOWN: Direction of travel down this rail.
   coordinate top,bottom;  // top is even with bottom of top child
                           // if UP, then bottom is even with top
                           // of bottom child.  Otherwise it is even with
@@ -253,13 +251,10 @@ public:
   virtual void insertFirst(node *node);
   virtual int numChildren(){return nodes.size();}
   virtual node* getChild(int n){return nodes[n];}
-  // virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  // virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
-  //  virtual int liftOptionChoice(int depth);
   virtual int operator ==(node &r);
-  virtual int operator !=(node &r){return  !(*this == r);} // not efficient
+  virtual int operator !=(node &r){return  !(*this == r);} 
   virtual node* subsume(string name, node *replacement);
   virtual void setParent(node* p);
   virtual void setPrevious(node* p);
@@ -295,10 +290,12 @@ public:
   virtual node* getChild(int n){return NULL;}
   virtual int analyzeOptLoops(int depth){return 0;}
   virtual int analyzeNonOptLoops(int depth){return 0;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,
+			      vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,
+			       vraildir join, int drawself);
   virtual int operator ==(node &r);
-  virtual int operator !=(node &r){return  !(*this == r);} // not efficient
+  virtual int operator !=(node &r){return  !(*this == r);} 
   virtual node* subsume(string name, node *replacement);
 };  
 
@@ -370,8 +367,10 @@ public:
   virtual ~choicenode(){}
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,
+			      vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,
+			       vraildir join, int drawself);
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
   virtual void fixSkips();
@@ -415,8 +414,10 @@ public:
   virtual int mergeConcats(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,
+			      vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,
+			       vraildir join, int drawself);
   virtual void mergeRails();
   virtual void setPrevious(node* p);
   virtual void setNext(node* p);
@@ -441,6 +442,7 @@ public:
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
+  virtual void fixSkips(){body->fixSkips();}
 };
 
 // ------------------------------------------------------------------------
@@ -460,6 +462,7 @@ public:
   void setParent();
   void setPrevious();
   void setNext();
+  void fixSkips(){for(auto i=productions.begin();i!=productions.end();i++)(*i)->fixSkips();}
 };
 
 #endif

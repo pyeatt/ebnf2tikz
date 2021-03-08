@@ -26,7 +26,7 @@ ebnf2tikz
 #include <map>
 #include <string>
 #include <fstream>
-#include <iostream>     // std::cout
+#include <iostream>
 
 using namespace std;
 
@@ -59,7 +59,6 @@ public:
     out << '('<<c.x<<"pt,"<<c.y<<"pt)";
     return out;
   }
-
 };
 
 class nodesizes{
@@ -111,7 +110,6 @@ public:
     height = i->second.y;
     return 1;
   }
-
   
 };
 

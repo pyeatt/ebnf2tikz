@@ -115,13 +115,13 @@ int main(int argc, char** argv) {
   node::loadData("bnfnodes.dat");
   
   if (drv.parse (infilename,noopt,figures))
-    std::cout << "Parser returned " << drv.result << endl;
+    std::cout << "Parser returned " << drv.get_result() << endl;
 
   outfile.close();
 
   node::deleteData();
   
-  return drv.result;
+  return drv.get_result();
 
 }
 
