@@ -33,9 +33,12 @@ void grammar::subsume()
   // look for productions that are marked for subsumption
   for(auto i=productions.begin();i!=productions.end();i++)
     if((name = (*i)->getSubsume()) != NULL) {
+      cout<<"Subsuming "<<(*i)->texName()<<". Body is\n";
+      (*i)->getChild(0)->dump(1);
       for(auto j=productions.begin();j!=productions.end();j++)
-	if(*j != *i)
+	if(j != i)
 	  (*j)->subsume(name,(*i)->getChild(0));
+      cout<<endl;
     }
 }
 
@@ -85,10 +88,12 @@ node* productionnode::subsume(regex_t* name, node *replacement) {
   // Production nodes always contain a concat with two leading
   // nullnodes followed by a rownode We only want to take the actual
   // production, which is the child of the third child.
-  replacement = new concatnode(replacement->getChild(2)->getChild(0));
+  //replacement = new concatnode(replacement->getChild(2)->getChild(0));
+  //replacement = new concatnode(replacement->getChild(2)->getChild(0));
+  replacement = replacement->getChild(2)->clone();
   tmp = body->subsume(name,replacement);
-  replacement->forgetChild(0);
-  delete replacement;
+  //  replacement->forgetChild(0);
+  // delete replacement;
   if(tmp != body)
     {
       delete body;
@@ -103,7 +108,15 @@ node* productionnode::subsume(regex_t* name, node *replacement) {
 node* nontermnode::subsume(regex_t* name, node *replacement){
   regmatch_t  pmatch[1];
   if(!regexec(name, str.c_str(), ARRAY_SIZE(pmatch), pmatch, 0))
-    return replacement->clone(); // return deep copy of replacement
+    {
+      cout<<" matched. Replacing "<<texName()<<endl;
+      node *tmp = replacement->clone();
+      cout<<" cloned "<<endl;
+      replacement->dump(1);
+      cout<<" and got "<<endl;
+      tmp->dump(1);
+      return tmp;
+    }
   else
     return this;                 // or pointer to this
 }

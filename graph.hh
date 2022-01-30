@@ -173,6 +173,7 @@ public:
   virtual int operator !=(node &r){return 1;}
   virtual node* subsume(regex_t* name, node *replacement){return this;}
   virtual void forgetChild(int n){};
+  virtual node* createRows(){return NULL;}
 };
 
 
@@ -427,6 +428,7 @@ public:
   virtual void setPrevious(node* p);
   virtual void setNext(node* p);
   virtual void fixSkips();
+  virtual node* createRows();
 };
 
 // ------------------------------------------------------------------------
@@ -457,6 +459,7 @@ public:
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   virtual void fixSkips(){body->fixSkips();}
+  virtual node* createRows();
 };
 
 // ------------------------------------------------------------------------
@@ -477,6 +480,7 @@ public:
   void setPrevious();
   void setNext();
   void fixSkips(){for(auto i=productions.begin();i!=productions.end();i++)(*i)->fixSkips();}
+  void createRows();
 };
 
 #endif

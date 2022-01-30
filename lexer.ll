@@ -40,8 +40,20 @@ ebnf2tikz
 
 
 %{
+#define YY_USER_ACTION \
+    loc.begin.line = loc.end.line; \
+    loc.begin.column = loc.end.column; \
+    for(int i = 0; yytext[i] != '\0'; i++) { \
+        if(yytext[i] == '\n') { \
+            loc.end.line++; \
+            loc.end.column = 0; \
+        } \
+        else { \
+            loc.end.column++; \
+        } \
+    }
   // Code run each time a pattern is matched.
-  # define YY_USER_ACTION  loc.columns (yyleng);
+  // # define YY_USER_ACTION  loc.columns (yyleng);
 %}
 
 
@@ -59,9 +71,9 @@ ebnf2tikz
 
 <<EOF>>                   {return yy::parser::make_END(loc);}
 
-[ ]	                  {loc.step();}
-[\t]                      {loc.step();}
-[\n\r]                    {loc.lines(yyleng); loc.step();}
+[ ]	                  {}
+[\t]                      {loc.end.column+=8;loc.end.column -= loc.end.column % 8;}
+[\n\r]                    {}
 
 \/\/.*\n                  {}
 ---.*\n                   {}

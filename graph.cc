@@ -149,7 +149,6 @@ singlenode::singlenode(node *p):node()
 
 singlenode::singlenode(const singlenode &original):node(original)
 {
-  delete body;
   body = original.body->clone();
   ea = body->east();
   wa = body->west();
@@ -223,8 +222,11 @@ void multinode::forgetChild(int n)
 
 multinode::multinode(node *p):node(){
   nodes.push_back(p);
-  ea=p->east(); 
-  wa=p->west();
+  if(p!=NULL)
+    {
+      ea=p->east(); 
+      wa=p->west();
+    }
   drawtoprev=0;
 };
 
@@ -337,6 +339,7 @@ productionnode::productionnode(annotmap *a,string s,node *p):
 	  
 	  if(reg == "emusbussubsume")
 	    reg = name;
+	  cout<<"creating regex: "<<reg<<" for "<<name<<endl;
 	  subsume_spec = new regex_t;
 	  if(regcomp(subsume_spec,reg.c_str(),REG_EXTENDED))
 	    {
@@ -367,6 +370,18 @@ void productionnode::dump(int depth) const
   if(!subsume_spec)
     body->dump(1);
 }
+
+node* productionnode::createRows()
+{
+  if(body->is_concat())
+    {
+      concatnode *tmp = (concatnode*)((concatnode*)body)->createRows();
+      delete body;
+      body = tmp;
+    }
+  return NULL;
+}
+  
 
 // ------------------------------------------------------------------------
 loopnode::loopnode(node *node):multinode(node)
@@ -663,6 +678,38 @@ void concatnode::insert(node* p)
     p->setDrawToPrev(0);
 }
 
+node* concatnode::createRows()
+{
+  // create a replacement for ourself (we will erase the NULL later)
+  concatnode *rep=new concatnode(NULL);
+
+  rep->beforeskip = beforeskip;
+  rep->drawtoprev = drawtoprev;
+  rep->leftrail = leftrail;
+  rep->rightrail = rightrail;
+  
+  while(nodes.size() > 0)
+    {
+      auto i = nodes.begin();
+      concatnode *c = new concatnode(*i);
+      i = nodes.erase(i);
+      while(i != nodes.end() && !(*i)->is_newline())
+	{
+	  c->insert(*i);
+	  i = nodes.erase(i);
+	}
+      rownode *r = new rownode(c);
+      rep->insert(r);
+      if(i!=nodes.end() && (*i)->is_newline())
+	{
+	  rep->insert(*i);
+	  i = nodes.erase(i);
+	}
+    }
+  rep->nodes.erase(rep->nodes.begin());
+  return rep;
+}
+
 // ------------------------------------------------------------------------
 
 grammar::~grammar()
@@ -693,4 +740,10 @@ void grammar::setNext()
 {
   for(auto i=productions.begin();i!=productions.end();i++)
     (*i)->setNext(NULL);
+}
+
+void grammar::createRows()
+{
+  for(auto i=productions.begin();i!=productions.end();i++)
+    (*i)->createRows();
 }
