@@ -490,7 +490,7 @@ int concatnode::analyzeOptLoops(int depth)
 	// Call findAndDelete to do all of that and delete matching
 	// nodes the parent
 	child = (concatnode*)loop->getChild(0);
-	if(gp != NULL)
+	if(gp != NULL && child != NULL)
 	  numnodes = findAndDeleteMatches(gp->nodes,prev,child->nodes,j);
 	else
 	  numnodes = 0;

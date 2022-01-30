@@ -132,7 +132,7 @@ coordinate rownode::place(ofstream &outs,int draw, int drawrails,
       myWidth = body->width();
     }
   myHeight = body->height();
-  if(previous->is_newline() && drawrails)
+  if(previous!=NULL && previous->is_newline() && drawrails)
     {
       // output a coordinate for the newline to attach to, and draw an
       // entry line
@@ -143,7 +143,7 @@ coordinate rownode::place(ofstream &outs,int draw, int drawrails,
       outs<<"\\coordinate ("<<coordname<<") at "<<attach<<";\n";
       
     }
-  if(previous->is_newline() && draw)
+  if(previous!=NULL && previous->is_newline() && draw)
     {
       outs<<"% drawn by rownode "<<nodename<<endl;
       if(body->is_concat()  && body->getChild(0)->is_rail())
@@ -165,6 +165,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   string coord=nextCoord();
   string coord2=nextCoord();
   string figtype;
+
   c = start+coordinate(0.0,-1.5*sizes->minsize);
   if(annotations != NULL && (*annotations)["sideways"] == "true")
     figtype="sidewaysfigure";
@@ -173,7 +174,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   
   if(drawrails)
     {
-      outs<<"\n\\begin{"<<figtype<<"}\n";
+      // outs<<"\n\\begin{"<<figtype<<"}\n";
       outs<<"\\centerline{\n";
       outs<<"\\begin{tikzpicture}\n";
       outs<<"\\node at "<<start<<"[anchor=west](name){";
@@ -187,16 +188,20 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       body->drawToRightRail(outs,NULL,UP,1);
       outs<<"\\end{tikzpicture}\n";
       outs<<"}\n";
-      string caption("No Caption.");
-      if(annotations != NULL)
-	{
-	  caption = (*annotations)["caption"];
-	  if(caption == "")
-	    caption = "No Caption.";
-	}
-      outs<<"\\caption{"<<caption<<"}\n";
-      outs<<"\\label{No Caption.}\n";
-      outs<<"\\end{"<<figtype<<"}\n";
+      // string caption("No Caption.");
+      // if(annotations != NULL)
+      // {
+      //  caption = (*annotations)["caption"];
+      // if(caption == "")
+      // caption = "No Caption.";
+      // }
+      // outs<<"\\caption{"<<caption<<"}\n";
+      // outs<<"\\label{No Caption.}\n";
+      // outs<<"\\end{"<<figtype<<"}\n";
+
+
+      outs<<"\n\\vspace{\\baselineskip}\n";
+      
     }
   return c;
 }
@@ -286,7 +291,7 @@ coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
   // for newline nodes, top is actually the right-hand side, and
   // bottom is the left-hand side.  The previous and next will always
   // be rails.
-  top = start - coordinate(0, previous->getPrevious()->height());
+  top = start - coordinate(0, previous->height());
   bottom = start - coordinate(0,myHeight);
   if(drawrails) {
     outs<<"% drawn by newlinenode "<<nodename<<endl;
@@ -511,7 +516,7 @@ void loopnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 	}
 	else { 
 	  // otherwise, use straight rail entry
-	  s<<"+left:"<<0.5*sizes->colsep<<"pt";
+	  s<<"+left:"<<sizes->colsep<<"pt";
 	  line(outs,nodes.front()->west(),p->rawName(),s.str());
 	}
       }
@@ -575,7 +580,7 @@ void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
        parent->getParent()->getNext()->is_newline()) {
       // if this choice precedes newline, draw first child's rail entry down
       s<<"+down:"<<sizes->colsep<<"pt";
-      line(outs,nodes.front()->east(),p->rawName(),s.str());
+      //line(outs,nodes.front()->east(),p->rawName(),s.str());
       rightrail->setRailDir(DOWN);
       join = DOWN;
       line(outs,nodes.back()->east(),
@@ -584,14 +589,15 @@ void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 	   s.str());
     }
     else {
-      if(parent->is_concat() &&
-	 this == parent->getChild(parent->numChildren()-1) &&
-	 parent->getParent() != NULL &&
-	 parent->getParent()->is_choice()) {
+      if(parent->is_choice() || parent->is_loop() || 
+	 ( parent->is_concat() &&
+	   this == parent->getChild(parent->numChildren()-1) &&
+	   parent->getParent() != NULL &&
+	   (parent->getParent()->is_choice()||parent->getParent()->is_loop()))) {
 	// if this is in a concat contained in a choice, draw first
 	//  child's rail entry up
-	line(outs,nodes.front()->east(),
-	     nodes.front()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
+	//line(outs,nodes.front()->east(),
+	//   nodes.front()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
 	// draw last child to linetop of the rail
 	line(outs,nodes.back()->east(),
 	     nodes.back()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
@@ -612,11 +618,11 @@ void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
   // and their methods are called separately so that they will not try
   // to connect themselves, but will only fill in their children.
   for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
-    (*i)->drawToRightRail(outs,p,join,1);
+    (*i)->drawToRightRail(outs,p,join,0);
   
-  if(nodes.back()->is_concat())
+  //if(nodes.back()->is_concat())
     nodes.back()->drawToRightRail(outs,p,join,0);
-  if(nodes.front()->is_concat())
+    //if(nodes.front()->is_concat())
     nodes.front()->drawToRightRail(outs,p,join,0);
   
 }
@@ -634,35 +640,38 @@ void loopnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
   if(drawself) {
     //TODO: make it so that only the last child of the last child will
     //actually draw to the top of the rail.
-    if(parent->is_concat() &&
-       this == parent->getChild(1) &&
-       parent->getParent() != NULL &&
-       parent->getParent()->is_row() &&
-       parent->getParent()->getNext() != NULL &&
-       parent->getParent()->getNext()->is_newline()) {
+    if(parent->is_choice() ||
+       (parent->is_concat() &&
+	this == parent->getChild(1) &&
+	parent->getParent() != NULL &&
+	parent->getParent()->is_row() &&
+	parent->getParent()->getNext() != NULL &&
+	parent->getParent()->getNext()->is_newline())) {
       // if this choice pre newline, then don't draw, because the
       // newline will take care of it
     }
     else {
-      if(parent->is_concat() &&
-	 this == parent->getChild(0) &&
-	 parent->getParent() != NULL &&
-	 parent->getParent()->is_choice()) {
+      if(parent->is_choice() || 
+	 (parent->is_concat() &&
+	  this == parent->getChild(0) &&
+	  parent->getParent() != NULL &&
+	  parent->getParent()->is_choice())) {
 	// if this is in a concat contained in a choice, draw first
 	// don't draw, because the concat will do it.
+	join = UP;
       }
       else {
 	// otherwise, use straight rail entry
 	s<<"+right:"<<0.5*sizes->colsep<<"pt";
 	line(outs,nodes.front()->east(),p->rawName(),s.str());
+	line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),
+	   p->rawName()+"|-"+nodes.front()->east(),
+	   nodes.front()->east());
       }
     }
-    line(outs,nodes.back()->east(),
-	 nodes.back()->east()+"-|"+p->rawName(),
-	 p->rawName()+"|-"+nodes.front()->east(),
-	 nodes.front()->east());
   }
-  nodes.back()->drawToRightRail(outs,p,join,0);
+  nodes.back()->drawToRightRail(outs,p,join,1);
   nodes.front()->drawToRightRail(outs,p,join,0);
 }
 

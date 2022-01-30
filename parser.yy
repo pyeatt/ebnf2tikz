@@ -131,6 +131,7 @@ node* wrapChoice(node *n) {
 grammar : productions {
      grammar *g = $1;
 
+g->dump();
      g->setParent();
      g->setPrevious();
      g->setNext();
@@ -151,15 +152,22 @@ grammar : productions {
      g->setNext();
      g->mergeRails();
 
+     // g->setParent();
+     // g->setPrevious();
+     // g->setNext();
+     // g->optimize();
+
      g->setParent();
      g->setPrevious();
      g->setNext();
-     g->optimize();
+g->dump();
+     g->createRows();
 
      g->setParent();
      g->setPrevious();
      g->setNext();
      g->fixSkips();
+
 
      g->setParent();
      g->setPrevious();
@@ -185,16 +193,17 @@ productions: productions production {
 // equal sign, followed by an expression, followed by a semicolon.
 production: annotations STRING EQUAL rows SEMICOLON
   {
-  concatnode *c = new concatnode(new nullnode("start1"));
-  c->setBeforeSkip(0);
-  c->setDrawToPrev(0);
-  c->getChild(0)->setBeforeSkip(0);
-  c->getChild(0)->setDrawToPrev(0);
-  c->insert(new nullnode("start2"));
+    concatnode *c = new concatnode(new nullnode("start1"));
+    c->setBeforeSkip(0);
+    c->setDrawToPrev(0);
+    c->getChild(0)->setBeforeSkip(0);
+    c->getChild(0)->setDrawToPrev(0);
+    c->insert(new nullnode("start2"));
     coordinate start;
+    if(!$4->is_concat())
+      $4=new concatnode($4);
     $4->setDrawToPrev(0);
-     if($4->is_concat())
-     $4->getChild(0)->setDrawToPrev(1);
+    $4->getChild(0)->setDrawToPrev(1);
     $4=wrapChoice($4);
     c->insert($4);
     c->insert(new nullnode("end1"));
@@ -218,7 +227,8 @@ rows :
   rows NEWLINE expression {
       $3 = wrapChoice($3);
       newlinenode *n = new newlinenode();
-      rownode *row = new rownode($3);
+      //rownode *row = new rownode($3);
+      concatnode *row = new concatnode($3);
       row->setBeforeSkip(0);
       $3->setBeforeSkip(0);
       // if($3->getChild(0) != NULL)
@@ -229,7 +239,8 @@ rows :
  	   // if the previous row endend in a rail, then set the
  	   // beforeskip for the newline to zero
 	   node *lr = $1->getChild($1->numChildren()-1)->getChild(0);
-	   if(lr->is_concat() && lr->getChild(lr->numChildren()-1)->is_rail())
+	   if(lr != NULL && lr->is_concat() &&
+	       lr->getChild(lr->numChildren()-1)->is_rail())
 	     n->setBeforeSkip(0);
 	}
       else
@@ -261,7 +272,8 @@ rows :
      } | 
     expression {
       $1 = wrapChoice($1);
-      $$ = new rownode($1);
+      //$$ = new rownode($1);
+      $$ = new concatnode($1);
       $$->setBeforeSkip(0);
       $1->setBeforeSkip(0);
       $1->setDrawToPrev(1);

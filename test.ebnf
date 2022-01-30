@@ -17,15 +17,14 @@ character_literal =
  optionchoice =
   b,  [ a | b ], c;
 
-<<-- caption "Syntax for the case statement.";
-     sideways
+<<-- caption "Syntax for the case statement."
 -->>
 case_statement =
     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
     { ',' , case_statement_alternative } \\
     'end', 'case', [ label ] ,';' ;
 
-<<-- subsume;
+<<-- 
 caption "Syntax for the case statement alternawive" -->>
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
@@ -119,8 +118,8 @@ muckrake =
 broken =
  	x  ,  a, b, [{x}];
 
-scooby =
-  	[{  blue, ',',  'part', a, (b | g)}];
+// scooby =
+//   	[{  blue, ',',  'part', a, (b | g)}];
 
 scooby =
    	x,    a, b,[{  blue, ',' , 'part', a, (b | g)}];
