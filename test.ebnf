@@ -42,7 +42,7 @@ choices =
 
 
 toollist =
- '(' \\ tool, { ',', tool } \\ ')';
+ '(' , tool , { ',' , tool } , ')' ;
 
 <<-- subsume as "tool" -->>
 tool =
@@ -102,7 +102,6 @@ a_much_better_loop =
 
 a_much_better_loop =
  	x ,   a, b, {  ',',  a, b};
-
 
 
 wowzer =
