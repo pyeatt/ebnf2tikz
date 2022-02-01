@@ -62,9 +62,9 @@ void usage(char *name)
     {
       if(options[i].has_arg==1)
 	cout<< "  --"<<options[i].name<<" <arg> or -"<<
-	  options[i].val<<" <arg>\n";
+	  char(options[i].val)<<" <arg>\n";
       else
-	cout<< "  --"<<options[i].name<<" or -"<<options[i].val<<"\n";
+	cout<< "  --"<<options[i].name<<" or -"<<char(options[i].val)<<"\n";
       cout<<description[i]<<endl<<endl;
     }
   exit(1);
