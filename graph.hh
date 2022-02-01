@@ -211,6 +211,7 @@ public:
   virtual void setPrevious(node *n){previous = n;body->setPrevious(n);}
   virtual void setNext(node *n) {next = n;body->setNext(n);}
   virtual void fixSkips();
+  virtual string texName() { return "singlenode";};
 };
 
 // ------------------------------------------------------------------------
@@ -238,6 +239,7 @@ public:
   virtual int operator !=(node &r){return !(*this == r);}
   virtual vraildir getRailDir(){return direction;}
   virtual void setRailDir(vraildir d){direction = d;}
+  virtual string texName() { return "railnode";};
 };
 
 // ------------------------------------------------------------------------
@@ -271,6 +273,7 @@ public:
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
   virtual void fixSkips();
+  virtual string texName() { return "multinode";};
 };
 
 // ------------------------------------------------------------------------
@@ -328,6 +331,7 @@ public:
   virtual nullnode* clone() const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
+  virtual string texName() { return "nullnode";};
 };
 
 // ------------------------------------------------------------------------
@@ -360,6 +364,7 @@ public:
   virtual void dump(int depth) const;
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
+  virtual string texName() { return "rownode";};
 };
 
 // ------------------------------------------------------------------------
@@ -380,6 +385,7 @@ public:
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
   virtual void fixSkips();
+  virtual string texName() { return "choicenode";};
 };
 
 // ------------------------------------------------------------------------
@@ -398,6 +404,7 @@ public:
   node* getBody();
   void setBody(node *r);
   virtual void fixSkips();
+  virtual string texName() { return "loopnode";};
 };
 
 // ------------------------------------------------------------------------
@@ -460,6 +467,7 @@ public:
 			   coordinate start,node *parent, int depth);
   virtual void fixSkips(){body->fixSkips();}
   virtual node* createRows();
+  virtual string texName() {return "production node '"+name+"'";};
 };
 
 // ------------------------------------------------------------------------
