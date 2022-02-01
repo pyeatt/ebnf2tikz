@@ -34,6 +34,7 @@ void grammar::subsume()
   for(auto i=productions.begin();i!=productions.end();i++)
     if((name = (*i)->getSubsume()) != NULL) {
       cout<<"Subsuming "<<(*i)->texName()<<". Body is\n";
+      (*i)->dump(1);
       (*i)->getChild(0)->dump(1);
       for(auto j=productions.begin();j!=productions.end();j++)
 	if(j != i)
