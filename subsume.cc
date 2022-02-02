@@ -32,14 +32,16 @@ void grammar::subsume()
   regex_t *name;
   // look for productions that are marked for subsumption
   for(auto i=productions.begin();i!=productions.end();i++)
-    if((name = (*i)->getSubsume()) != NULL) {
-      cout<<"Subsuming "<<(*i)->texName()<<". Body is\n";
+    {
       (*i)->dump(1);
-      (*i)->getChild(0)->dump(1);
-      for(auto j=productions.begin();j!=productions.end();j++)
-	if(j != i)
-	  (*j)->subsume(name,(*i)->getChild(0));
-      cout<<endl;
+      if((name = (*i)->getSubsume()) != NULL) {
+	cout<<"Subsuming "<<(*i)->texName()<<". Body is\n";
+	(*i)->getChild(0)->dump(1);
+	for(auto j=productions.begin();j!=productions.end();j++)
+	  if(j != i)
+	    (*j)->subsume(name,(*i)->getChild(0));
+	cout<<endl;
+      }
     }
 }
 
@@ -87,13 +89,18 @@ node* multinode::subsume(regex_t* name, node *replacement){
 node* productionnode::subsume(regex_t* name, node *replacement) {
   node *tmp;
   // Production nodes always contain a concat with two leading
-  // nullnodes followed by a rownode We only want to take the actual
-  // production, which is the child of the third child.
-  //replacement = new concatnode(replacement->getChild(2)->getChild(0));
-  //replacement = new concatnode(replacement->getChild(2)->getChild(0));
-  replacement = replacement->getChild(2)->clone();
+  // nullnodes, and two trailing nullnodes. We only want to take the
+  // actual production, which is everything in between.
+  replacement = replacement->clone();
+  delete replacement->getChild(replacement->numChildren()-1);
+  replacement->forgetChild(replacement->numChildren()-1);
+  delete replacement->getChild(replacement->numChildren()-1);
+  replacement->forgetChild(replacement->numChildren()-1);
+  delete replacement->getChild(0);
+  replacement->forgetChild(0);
+  delete replacement->getChild(0);
+  replacement->forgetChild(0);
   tmp = body->subsume(name,replacement);
-  //  replacement->forgetChild(0);
   // delete replacement;
   if(tmp != body)
     {

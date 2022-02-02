@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021 Gentoo Linux) (preloaded format=pdflatex 2021.9.22)  1 FEB 2022 13:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021 Gentoo Linux) (preloaded format=pdflatex 2021.9.22)  2 FEB 2022 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1036,33 +1036,33 @@ e
 \tmplengthb=\skip62
 \tmplengthc=\skip63
  (./test.tex
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 25
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 27
 4.
 
 (/usr/share/texmf-dist/tex/latex/inconsolata/t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 254.
+(Font)              scaled to size 10.0pt on input line 274.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5]) [6] (./te
-stdriver.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] [5] [6]) [7] (
+./testdriver.aux) ) 
 Here is how much of TeX's memory you used:
- 23262 strings out of 480851
- 452916 string characters out of 5905575
- 787240 words of memory out of 5000000
- 40114 multiletter control sequences out of 15000+600000
+ 23480 strings out of 480851
+ 457679 string characters out of 5905575
+ 813589 words of memory out of 5000000
+ 40332 multiletter control sequences out of 15000+600000
  405963 words of font info for 31 fonts, out of 8000000 for 9000
  62 hyphenation exceptions out of 8191
  90i,7n,101p,482b,801s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
-</usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/tex
-mf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on testdriver.pdf (6 pages, 60274 bytes).
+{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.
+enc}</usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share
+/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
+Output written on testdriver.pdf (7 pages, 70064 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
+ 46 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  25 words of extra memory for PDF output out of 10000 (max. 10000000)
 

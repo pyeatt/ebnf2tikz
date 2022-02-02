@@ -388,95 +388,80 @@ void node::drawToRightRail(ofstream &outs, railnode* p,vraildir join,
   
 void nontermnode::drawToLeftRail(ofstream &outs,railnode* p, vraildir join,
 				 int drawself){
-  // if(p != NULL && drawself && !parent->is_concat())
-  //   {
-  //     stringstream s;
-  //     if(join == UP)
-  // 	s<<"+down:"<<sizes->colsep<<"pt";
-  //     else
-  // 	s<<"+up:"<<sizes->colsep<<"pt";
-  //     line(outs,wa,wa+"-|"+p->rawName(),s.str());
-  //   }
+  if(p != NULL && drawself && !parent->is_concat())
+    {
+      stringstream s;
+      if(join == UP)
+	s<<"+down:"<<sizes->colsep<<"pt";
+      else
+	s<<"+up:"<<sizes->colsep<<"pt";
+      line(outs,wa,wa+"-|"+p->rawName(),s.str());
+    }
 }
-
-void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
-				  int drawself){
-
-  // if(p != NULL && drawself && !parent->is_concat())
-  //   {
-  //     stringstream s;
-  //     if(join == UP)
-  // 	s<<"+up:"<<sizes->colsep<<"pt";
-  //     else
-  // 	s<<"+down:"<<sizes->colsep<<"pt";
-  //     line(outs,ea,ea+"-|"+p->rawName(),s.str());
-  //   }
-}
-
-
 
 void choicenode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 				int drawself){
   // if p is NULL then override with our own rails
 
-  // stringstream s,s2;
-  // if(p==NULL)
-  //   {
-  //     p = leftrail;
-  //     if(p != NULL)
-  // 	join = p->getRailDir();
-  //   }
-
-  // if(drawself) {
-  //   if(p->getRailDir()==UP)
-  //     line(outs,nodes.back()->west(),
-  // 	   nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-  //   else
-  //     //TODO: make it so that only the last child of the last child will
-  //     //actually draw to the top of the rail.
-  //     if(parent->is_concat() &&
-  // 	 this == parent->getChild(1) &&
-  // 	 parent->getParent() != NULL &&
-  // 	 parent->getParent()->is_row() &&
-  // 	 parent->getParent()->getPrevious() != NULL &&
-  // 	 parent->getParent()->getPrevious()->is_newline()) {
-  // 	// if this choice follows newline, draw first child's rail entry up
-  // 	s<<"+up:"<<sizes->colsep<<"pt";
-  // 	line(outs,nodes.front()->west(),p->rawName(),s.str());
-  // 	// and draw last child up into the newline
-  // 	line(outs,nodes.back()->west(),
-  // 	     nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-  //     }
-  //     else {
-  // 	if(parent->is_concat() &&
-  // 	   this == parent->getChild(0) &&
-  // 	   parent->getParent() != NULL &&
-  // 	   parent->getParent()->is_choice()) {
-  // 	  // if this is in a concat contained in a choice, draw first
-  // 	  //  child's rail entry up
-  // 	  line(outs,nodes.front()->west(),
-  // 	       nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-  // 	  // draw last child to linetop of the rail
-  // 	  line(outs,nodes.back()->west(),
-  // 	       nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-  // 	}
-  // 	else { 
-  // 	  // otherwise, use straight rail entry
-  // 	  s<<"+left:"<<0.5*sizes->colsep<<"pt";
-  // 	  line(outs,nodes.front()->west(),p->rawName(),s.str());
-  // 	  line(outs,nodes.back()->west(),
-  // 	       nodes.back()->west()+"-|"+p->rawName(),p->rawName(),s.str());
-  // 	}
-  //     }
-  // }
-  // // skip first and last child
-  // for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
-  //   (*i)->drawToLeftRail(outs,p,join,1);
+  stringstream s,s2;
+  if(p==NULL)
+    {
+      p = leftrail;
+      if(p != NULL)
+	join = p->getRailDir();
+    }
+  if(drawself) {
+    //  if(0) {
+    if(p->getRailDir()==UP)
+      line(outs,nodes.back()->west(),
+	   nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+    else
+      //TODO: make it so that only the last child of the last child will
+      //actually draw to the top of the rail.
+      if(parent->is_concat() &&
+	 this == parent->getChild(1) &&
+	 parent->getParent() != NULL &&
+	 parent->getParent()->is_row() &&
+	 parent->getParent()->getPrevious() != NULL &&
+	 parent->getParent()->getPrevious()->is_newline()) {
+	// if this choice follows newline, draw first child's rail entry up
+	s<<"+up:"<<sizes->colsep<<"pt";
+	line(outs,nodes.front()->west(),p->rawName(),s.str());
+	// and draw last child up into the newline
+	line(outs,nodes.back()->west(),
+	     nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+      }
+      else {
+	if(parent->is_concat() &&
+	   this == parent->getChild(0) &&
+	   parent->getParent() != NULL &&
+	   parent->getParent()->is_choice()) {
+	  // if this is in a concat contained in a choice, draw first
+	  //  child's rail entry up
+	  line(outs,nodes.front()->west(),
+	       nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+	  // draw last child to linetop of the rail
+	  line(outs,nodes.back()->west(),
+	       nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+	}
+	else { 
+	  // otherwise, use straight rail entry
+	  s<<"+left:"<<sizes->colsep<<"pt";
+	  line(outs,nodes.front()->west(),p->rawName(),s.str());
+	  line(outs,nodes.back()->west(),
+	       nodes.back()->west()+"-|"+p->rawName(),p->rawName(),s.str());
+	}
+      }
+  }
   
-  // if(nodes.back()->is_concat())
-  //   nodes.back()->drawToLeftRail(outs,p,join,0);
-  // if(nodes.front()->is_concat())
-  //   nodes.front()->drawToLeftRail(outs,p,join,0);
+  // skip first and last child
+  for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
+    (*i)->drawToLeftRail(outs,p,join,1);
+  
+  if(nodes.back()->is_concat())
+    nodes.back()->drawToLeftRail(outs,p,join,0);
+  if(nodes.front()->is_concat())
+    nodes.front()->drawToLeftRail(outs,p,join,0);
   
 }
 
@@ -485,52 +470,53 @@ void loopnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 {
   // if p is NULL then override with our own rails
 
-  // stringstream s,s2;
-  // if(p==NULL)
-  //   {
-  //     p = leftrail;
-  //     if(p != NULL)
-  // 	join = p->getRailDir();
-  //   }
-  // if(drawself)
-  //   {
-  //     //TODO: make it so that only the last child of the last child will
-  //     //actually draw to the top of the rail.
-  //     if(parent->is_concat() &&
-  // 	 this == parent->getChild(1) &&
-  // 	 parent->getParent() != NULL &&
-  // 	 parent->getParent()->is_row() &&
-  // 	 parent->getParent()->getPrevious() != NULL &&
-  // 	 parent->getParent()->getPrevious()->is_newline()) {
-  // 	// if this choice follows newline, draw first child's rail entry up
-  // 	s<<"+up:"<<sizes->colsep<<"pt";
-  // 	line(outs,nodes.front()->west(),p->rawName(),s.str());
-  //     }
-  //     else {
-  // 	if(parent->is_concat() &&
-  // 	   this == parent->getChild(0) &&
-  // 	   parent->getParent() != NULL &&
-  // 	   parent->getParent()->is_choice()) {
-  // 	  // if this is in a concat contained in a choice, draw first
-  // 	  //  child's rail entry up
-  // 	  line(outs,nodes.front()->west(),
-  // 	       nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-  // 	}
-  // 	else { 
-  // 	  // otherwise, use straight rail entry
-  // 	  s<<"+left:"<<sizes->colsep<<"pt";
-  // 	  line(outs,nodes.front()->west(),p->rawName(),s.str());
-  // 	}
-  //     }
-  //   }
+  stringstream s,s2;
+  if(p==NULL)
+    {
+      p = leftrail;
+      if(p != NULL)
+	join = p->getRailDir();
+    }
+  if(drawself)
+    //if(0)
+    {
+      //TODO: make it so that only the last child of the last child will
+      //actually draw to the top of the rail.
+      if(parent->is_concat() &&
+	 this == parent->getChild(1) &&
+	 parent->getParent() != NULL &&
+	 parent->getParent()->is_row() &&
+	 parent->getParent()->getPrevious() != NULL &&
+	 parent->getParent()->getPrevious()->is_newline()) {
+	// if this choice follows newline, draw first child's rail entry up
+	s<<"+down:"<<sizes->colsep<<"pt";
+	line(outs,nodes.front()->west(),p->rawName(),s.str());
+      }
+      else {
+	if(parent->is_concat() &&
+	   this == parent->getChild(0) &&
+	   parent->getParent() != NULL &&
+	   parent->getParent()->is_choice()) {
+	  // if this is in a concat contained in a choice, draw first
+	  //  child's rail entry up
+	  line(outs,nodes.front()->west(),
+	       nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+	}
+	else { 
+	  // otherwise, use straight rail entry
+	  s<<"+left:"<<sizes->colsep<<"pt";
+	  line(outs,nodes.front()->west(),p->rawName(),s.str());
+	}
+      }
+    }
   
-  // line(outs,nodes.back()->west(),
-  //      nodes.back()->west()+"-|"+p->rawName(),
-  //      p->rawName()+"|-"+nodes.front()->west(),
-  //      nodes.front()->west());
+  line(outs,nodes.back()->west(),
+       nodes.back()->west()+"-|"+p->rawName(),
+       p->rawName()+"|-"+nodes.front()->west(),
+       nodes.front()->west());
   
-  // nodes.back()->drawToLeftRail(outs,p,join,0);
-  // nodes.front()->drawToLeftRail(outs,p,join,0);
+  nodes.back()->drawToLeftRail(outs,p,join,0);
+  nodes.front()->drawToLeftRail(outs,p,join,0);
 }
 
 	
@@ -538,94 +524,108 @@ void loopnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 void concatnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 				int drawself)
 {
-  // stringstream s;
-  // // draw from first child to my rail
-  // if(p==NULL) {
-  //   p = leftrail;
-  //   if(p != NULL)
-  //     join = p->getRailDir();
-  // }
-  // if(drawself && p != NULL) {
-  //   if(parent != NULL && parent->is_choice() && this != parent->getChild(0))
-  //     { // if this is concat contained in a choice, draw first
-  // 	//  child's rail entry up
-  // 	line(outs,nodes.front()->west(),
-  // 	     nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-  //     }
-  //   else {
-  //     s<<"+left:"<<0.5*sizes->colsep<<"pt";
-  //     line(outs,nodes.front()->west(),p->rawName(),s.str());
-  //   }
-  // }
-  // nodes.front()->drawToLeftRail(outs,p,join,1);
-  // // have all remaining children connect their internal rails
-  // for(auto i = nodes.begin()+1;i != nodes.end();i++)
-  //   (*i)->drawToLeftRail(outs,NULL,join,1);
+  stringstream s;
+  // draw from first child to my rail
+  if(p==NULL) {
+    p = leftrail;
+    if(p != NULL)
+      join = p->getRailDir();
+  }
+  if(drawself && p != NULL) {
+    if(parent != NULL && parent->is_choice() && this != parent->getChild(0))
+      { // if this is concat contained in a choice, draw first
+	//  child's rail entry up
+	line(outs,nodes.front()->west(),
+	     nodes.front()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
+      }
+    else {
+      s<<"+left:"<<0.5*sizes->colsep<<"pt";
+      line(outs,nodes.front()->west(),p->rawName(),s.str());
+    }
+  }
+  nodes.front()->drawToLeftRail(outs,p,join,1);
+  // have all remaining children connect their internal rails
+  for(auto i = nodes.begin()+1;i != nodes.end();i++)
+    (*i)->drawToLeftRail(outs,NULL,join,1);
 }
+
+void nontermnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
+				  int drawself){
+  if(p != NULL && drawself && !parent->is_concat())
+    {
+      stringstream s;
+      if(join == UP)
+	s<<"+up:"<<sizes->colsep<<"pt";
+      else
+	s<<"+down:"<<sizes->colsep<<"pt";
+      line(outs,ea,ea+"-|"+p->rawName(),s.str());
+    }
+}
+
 
 void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 				 int drawself){
-  // stringstream s;
-  // // if p is NULL then override with our own rails, and do straight
-  // // entry for first child
-  // if(p==NULL) {
-  //   p = rightrail;
-  //   if(p != NULL)
-  //     join = rightrail->getRailDir();
-  // }
-  // if(drawself) {
-  //   if(parent->is_concat() &&
-  //      this == parent->getChild(1) &&
-  //      parent->getParent() != NULL &&
-  //      parent->getParent()->is_row() &&
-  //      parent->getParent()->getNext() != NULL &&
-  //      parent->getParent()->getNext()->is_newline()) {
-  //     // if this choice precedes newline, draw first child's rail entry down
-  //     s<<"+down:"<<sizes->colsep<<"pt";
-  //     //line(outs,nodes.front()->east(),p->rawName(),s.str());
-  //     rightrail->setRailDir(DOWN);
-  //     join = DOWN;
-  //     line(outs,nodes.back()->east(),
-  // 	   nodes.back()->east()+"-|"+p->rawName(),
-  // 	   p->rawName()+"|-"+nodes.front()->east(),
-  // 	   s.str());
-  //   }
-  //   else {
-  //     if(parent->is_choice() || parent->is_loop() || 
-  // 	 ( parent->is_concat() &&
-  // 	   this == parent->getChild(parent->numChildren()-1) &&
-  // 	   parent->getParent() != NULL &&
-  // 	   (parent->getParent()->is_choice()||parent->getParent()->is_loop()))) {
-  // 	// if this is in a concat contained in a choice, draw first
-  // 	//  child's rail entry up
-  // 	//line(outs,nodes.front()->east(),
-  // 	//   nodes.front()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
-  // 	// draw last child to linetop of the rail
-  // 	line(outs,nodes.back()->east(),
-  // 	     nodes.back()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
-  //     }
-  //     else {
-  // 	join=UP;
-  // 	rightrail->setRailDir(UP);
-  // 	line(outs,nodes.front()->east(),rightrail->west());
-  // 	s<<"+right:"<<0.5*sizes->colsep<<"pt";
-  // 	line(outs,nodes.back()->east(),
-  // 	     nodes.back()->east()+"-|"+p->rawName(),
-  // 	     p->rawName()+"|-"+nodes.front()->east(),
-  // 	     s.str());
-  //     }
-  //   }
-  // }
-  // // skip first and last child.  They are cannected it this function,
-  // // and their methods are called separately so that they will not try
-  // // to connect themselves, but will only fill in their children.
-  // for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
-  //   (*i)->drawToRightRail(outs,p,join,0);
+  stringstream s;
+  // if p is NULL then override with our own rails, and do straight
+  // entry for first child
+  if(p==NULL) {
+    p = rightrail;
+    if(p != NULL)
+      join = rightrail->getRailDir();
+  }
+  if(drawself) {
+    if(parent->is_concat() &&
+       this == parent->getChild(1) &&
+       parent->getParent() != NULL &&
+       parent->getParent()->is_row() &&
+       parent->getParent()->getNext() != NULL &&
+       parent->getParent()->getNext()->is_newline()) {
+      // if this choice precedes newline, draw first child's rail entry down
+      s<<"+down:"<<sizes->colsep<<"pt";
+      line(outs,nodes.front()->east(),p->rawName(),s.str());
+      rightrail->setRailDir(DOWN);
+      join = DOWN;
+      line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),
+	   p->rawName()+"|-"+nodes.front()->east(),
+	   s.str());
+    }
+    else {
+      if(parent->is_choice() || parent->is_loop() || 
+	 ( parent->is_concat() &&
+	   this == parent->getChild(parent->numChildren()-1) &&
+	   parent->getParent() != NULL &&
+	   (parent->getParent()->is_choice()||parent->getParent()->is_loop()))) {
+	// if this is in a concat contained in a choice, draw first
+	//  child's rail entry up
+	line(outs,nodes.front()->east(),
+	   nodes.front()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
+	// draw last child to linetop of the rail
+	line(outs,nodes.back()->east(),
+	     nodes.back()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
+      }
+      else {
+	join=UP;
+	rightrail->setRailDir(UP);
+	line(outs,nodes.front()->east(),rightrail->west());
+	s<<"+right:"<<0.5*sizes->colsep<<"pt";
+	line(outs,nodes.back()->east(),
+	     nodes.back()->east()+"-|"+p->rawName(),
+	     p->rawName()+"|-"+nodes.front()->east(),
+	     s.str());
+      }
+    }
+  }
+  // skip first and last child.  They are connected it this function,
+  // and their methods are called separately so that they will not try
+  // to connect themselves, but will only fill in their children.
+  for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
+    (*i)->drawToRightRail(outs,p,join,1);
   
-  // //if(nodes.back()->is_concat())
-  //   nodes.back()->drawToRightRail(outs,p,join,0);
-  //   //if(nodes.front()->is_concat())
-  //   nodes.front()->drawToRightRail(outs,p,join,0);
+  //if(nodes.back()->is_concat())
+    nodes.back()->drawToRightRail(outs,p,join,0);
+    //if(nodes.front()->is_concat())
+    nodes.front()->drawToRightRail(outs,p,join,0);
   
 }
 
@@ -634,101 +634,102 @@ void loopnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
   // if p is NULL then override with our own rails, and do straight
   // entry for first child
   
-  // stringstream s,s2;
-  // if(p==NULL) {
-  //   p = rightrail;
-  //   if(p != NULL)
-  //     join = p->getRailDir();
-  // }
-  // if(drawself) {
-  //   //TODO: make it so that only the last child of the last child will
-  //   //actually draw to the top of the rail.
-  //   if(parent->is_choice() ||
-  //      (parent->is_concat() &&
-  // 	this == parent->getChild(1) &&
-  // 	parent->getParent() != NULL &&
-  // 	parent->getParent()->is_row() &&
-  // 	parent->getParent()->getNext() != NULL &&
-  // 	parent->getParent()->getNext()->is_newline())) {
-  //     // if this choice pre newline, then don't draw, because the
-  //     // newline will take care of it
-  //   }
-  //   else {
-  //     if(parent->is_choice() || 
-  // 	 (parent->is_concat() &&
-  // 	  this == parent->getChild(0) &&
-  // 	  parent->getParent() != NULL &&
-  // 	  parent->getParent()->is_choice())) {
-  // 	// if this is in a concat contained in a choice, draw first
-  // 	// don't draw, because the concat will do it.
-  // 	join = UP;
-  //     }
-  //     else {
-  // 	// otherwise, use straight rail entry
-  // 	s<<"+right:"<<0.5*sizes->colsep<<"pt";
-  // 	line(outs,nodes.front()->east(),p->rawName(),s.str());
-  // 	line(outs,nodes.back()->east(),
-  // 	   nodes.back()->east()+"-|"+p->rawName(),
-  // 	   p->rawName()+"|-"+nodes.front()->east(),
-  // 	   nodes.front()->east());
-  //     }
-  //   }
-  // }
-  // nodes.back()->drawToRightRail(outs,p,join,1);
-  // nodes.front()->drawToRightRail(outs,p,join,0);
+  stringstream s,s2;
+  if(p==NULL) {
+    p = rightrail;
+    if(p != NULL)
+      join = p->getRailDir();
+    //join = UP;
+  }
+  if(drawself) {
+    //TODO: make it so that only the last child of the last child will
+    //actually draw to the top of the rail.
+    if(parent->is_choice() ||
+       (parent->is_concat() &&
+	this == parent->getChild(1) &&
+	parent->getParent() != NULL &&
+	parent->getParent()->is_row() &&
+	parent->getParent()->getNext() != NULL &&
+	parent->getParent()->getNext()->is_newline())) {
+      // if this choice pre newline, then don't draw, because the
+      // newline will take care of it
+    }
+    else {
+      if(parent->is_choice() || 
+	 (parent->is_concat() &&
+	  this == parent->getChild(0) &&
+	  parent->getParent() != NULL &&
+	  parent->getParent()->is_choice())) {
+	// if this is in a concat contained in a choice, draw first
+	// don't draw, because the concat will do it.
+	join = UP;
+      }
+      else {
+	// otherwise, use straight rail entry
+	s<<"+right:"<<0.5*sizes->colsep<<"pt";
+	line(outs,nodes.front()->east(),p->rawName(),s.str());
+	line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),
+	   p->rawName()+"|-"+nodes.front()->east(),
+	   nodes.front()->east());
+      }
+    }
+  }
+  nodes.back()->drawToRightRail(outs,p,UP,0);
+  nodes.front()->drawToRightRail(outs,p,join,0);
 }
 
 void concatnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 				 int drawself){
-  // stringstream s;
-  // if(p==NULL) {
-  //   p = rightrail;
-  //   if(p != NULL)
-  //     join = p->getRailDir();
-  // }
+  stringstream s;
+  if(p==NULL) {
+    p = rightrail;
+    if(p != NULL)
+      join = p->getRailDir();
+  }
 
-  // if(drawself && p != NULL) {
-  //   if(join == DOWN) {
-  //     s<<"+down:"<<sizes->colsep<<"pt";
-  //     line(outs,nodes.back()->east(),
-  // 	   nodes.back()->east()+"-|"+p->rawName(),s.str());
-  //   }
-  //   else
-  //     if(parent != NULL && parent->is_choice() &&
-  // 	 this != parent->getChild(0)) {
-  // 	// if this is concat contained in a choice, draw last
-  // 	//  child's rail entry up, unless join type is DOWN
-  // 	line(outs,nodes.back()->east(),
-  // 	     nodes.back()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
+  if(drawself && p != NULL) {
+    if(join == DOWN) {
+      s<<"+down:"<<sizes->colsep<<"pt";
+      line(outs,nodes.back()->east(),
+	   nodes.back()->east()+"-|"+p->rawName(),s.str());
+    }
+    else
+      if(parent != NULL && parent->is_choice() &&
+	 this != parent->getChild(0)) {
+	// if this is concat contained in a choice, draw last
+	//  child's rail entry up, unless join type is DOWN
+	line(outs,nodes.back()->east(),
+	     nodes.back()->east()+"-|"+p->rawName(),p->rawName()+"linetop");
 	    
-  //     }
-  //     else {
-  // 	s<<"+right:"<<0.5*sizes->colsep<<"pt";
-  // 	line(outs,nodes.back()->east(),p->rawName(),s.str());
-  //     }
-  // }
-  // nodes.back()->drawToRightRail(outs,p,join,1);
-  // // have all remaining children connect their internal rails
-  // for(auto i = nodes.begin();i != nodes.end()-1;i++)
-  //   (*i)->drawToRightRail(outs,NULL,join,1);
+      }
+      else {
+	s<<"+right:"<<0.5*sizes->colsep<<"pt";
+	line(outs,nodes.back()->east(),p->rawName(),s.str());
+      }
+  }
+  nodes.back()->drawToRightRail(outs,p,join,1);
+  // have all remaining children connect their internal rails
+  for(auto i = nodes.begin();i != nodes.end()-1;i++)
+    (*i)->drawToRightRail(outs,NULL,join,1);
 }
 
 void singlenode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 				int drawself){
-  // if(leftrail != NULL) {
-  //   p = leftrail;
-  //   join = leftrail->getRailDir();
-  // }
-  // body->drawToLeftRail(outs,p,join,1);
+  if(leftrail != NULL) {
+    p = leftrail;
+    join = leftrail->getRailDir();
+  }
+  body->drawToLeftRail(outs,p,join,1);
 }
 
 void singlenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 				 int drawself){
-  // if(rightrail != NULL) {
-  //   p = rightrail;
-  //   join = rightrail->getRailDir();
-  // }
-  // body->drawToRightRail(outs,p,join,1);
+  if(rightrail != NULL) {
+    p = rightrail;
+    join = rightrail->getRailDir();
+  }
+  body->drawToRightRail(outs,p,join,1);
 }
 
 
