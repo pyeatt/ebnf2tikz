@@ -24,6 +24,7 @@ ebnf2tikz
 #include <graph.hh>
 #include <sstream>
 #include <nodesize.hh>
+#include <util.hh>
 
 using namespace std;
 
@@ -102,15 +103,23 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
 void grammar::place(ofstream &outs)
 {
   for(auto i=productions.begin();i!=productions.end();i++)
-    if((*i)->getSubsume() == NULL)
-      {
-	// place everything
-	(*i)->place(outs, 0, 0, coordinate(0,0), NULL, 0);
-	// draw rails
-	(*i)->place(outs, 0, 1, coordinate(0,0), NULL, 0);
+    {
+      if((*i)->getSubsume() == NULL)
+	{
+	  // LaTeX saveboxes cannot contain '_' characters, so convert
+	  // it to camelcase.
+	  string s = camelcase((*i)->getName());
+	  outs<<"\n\\newsavebox{\\"<<s<<"}\n\n";
+	  outs<<"\\savebox{\\"<<s<<"}{";
+	  // place everything
+	  (*i)->place(outs, 0, 0, coordinate(0,0), NULL, 0);
+	  // draw rails
+	  (*i)->place(outs, 0, 1, coordinate(0,0), NULL, 0);
 	// draw everything else
-	(*i)->place(outs, 1, 0, coordinate(0,0), NULL, 0);
-      }
+	  (*i)->place(outs, 1, 0, coordinate(0,0), NULL, 0);
+	  outs<<"}\n\n";
+	}
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -167,6 +176,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   string figtype;
 
   c = start+coordinate(0.0,-1.5*sizes->minsize);
+
   if(annotations != NULL && (*annotations)["sideways"] == "true")
     figtype="sidewaysfigure";
   else
@@ -175,7 +185,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
   if(drawrails)
     {
       // outs<<"\n\\begin{"<<figtype<<"}\n";
-      outs<<"\\centerline{\n";
+      //     outs<<"\\centerline{\n";
       outs<<"\\begin{tikzpicture}\n";
       outs<<"\\node at "<<start<<"[anchor=west](name){";
       outs << latexwrite("railname",name);
@@ -187,7 +197,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       body->drawToLeftRail(outs,NULL,UP,1);
       body->drawToRightRail(outs,NULL,UP,1);
       outs<<"\\end{tikzpicture}\n";
-      outs<<"}\n";
+      //      outs<<"}\n";
       // string caption("No Caption.");
       // if(annotations != NULL)
       // {
@@ -200,7 +210,7 @@ coordinate productionnode::place(ofstream &outs,int draw, int drawrails,
       // outs<<"\\end{"<<figtype<<"}\n";
 
 
-      outs<<"\n\\vspace{\\baselineskip}\n";
+      //      outs<<"\n\\vspace{\\baselineskip}\n";
       
     }
   return c;

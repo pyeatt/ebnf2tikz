@@ -335,10 +335,9 @@ productionnode::productionnode(annotmap *a,string s,node *p):
       annotations = a;
       string reg = (*a)["subsume"];
       if(reg != "")
-	{
-	  
+	{	  
 	  if(reg == "emusbussubsume")
-	    reg = name;
+	    reg = '^' + name + '$';
 	  cout<<"creating regex: "<<reg<<" for "<<name<<endl;
 	  subsume_spec = new regex_t;
 	  if(regcomp(subsume_spec,reg.c_str(),REG_EXTENDED))

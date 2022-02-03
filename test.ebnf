@@ -5,10 +5,10 @@ newlines =
    (a, b) \\ (c, d, e), (f) \\ {g,  h, i, j}  \\ [k, l, m] \\ (n, o  );
 
 
-simple =
+simplea =
          [ a  | b | c | d ] ;
 
-simple =
+simpleb =
   b, { a , b } ;
 
 character_literal =
@@ -55,10 +55,10 @@ saw =
 nolist=
   a , b , [c , "d" ] , e , f ;
 
-list =
+lista =
   a, 'b', c \\  this | that_one | 'and' ,  the, other;
 
-list =
+listb =
   a, 'b', (c , this | that_one,  'and',   the ),other;
 
 
@@ -100,7 +100,7 @@ a_much_better_loop =
  a, [{  ',', a}];
 
 
-a_much_better_loop =
+a_much_better_loopb =
  	x ,   a, b, {  ',',  a, b};
 
 
@@ -123,7 +123,7 @@ broken =
 scooby =
    	x,    a, b,[{  blue, ',' , 'part', a, (b | g)}];
 
-muckrake =
+muckrakeb =
  	x ,  ( a|b), [{  blue, ',',  (a| b)}], 'toodles';
 
 
