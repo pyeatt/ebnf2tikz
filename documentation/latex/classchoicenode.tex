@@ -1,0 +1,181 @@
+\hypertarget{classchoicenode}{}\doxysection{choicenode Class Reference}
+\label{classchoicenode}\index{choicenode@{choicenode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for choicenode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=146pt]{classchoicenode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for choicenode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{classchoicenode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classchoicenode_ae09da12555355e49a936e7d2b9ca8924}{choicenode}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+\mbox{\hyperlink{classchoicenode_a92e54a9a4230eeb6b075fd3bd871a7f7}{choicenode}} (const \mbox{\hyperlink{classchoicenode}{choicenode}} \&original)
+\item 
+virtual \mbox{\hyperlink{classchoicenode}{choicenode}} $\ast$ \mbox{\hyperlink{classchoicenode_aeff3a294ad8aebab9f5e9345018e279d}{clone}} () const
+\item 
+virtual void \mbox{\hyperlink{classchoicenode_a740e93d4e40fc162257b72d8e1ea33b9}{insert}} (\mbox{\hyperlink{classnode}{node}} $\ast$\mbox{\hyperlink{classnode}{node}})
+\item 
+virtual \mbox{\hyperlink{classchoicenode_a1e394a8182ac48c7cee5efe0524cb333}{$\sim$choicenode}} ()
+\item 
+virtual int \mbox{\hyperlink{classchoicenode_a6ef2e3c8765cdd13b95c3e416bd8fd2a}{rail\+\_\+left}} ()
+\item 
+virtual int \mbox{\hyperlink{classchoicenode_a0a54b05c61b7b85028ef24ae374a5a6d}{rail\+\_\+right}} ()
+\item 
+virtual void \mbox{\hyperlink{classchoicenode_a9f65048910d18589da23eb0ee9466472}{draw\+To\+Left\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classchoicenode_a8da8e509d37a1ec0c2405195b65333a2}{draw\+To\+Right\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classchoicenode_a4a3c2454b87aabf439d29163631d4370}{dump}} (int depth) const
+\item 
+virtual int \mbox{\hyperlink{classchoicenode_ad9153069e548d3dc62ff99aef6cc7a81}{merge\+Choices}} (int depth)
+\item 
+virtual void \mbox{\hyperlink{classchoicenode_aa53cf9d769f2151266dbbe8a7147987f}{fix\+Skips}} ()
+\item 
+virtual string \mbox{\hyperlink{classchoicenode_a5f8ac7e6668c58c69f3b812a9c62f8c4}{tex\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classchoicenode_ae09da12555355e49a936e7d2b9ca8924}\label{classchoicenode_ae09da12555355e49a936e7d2b9ca8924}} 
+\index{choicenode@{choicenode}!choicenode@{choicenode}}
+\index{choicenode@{choicenode}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{choicenode()}{choicenode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily choicenode\+::choicenode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classchoicenode_a92e54a9a4230eeb6b075fd3bd871a7f7}\label{classchoicenode_a92e54a9a4230eeb6b075fd3bd871a7f7}} 
+\index{choicenode@{choicenode}!choicenode@{choicenode}}
+\index{choicenode@{choicenode}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{choicenode()}{choicenode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily choicenode\+::choicenode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classchoicenode}{choicenode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classchoicenode_a1e394a8182ac48c7cee5efe0524cb333}\label{classchoicenode_a1e394a8182ac48c7cee5efe0524cb333}} 
+\index{choicenode@{choicenode}!````~choicenode@{$\sim$choicenode}}
+\index{````~choicenode@{$\sim$choicenode}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{$\sim$choicenode()}{~choicenode()}}
+{\footnotesize\ttfamily virtual choicenode\+::$\sim$choicenode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classchoicenode_aeff3a294ad8aebab9f5e9345018e279d}\label{classchoicenode_aeff3a294ad8aebab9f5e9345018e279d}} 
+\index{choicenode@{choicenode}!clone@{clone}}
+\index{clone@{clone}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classchoicenode}{choicenode}} $\ast$ choicenode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_af215c2088f21e60808a6fd898dc178a6}{multinode}}.
+
+\mbox{\Hypertarget{classchoicenode_a9f65048910d18589da23eb0ee9466472}\label{classchoicenode_a9f65048910d18589da23eb0ee9466472}} 
+\index{choicenode@{choicenode}!drawToLeftRail@{drawToLeftRail}}
+\index{drawToLeftRail@{drawToLeftRail}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{drawToLeftRail()}{drawToLeftRail()}}
+{\footnotesize\ttfamily void choicenode\+::draw\+To\+Left\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_aeb62d9eb826818fca32fbfc5cc918706}{node}}.
+
+\mbox{\Hypertarget{classchoicenode_a8da8e509d37a1ec0c2405195b65333a2}\label{classchoicenode_a8da8e509d37a1ec0c2405195b65333a2}} 
+\index{choicenode@{choicenode}!drawToRightRail@{drawToRightRail}}
+\index{drawToRightRail@{drawToRightRail}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{drawToRightRail()}{drawToRightRail()}}
+{\footnotesize\ttfamily void choicenode\+::draw\+To\+Right\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adb96728ae6876de3744c761b0946df6f}{node}}.
+
+\mbox{\Hypertarget{classchoicenode_a4a3c2454b87aabf439d29163631d4370}\label{classchoicenode_a4a3c2454b87aabf439d29163631d4370}} 
+\index{choicenode@{choicenode}!dump@{dump}}
+\index{dump@{dump}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void choicenode\+::dump (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adbb5e9bcbe37e287419af5919dccfc12}{node}}.
+
+\mbox{\Hypertarget{classchoicenode_aa53cf9d769f2151266dbbe8a7147987f}\label{classchoicenode_aa53cf9d769f2151266dbbe8a7147987f}} 
+\index{choicenode@{choicenode}!fixSkips@{fixSkips}}
+\index{fixSkips@{fixSkips}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{fixSkips()}{fixSkips()}}
+{\footnotesize\ttfamily void choicenode\+::fix\+Skips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a47f441e547cac03febd03d0fdbeeb9d6}{multinode}}.
+
+\mbox{\Hypertarget{classchoicenode_a740e93d4e40fc162257b72d8e1ea33b9}\label{classchoicenode_a740e93d4e40fc162257b72d8e1ea33b9}} 
+\index{choicenode@{choicenode}!insert@{insert}}
+\index{insert@{insert}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily void choicenode\+::insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_ae98cbd4c5e796f3ce4cf58ce62dcc0ff}{multinode}}.
+
+\mbox{\Hypertarget{classchoicenode_ad9153069e548d3dc62ff99aef6cc7a81}\label{classchoicenode_ad9153069e548d3dc62ff99aef6cc7a81}} 
+\index{choicenode@{choicenode}!mergeChoices@{mergeChoices}}
+\index{mergeChoices@{mergeChoices}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{mergeChoices()}{mergeChoices()}}
+{\footnotesize\ttfamily int choicenode\+::merge\+Choices (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a5ef5a3b5ec65fa02aa0bcdf34d60f2e7}{multinode}}.
+
+\mbox{\Hypertarget{classchoicenode_a6ef2e3c8765cdd13b95c3e416bd8fd2a}\label{classchoicenode_a6ef2e3c8765cdd13b95c3e416bd8fd2a}} 
+\index{choicenode@{choicenode}!rail\_left@{rail\_left}}
+\index{rail\_left@{rail\_left}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{rail\_left()}{rail\_left()}}
+{\footnotesize\ttfamily virtual int choicenode\+::rail\+\_\+left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classchoicenode_a0a54b05c61b7b85028ef24ae374a5a6d}\label{classchoicenode_a0a54b05c61b7b85028ef24ae374a5a6d}} 
+\index{choicenode@{choicenode}!rail\_right@{rail\_right}}
+\index{rail\_right@{rail\_right}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{rail\_right()}{rail\_right()}}
+{\footnotesize\ttfamily virtual int choicenode\+::rail\+\_\+right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classchoicenode_a5f8ac7e6668c58c69f3b812a9c62f8c4}\label{classchoicenode_a5f8ac7e6668c58c69f3b812a9c62f8c4}} 
+\index{choicenode@{choicenode}!texName@{texName}}
+\index{texName@{texName}!choicenode@{choicenode}}
+\doxysubsubsection{\texorpdfstring{texName()}{texName()}}
+{\footnotesize\ttfamily virtual string choicenode\+::tex\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_af0e01874f64bc4215669889d941233ef}{multinode}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{optimize_8cc}{optimize.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

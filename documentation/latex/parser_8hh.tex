@@ -1,0 +1,247 @@
+\hypertarget{parser_8hh}{}\doxysection{parser.\+hh File Reference}
+\label{parser_8hh}\index{parser.hh@{parser.hh}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}graph.\+hh\char`\"{}}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include \char`\"{}location.\+hh\char`\"{}}\newline
+{\ttfamily \#include $<$typeinfo$>$}\newline
+Include dependency graph for parser.\+hh\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{parser_8hh__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{parser_8hh__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classyy_1_1parser}{yy\+::parser}}
+\begin{DoxyCompactList}\small\item\em A Bison parser. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classyy_1_1parser_1_1value__type}{yy\+::parser\+::value\+\_\+type}}
+\item 
+struct \mbox{\hyperlink{structyy_1_1parser_1_1syntax__error}{yy\+::parser\+::syntax\+\_\+error}}
+\begin{DoxyCompactList}\small\item\em Syntax errors thrown from user actions. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structyy_1_1parser_1_1token}{yy\+::parser\+::token}}
+\begin{DoxyCompactList}\small\item\em Token kinds. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind}{yy\+::parser\+::symbol\+\_\+kind}}
+\begin{DoxyCompactList}\small\item\em Symbol kinds. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structyy_1_1parser_1_1basic__symbol}{yy\+::parser\+::basic\+\_\+symbol$<$ Base $>$}}
+\item 
+struct \mbox{\hyperlink{structyy_1_1parser_1_1by__kind}{yy\+::parser\+::by\+\_\+kind}}
+\begin{DoxyCompactList}\small\item\em Type access provider for token (enum) based symbols. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structyy_1_1parser_1_1symbol__type}{yy\+::parser\+::symbol\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em \char`\"{}\+External\char`\"{} symbols\+: returned by the scanner. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classyy_1_1parser_1_1context}{yy\+::parser\+::context}}
+\item 
+class \mbox{\hyperlink{classyy_1_1parser_1_1stack_1_1slice}{yy\+::parser\+::stack$<$ T, S $>$\+::slice}}
+\begin{DoxyCompactList}\small\item\em Present a slice of the top of a stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceyy}{yy}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a2c2dc185807321e4cc1be9362787266f}{YY\+\_\+\+CPLUSPLUS}}~199711L
+\item 
+\#define \mbox{\hyperlink{parser_8hh_add6c8aaf72021a02759ca5aae05694da}{YY\+\_\+\+MOVE}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a0b80dc025f1883a147e79d45278a088b}{YY\+\_\+\+MOVE\+\_\+\+OR\+\_\+\+COPY}}~copy
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a5acee687e2d12ed695b3d6d30b8bf5d5}{YY\+\_\+\+MOVE\+\_\+\+REF}}(Type)~Type\&
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a136a1225ab9f41786793cf23145b58dd}{YY\+\_\+\+RVREF}}(Type)~const Type\&
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a5a0fd70f778dbbab452e5a526ce56049}{YY\+\_\+\+COPY}}(Type)~const Type\&
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_af3672105a94e399b66c50d40fb6de643}{YY\+\_\+\+NOTHROW}}~throw ()
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a02ac17d462dd0644526bc88fe037e15d}{YY\+\_\+\+CONSTEXPR}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_af73334d9f3369e71311bb882dbd8d887}{YY\+\_\+\+ASSERT}}~assert
+\item 
+\#define \mbox{\hyperlink{parser_8hh_ad1405f082b8df6353a9d53c9709c4d03}{YY\+\_\+\+ATTRIBUTE\+\_\+\+PURE}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_ab312a884bd41ff11bbd1aa6c1a0e1b0a}{YY\+\_\+\+ATTRIBUTE\+\_\+\+UNUSED}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_afd165b6b23a4fb227c4ecbc2c9a746cb}{YY\+\_\+\+USE}}(E)~((void) (E))
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a6d890db48971847b837a6a1397c9059a}{YY\+\_\+\+INITIAL\+\_\+\+VALUE}}(Value)~Value
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a145ddbb780f86b5f35ddfffb23e62d4d}{YY\+\_\+\+IGNORE\+\_\+\+MAYBE\+\_\+\+UNINITIALIZED\+\_\+\+BEGIN}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a2b2abbe8d335b7933a69ac2f05a015d2}{YY\+\_\+\+IGNORE\+\_\+\+MAYBE\+\_\+\+UNINITIALIZED\+\_\+\+END}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a80d1607dba7679ec5b82303d36ec4c9e}{YY\+\_\+\+IGNORE\+\_\+\+USELESS\+\_\+\+CAST\+\_\+\+BEGIN}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a2faf73c0e75243966cbdad0ede982584}{YY\+\_\+\+IGNORE\+\_\+\+USELESS\+\_\+\+CAST\+\_\+\+END}}
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a4b53a97e60d84c765592be332ef6adce}{YY\+\_\+\+CAST}}(Type,  Val)~((Type) (Val))
+\item 
+\#define \mbox{\hyperlink{parser_8hh_ad56e31fec1bf5fadf90c0ff7f13b0020}{YY\+\_\+\+REINTERPRET\+\_\+\+CAST}}(Type,  Val)~((Type) (Val))
+\item 
+\#define \mbox{\hyperlink{parser_8hh_a853b3bfad6d2b2ff693dce81182e0c2e}{YYDEBUG}}~1
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$ \mbox{\hyperlink{parser_8hh_a684a750b6b0b07af2f7d8dbc2dd6617c}{scan\+Annot}} (string \&s, void $\ast$\mbox{\hyperlink{parser_8cc_abaf70dc7df8e78acc6505d164cb2276b}{loc}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Define the \mbox{\hyperlink{classyy_1_1parser}{yy\+::parser}} class. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{parser_8hh_af73334d9f3369e71311bb882dbd8d887}\label{parser_8hh_af73334d9f3369e71311bb882dbd8d887}} 
+\index{parser.hh@{parser.hh}!YY\_ASSERT@{YY\_ASSERT}}
+\index{YY\_ASSERT@{YY\_ASSERT}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_ASSERT}{YY\_ASSERT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+ASSERT~assert}
+
+\mbox{\Hypertarget{parser_8hh_ad1405f082b8df6353a9d53c9709c4d03}\label{parser_8hh_ad1405f082b8df6353a9d53c9709c4d03}} 
+\index{parser.hh@{parser.hh}!YY\_ATTRIBUTE\_PURE@{YY\_ATTRIBUTE\_PURE}}
+\index{YY\_ATTRIBUTE\_PURE@{YY\_ATTRIBUTE\_PURE}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_ATTRIBUTE\_PURE}{YY\_ATTRIBUTE\_PURE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+ATTRIBUTE\+\_\+\+PURE}
+
+\mbox{\Hypertarget{parser_8hh_ab312a884bd41ff11bbd1aa6c1a0e1b0a}\label{parser_8hh_ab312a884bd41ff11bbd1aa6c1a0e1b0a}} 
+\index{parser.hh@{parser.hh}!YY\_ATTRIBUTE\_UNUSED@{YY\_ATTRIBUTE\_UNUSED}}
+\index{YY\_ATTRIBUTE\_UNUSED@{YY\_ATTRIBUTE\_UNUSED}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_ATTRIBUTE\_UNUSED}{YY\_ATTRIBUTE\_UNUSED}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+ATTRIBUTE\+\_\+\+UNUSED}
+
+\mbox{\Hypertarget{parser_8hh_a4b53a97e60d84c765592be332ef6adce}\label{parser_8hh_a4b53a97e60d84c765592be332ef6adce}} 
+\index{parser.hh@{parser.hh}!YY\_CAST@{YY\_CAST}}
+\index{YY\_CAST@{YY\_CAST}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_CAST}{YY\_CAST}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+CAST(\begin{DoxyParamCaption}\item[{}]{Type,  }\item[{}]{Val }\end{DoxyParamCaption})~((Type) (Val))}
+
+\mbox{\Hypertarget{parser_8hh_a02ac17d462dd0644526bc88fe037e15d}\label{parser_8hh_a02ac17d462dd0644526bc88fe037e15d}} 
+\index{parser.hh@{parser.hh}!YY\_CONSTEXPR@{YY\_CONSTEXPR}}
+\index{YY\_CONSTEXPR@{YY\_CONSTEXPR}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_CONSTEXPR}{YY\_CONSTEXPR}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+CONSTEXPR}
+
+\mbox{\Hypertarget{parser_8hh_a5a0fd70f778dbbab452e5a526ce56049}\label{parser_8hh_a5a0fd70f778dbbab452e5a526ce56049}} 
+\index{parser.hh@{parser.hh}!YY\_COPY@{YY\_COPY}}
+\index{YY\_COPY@{YY\_COPY}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_COPY}{YY\_COPY}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+COPY(\begin{DoxyParamCaption}\item[{}]{Type }\end{DoxyParamCaption})~const Type\&}
+
+\mbox{\Hypertarget{parser_8hh_a2c2dc185807321e4cc1be9362787266f}\label{parser_8hh_a2c2dc185807321e4cc1be9362787266f}} 
+\index{parser.hh@{parser.hh}!YY\_CPLUSPLUS@{YY\_CPLUSPLUS}}
+\index{YY\_CPLUSPLUS@{YY\_CPLUSPLUS}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_CPLUSPLUS}{YY\_CPLUSPLUS}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+CPLUSPLUS~199711L}
+
+\mbox{\Hypertarget{parser_8hh_a145ddbb780f86b5f35ddfffb23e62d4d}\label{parser_8hh_a145ddbb780f86b5f35ddfffb23e62d4d}} 
+\index{parser.hh@{parser.hh}!YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN@{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}}
+\index{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN@{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+IGNORE\+\_\+\+MAYBE\+\_\+\+UNINITIALIZED\+\_\+\+BEGIN}
+
+\mbox{\Hypertarget{parser_8hh_a2b2abbe8d335b7933a69ac2f05a015d2}\label{parser_8hh_a2b2abbe8d335b7933a69ac2f05a015d2}} 
+\index{parser.hh@{parser.hh}!YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END@{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}}
+\index{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END@{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}{YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+IGNORE\+\_\+\+MAYBE\+\_\+\+UNINITIALIZED\+\_\+\+END}
+
+\mbox{\Hypertarget{parser_8hh_a80d1607dba7679ec5b82303d36ec4c9e}\label{parser_8hh_a80d1607dba7679ec5b82303d36ec4c9e}} 
+\index{parser.hh@{parser.hh}!YY\_IGNORE\_USELESS\_CAST\_BEGIN@{YY\_IGNORE\_USELESS\_CAST\_BEGIN}}
+\index{YY\_IGNORE\_USELESS\_CAST\_BEGIN@{YY\_IGNORE\_USELESS\_CAST\_BEGIN}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_IGNORE\_USELESS\_CAST\_BEGIN}{YY\_IGNORE\_USELESS\_CAST\_BEGIN}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+IGNORE\+\_\+\+USELESS\+\_\+\+CAST\+\_\+\+BEGIN}
+
+\mbox{\Hypertarget{parser_8hh_a2faf73c0e75243966cbdad0ede982584}\label{parser_8hh_a2faf73c0e75243966cbdad0ede982584}} 
+\index{parser.hh@{parser.hh}!YY\_IGNORE\_USELESS\_CAST\_END@{YY\_IGNORE\_USELESS\_CAST\_END}}
+\index{YY\_IGNORE\_USELESS\_CAST\_END@{YY\_IGNORE\_USELESS\_CAST\_END}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_IGNORE\_USELESS\_CAST\_END}{YY\_IGNORE\_USELESS\_CAST\_END}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+IGNORE\+\_\+\+USELESS\+\_\+\+CAST\+\_\+\+END}
+
+\mbox{\Hypertarget{parser_8hh_a6d890db48971847b837a6a1397c9059a}\label{parser_8hh_a6d890db48971847b837a6a1397c9059a}} 
+\index{parser.hh@{parser.hh}!YY\_INITIAL\_VALUE@{YY\_INITIAL\_VALUE}}
+\index{YY\_INITIAL\_VALUE@{YY\_INITIAL\_VALUE}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_INITIAL\_VALUE}{YY\_INITIAL\_VALUE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+INITIAL\+\_\+\+VALUE(\begin{DoxyParamCaption}\item[{}]{Value }\end{DoxyParamCaption})~Value}
+
+\mbox{\Hypertarget{parser_8hh_add6c8aaf72021a02759ca5aae05694da}\label{parser_8hh_add6c8aaf72021a02759ca5aae05694da}} 
+\index{parser.hh@{parser.hh}!YY\_MOVE@{YY\_MOVE}}
+\index{YY\_MOVE@{YY\_MOVE}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_MOVE}{YY\_MOVE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+MOVE}
+
+\mbox{\Hypertarget{parser_8hh_a0b80dc025f1883a147e79d45278a088b}\label{parser_8hh_a0b80dc025f1883a147e79d45278a088b}} 
+\index{parser.hh@{parser.hh}!YY\_MOVE\_OR\_COPY@{YY\_MOVE\_OR\_COPY}}
+\index{YY\_MOVE\_OR\_COPY@{YY\_MOVE\_OR\_COPY}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_MOVE\_OR\_COPY}{YY\_MOVE\_OR\_COPY}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+MOVE\+\_\+\+OR\+\_\+\+COPY~copy}
+
+\mbox{\Hypertarget{parser_8hh_a5acee687e2d12ed695b3d6d30b8bf5d5}\label{parser_8hh_a5acee687e2d12ed695b3d6d30b8bf5d5}} 
+\index{parser.hh@{parser.hh}!YY\_MOVE\_REF@{YY\_MOVE\_REF}}
+\index{YY\_MOVE\_REF@{YY\_MOVE\_REF}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_MOVE\_REF}{YY\_MOVE\_REF}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+MOVE\+\_\+\+REF(\begin{DoxyParamCaption}\item[{}]{Type }\end{DoxyParamCaption})~Type\&}
+
+\mbox{\Hypertarget{parser_8hh_a986b895e8d279ff24380891c280bc9f4}\label{parser_8hh_a986b895e8d279ff24380891c280bc9f4}} 
+\index{parser.hh@{parser.hh}!YY\_NOEXCEPT@{YY\_NOEXCEPT}}
+\index{YY\_NOEXCEPT@{YY\_NOEXCEPT}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_NOEXCEPT}{YY\_NOEXCEPT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NOEXCEPT}
+
+\mbox{\Hypertarget{parser_8hh_af3672105a94e399b66c50d40fb6de643}\label{parser_8hh_af3672105a94e399b66c50d40fb6de643}} 
+\index{parser.hh@{parser.hh}!YY\_NOTHROW@{YY\_NOTHROW}}
+\index{YY\_NOTHROW@{YY\_NOTHROW}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_NOTHROW}{YY\_NOTHROW}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NOTHROW~throw ()}
+
+\mbox{\Hypertarget{parser_8hh_ad56e31fec1bf5fadf90c0ff7f13b0020}\label{parser_8hh_ad56e31fec1bf5fadf90c0ff7f13b0020}} 
+\index{parser.hh@{parser.hh}!YY\_REINTERPRET\_CAST@{YY\_REINTERPRET\_CAST}}
+\index{YY\_REINTERPRET\_CAST@{YY\_REINTERPRET\_CAST}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_REINTERPRET\_CAST}{YY\_REINTERPRET\_CAST}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+REINTERPRET\+\_\+\+CAST(\begin{DoxyParamCaption}\item[{}]{Type,  }\item[{}]{Val }\end{DoxyParamCaption})~((Type) (Val))}
+
+\mbox{\Hypertarget{parser_8hh_a136a1225ab9f41786793cf23145b58dd}\label{parser_8hh_a136a1225ab9f41786793cf23145b58dd}} 
+\index{parser.hh@{parser.hh}!YY\_RVREF@{YY\_RVREF}}
+\index{YY\_RVREF@{YY\_RVREF}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_RVREF}{YY\_RVREF}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+RVREF(\begin{DoxyParamCaption}\item[{}]{Type }\end{DoxyParamCaption})~const Type\&}
+
+\mbox{\Hypertarget{parser_8hh_afd165b6b23a4fb227c4ecbc2c9a746cb}\label{parser_8hh_afd165b6b23a4fb227c4ecbc2c9a746cb}} 
+\index{parser.hh@{parser.hh}!YY\_USE@{YY\_USE}}
+\index{YY\_USE@{YY\_USE}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_USE}{YY\_USE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+USE(\begin{DoxyParamCaption}\item[{}]{E }\end{DoxyParamCaption})~((void) (E))}
+
+\mbox{\Hypertarget{parser_8hh_a853b3bfad6d2b2ff693dce81182e0c2e}\label{parser_8hh_a853b3bfad6d2b2ff693dce81182e0c2e}} 
+\index{parser.hh@{parser.hh}!YYDEBUG@{YYDEBUG}}
+\index{YYDEBUG@{YYDEBUG}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{YYDEBUG}{YYDEBUG}}
+{\footnotesize\ttfamily \#define YYDEBUG~1}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{parser_8hh_a684a750b6b0b07af2f7d8dbc2dd6617c}\label{parser_8hh_a684a750b6b0b07af2f7d8dbc2dd6617c}} 
+\index{parser.hh@{parser.hh}!scanAnnot@{scanAnnot}}
+\index{scanAnnot@{scanAnnot}!parser.hh@{parser.hh}}
+\doxysubsubsection{\texorpdfstring{scanAnnot()}{scanAnnot()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}}$\ast$ scan\+Annot (\begin{DoxyParamCaption}\item[{string \&}]{s,  }\item[{void $\ast$}]{loc }\end{DoxyParamCaption})}
+

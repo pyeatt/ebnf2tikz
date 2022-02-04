@@ -132,47 +132,49 @@ grammar : productions {
      grammar *g = $1;
 
 g->dump();
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->optimize();
 
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->subsume();
+	// g->setParent();
+	// g->setPrevious();
+     	// g->setNext();
+     
+//      g->optimize();
 
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->optimize();
+//      g->setParent();
+//      g->setPrevious();
+//      g->setNext();
+//      g->subsume();
 
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->mergeRails();
+//      g->setParent();
+//      g->setPrevious();
+//      g->setNext();
+//      g->optimize();
+
+//      g->setParent();
+//      g->setPrevious();
+//      g->setNext();
+//      g->mergeRails();
+
+//      // g->setParent();
+//      // g->setPrevious();
+//      // g->setNext();
+//      // g->optimize();
+
+//      g->setParent();
+//      g->setPrevious();
+//      g->setNext();
+// g->dump();
+//      g->createRows();
+
+//      g->setParent();
+//      g->setPrevious();
+//      g->setNext();
+//      g->fixSkips();
+
 
      // g->setParent();
      // g->setPrevious();
      // g->setNext();
-     // g->optimize();
-
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-g->dump();
-     g->createRows();
-
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->fixSkips();
-
-
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->place(drv.outs());
+//     g->place(drv.outs());
 
      delete g;
   } ;
@@ -200,11 +202,11 @@ production: annotations STRING EQUAL rows SEMICOLON
     c->getChild(0)->setDrawToPrev(0);
     c->insert(new nullnode("start2"));
     coordinate start;
-    if(!$4->is_concat())
-      $4=new concatnode($4);
+//    if(!$4->is_concat())
+//      $4=new concatnode($4);
     $4->setDrawToPrev(0);
     $4->getChild(0)->setDrawToPrev(1);
-    $4=wrapChoice($4);
+//    $4=wrapChoice($4);
     c->insert($4);
     c->insert(new nullnode("end1"));
     c->insert(new nullnode("end2"));
@@ -225,7 +227,7 @@ annotations : ANNOTATION {
 // this is how we handle manual newline "\\" in the input
 rows :
   rows NEWLINE expression {
-      $3 = wrapChoice($3);
+ //     $3 = wrapChoice($3);
       newlinenode *n = new newlinenode();
       //rownode *row = new rownode($3);
       concatnode *row = new concatnode($3);
@@ -271,9 +273,10 @@ rows :
       $$->setDrawToPrev(0);
      } | 
     expression {
-      $1 = wrapChoice($1);
+      //$1 = wrapChoice($1);
       //$$ = new rownode($1);
-      $$ = new concatnode($1);
+      //$$ = new concatnode($1);
+      $$ = $1;
       $$->setBeforeSkip(0);
       $1->setBeforeSkip(0);
       $1->setDrawToPrev(1);
@@ -309,8 +312,8 @@ expression:
     } |
   expression COMMA expression
     {
-      $1=wrapChoice($1);
-      $3=wrapChoice($3);
+//      $1=wrapChoice($1);
+//    $3=wrapChoice($3);
       // COMMA is left associative, so only need to check $1
       if(!$1->is_concat()) {
         $$ = new concatnode($1);
@@ -321,33 +324,38 @@ expression:
       }
     } |
   LPAREN expression RPAREN {
-    $2 = wrapChoice($2);
+//  $2 = wrapChoice($2);
     $$ = $2;
   } |
   LBRACK expression RBRACK {
-    $2 = wrapChoice($2);
-    choicenode *c = new choicenode(new nullnode("ebnf2tikz NULL node"));
+//    $2 = wrapChoice($2);
+//    choicenode *c = new choicenode(new nullnode("ebnf2tikz NULL node"));
     railnode *r,*l;
     l = new railnode(LEFT,DOWN);
     r = new railnode(RIGHT,UP);
-    c->setLeftRail(l);
-    c->setRightRail(r);
-    c->insert($2); 
-    $$ = new concatnode(l);
-    $$->insert(c);
-    $$->insert(r);
+//    c->setLeftRail(l);
+//    c->setRightRail(r);
+    $2->setLeftRail(l);
+    $2->setRightRail(r);
+    $$ = $2;
+//    c->insert($2);
+//    $$ = c;
+//    $$ = new concatnode(l);
+//    $$->insert(c);
+//    $$->insert(r);
   } |
   LBRACE expression RBRACE {
-    $2=wrapChoice($2);
+//    $2=wrapChoice($2);
     loopnode *n = new loopnode($2); 
     railnode *r,*l;
     l = new railnode(LEFT,UP);
     r = new railnode(RIGHT,DOWN);
     n->setLeftRail(l);
     n->setRightRail(r);
-    $$ = new concatnode(l);
-    $$->insert(n);
-    $$->insert(r);
+    $$ = n;
+//    $$ = new concatnode(l);
+//    $$->insert(n);
+//    $$->insert(r);
   } |
   primary {
     $$ = $1;

@@ -1,0 +1,229 @@
+\hypertarget{classrailnode}{}\doxysection{railnode Class Reference}
+\label{classrailnode}\index{railnode@{railnode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for railnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=151pt]{classrailnode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for railnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=281pt]{classrailnode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classrailnode_ac46e53d4e228f15a68b96079f2808425}{railnode}} ()
+\item 
+\mbox{\hyperlink{classrailnode_a8ec844e9dd58dd9fb16696dbaf0acbe9}{railnode}} (\mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340}{vrailside}} s, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} d)
+\item 
+\mbox{\hyperlink{classrailnode_a2325117eadf427944cc50a05d5192863}{railnode}} (const \mbox{\hyperlink{classrailnode}{railnode}} \&original)
+\item 
+virtual \mbox{\hyperlink{classrailnode}{railnode}} $\ast$ \mbox{\hyperlink{classrailnode_ac1b31c665672e7ae156632123a6bbfe4}{clone}} () const
+\item 
+virtual \mbox{\hyperlink{classrailnode_ac76bff59c31b3b83bf768139144a8337}{$\sim$railnode}} ()
+\item 
+virtual void \mbox{\hyperlink{classrailnode_afa3b395299f089e7b262db9dadaf3d66}{set\+Bottom}} (\mbox{\hyperlink{classcoordinate}{coordinate}} b)
+\item 
+virtual \mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classrailnode_a1fde7f9399cdb11879514c36b7101a88}{get\+Bottom}} ()
+\item 
+virtual void \mbox{\hyperlink{classrailnode_ac0088c07bedeeccd4ec9e683c2aaec23}{dump}} (int depth) const
+\item 
+virtual \mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classrailnode_aceccde3e012c7bbed77aff0ba6705489}{place}} (ofstream \&outs, int draw, int drawrails, \mbox{\hyperlink{classcoordinate}{coordinate}} start, \mbox{\hyperlink{classnode}{node}} $\ast$\mbox{\hyperlink{classnode_a5e88137f1d0e2f7a940bccf4c3d3a4d3}{parent}}, int depth)
+\item 
+virtual int \mbox{\hyperlink{classrailnode_ae2412bed0efb15e8685ca337ee57c01d}{operator==}} (\mbox{\hyperlink{classnode}{node}} \&r)
+\item 
+virtual int \mbox{\hyperlink{classrailnode_a1c95a0aa11b56687b64e9a36e5298e17}{operator!=}} (\mbox{\hyperlink{classnode}{node}} \&r)
+\item 
+virtual \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} \mbox{\hyperlink{classrailnode_a566f409628afeef2414c29fb845e9943}{get\+Rail\+Dir}} ()
+\item 
+virtual void \mbox{\hyperlink{classrailnode_a0037f798de8be63ce2d9d76abaa90a63}{set\+Rail\+Dir}} (\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} d)
+\item 
+virtual string \mbox{\hyperlink{classrailnode_a75fc02c6ad973412a02018c11ededcc3}{tex\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340}{vrailside}} \mbox{\hyperlink{classrailnode_a6df2a7f8c8f2957ceaa27fed665f0c6c}{side}}
+\item 
+\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} \mbox{\hyperlink{classrailnode_aac333c1439b33f663208b1347f272069}{direction}}
+\item 
+\mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classrailnode_a5550e3025a59c22e411323ed67ab962e}{top}}
+\item 
+\mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classrailnode_a1850bedb2b5e5e38910de3b1c743d32c}{bottom}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classrailnode_ac46e53d4e228f15a68b96079f2808425}\label{classrailnode_ac46e53d4e228f15a68b96079f2808425}} 
+\index{railnode@{railnode}!railnode@{railnode}}
+\index{railnode@{railnode}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{railnode()}{railnode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily railnode\+::railnode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classrailnode_a8ec844e9dd58dd9fb16696dbaf0acbe9}\label{classrailnode_a8ec844e9dd58dd9fb16696dbaf0acbe9}} 
+\index{railnode@{railnode}!railnode@{railnode}}
+\index{railnode@{railnode}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{railnode()}{railnode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily railnode\+::railnode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340}{vrailside}}}]{s,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{d }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classrailnode_a2325117eadf427944cc50a05d5192863}\label{classrailnode_a2325117eadf427944cc50a05d5192863}} 
+\index{railnode@{railnode}!railnode@{railnode}}
+\index{railnode@{railnode}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{railnode()}{railnode()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily railnode\+::railnode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classrailnode}{railnode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classrailnode_ac76bff59c31b3b83bf768139144a8337}\label{classrailnode_ac76bff59c31b3b83bf768139144a8337}} 
+\index{railnode@{railnode}!````~railnode@{$\sim$railnode}}
+\index{````~railnode@{$\sim$railnode}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{$\sim$railnode()}{~railnode()}}
+{\footnotesize\ttfamily virtual railnode\+::$\sim$railnode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classrailnode_ac1b31c665672e7ae156632123a6bbfe4}\label{classrailnode_ac1b31c665672e7ae156632123a6bbfe4}} 
+\index{railnode@{railnode}!clone@{clone}}
+\index{clone@{clone}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classrailnode}{railnode}}$\ast$ railnode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classnode_ac47eff3133679324ea84b5d32af17cb1}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classnewlinenode_ac9beccb0249823d3c772cf23a67a88fe}{newlinenode}}.
+
+\mbox{\Hypertarget{classrailnode_ac0088c07bedeeccd4ec9e683c2aaec23}\label{classrailnode_ac0088c07bedeeccd4ec9e683c2aaec23}} 
+\index{railnode@{railnode}!dump@{dump}}
+\index{dump@{dump}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void railnode\+::dump (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adbb5e9bcbe37e287419af5919dccfc12}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classnewlinenode_ac87692c211db93d0c8d02fe19faafd7e}{newlinenode}}.
+
+\mbox{\Hypertarget{classrailnode_a1fde7f9399cdb11879514c36b7101a88}\label{classrailnode_a1fde7f9399cdb11879514c36b7101a88}} 
+\index{railnode@{railnode}!getBottom@{getBottom}}
+\index{getBottom@{getBottom}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{getBottom()}{getBottom()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classcoordinate}{coordinate}} railnode\+::get\+Bottom (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classrailnode_a566f409628afeef2414c29fb845e9943}\label{classrailnode_a566f409628afeef2414c29fb845e9943}} 
+\index{railnode@{railnode}!getRailDir@{getRailDir}}
+\index{getRailDir@{getRailDir}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{getRailDir()}{getRailDir()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} railnode\+::get\+Rail\+Dir (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classrailnode_a1c95a0aa11b56687b64e9a36e5298e17}\label{classrailnode_a1c95a0aa11b56687b64e9a36e5298e17}} 
+\index{railnode@{railnode}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily virtual int railnode\+::operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a0eca8182c12110a0599a601b6263df6b}{node}}.
+
+\mbox{\Hypertarget{classrailnode_ae2412bed0efb15e8685ca337ee57c01d}\label{classrailnode_ae2412bed0efb15e8685ca337ee57c01d}} 
+\index{railnode@{railnode}!operator==@{operator==}}
+\index{operator==@{operator==}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily int railnode\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a14b207f963ce8a03d7d8e153ea6f1d14}{node}}.
+
+\mbox{\Hypertarget{classrailnode_aceccde3e012c7bbed77aff0ba6705489}\label{classrailnode_aceccde3e012c7bbed77aff0ba6705489}} 
+\index{railnode@{railnode}!place@{place}}
+\index{place@{place}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{place()}{place()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoordinate}{coordinate}} railnode\+::place (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{int}]{draw,  }\item[{int}]{drawrails,  }\item[{\mbox{\hyperlink{classcoordinate}{coordinate}}}]{start,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{parent,  }\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a15666552a0f184c0275500e4d85ec54c}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classnewlinenode_aba301e8259a644a7be991fd8ba08d478}{newlinenode}}.
+
+\mbox{\Hypertarget{classrailnode_afa3b395299f089e7b262db9dadaf3d66}\label{classrailnode_afa3b395299f089e7b262db9dadaf3d66}} 
+\index{railnode@{railnode}!setBottom@{setBottom}}
+\index{setBottom@{setBottom}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{setBottom()}{setBottom()}}
+{\footnotesize\ttfamily virtual void railnode\+::set\+Bottom (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcoordinate}{coordinate}}}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classrailnode_a0037f798de8be63ce2d9d76abaa90a63}\label{classrailnode_a0037f798de8be63ce2d9d76abaa90a63}} 
+\index{railnode@{railnode}!setRailDir@{setRailDir}}
+\index{setRailDir@{setRailDir}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{setRailDir()}{setRailDir()}}
+{\footnotesize\ttfamily virtual void railnode\+::set\+Rail\+Dir (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{d }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classrailnode_a75fc02c6ad973412a02018c11ededcc3}\label{classrailnode_a75fc02c6ad973412a02018c11ededcc3}} 
+\index{railnode@{railnode}!texName@{texName}}
+\index{texName@{texName}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{texName()}{texName()}}
+{\footnotesize\ttfamily virtual string railnode\+::tex\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_af2abb77259119cbe7a917303f30b2fdf}{node}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classrailnode_a1850bedb2b5e5e38910de3b1c743d32c}\label{classrailnode_a1850bedb2b5e5e38910de3b1c743d32c}} 
+\index{railnode@{railnode}!bottom@{bottom}}
+\index{bottom@{bottom}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{bottom}{bottom}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoordinate}{coordinate}} railnode\+::bottom\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classrailnode_aac333c1439b33f663208b1347f272069}\label{classrailnode_aac333c1439b33f663208b1347f272069}} 
+\index{railnode@{railnode}!direction@{direction}}
+\index{direction@{direction}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{direction}{direction}}
+{\footnotesize\ttfamily \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} railnode\+::direction\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classrailnode_a6df2a7f8c8f2957ceaa27fed665f0c6c}\label{classrailnode_a6df2a7f8c8f2957ceaa27fed665f0c6c}} 
+\index{railnode@{railnode}!side@{side}}
+\index{side@{side}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{side}{side}}
+{\footnotesize\ttfamily \mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340}{vrailside}} railnode\+::side\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classrailnode_a5550e3025a59c22e411323ed67ab962e}\label{classrailnode_a5550e3025a59c22e411323ed67ab962e}} 
+\index{railnode@{railnode}!top@{top}}
+\index{top@{top}!railnode@{railnode}}
+\doxysubsubsection{\texorpdfstring{top}{top}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoordinate}{coordinate}} railnode\+::top\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\end{DoxyCompactItemize}

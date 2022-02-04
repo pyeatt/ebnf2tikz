@@ -1,0 +1,339 @@
+\hypertarget{classsinglenode}{}\doxysection{singlenode Class Reference}
+\label{classsinglenode}\index{singlenode@{singlenode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for singlenode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{classsinglenode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for singlenode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{classsinglenode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsinglenode_a6457b7d0c919940b439d033aec86ee5c}{singlenode}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+\mbox{\hyperlink{classsinglenode_a97d81921d82f91807343a44f916796bf}{singlenode}} (const \mbox{\hyperlink{classsinglenode}{singlenode}} \&original)
+\item 
+virtual \mbox{\hyperlink{classsinglenode}{singlenode}} $\ast$ \mbox{\hyperlink{classsinglenode_a33a0daa73869685e89522f9fc3956484}{clone}} () const
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_a8246d602276aaacc9d929435a35324e1}{forget\+Child}} (int n)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_ac8fea10308c8a1dc78ce33822b7d1a9c}{draw\+To\+Left\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_aa6a13b462d650ee1fc25a1a1a53ff3ae}{draw\+To\+Right\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_aba81365b0d4834df93cf09ec91e87e69}{merge\+Rails}} ()
+\item 
+virtual \mbox{\hyperlink{classsinglenode_a32cad275c48f4323297ba971586f7548}{$\sim$singlenode}} ()
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a223c92b21864145d006257543f732a75}{merge\+Concats}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a9eaa83b6de93ce0e39d1ff0c2166585f}{lift\+Concats}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a4e3b5f5a72bc064c71b5aa2c75fed903}{merge\+Choices}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a709f0a50fe7ad68a006eb7314f23ab7c}{analyze\+Opt\+Loops}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a9d7a1e05a0f7bc0c62844b1a534eae47}{analyze\+Non\+Opt\+Loops}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a6171ba091ac9abb062a730c8ded472d9}{num\+Children}} ()
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classsinglenode_a7e2644a749de674a06bdeb9c086f7ad7}{get\+Child}} (int n)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_a8047884e5edf9344a38312d36c44f83c}{operator==}} (\mbox{\hyperlink{classnode}{node}} \&r)
+\item 
+virtual int \mbox{\hyperlink{classsinglenode_ad17672d613773c95549e7f3642c51d45}{operator!=}} (\mbox{\hyperlink{classnode}{node}} \&r)
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classsinglenode_a4b57100df4bf68437904da07a8686ef0}{subsume}} (regex\+\_\+t $\ast$name, \mbox{\hyperlink{classnode}{node}} $\ast$replacement)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_ab15bfacdcf1196b2b0add443c864ad4d}{set\+Parent}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_af3ca542ed03e983dca9ba021b538bb91}{set\+Previous}} (\mbox{\hyperlink{classnode}{node}} $\ast$n)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_a020c3120920a96382776f75cdef387c7}{set\+Next}} (\mbox{\hyperlink{classnode}{node}} $\ast$n)
+\item 
+virtual void \mbox{\hyperlink{classsinglenode_ad10566ba4010eb8cc0c1bb0b416548ed}{fix\+Skips}} ()
+\item 
+virtual string \mbox{\hyperlink{classsinglenode_a9013e35856dc7498cf1b242600a83ed0}{tex\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classsinglenode_a45d711dba989fcd2984fa7f96ec683fc}{body}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsinglenode_a6457b7d0c919940b439d033aec86ee5c}\label{classsinglenode_a6457b7d0c919940b439d033aec86ee5c}} 
+\index{singlenode@{singlenode}!singlenode@{singlenode}}
+\index{singlenode@{singlenode}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{singlenode()}{singlenode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily singlenode\+::singlenode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsinglenode_a97d81921d82f91807343a44f916796bf}\label{classsinglenode_a97d81921d82f91807343a44f916796bf}} 
+\index{singlenode@{singlenode}!singlenode@{singlenode}}
+\index{singlenode@{singlenode}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{singlenode()}{singlenode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily singlenode\+::singlenode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classsinglenode}{singlenode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsinglenode_a32cad275c48f4323297ba971586f7548}\label{classsinglenode_a32cad275c48f4323297ba971586f7548}} 
+\index{singlenode@{singlenode}!````~singlenode@{$\sim$singlenode}}
+\index{````~singlenode@{$\sim$singlenode}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{$\sim$singlenode()}{~singlenode()}}
+{\footnotesize\ttfamily virtual singlenode\+::$\sim$singlenode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsinglenode_a9d7a1e05a0f7bc0c62844b1a534eae47}\label{classsinglenode_a9d7a1e05a0f7bc0c62844b1a534eae47}} 
+\index{singlenode@{singlenode}!analyzeNonOptLoops@{analyzeNonOptLoops}}
+\index{analyzeNonOptLoops@{analyzeNonOptLoops}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{analyzeNonOptLoops()}{analyzeNonOptLoops()}}
+{\footnotesize\ttfamily virtual int singlenode\+::analyze\+Non\+Opt\+Loops (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a27eb07086a3484b1012e24dabe0567d9}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a709f0a50fe7ad68a006eb7314f23ab7c}\label{classsinglenode_a709f0a50fe7ad68a006eb7314f23ab7c}} 
+\index{singlenode@{singlenode}!analyzeOptLoops@{analyzeOptLoops}}
+\index{analyzeOptLoops@{analyzeOptLoops}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{analyzeOptLoops()}{analyzeOptLoops()}}
+{\footnotesize\ttfamily virtual int singlenode\+::analyze\+Opt\+Loops (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ab48a637bc7e1a4143cfdcd673e2e1f4b}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a33a0daa73869685e89522f9fc3956484}\label{classsinglenode_a33a0daa73869685e89522f9fc3956484}} 
+\index{singlenode@{singlenode}!clone@{clone}}
+\index{clone@{clone}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsinglenode}{singlenode}} $\ast$ singlenode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classnode_ac47eff3133679324ea84b5d32af17cb1}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classproductionnode_a615d238356a292351182791afa4da012}{productionnode}}, and \mbox{\hyperlink{classrownode_a853d39014f607f5eb48ad31874c6c9b6}{rownode}}.
+
+\mbox{\Hypertarget{classsinglenode_ac8fea10308c8a1dc78ce33822b7d1a9c}\label{classsinglenode_ac8fea10308c8a1dc78ce33822b7d1a9c}} 
+\index{singlenode@{singlenode}!drawToLeftRail@{drawToLeftRail}}
+\index{drawToLeftRail@{drawToLeftRail}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{drawToLeftRail()}{drawToLeftRail()}}
+{\footnotesize\ttfamily void singlenode\+::draw\+To\+Left\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_aeb62d9eb826818fca32fbfc5cc918706}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_aa6a13b462d650ee1fc25a1a1a53ff3ae}\label{classsinglenode_aa6a13b462d650ee1fc25a1a1a53ff3ae}} 
+\index{singlenode@{singlenode}!drawToRightRail@{drawToRightRail}}
+\index{drawToRightRail@{drawToRightRail}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{drawToRightRail()}{drawToRightRail()}}
+{\footnotesize\ttfamily void singlenode\+::draw\+To\+Right\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adb96728ae6876de3744c761b0946df6f}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_ad10566ba4010eb8cc0c1bb0b416548ed}\label{classsinglenode_ad10566ba4010eb8cc0c1bb0b416548ed}} 
+\index{singlenode@{singlenode}!fixSkips@{fixSkips}}
+\index{fixSkips@{fixSkips}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{fixSkips()}{fixSkips()}}
+{\footnotesize\ttfamily void singlenode\+::fix\+Skips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ac898bf23fea51a4cb04e42694657676c}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classproductionnode_a09d6eb52c1ba5e2d9cfdba7b30a5e971}{productionnode}}.
+
+\mbox{\Hypertarget{classsinglenode_a8246d602276aaacc9d929435a35324e1}\label{classsinglenode_a8246d602276aaacc9d929435a35324e1}} 
+\index{singlenode@{singlenode}!forgetChild@{forgetChild}}
+\index{forgetChild@{forgetChild}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{forgetChild()}{forgetChild()}}
+{\footnotesize\ttfamily void singlenode\+::forget\+Child (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ae9b0858d86cfd2742a8820cf1bd24dda}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a7e2644a749de674a06bdeb9c086f7ad7}\label{classsinglenode_a7e2644a749de674a06bdeb9c086f7ad7}} 
+\index{singlenode@{singlenode}!getChild@{getChild}}
+\index{getChild@{getChild}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{getChild()}{getChild()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classnode}{node}}$\ast$ singlenode\+::get\+Child (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a40ba4b6dc7b1f98a917a4ad482eacf59}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a9eaa83b6de93ce0e39d1ff0c2166585f}\label{classsinglenode_a9eaa83b6de93ce0e39d1ff0c2166585f}} 
+\index{singlenode@{singlenode}!liftConcats@{liftConcats}}
+\index{liftConcats@{liftConcats}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{liftConcats()}{liftConcats()}}
+{\footnotesize\ttfamily int singlenode\+::lift\+Concats (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_af35e20bb92ed3954e3dd9c61d69a3021}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a4e3b5f5a72bc064c71b5aa2c75fed903}\label{classsinglenode_a4e3b5f5a72bc064c71b5aa2c75fed903}} 
+\index{singlenode@{singlenode}!mergeChoices@{mergeChoices}}
+\index{mergeChoices@{mergeChoices}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{mergeChoices()}{mergeChoices()}}
+{\footnotesize\ttfamily virtual int singlenode\+::merge\+Choices (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a9df2d151d3be24d0c7d11c79c1f3626c}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a223c92b21864145d006257543f732a75}\label{classsinglenode_a223c92b21864145d006257543f732a75}} 
+\index{singlenode@{singlenode}!mergeConcats@{mergeConcats}}
+\index{mergeConcats@{mergeConcats}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{mergeConcats()}{mergeConcats()}}
+{\footnotesize\ttfamily virtual int singlenode\+::merge\+Concats (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a0c307ad1b8e0318b1ac7758f0eafe37f}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_aba81365b0d4834df93cf09ec91e87e69}\label{classsinglenode_aba81365b0d4834df93cf09ec91e87e69}} 
+\index{singlenode@{singlenode}!mergeRails@{mergeRails}}
+\index{mergeRails@{mergeRails}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{mergeRails()}{mergeRails()}}
+{\footnotesize\ttfamily virtual void singlenode\+::merge\+Rails (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_aac0f40b91dbfccb849f31a4b414fe9bc}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a6171ba091ac9abb062a730c8ded472d9}\label{classsinglenode_a6171ba091ac9abb062a730c8ded472d9}} 
+\index{singlenode@{singlenode}!numChildren@{numChildren}}
+\index{numChildren@{numChildren}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{numChildren()}{numChildren()}}
+{\footnotesize\ttfamily virtual int singlenode\+::num\+Children (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a1a4a83ea6a3a7064ecf63e6d73975c33}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_ad17672d613773c95549e7f3642c51d45}\label{classsinglenode_ad17672d613773c95549e7f3642c51d45}} 
+\index{singlenode@{singlenode}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily virtual int singlenode\+::operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a0eca8182c12110a0599a601b6263df6b}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a8047884e5edf9344a38312d36c44f83c}\label{classsinglenode_a8047884e5edf9344a38312d36c44f83c}} 
+\index{singlenode@{singlenode}!operator==@{operator==}}
+\index{operator==@{operator==}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily int singlenode\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a14b207f963ce8a03d7d8e153ea6f1d14}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a020c3120920a96382776f75cdef387c7}\label{classsinglenode_a020c3120920a96382776f75cdef387c7}} 
+\index{singlenode@{singlenode}!setNext@{setNext}}
+\index{setNext@{setNext}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{setNext()}{setNext()}}
+{\footnotesize\ttfamily virtual void singlenode\+::set\+Next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a5874013b16a4c3a66b93844e7c660c0a}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_ab15bfacdcf1196b2b0add443c864ad4d}\label{classsinglenode_ab15bfacdcf1196b2b0add443c864ad4d}} 
+\index{singlenode@{singlenode}!setParent@{setParent}}
+\index{setParent@{setParent}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{setParent()}{setParent()}}
+{\footnotesize\ttfamily void singlenode\+::set\+Parent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_abc5e6a2c93f2a1e00740d87b885b19f2}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_af3ca542ed03e983dca9ba021b538bb91}\label{classsinglenode_af3ca542ed03e983dca9ba021b538bb91}} 
+\index{singlenode@{singlenode}!setPrevious@{setPrevious}}
+\index{setPrevious@{setPrevious}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{setPrevious()}{setPrevious()}}
+{\footnotesize\ttfamily virtual void singlenode\+::set\+Previous (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_af3ddde52d300d5fdba0f7d30b1c07c65}{node}}.
+
+\mbox{\Hypertarget{classsinglenode_a4b57100df4bf68437904da07a8686ef0}\label{classsinglenode_a4b57100df4bf68437904da07a8686ef0}} 
+\index{singlenode@{singlenode}!subsume@{subsume}}
+\index{subsume@{subsume}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{subsume()}{subsume()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ singlenode\+::subsume (\begin{DoxyParamCaption}\item[{regex\+\_\+t $\ast$}]{name,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{replacement }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a048b9c394838fbd7e8fd120145215f31}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classproductionnode_a0ad1a323b502dfc5741223102421e77c}{productionnode}}.
+
+\mbox{\Hypertarget{classsinglenode_a9013e35856dc7498cf1b242600a83ed0}\label{classsinglenode_a9013e35856dc7498cf1b242600a83ed0}} 
+\index{singlenode@{singlenode}!texName@{texName}}
+\index{texName@{texName}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{texName()}{texName()}}
+{\footnotesize\ttfamily virtual string singlenode\+::tex\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_af2abb77259119cbe7a917303f30b2fdf}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classproductionnode_a778856b140c11f16072ab28507c6cf0e}{productionnode}}, and \mbox{\hyperlink{classrownode_a150d7edae69827841a3406f16a1e1326}{rownode}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsinglenode_a45d711dba989fcd2984fa7f96ec683fc}\label{classsinglenode_a45d711dba989fcd2984fa7f96ec683fc}} 
+\index{singlenode@{singlenode}!body@{body}}
+\index{body@{body}!singlenode@{singlenode}}
+\doxysubsubsection{\texorpdfstring{body}{body}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}}$\ast$ singlenode\+::body\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{optimize_8cc}{optimize.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

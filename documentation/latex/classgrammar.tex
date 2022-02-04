@@ -1,0 +1,128 @@
+\hypertarget{classgrammar}{}\doxysection{grammar Class Reference}
+\label{classgrammar}\index{grammar@{grammar}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classgrammar_a090a1152475dfa6d3492dae9d53bfb5a}{grammar}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+\mbox{\hyperlink{classgrammar_ad53fb93f23218e65eb82b80f56c70f65}{$\sim$grammar}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_a83d2bb2119a4670a45f4123e33ff3236}{insert}} (\mbox{\hyperlink{classproductionnode}{productionnode}} $\ast$\mbox{\hyperlink{classnode}{node}})
+\item 
+void \mbox{\hyperlink{classgrammar_a6f6c9bb0ff1e019fd2785bb2e9afa66a}{dump}} () const
+\item 
+void \mbox{\hyperlink{classgrammar_a37e086e85e62353957960e4fd50bc701}{optimize}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_a04729702b880cc19457bc101efeeed62}{subsume}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_a41cc98e1246c51d528cdf284b9b11c49}{place}} (ofstream \&outs)
+\item 
+void \mbox{\hyperlink{classgrammar_a6d550aa29bf9db96ddf4a71cf40731d7}{merge\+Rails}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_a615dbd5861260eebe743ef3772b6d2bf}{set\+Parent}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_aaaf2a4ed102e4d2e4815fb9f53985258}{set\+Previous}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_aa0388457409a07973820a3ccc18f1fed}{set\+Next}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_a67d663f65fda5ae70e206ed7c134a7c3}{fix\+Skips}} ()
+\item 
+void \mbox{\hyperlink{classgrammar_a7345a4b0588c66be89b183e21d6acac7}{create\+Rows}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classgrammar_a090a1152475dfa6d3492dae9d53bfb5a}\label{classgrammar_a090a1152475dfa6d3492dae9d53bfb5a}} 
+\index{grammar@{grammar}!grammar@{grammar}}
+\index{grammar@{grammar}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{grammar()}{grammar()}}
+{\footnotesize\ttfamily grammar\+::grammar (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classgrammar_ad53fb93f23218e65eb82b80f56c70f65}\label{classgrammar_ad53fb93f23218e65eb82b80f56c70f65}} 
+\index{grammar@{grammar}!````~grammar@{$\sim$grammar}}
+\index{````~grammar@{$\sim$grammar}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{$\sim$grammar()}{~grammar()}}
+{\footnotesize\ttfamily grammar\+::$\sim$grammar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classgrammar_a7345a4b0588c66be89b183e21d6acac7}\label{classgrammar_a7345a4b0588c66be89b183e21d6acac7}} 
+\index{grammar@{grammar}!createRows@{createRows}}
+\index{createRows@{createRows}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{createRows()}{createRows()}}
+{\footnotesize\ttfamily void grammar\+::create\+Rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_a6f6c9bb0ff1e019fd2785bb2e9afa66a}\label{classgrammar_a6f6c9bb0ff1e019fd2785bb2e9afa66a}} 
+\index{grammar@{grammar}!dump@{dump}}
+\index{dump@{dump}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void grammar\+::dump (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classgrammar_a67d663f65fda5ae70e206ed7c134a7c3}\label{classgrammar_a67d663f65fda5ae70e206ed7c134a7c3}} 
+\index{grammar@{grammar}!fixSkips@{fixSkips}}
+\index{fixSkips@{fixSkips}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{fixSkips()}{fixSkips()}}
+{\footnotesize\ttfamily void grammar\+::fix\+Skips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classgrammar_a83d2bb2119a4670a45f4123e33ff3236}\label{classgrammar_a83d2bb2119a4670a45f4123e33ff3236}} 
+\index{grammar@{grammar}!insert@{insert}}
+\index{insert@{insert}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily void grammar\+::insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classproductionnode}{productionnode}} $\ast$}]{node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classgrammar_a6d550aa29bf9db96ddf4a71cf40731d7}\label{classgrammar_a6d550aa29bf9db96ddf4a71cf40731d7}} 
+\index{grammar@{grammar}!mergeRails@{mergeRails}}
+\index{mergeRails@{mergeRails}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{mergeRails()}{mergeRails()}}
+{\footnotesize\ttfamily void grammar\+::merge\+Rails (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_a37e086e85e62353957960e4fd50bc701}\label{classgrammar_a37e086e85e62353957960e4fd50bc701}} 
+\index{grammar@{grammar}!optimize@{optimize}}
+\index{optimize@{optimize}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{optimize()}{optimize()}}
+{\footnotesize\ttfamily void grammar\+::optimize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_a41cc98e1246c51d528cdf284b9b11c49}\label{classgrammar_a41cc98e1246c51d528cdf284b9b11c49}} 
+\index{grammar@{grammar}!place@{place}}
+\index{place@{place}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{place()}{place()}}
+{\footnotesize\ttfamily void grammar\+::place (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_aa0388457409a07973820a3ccc18f1fed}\label{classgrammar_aa0388457409a07973820a3ccc18f1fed}} 
+\index{grammar@{grammar}!setNext@{setNext}}
+\index{setNext@{setNext}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{setNext()}{setNext()}}
+{\footnotesize\ttfamily void grammar\+::set\+Next (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_a615dbd5861260eebe743ef3772b6d2bf}\label{classgrammar_a615dbd5861260eebe743ef3772b6d2bf}} 
+\index{grammar@{grammar}!setParent@{setParent}}
+\index{setParent@{setParent}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{setParent()}{setParent()}}
+{\footnotesize\ttfamily void grammar\+::set\+Parent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_aaaf2a4ed102e4d2e4815fb9f53985258}\label{classgrammar_aaaf2a4ed102e4d2e4815fb9f53985258}} 
+\index{grammar@{grammar}!setPrevious@{setPrevious}}
+\index{setPrevious@{setPrevious}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{setPrevious()}{setPrevious()}}
+{\footnotesize\ttfamily void grammar\+::set\+Previous (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classgrammar_a04729702b880cc19457bc101efeeed62}\label{classgrammar_a04729702b880cc19457bc101efeeed62}} 
+\index{grammar@{grammar}!subsume@{subsume}}
+\index{subsume@{subsume}!grammar@{grammar}}
+\doxysubsubsection{\texorpdfstring{subsume()}{subsume()}}
+{\footnotesize\ttfamily void grammar\+::subsume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{optimize_8cc}{optimize.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

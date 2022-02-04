@@ -1,0 +1,225 @@
+\hypertarget{parser_8cc}{}\doxysection{parser.\+cc File Reference}
+\label{parser_8cc}\index{parser.cc@{parser.cc}}
+{\ttfamily \#include \char`\"{}parser.\+hh\char`\"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}driver.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}annot\+\_\+lexer.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lexer.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}nodesize.\+hh\char`\"{}}\newline
+Include dependency graph for parser.\+cc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{parser_8cc__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceyy}{yy}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a86f079016f11f0600f4259f3f03f8d43}{YY\+\_\+}}(msgid)~msgid
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a50c42b07435bf2867d707c84388133bf}{YY\+\_\+\+EXCEPTIONS}}~1
+\item 
+\#define \mbox{\hyperlink{parser_8cc_ab2b4f027a2b092ac14ca4464e7b3db60}{YYRHSLOC}}(Rhs,  K)~((Rhs)\mbox{[}K\mbox{]}.location)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a485d38f93de30679900c9cad6e7f3446}{YYLLOC\+\_\+\+DEFAULT}}(Current,  Rhs,  N)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a3649de2ba01c20b4c9ec72bdc71b2956}{YYCDEBUG}}~\mbox{\hyperlink{lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{if}} (yydebug\+\_\+) ($\ast$yycdebug\+\_\+)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a4b71a422d1f0f6b0f93e6cfbe988d9ed}{YY\+\_\+\+SYMBOL\+\_\+\+PRINT}}(Title,  Symbol)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a49ad456240785266cadae498ddae9310}{YY\+\_\+\+REDUCE\+\_\+\+PRINT}}(Rule)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a56e528a4079b5c725f0fcbe184414bf5}{YY\+\_\+\+STACK\+\_\+\+PRINT}}()
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a20bf055e53dc4fd5afddfd752a4d1adb}{yyerrok}}~(yyerrstatus\+\_\+ = 0)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a5035d59933b3f5388c44f596145db047}{yyclearin}}~(yyla.\+clear ())
+\item 
+\#define \mbox{\hyperlink{parser_8cc_aa6c7a65b580c214b2ea832fd7bdd472e}{YYACCEPT}}~goto yyacceptlab
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a3bcde0b05b9aa4ec5169092d9d211dbd}{YYABORT}}~goto yyabortlab
+\item 
+\#define \mbox{\hyperlink{parser_8cc_af1eef6197be78122699013d0784acc80}{YYERROR}}~goto yyerrorlab
+\item 
+\#define \mbox{\hyperlink{parser_8cc_ad860e18ca4b79fc589895b531bdb7948}{YYRECOVERING}}()~(!!yyerrstatus\+\_\+)
+\item 
+\#define \mbox{\hyperlink{parser_8cc_a5678224066e7b61a101000279b4bb0be}{YYCASE\+\_\+}}(N,  S)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{parser_8cc_a53252ce667040b1a73f260f6549a70b0}{wrap\+Choice}} (\mbox{\hyperlink{classnode}{node}} $\ast$n)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classyy_1_1location}{yy\+::location}} \mbox{\hyperlink{parser_8cc_abaf70dc7df8e78acc6505d164cb2276b}{loc}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{parser_8cc_a86f079016f11f0600f4259f3f03f8d43}\label{parser_8cc_a86f079016f11f0600f4259f3f03f8d43}} 
+\index{parser.cc@{parser.cc}!YY\_@{YY\_}}
+\index{YY\_@{YY\_}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_}{YY\_}}
+{\footnotesize\ttfamily \#define YY\+\_\+(\begin{DoxyParamCaption}\item[{}]{msgid }\end{DoxyParamCaption})~msgid}
+
+\mbox{\Hypertarget{parser_8cc_a50c42b07435bf2867d707c84388133bf}\label{parser_8cc_a50c42b07435bf2867d707c84388133bf}} 
+\index{parser.cc@{parser.cc}!YY\_EXCEPTIONS@{YY\_EXCEPTIONS}}
+\index{YY\_EXCEPTIONS@{YY\_EXCEPTIONS}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_EXCEPTIONS}{YY\_EXCEPTIONS}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+EXCEPTIONS~1}
+
+\mbox{\Hypertarget{parser_8cc_a49ad456240785266cadae498ddae9310}\label{parser_8cc_a49ad456240785266cadae498ddae9310}} 
+\index{parser.cc@{parser.cc}!YY\_REDUCE\_PRINT@{YY\_REDUCE\_PRINT}}
+\index{YY\_REDUCE\_PRINT@{YY\_REDUCE\_PRINT}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_REDUCE\_PRINT}{YY\_REDUCE\_PRINT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+REDUCE\+\_\+\+PRINT(\begin{DoxyParamCaption}\item[{}]{Rule }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{do} \{                                  \(\backslash\)}
+\DoxyCodeLine{    if (yydebug\_)                       \(\backslash\)}
+\DoxyCodeLine{      yy\_reduce\_print\_ (Rule);          \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{while} (\textcolor{keyword}{false})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{parser_8cc_a56e528a4079b5c725f0fcbe184414bf5}\label{parser_8cc_a56e528a4079b5c725f0fcbe184414bf5}} 
+\index{parser.cc@{parser.cc}!YY\_STACK\_PRINT@{YY\_STACK\_PRINT}}
+\index{YY\_STACK\_PRINT@{YY\_STACK\_PRINT}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_STACK\_PRINT}{YY\_STACK\_PRINT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+STACK\+\_\+\+PRINT(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{do} \{                                  \(\backslash\)}
+\DoxyCodeLine{    if (yydebug\_)                       \(\backslash\)}
+\DoxyCodeLine{      yy\_stack\_print\_ ();                \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{while} (\textcolor{keyword}{false})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{parser_8cc_a4b71a422d1f0f6b0f93e6cfbe988d9ed}\label{parser_8cc_a4b71a422d1f0f6b0f93e6cfbe988d9ed}} 
+\index{parser.cc@{parser.cc}!YY\_SYMBOL\_PRINT@{YY\_SYMBOL\_PRINT}}
+\index{YY\_SYMBOL\_PRINT@{YY\_SYMBOL\_PRINT}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_SYMBOL\_PRINT}{YY\_SYMBOL\_PRINT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+SYMBOL\+\_\+\+PRINT(\begin{DoxyParamCaption}\item[{}]{Title,  }\item[{}]{Symbol }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \textcolor{keywordflow}{do} \{                                          \(\backslash\)}
+\DoxyCodeLine{    if (yydebug\_)                               \(\backslash\)}
+\DoxyCodeLine{    \{                                           \(\backslash\)}
+\DoxyCodeLine{      *yycdebug\_ << Title << \textcolor{charliteral}{' '};               \(\backslash\)}
+\DoxyCodeLine{      yy\_print\_ (*yycdebug\_, Symbol);           \(\backslash\)}
+\DoxyCodeLine{      *yycdebug\_ << \textcolor{charliteral}{'\(\backslash\)n'};                       \(\backslash\)}
+\DoxyCodeLine{    \}                                           \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{while} (\textcolor{keyword}{false})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{parser_8cc_a3bcde0b05b9aa4ec5169092d9d211dbd}\label{parser_8cc_a3bcde0b05b9aa4ec5169092d9d211dbd}} 
+\index{parser.cc@{parser.cc}!YYABORT@{YYABORT}}
+\index{YYABORT@{YYABORT}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYABORT}{YYABORT}}
+{\footnotesize\ttfamily \#define YYABORT~goto yyabortlab}
+
+\mbox{\Hypertarget{parser_8cc_aa6c7a65b580c214b2ea832fd7bdd472e}\label{parser_8cc_aa6c7a65b580c214b2ea832fd7bdd472e}} 
+\index{parser.cc@{parser.cc}!YYACCEPT@{YYACCEPT}}
+\index{YYACCEPT@{YYACCEPT}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYACCEPT}{YYACCEPT}}
+{\footnotesize\ttfamily \#define YYACCEPT~goto yyacceptlab}
+
+\mbox{\Hypertarget{parser_8cc_a5678224066e7b61a101000279b4bb0be}\label{parser_8cc_a5678224066e7b61a101000279b4bb0be}} 
+\index{parser.cc@{parser.cc}!YYCASE\_@{YYCASE\_}}
+\index{YYCASE\_@{YYCASE\_}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYCASE\_}{YYCASE\_}}
+{\footnotesize\ttfamily \#define YYCASE\+\_\+(\begin{DoxyParamCaption}\item[{}]{N,  }\item[{}]{S }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{        \textcolor{keywordflow}{case} N:                               \(\backslash\)}
+\DoxyCodeLine{          yyformat = S;                       \(\backslash\)}
+\DoxyCodeLine{        break}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{parser_8cc_a3649de2ba01c20b4c9ec72bdc71b2956}\label{parser_8cc_a3649de2ba01c20b4c9ec72bdc71b2956}} 
+\index{parser.cc@{parser.cc}!YYCDEBUG@{YYCDEBUG}}
+\index{YYCDEBUG@{YYCDEBUG}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYCDEBUG}{YYCDEBUG}}
+{\footnotesize\ttfamily \#define YYCDEBUG~\mbox{\hyperlink{lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{if}} (yydebug\+\_\+) ($\ast$yycdebug\+\_\+)}
+
+\mbox{\Hypertarget{parser_8cc_a5035d59933b3f5388c44f596145db047}\label{parser_8cc_a5035d59933b3f5388c44f596145db047}} 
+\index{parser.cc@{parser.cc}!yyclearin@{yyclearin}}
+\index{yyclearin@{yyclearin}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{yyclearin}{yyclearin}}
+{\footnotesize\ttfamily \#define yyclearin~(yyla.\+clear ())}
+
+\mbox{\Hypertarget{parser_8cc_a20bf055e53dc4fd5afddfd752a4d1adb}\label{parser_8cc_a20bf055e53dc4fd5afddfd752a4d1adb}} 
+\index{parser.cc@{parser.cc}!yyerrok@{yyerrok}}
+\index{yyerrok@{yyerrok}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{yyerrok}{yyerrok}}
+{\footnotesize\ttfamily \#define yyerrok~(yyerrstatus\+\_\+ = 0)}
+
+\mbox{\Hypertarget{parser_8cc_af1eef6197be78122699013d0784acc80}\label{parser_8cc_af1eef6197be78122699013d0784acc80}} 
+\index{parser.cc@{parser.cc}!YYERROR@{YYERROR}}
+\index{YYERROR@{YYERROR}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYERROR}{YYERROR}}
+{\footnotesize\ttfamily \#define YYERROR~goto yyerrorlab}
+
+\mbox{\Hypertarget{parser_8cc_a485d38f93de30679900c9cad6e7f3446}\label{parser_8cc_a485d38f93de30679900c9cad6e7f3446}} 
+\index{parser.cc@{parser.cc}!YYLLOC\_DEFAULT@{YYLLOC\_DEFAULT}}
+\index{YYLLOC\_DEFAULT@{YYLLOC\_DEFAULT}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYLLOC\_DEFAULT}{YYLLOC\_DEFAULT}}
+{\footnotesize\ttfamily \#define YYLLOC\+\_\+\+DEFAULT(\begin{DoxyParamCaption}\item[{}]{Current,  }\item[{}]{Rhs,  }\item[{}]{N }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{annot__lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{do                                                                  \(\backslash\)}}}
+\DoxyCodeLine{\mbox{\hyperlink{annot__lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{      if}} (N)                                                            \(\backslash\)}
+\DoxyCodeLine{        \{                                                               \(\backslash\)}
+\DoxyCodeLine{          (Current).begin  = \mbox{\hyperlink{parser_8cc_ab2b4f027a2b092ac14ca4464e7b3db60}{YYRHSLOC}} (Rhs, 1).begin;                   \(\backslash\)}
+\DoxyCodeLine{          (Current).end    = \mbox{\hyperlink{parser_8cc_ab2b4f027a2b092ac14ca4464e7b3db60}{YYRHSLOC}} (Rhs, N).end;                     \(\backslash\)}
+\DoxyCodeLine{        \}                                                               \(\backslash\)}
+\DoxyCodeLine{      else                                                              \(\backslash\)}
+\DoxyCodeLine{        \{                                                               \(\backslash\)}
+\DoxyCodeLine{          (Current).begin = (Current).end = \mbox{\hyperlink{parser_8cc_ab2b4f027a2b092ac14ca4464e7b3db60}{YYRHSLOC}} (Rhs, 0).end;      \(\backslash\)}
+\DoxyCodeLine{        \}                                                               \(\backslash\)}
+\DoxyCodeLine{    while (\textcolor{keyword}{false})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{parser_8cc_ad860e18ca4b79fc589895b531bdb7948}\label{parser_8cc_ad860e18ca4b79fc589895b531bdb7948}} 
+\index{parser.cc@{parser.cc}!YYRECOVERING@{YYRECOVERING}}
+\index{YYRECOVERING@{YYRECOVERING}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYRECOVERING}{YYRECOVERING}}
+{\footnotesize\ttfamily \#define YYRECOVERING(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~(!!yyerrstatus\+\_\+)}
+
+\mbox{\Hypertarget{parser_8cc_ab2b4f027a2b092ac14ca4464e7b3db60}\label{parser_8cc_ab2b4f027a2b092ac14ca4464e7b3db60}} 
+\index{parser.cc@{parser.cc}!YYRHSLOC@{YYRHSLOC}}
+\index{YYRHSLOC@{YYRHSLOC}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{YYRHSLOC}{YYRHSLOC}}
+{\footnotesize\ttfamily \#define YYRHSLOC(\begin{DoxyParamCaption}\item[{}]{Rhs,  }\item[{}]{K }\end{DoxyParamCaption})~((Rhs)\mbox{[}K\mbox{]}.location)}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{parser_8cc_a53252ce667040b1a73f260f6549a70b0}\label{parser_8cc_a53252ce667040b1a73f260f6549a70b0}} 
+\index{parser.cc@{parser.cc}!wrapChoice@{wrapChoice}}
+\index{wrapChoice@{wrapChoice}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{wrapChoice()}{wrapChoice()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}}$\ast$ wrap\+Choice (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{n }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{parser_8cc_abaf70dc7df8e78acc6505d164cb2276b}\label{parser_8cc_abaf70dc7df8e78acc6505d164cb2276b}} 
+\index{parser.cc@{parser.cc}!loc@{loc}}
+\index{loc@{loc}!parser.cc@{parser.cc}}
+\doxysubsubsection{\texorpdfstring{loc}{loc}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classyy_1_1location}{yy\+::location}} loc\hspace{0.3cm}{\ttfamily [extern]}}
+

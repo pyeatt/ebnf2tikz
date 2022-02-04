@@ -1,0 +1,245 @@
+\hypertarget{structannot_1_1parser_1_1basic__symbol}{}\doxysection{annot\+::parser\+::basic\+\_\+symbol$<$ Base $>$ Struct Template Reference}
+\label{structannot_1_1parser_1_1basic__symbol}\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+
+
+{\ttfamily \#include $<$annot\+\_\+parser.\+hh$>$}
+
+
+
+Inheritance diagram for annot\+::parser\+::basic\+\_\+symbol$<$ Base $>$\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{structannot_1_1parser_1_1basic__symbol__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for annot\+::parser\+::basic\+\_\+symbol$<$ Base $>$\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structannot_1_1parser_1_1basic__symbol__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef Base \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a62979536809571903e6f90e1450c482c}{super\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Alias to Base. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a54ead1c8adbf1ea09ed2dec611b98c66}{basic\+\_\+symbol}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a18433fba5c832d8a02073fa4327200d1}{basic\+\_\+symbol}} (const \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} \&that)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a069433449b7592c889aa85dfadde994c}{basic\+\_\+symbol}} (typename Base\+::kind\+\_\+type t, const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\begin{DoxyCompactList}\small\item\em Constructors for typed symbols. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a4b8fe7d483456e93b91ddc4fc6e0e52e}{basic\+\_\+symbol}} (typename Base\+::kind\+\_\+type t, const \mbox{\hyperlink{graph_8hh_a81b902e00124c95d161bffd863b12c27}{annot\+\_\+t}} $\ast$\&v, const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_ac09fee604c3a3795a37c3e5680a64df3}{basic\+\_\+symbol}} (typename Base\+::kind\+\_\+type t, const \mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$\&v, const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_aa95a84f6a91ab9dae4b253e65f7c36c3}{basic\+\_\+symbol}} (typename Base\+::kind\+\_\+type t, const std\+::string \&v, const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a548fb26c3bb2ccdc36cfabdfceffcbee}{$\sim$basic\+\_\+symbol}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the symbol. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_afba6dd4cc8425956afb5b7c3db050ae9}{clear}} () \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Destroy contents, and record that is empty. \end{DoxyCompactList}\item 
+const char $\ast$ \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a0bb6e431c68254ccc420ab48414c8487}{name}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em The user-\/facing name of this symbol. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a413e9a977a8f7b8a3405b5a863953799}{type\+\_\+get}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Backward compatibility (Bison 3.\+6). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a23db1e09cccfb48a53b7f3fe4bc0ff78}{empty}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Whether empty. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_ab4138ed3ca7a8ef67a30fdcbba062570}{move}} (\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} \&s)
+\begin{DoxyCompactList}\small\item\em Destructive move, {\itshape s} is emptied into this. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1parser_1_1semantic__type}{semantic\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_ae5890268d0cf1f485b407ff1c597c942}{value}}
+\begin{DoxyCompactList}\small\item\em The semantic value. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_aadf524c56a97d67484ed6d1eedde89b5}{location}}
+\begin{DoxyCompactList}\small\item\em The location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Base$>$\newline
+struct annot\+::parser\+::basic\+\_\+symbol$<$ Base $>$}
+
+A complete symbol.
+
+Expects its Base type to provide access to the symbol kind via kind ().
+
+Provide access to semantic value and location. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a62979536809571903e6f90e1450c482c}\label{structannot_1_1parser_1_1basic__symbol_a62979536809571903e6f90e1450c482c}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!super\_type@{super\_type}}
+\index{super\_type@{super\_type}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{super\_type}{super\_type}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+typedef Base \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol_a62979536809571903e6f90e1450c482c}{super\+\_\+type}}}
+
+
+
+Alias to Base. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a54ead1c8adbf1ea09ed2dec611b98c66}\label{structannot_1_1parser_1_1basic__symbol_a54ead1c8adbf1ea09ed2dec611b98c66}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!basic\_symbol@{basic\_symbol}}
+\index{basic\_symbol@{basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{basic\_symbol()}{basic\_symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Default constructor. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a18433fba5c832d8a02073fa4327200d1}\label{structannot_1_1parser_1_1basic__symbol_a18433fba5c832d8a02073fa4327200d1}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!basic\_symbol@{basic\_symbol}}
+\index{basic\_symbol@{basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{basic\_symbol()}{basic\_symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}}$<$ Base $>$ \&}]{that }\end{DoxyParamCaption})}
+
+
+
+Copy constructor. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a069433449b7592c889aa85dfadde994c}\label{structannot_1_1parser_1_1basic__symbol_a069433449b7592c889aa85dfadde994c}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!basic\_symbol@{basic\_symbol}}
+\index{basic\_symbol@{basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{basic\_symbol()}{basic\_symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}\item[{typename Base\+::kind\+\_\+type}]{t,  }\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructors for typed symbols. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a4b8fe7d483456e93b91ddc4fc6e0e52e}\label{structannot_1_1parser_1_1basic__symbol_a4b8fe7d483456e93b91ddc4fc6e0e52e}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!basic\_symbol@{basic\_symbol}}
+\index{basic\_symbol@{basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{basic\_symbol()}{basic\_symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}\item[{typename Base\+::kind\+\_\+type}]{t,  }\item[{const \mbox{\hyperlink{graph_8hh_a81b902e00124c95d161bffd863b12c27}{annot\+\_\+t}} $\ast$\&}]{v,  }\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_ac09fee604c3a3795a37c3e5680a64df3}\label{structannot_1_1parser_1_1basic__symbol_ac09fee604c3a3795a37c3e5680a64df3}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!basic\_symbol@{basic\_symbol}}
+\index{basic\_symbol@{basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{basic\_symbol()}{basic\_symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}\item[{typename Base\+::kind\+\_\+type}]{t,  }\item[{const \mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$\&}]{v,  }\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_aa95a84f6a91ab9dae4b253e65f7c36c3}\label{structannot_1_1parser_1_1basic__symbol_aa95a84f6a91ab9dae4b253e65f7c36c3}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!basic\_symbol@{basic\_symbol}}
+\index{basic\_symbol@{basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{basic\_symbol()}{basic\_symbol()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}\item[{typename Base\+::kind\+\_\+type}]{t,  }\item[{const std\+::string \&}]{v,  }\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a548fb26c3bb2ccdc36cfabdfceffcbee}\label{structannot_1_1parser_1_1basic__symbol_a548fb26c3bb2ccdc36cfabdfceffcbee}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!````~basic\_symbol@{$\sim$basic\_symbol}}
+\index{````~basic\_symbol@{$\sim$basic\_symbol}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$basic\_symbol()}{~basic\_symbol()}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::$\sim$\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destroy the symbol. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_afba6dd4cc8425956afb5b7c3db050ae9}\label{structannot_1_1parser_1_1basic__symbol_afba6dd4cc8425956afb5b7c3db050ae9}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!clear@{clear}}
+\index{clear@{clear}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+void \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destroy contents, and record that is empty. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a23db1e09cccfb48a53b7f3fe4bc0ff78}\label{structannot_1_1parser_1_1basic__symbol_a23db1e09cccfb48a53b7f3fe4bc0ff78}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!empty@{empty}}
+\index{empty@{empty}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+bool \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Whether empty. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_ab4138ed3ca7a8ef67a30fdcbba062570}\label{structannot_1_1parser_1_1basic__symbol_ab4138ed3ca7a8ef67a30fdcbba062570}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!move@{move}}
+\index{move@{move}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+void \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}}$<$ Base $>$ \&}]{s }\end{DoxyParamCaption})}
+
+
+
+Destructive move, {\itshape s} is emptied into this. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a0bb6e431c68254ccc420ab48414c8487}\label{structannot_1_1parser_1_1basic__symbol_a0bb6e431c68254ccc420ab48414c8487}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!name@{name}}
+\index{name@{name}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{name()}{name()}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+const char$\ast$ \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The user-\/facing name of this symbol. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_a413e9a977a8f7b8a3405b5a863953799}\label{structannot_1_1parser_1_1basic__symbol_a413e9a977a8f7b8a3405b5a863953799}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!type\_get@{type\_get}}
+\index{type\_get@{type\_get}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{type\_get()}{type\_get()}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{parser\+::symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::type\+\_\+get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Backward compatibility (Bison 3.\+6). 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_aadf524c56a97d67484ed6d1eedde89b5}\label{structannot_1_1parser_1_1basic__symbol_aadf524c56a97d67484ed6d1eedde89b5}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!location@{location}}
+\index{location@{location}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{location}{location}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::\mbox{\hyperlink{classannot_1_1location}{location}}}
+
+
+
+The location. 
+
+\mbox{\Hypertarget{structannot_1_1parser_1_1basic__symbol_ae5890268d0cf1f485b407ff1c597c942}\label{structannot_1_1parser_1_1basic__symbol_ae5890268d0cf1f485b407ff1c597c942}} 
+\index{annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}!value@{value}}
+\index{value@{value}!annot::parser::basic\_symbol$<$ Base $>$@{annot::parser::basic\_symbol$<$ Base $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily template$<$typename Base $>$ \\
+\mbox{\hyperlink{classannot_1_1parser_1_1semantic__type}{semantic\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{annot\+::parser\+::basic\+\_\+symbol}}$<$ Base $>$\+::value}
+
+
+
+The semantic value. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{annot__parser_8hh}{annot\+\_\+parser.\+hh}}\end{DoxyCompactItemize}

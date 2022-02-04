@@ -131,6 +131,8 @@ node* nontermnode::subsume(regex_t* name, node *replacement){
 
 // ------------------------------------------------------------------------
 
+// fixSkips adjusts nodes that follow a newline.
+
 void singlenode::fixSkips()
 {
   body->fixSkips();
@@ -150,7 +152,7 @@ void choicenode::fixSkips()
   for(auto i = nodes.begin(); i != nodes.end(); i++)
     (*i)->setBeforeSkip(0);
   // if the loop follows a newline, then our rail must have a
-  // beforeskip check the loops rail.  If its beforeskip is zero, then
+  // beforeskip. Check the loops rail.  If its beforeskip is zero, then
   // our rail needs a beforeskip.
   if(parent != NULL &&
      parent->is_concat() &&

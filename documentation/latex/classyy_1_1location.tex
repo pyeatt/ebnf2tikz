@@ -1,0 +1,186 @@
+\hypertarget{classyy_1_1location}{}\doxysection{yy\+::location Class Reference}
+\label{classyy_1_1location}\index{yy::location@{yy::location}}
+
+
+Two points in a source file.  
+
+
+
+
+{\ttfamily \#include $<$location.\+hh$>$}
+
+
+
+Collaboration diagram for yy\+::location\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=146pt]{classyy_1_1location__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{classyy_1_1position_afee2270e96ccb20135eb3246e2a643ed}{position\+::filename\+\_\+type}} \mbox{\hyperlink{classyy_1_1location_ac037d28112de531028f028056ccc980c}{filename\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type for file name. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{classyy_1_1position_a268dbee9411e246a6a2aca1a2c81d6a7}{position\+::counter\+\_\+type}} \mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type for line and column numbers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classyy_1_1location_a0d659c37bcd57075c7bb25e600d3f526}{location}} (const \mbox{\hyperlink{classyy_1_1position}{position}} \&b, const \mbox{\hyperlink{classyy_1_1position}{position}} \&e)
+\begin{DoxyCompactList}\small\item\em Construct a location from {\itshape b} to {\itshape e}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classyy_1_1location_a378c53e8dc67416748f0b12844919e51}{location}} (const \mbox{\hyperlink{classyy_1_1position}{position}} \&p=\mbox{\hyperlink{classyy_1_1position}{position}}())
+\begin{DoxyCompactList}\small\item\em Construct a 0-\/width location in {\itshape p}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classyy_1_1location_a1963dd9616b4554c943f5102151d9d71}{location}} (\mbox{\hyperlink{classyy_1_1location_ac037d28112de531028f028056ccc980c}{filename\+\_\+type}} $\ast$f, \mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}} l=1, \mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}} c=1)
+\begin{DoxyCompactList}\small\item\em Construct a 0-\/width location in {\itshape f}, {\itshape l}, {\itshape c}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyy_1_1location_ac6b3716aedb493f2a4f1d602620ee8bb}{initialize}} (\mbox{\hyperlink{classyy_1_1location_ac037d28112de531028f028056ccc980c}{filename\+\_\+type}} $\ast$f=\mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}, \mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}} l=1, \mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}} c=1)
+\begin{DoxyCompactList}\small\item\em Initialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Line and Column related manipulators}\par
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classyy_1_1location_a96620cec8dd8ebfc96c60a03c10154d0}{step}} ()
+\begin{DoxyCompactList}\small\item\em Reset initial location to final location. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyy_1_1location_ac7cd04f903980f32182f0aa65bbf5d84}{columns}} (\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}} count=1)
+\begin{DoxyCompactList}\small\item\em Extend the current location to the COUNT next columns. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classyy_1_1location_a5c1f01a4bb5dff82b214cc8b780ff04b}{lines}} (\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}} count=1)
+\begin{DoxyCompactList}\small\item\em Extend the current location to the COUNT next lines. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classyy_1_1position}{position}} \mbox{\hyperlink{classyy_1_1location_a70540e90479a85db4112b552d7e032cf}{begin}}
+\begin{DoxyCompactList}\small\item\em Beginning of the located region. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classyy_1_1position}{position}} \mbox{\hyperlink{classyy_1_1location_aa9be2a89fdb63da08167ebd4b819addd}{end}}
+\begin{DoxyCompactList}\small\item\em End of the located region. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Two points in a source file. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}\label{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}} 
+\index{yy::location@{yy::location}!counter\_type@{counter\_type}}
+\index{counter\_type@{counter\_type}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{counter\_type}{counter\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{classyy_1_1position_a268dbee9411e246a6a2aca1a2c81d6a7}{position\+::counter\+\_\+type}} \mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{yy\+::location\+::counter\+\_\+type}}}
+
+
+
+Type for line and column numbers. 
+
+\mbox{\Hypertarget{classyy_1_1location_ac037d28112de531028f028056ccc980c}\label{classyy_1_1location_ac037d28112de531028f028056ccc980c}} 
+\index{yy::location@{yy::location}!filename\_type@{filename\_type}}
+\index{filename\_type@{filename\_type}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{filename\_type}{filename\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{classyy_1_1position_afee2270e96ccb20135eb3246e2a643ed}{position\+::filename\+\_\+type}} \mbox{\hyperlink{classyy_1_1location_ac037d28112de531028f028056ccc980c}{yy\+::location\+::filename\+\_\+type}}}
+
+
+
+Type for file name. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classyy_1_1location_a0d659c37bcd57075c7bb25e600d3f526}\label{classyy_1_1location_a0d659c37bcd57075c7bb25e600d3f526}} 
+\index{yy::location@{yy::location}!location@{location}}
+\index{location@{location}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily yy\+::location\+::location (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classyy_1_1position}{position}} \&}]{b,  }\item[{const \mbox{\hyperlink{classyy_1_1position}{position}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a location from {\itshape b} to {\itshape e}. 
+
+\mbox{\Hypertarget{classyy_1_1location_a378c53e8dc67416748f0b12844919e51}\label{classyy_1_1location_a378c53e8dc67416748f0b12844919e51}} 
+\index{yy::location@{yy::location}!location@{location}}
+\index{location@{location}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily yy\+::location\+::location (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classyy_1_1position}{position}} \&}]{p = {\ttfamily \mbox{\hyperlink{classyy_1_1position}{position}}~()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a 0-\/width location in {\itshape p}. 
+
+\mbox{\Hypertarget{classyy_1_1location_a1963dd9616b4554c943f5102151d9d71}\label{classyy_1_1location_a1963dd9616b4554c943f5102151d9d71}} 
+\index{yy::location@{yy::location}!location@{location}}
+\index{location@{location}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily yy\+::location\+::location (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classyy_1_1location_ac037d28112de531028f028056ccc980c}{filename\+\_\+type}} $\ast$}]{f,  }\item[{\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}}]{l = {\ttfamily 1},  }\item[{\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}}]{c = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a 0-\/width location in {\itshape f}, {\itshape l}, {\itshape c}. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classyy_1_1location_ac7cd04f903980f32182f0aa65bbf5d84}\label{classyy_1_1location_ac7cd04f903980f32182f0aa65bbf5d84}} 
+\index{yy::location@{yy::location}!columns@{columns}}
+\index{columns@{columns}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{columns()}{columns()}}
+{\footnotesize\ttfamily void yy\+::location\+::columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Extend the current location to the COUNT next columns. 
+
+\mbox{\Hypertarget{classyy_1_1location_ac6b3716aedb493f2a4f1d602620ee8bb}\label{classyy_1_1location_ac6b3716aedb493f2a4f1d602620ee8bb}} 
+\index{yy::location@{yy::location}!initialize@{initialize}}
+\index{initialize@{initialize}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void yy\+::location\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classyy_1_1location_ac037d28112de531028f028056ccc980c}{filename\+\_\+type}} $\ast$}]{f = {\ttfamily \mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}},  }\item[{\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}}]{l = {\ttfamily 1},  }\item[{\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}}]{c = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initialization. 
+
+\mbox{\Hypertarget{classyy_1_1location_a5c1f01a4bb5dff82b214cc8b780ff04b}\label{classyy_1_1location_a5c1f01a4bb5dff82b214cc8b780ff04b}} 
+\index{yy::location@{yy::location}!lines@{lines}}
+\index{lines@{lines}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{lines()}{lines()}}
+{\footnotesize\ttfamily void yy\+::location\+::lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classyy_1_1location_a4319905d047c834d9513474feb7f61e5}{counter\+\_\+type}}}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Extend the current location to the COUNT next lines. 
+
+\mbox{\Hypertarget{classyy_1_1location_a96620cec8dd8ebfc96c60a03c10154d0}\label{classyy_1_1location_a96620cec8dd8ebfc96c60a03c10154d0}} 
+\index{yy::location@{yy::location}!step@{step}}
+\index{step@{step}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily void yy\+::location\+::step (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Reset initial location to final location. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classyy_1_1location_a70540e90479a85db4112b552d7e032cf}\label{classyy_1_1location_a70540e90479a85db4112b552d7e032cf}} 
+\index{yy::location@{yy::location}!begin@{begin}}
+\index{begin@{begin}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{begin}{begin}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classyy_1_1position}{position}} yy\+::location\+::begin}
+
+
+
+Beginning of the located region. 
+
+\mbox{\Hypertarget{classyy_1_1location_aa9be2a89fdb63da08167ebd4b819addd}\label{classyy_1_1location_aa9be2a89fdb63da08167ebd4b819addd}} 
+\index{yy::location@{yy::location}!end@{end}}
+\index{end@{end}!yy::location@{yy::location}}
+\doxysubsubsection{\texorpdfstring{end}{end}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classyy_1_1position}{position}} yy\+::location\+::end}
+
+
+
+End of the located region. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{location_8hh}{location.\+hh}}\end{DoxyCompactItemize}

@@ -1,0 +1,76 @@
+\hypertarget{location_8hh}{}\doxysection{location.\+hh File Reference}
+\label{location_8hh}\index{location.hh@{location.hh}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for location.\+hh\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=194pt]{location_8hh__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{location_8hh__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classyy_1_1position}{yy\+::position}}
+\begin{DoxyCompactList}\small\item\em A point in a source file. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classyy_1_1location}{yy\+::location}}
+\begin{DoxyCompactList}\small\item\em Two points in a source file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceyy}{yy}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}~((void$\ast$)0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+position \& \mbox{\hyperlink{namespaceyy_ac7a69a333cce8cb17901f3b5443d44cd}{yy\+::operator+=}} (position \&res, position\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Add {\itshape width} columns, in place. \end{DoxyCompactList}\item 
+position \mbox{\hyperlink{namespaceyy_a0c115d2dbb46d45b8815a5f2cba16bb1}{yy\+::operator+}} (position res, position\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Add {\itshape width} columns. \end{DoxyCompactList}\item 
+position \& \mbox{\hyperlink{namespaceyy_a68fe9f8fa8e8bfb56cb1c0ea55d07555}{yy\+::operator-\/=}} (position \&res, position\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Subtract {\itshape width} columns, in place. \end{DoxyCompactList}\item 
+position \mbox{\hyperlink{namespaceyy_ac5af74549aaf6491d8415ba87d906d1a}{yy\+::operator-\/}} (position res, position\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Subtract {\itshape width} columns. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename YYChar $>$ }\\std\+::basic\+\_\+ostream$<$ YYChar $>$ \& \mbox{\hyperlink{namespaceyy_ac0f65a84b37cc3e7731a310eb240b952}{yy\+::operator$<$$<$}} (std\+::basic\+\_\+ostream$<$ YYChar $>$ \&ostr, const position \&pos)
+\begin{DoxyCompactList}\small\item\em Intercept output stream redirection. \end{DoxyCompactList}\item 
+location \& \mbox{\hyperlink{namespaceyy_ac14111e26538c547c68b89899951b6b7}{yy\+::operator+=}} (location \&res, const location \&end)
+\begin{DoxyCompactList}\small\item\em Join two locations, in place. \end{DoxyCompactList}\item 
+location \mbox{\hyperlink{namespaceyy_ad82fe89bde177a8060bad10aca431c79}{yy\+::operator+}} (location res, const location \&end)
+\begin{DoxyCompactList}\small\item\em Join two locations. \end{DoxyCompactList}\item 
+location \& \mbox{\hyperlink{namespaceyy_a00a24e38e907701711a3ba91dda8878c}{yy\+::operator+=}} (location \&res, location\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Add {\itshape width} columns to the end position, in place. \end{DoxyCompactList}\item 
+location \mbox{\hyperlink{namespaceyy_afe82aff580cd53105cbd097135f1b717}{yy\+::operator+}} (location res, location\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Add {\itshape width} columns to the end position. \end{DoxyCompactList}\item 
+location \& \mbox{\hyperlink{namespaceyy_a8945c6d6c18cafe08bc626a1b15edf50}{yy\+::operator-\/=}} (location \&res, location\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Subtract {\itshape width} columns to the end position, in place. \end{DoxyCompactList}\item 
+location \mbox{\hyperlink{namespaceyy_ae77f455fc4c4ba3746f87ca8040ca8f9}{yy\+::operator-\/}} (location res, location\+::counter\+\_\+type width)
+\begin{DoxyCompactList}\small\item\em Subtract {\itshape width} columns to the end position. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename YYChar $>$ }\\std\+::basic\+\_\+ostream$<$ YYChar $>$ \& \mbox{\hyperlink{namespaceyy_a0406f2358d6ba6b06648ff66f3508aad}{yy\+::operator$<$$<$}} (std\+::basic\+\_\+ostream$<$ YYChar $>$ \&ostr, const location \&\mbox{\hyperlink{parser_8cc_abaf70dc7df8e78acc6505d164cb2276b}{loc}})
+\begin{DoxyCompactList}\small\item\em Intercept output stream redirection. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Define the \mbox{\hyperlink{classyy_1_1location}{yy\+::location}} class. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}\label{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}} 
+\index{location.hh@{location.hh}!YY\_NULLPTR@{YY\_NULLPTR}}
+\index{YY\_NULLPTR@{YY\_NULLPTR}!location.hh@{location.hh}}
+\doxysubsubsection{\texorpdfstring{YY\_NULLPTR}{YY\_NULLPTR}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NULLPTR~((void$\ast$)0)}
+

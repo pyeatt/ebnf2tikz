@@ -1,0 +1,1676 @@
+\hypertarget{annot__lexer_8cc}{}\doxysection{annot\+\_\+lexer.\+cc File Reference}
+\label{annot__lexer_8cc}\index{annot\_lexer.cc@{annot\_lexer.cc}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$cerrno$>$}\newline
+{\ttfamily \#include $<$climits$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}graph.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}annot\+\_\+parser.\+hh\char`\"{}}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+Include dependency graph for annot\+\_\+lexer.\+cc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{annot__lexer_8cc__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structyy__buffer__state}{yy\+\_\+buffer\+\_\+state}}
+\item 
+struct \mbox{\hyperlink{structyy__trans__info}{yy\+\_\+trans\+\_\+info}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a1ae16e642a197fa4948998525813c6f5}{YY\+\_\+\+INT\+\_\+\+ALIGNED}}~short int
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac86ea8173dfcfc5c989d3295a77e2f95}{yy\+\_\+create\+\_\+buffer}}~annot\+\_\+create\+\_\+buffer
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ad1868c6b38b45af25a4a0f449912a808}{yy\+\_\+delete\+\_\+buffer}}~annot\+\_\+delete\+\_\+buffer
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a6849452203fd033f103556fdf858fd33}{yy\+\_\+scan\+\_\+buffer}}~annot\+\_\+scan\+\_\+buffer
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a6c5cf8c3b7a69bf60a87dd6eb00fe579}{yy\+\_\+scan\+\_\+string}}~annot\+\_\+scan\+\_\+string
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3b70699ea880c5d25a1c75f4ad96c315}{yy\+\_\+scan\+\_\+bytes}}~annot\+\_\+scan\+\_\+bytes
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa14efad9f9c24106a3e3398a4f6621c2}{yy\+\_\+init\+\_\+buffer}}~annot\+\_\+init\+\_\+buffer
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab01a4c7245136f22a63acac7c0ceb343}{yy\+\_\+flush\+\_\+buffer}}~annot\+\_\+flush\+\_\+buffer
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_af59010f39becd2a037cb1ccf0523f5d1}{yy\+\_\+load\+\_\+buffer\+\_\+state}}~annot\+\_\+load\+\_\+buffer\+\_\+state
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a968d5b9e7e06a38bfca977b343d47d5c}{yy\+\_\+switch\+\_\+to\+\_\+buffer}}~annot\+\_\+switch\+\_\+to\+\_\+buffer
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a498ea96bb65e39b1eab5c51cf16ead13}{yypush\+\_\+buffer\+\_\+state}}~annotpush\+\_\+buffer\+\_\+state
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa6416fe813d70fe9b2febdc776174577}{yypop\+\_\+buffer\+\_\+state}}~annotpop\+\_\+buffer\+\_\+state
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a95b647b6ab42aa91ec5407a3276ad8cf}{yyensure\+\_\+buffer\+\_\+stack}}~annotensure\+\_\+buffer\+\_\+stack
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a7411c3bab9eca1afee90113c2d22da37}{yy\+\_\+flex\+\_\+debug}}~annot\+\_\+flex\+\_\+debug
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}}~annotin
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}~annotleng
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3bfa55ce11beedbbf77929b1be152067}{yylex}}~annotlex
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}{yylineno}}~annotlineno
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a296847b42b0baa62e2af36cb79f3c0eb}{yyout}}~annotout
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a2259355ac49295f72feab070a34a9b11}{yyrestart}}~annotrestart
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}}~annottext
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a5be541efdb129f7cefb2437f52fe7359}{yywrap}}~\mbox{\hyperlink{annot__lexer_8hh_a06db2cf6e3abb586a4a1158ab29c4888}{annotwrap}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a803397ab738ee8630166680646a2d913}{yyalloc}}~annotalloc
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab1eba250555ca003eb39387bb1a41d39}{yyrealloc}}~annotrealloc
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a4fa4368d47620ea80150b516e8884f6b}{yyfree}}~annotfree
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3c3d1ef92e93b0bc81d7760a73d5c3b6}{FLEX\+\_\+\+SCANNER}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a243ca1d30872935faf05ea5118ed6fdc}{YY\+\_\+\+FLEX\+\_\+\+MAJOR\+\_\+\+VERSION}}~2
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a90f9d458829400869e47efb68a865677}{YY\+\_\+\+FLEX\+\_\+\+MINOR\+\_\+\+VERSION}}~6
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac676bd06869180ea493e9b6d7c078dbb}{YY\+\_\+\+FLEX\+\_\+\+SUBMINOR\+\_\+\+VERSION}}~4
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a9465c9986fdda27730c9dff8d16a0887}{FLEX\+\_\+\+BETA}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae361fc49a025d44bf3a739cfdadf4fc7}{annot\+\_\+create\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_af7a8251bf8ee678e6e031b5d135065e5}{annot\+\_\+delete\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_af60218461f06560fb8e8a039eade2053}{annot\+\_\+scan\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a784c35246c5bcd4b1e757e8afeb08ed2}{annot\+\_\+scan\+\_\+string\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a4d581d1fa5a509f6cca4516bd7ac845d}{annot\+\_\+scan\+\_\+bytes\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_afff5823769abeb4459f340290fe3723b}{annot\+\_\+init\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a60057eb60f34af3ec55372d7b0f59d8e}{annot\+\_\+flush\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae8f72a49e89a74b59c8d0d66239b496f}{annot\+\_\+load\+\_\+buffer\+\_\+state\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a0c2111c91ef72bef6ae342dcaab77769}{annot\+\_\+switch\+\_\+to\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a47d2059983b53921d3ab6cbd8d1148e7}{annotpush\+\_\+buffer\+\_\+state\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a7d9aed3b4ef279052b9a2f95d6d28a9e}{annotpop\+\_\+buffer\+\_\+state\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a96bdf6d5b4e750e1686608f3711ab425}{annotensure\+\_\+buffer\+\_\+stack\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aef5e2cc86d57e5523482fb6253d3ab13}{annotlex\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_acddce17cc21a33aa4dd097ca7247e2da}{annotrestart\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a1abe53179d3512124a969f758a7e8008}{yylex\+\_\+init}}~annotlex\+\_\+init
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3e35658077c5654d17265289032c8911}{yylex\+\_\+init\+\_\+extra}}~annotlex\+\_\+init\+\_\+extra
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a0180d5b750112a6cfb27817966e99fff}{yylex\+\_\+destroy}}~annotlex\+\_\+destroy
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a81c1f6c4ad68be7dbf300e73961f38cf}{yyget\+\_\+debug}}~annotget\+\_\+debug
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a254eae02eef471e53fba6c926f9ea9af}{yyset\+\_\+debug}}~annotset\+\_\+debug
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a0484e07fe35238d8031c34f287a9b749}{yyget\+\_\+extra}}~annotget\+\_\+extra
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a04fd4c8badc07e7080dbd371b6bc4811}{yyset\+\_\+extra}}~annotset\+\_\+extra
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa6f5243e96af1d42bd6f3d6b3299bffa}{yyget\+\_\+in}}~annotget\+\_\+in
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_afca8968a4317529bdbdc6ed77cd1e479}{yyset\+\_\+in}}~annotset\+\_\+in
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac269c11a8e1e7488ec43d1dee26db8a1}{yyget\+\_\+out}}~annotget\+\_\+out
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_add96a0e9a95289d7fc2a45adfaf0f9ef}{yyset\+\_\+out}}~annotset\+\_\+out
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a07590ba42ef871984a197d5104a4a9e0}{yyget\+\_\+leng}}~annotget\+\_\+leng
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a456cd16577fb85716b25d43deb56eaff}{yyget\+\_\+text}}~annotget\+\_\+text
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a5b042f5ec81dac297969a70684a7cb1b}{yyget\+\_\+lineno}}~annotget\+\_\+lineno
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a10055b24aa335a47aec5deaac1a47603}{yyset\+\_\+lineno}}~annotset\+\_\+lineno
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab9ca54d1ffbec5641e333b81f670b787}{annotwrap\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a7273256a0cc6e5783ddb2ed5c8d2d9db}{annotalloc\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a6c59a3e7da19e12670398035cc40071b}{annotrealloc\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_af49b07c2e26d77ad88d36e748254863f}{annotfree\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a411d7d7524ab2e9838d7da16964127b9}{annottext\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aaa06e0834c31fcf1448ecfbddf6d55b0}{annotleng\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a7d5e6d38dd049a580613753d8b31939b}{annotin\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a4bac733de2fdc5023c145f6b25079467}{annotout\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_afe61e1e636674e39e9406d7e6b313d16}{annot\+\_\+flex\+\_\+debug\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_acdb95728e23fc181795bb1009b30a6e6}{annotlineno\+\_\+\+ALREADY\+\_\+\+DEFINED}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aec980b5a71bbe6d67931df20f0ebaec4}{FLEXINT\+\_\+H}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aadcf2a81af243df333b31efa6461ab8e}{INT8\+\_\+\+MIN}}~(-\/128)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ad4e9955955b27624963643eac448118a}{INT16\+\_\+\+MIN}}~(-\/32767-\/1)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a688eb21a22db27c2b2bd5836943cdcbe}{INT32\+\_\+\+MIN}}~(-\/2147483647-\/1)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aaf7f29f45f1a513b4748a4e5014ddf6a}{INT8\+\_\+\+MAX}}~(127)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac58f2c111cc9989c86db2a7dc4fd84ca}{INT16\+\_\+\+MAX}}~(32767)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a181807730d4a375f848ba139813ce04f}{INT32\+\_\+\+MAX}}~(2147483647)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aeb4e270a084ee26fe73e799861bd0252}{UINT8\+\_\+\+MAX}}~(255U)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3ea490c9b3617d4479bd80ef93cd5602}{UINT16\+\_\+\+MAX}}~(65535U)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab5eb23180f7cc12b7d6c04a8ec067fdd}{UINT32\+\_\+\+MAX}}~(4294967295U)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3c75bb398badb69c7577b21486f9963f}{SIZE\+\_\+\+MAX}}~($\sim$(size\+\_\+t)0)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa2f1a918be586b44bf08126bde2d7cc9}{yyconst}}~const
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a452d0647f1848fea42589793f3e2d1f4}{yynoreturn}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a8e0bcf8f8a5b613ea583347f8bc31cbf}{YY\+\_\+\+NULL}}~0
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_af1185350b7a92cf8aa5324c68850c8a6}{YY\+\_\+\+SC\+\_\+\+TO\+\_\+\+UI}}(c)~((\mbox{\hyperlink{annot__lexer_8cc_acc1e625a829554ffed5e4307d4a5f6b7}{YY\+\_\+\+CHAR}}) (c))
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab766bbbee08d04b67e3fe599d6900873}{BEGIN}}~(yy\+\_\+start) = 1 + 2 $\ast$
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a8e14785f9eab7a997d659b25af9584c5}{YY\+\_\+\+START}}~(((yy\+\_\+start) -\/ 1) / 2)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a32b5b960944f946b192d54f672569cd9}{YYSTATE}}~\mbox{\hyperlink{lexer_8cc_a8e14785f9eab7a997d659b25af9584c5}{YY\+\_\+\+START}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab3077e60914fc54dcc55ecae1ce9700b}{YY\+\_\+\+STATE\+\_\+\+EOF}}(state)~(\mbox{\hyperlink{lexer_8cc_ab2708fd42cff29ce6a0a52b91bea40d1}{YY\+\_\+\+END\+\_\+\+OF\+\_\+\+BUFFER}} + state + 1)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a0406739e64fb5750cf995d2ae68ce69d}{YY\+\_\+\+NEW\+\_\+\+FILE}}~\mbox{\hyperlink{lexer_8hh_ab657ddef65d43cc3ab8dfc2cad0ac5b8}{yyrestart}}( \mbox{\hyperlink{lexer_8hh_a46af646807e0797e72b6e8945e7ea88b}{yyin}}  )
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab866a64da164ed2d4d444df1ef1fc9b3}{YY\+\_\+\+END\+\_\+\+OF\+\_\+\+BUFFER\+\_\+\+CHAR}}~0
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae7e51116e747d3390e7a6cfc6532834c}{YY\+\_\+\+BUF\+\_\+\+SIZE}}~16384
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac2f8b6fccdc516d96b02ac09a4dc01bd}{YY\+\_\+\+STATE\+\_\+\+BUF\+\_\+\+SIZE}}~((\mbox{\hyperlink{lexer_8hh_ae7e51116e747d3390e7a6cfc6532834c}{YY\+\_\+\+BUF\+\_\+\+SIZE}} + 2) $\ast$ sizeof(\mbox{\hyperlink{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}{yy\+\_\+state\+\_\+type}}))
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa79d63ed3ff8d2249baf1732a73089f5}{YY\+\_\+\+TYPEDEF\+\_\+\+YY\+\_\+\+BUFFER\+\_\+\+STATE}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae0f2b0b5f04b2338367826b5670774f9}{YY\+\_\+\+TYPEDEF\+\_\+\+YY\+\_\+\+SIZE\+\_\+T}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_adf4b0db227e07782e28ade353a7ba7a1}{EOB\+\_\+\+ACT\+\_\+\+CONTINUE\+\_\+\+SCAN}}~0
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a7f71d7fa2c403eb4b2f38cb9536f3c63}{EOB\+\_\+\+ACT\+\_\+\+END\+\_\+\+OF\+\_\+\+FILE}}~1
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ad1a0b5ebcabffe388e9e9ebb2619c1fb}{EOB\+\_\+\+ACT\+\_\+\+LAST\+\_\+\+MATCH}}~2
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a12e5f3a76911433480bca7f4edba6119}{YY\+\_\+\+LESS\+\_\+\+LINENO}}(n)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a5206f64af3a299a0dc820c385cf0c489}{YY\+\_\+\+LINENO\+\_\+\+REWIND\+\_\+\+TO}}(ptr)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae65cb72d09db0abdc4b8e8c4d533ab14}{yyless}}(n)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a448a4e9041a09588332733c6846c770c}{unput}}(c)~yyunput( c, (\mbox{\hyperlink{lexer_8hh_a790a191a93ef4d3b8c0bb43fd7480052}{yytext\+\_\+ptr}})  )
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a8aaa9e1fa7f13d6954d045ef973a9c84}{YY\+\_\+\+STRUCT\+\_\+\+YY\+\_\+\+BUFFER\+\_\+\+STATE}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a53579db42834b88199458993912c646d}{YY\+\_\+\+BUFFER\+\_\+\+NEW}}~0
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a609d19f40900ecc2a5f812d9388c21fb}{YY\+\_\+\+BUFFER\+\_\+\+NORMAL}}~1
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ad689d97c15e807a6116ace7a420cea57}{YY\+\_\+\+BUFFER\+\_\+\+EOF\+\_\+\+PENDING}}~2
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa093d500a6330d06d8e4760c494fac33}{YY\+\_\+\+CURRENT\+\_\+\+BUFFER}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a817a6a24af62508b5a35f4bed5f56a2e}{YY\+\_\+\+CURRENT\+\_\+\+BUFFER\+\_\+\+LVALUE}}~(yy\+\_\+buffer\+\_\+stack)\mbox{[}(yy\+\_\+buffer\+\_\+stack\+\_\+top)\mbox{]}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac5d478d90ea9a2ecd43d579067a2e89d}{YY\+\_\+\+FLUSH\+\_\+\+BUFFER}}~\mbox{\hyperlink{lexer_8hh_a2f59cc88e85e5455c62e4ef7ce095ea8}{yy\+\_\+flush\+\_\+buffer}}( \mbox{\hyperlink{lexer_8cc_aa093d500a6330d06d8e4760c494fac33}{YY\+\_\+\+CURRENT\+\_\+\+BUFFER}} )
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab7eb911e18655f2f78e63afe5a8a4a12}{yy\+\_\+new\+\_\+buffer}}~\mbox{\hyperlink{lexer_8hh_a5bc6f1a5f7812508f425b08283f13ae8}{yy\+\_\+create\+\_\+buffer}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac56eb96366c08862bf0efe5d83d1fc4c}{yy\+\_\+set\+\_\+interactive}}(is\+\_\+interactive)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a12e30d13a76a94e78010db9996d39c50}{yy\+\_\+set\+\_\+bol}}(at\+\_\+bol)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a71ca89b3656acd0552f14949a571560b}{YY\+\_\+\+AT\+\_\+\+BOL}}()~(\mbox{\hyperlink{lexer_8cc_a817a6a24af62508b5a35f4bed5f56a2e}{YY\+\_\+\+CURRENT\+\_\+\+BUFFER\+\_\+\+LVALUE}}-\/$>$yy\+\_\+at\+\_\+bol)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a06db2cf6e3abb586a4a1158ab29c4888}{annotwrap}}()~(/$\ast$CONSTCOND$\ast$/1)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae1ef5933028cbc587d31328e53d11a99}{YY\+\_\+\+SKIP\+\_\+\+YYWRAP}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a790a191a93ef4d3b8c0bb43fd7480052}{yytext\+\_\+ptr}}~\mbox{\hyperlink{lexer_8hh_ad9264b77d56b6971f29739e2bda77f51}{yytext}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_acc3486d769af4e4b2820346a0093cc79}{YY\+\_\+\+DO\+\_\+\+BEFORE\+\_\+\+ACTION}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae558785bb896e090901c2b905f6790c6}{YY\+\_\+\+NUM\+\_\+\+RULES}}~15
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ab2708fd42cff29ce6a0a52b91bea40d1}{YY\+\_\+\+END\+\_\+\+OF\+\_\+\+BUFFER}}~16
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a835f10dd1ab4bf9a80c4cd80ee6e3058}{REJECT}}~reject\+\_\+used\+\_\+but\+\_\+not\+\_\+detected
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a745d37b5e002b2e5f93ad42ea7b554be}{yymore}}()~yymore\+\_\+used\+\_\+but\+\_\+not\+\_\+detected
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a68792d73820bc46a71d3d4e613f0b977}{YY\+\_\+\+MORE\+\_\+\+ADJ}}~0
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a56858d18c7eda4f53664496ef566f651}{YY\+\_\+\+RESTORE\+\_\+\+YY\+\_\+\+MORE\+\_\+\+OFFSET}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae5b01ac2fa5a6ad5fb97559638abe686}{YY\+\_\+\+DECL}}~\mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{annot\+::parser\+::symbol\+\_\+type}} annotlex (\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$m)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a85523a0c7d95c059d251b4e9829947aa}{YY\+\_\+\+NO\+\_\+\+INPUT}}~1
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a6198b2fcf96178b24ad4efff2a3debb0}{YY\+\_\+\+USER\+\_\+\+ACTION}}~aloc.\+columns (\mbox{\hyperlink{lexer_8hh_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}});
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aa3d063564f6ab16f6d408b8369d0e9ff}{INITIAL}}~0
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a26938d921de835f6183c02e54cf08828}{YY\+\_\+\+EXTRA\+\_\+\+TYPE}}~void $\ast$
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aab1491ceccb1c95c14320b2903773a1c}{YY\+\_\+\+READ\+\_\+\+BUF\+\_\+\+SIZE}}~8192
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aad1dc60a04a1d8cfc8b3ded13601e361}{ECHO}}~do \{ \mbox{\hyperlink{lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{if}} (fwrite( \mbox{\hyperlink{lexer_8hh_ad9264b77d56b6971f29739e2bda77f51}{yytext}}, (size\+\_\+t) \mbox{\hyperlink{lexer_8hh_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}, 1, \mbox{\hyperlink{lexer_8hh_a296847b42b0baa62e2af36cb79f3c0eb}{yyout}} )) \{\} \} \mbox{\hyperlink{lexer_8cc_a8fdafe3be7e00ce3d4f0cb50a9a5eb39}{while}} (0)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_aacfdca45fa4beb8b06172525a53c424a}{YY\+\_\+\+INPUT}}(buf,  result,  max\+\_\+size)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac3286b18a2e91b4571b97df96a118e84}{yyterminate}}()~return \mbox{\hyperlink{lexer_8cc_a8e0bcf8f8a5b613ea583347f8bc31cbf}{YY\+\_\+\+NULL}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a227e75c43b9e0cd41529974230be7e75}{YY\+\_\+\+START\+\_\+\+STACK\+\_\+\+INCR}}~25
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ac0586b8b0b092d02f4ba7d45abe328f2}{YY\+\_\+\+FATAL\+\_\+\+ERROR}}(msg)~yy\+\_\+fatal\+\_\+error( msg )
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a3cc40a460ad7df816678bcc05241e84c}{YY\+\_\+\+BREAK}}~/$\ast$LINTED$\ast$/break;
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a690504b662e4281515bf12722df178ba}{YY\+\_\+\+RULE\+\_\+\+SETUP}}~ \mbox{\hyperlink{lexer_8cc_a6198b2fcf96178b24ad4efff2a3debb0}{YY\+\_\+\+USER\+\_\+\+ACTION}}
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae93e67b85c44f6bd31ead14a552a35c8}{YY\+\_\+\+EXIT\+\_\+\+FAILURE}}~2
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_ae65cb72d09db0abdc4b8e8c4d533ab14}{yyless}}(n)
+\item 
+\#define \mbox{\hyperlink{annot__lexer_8cc_a828cc83270f8f5bb1688e14dd4e28128}{YYTABLES\+\_\+\+NAME}}~\char`\"{}yytables\char`\"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef signed char \mbox{\hyperlink{annot__lexer_8cc_a7b0840dff4a2ef1702118aa12264b2a7}{flex\+\_\+int8\+\_\+t}}
+\item 
+typedef short int \mbox{\hyperlink{annot__lexer_8cc_a2e73b2c75126814585525fb2e9d51159}{flex\+\_\+int16\+\_\+t}}
+\item 
+typedef int \mbox{\hyperlink{annot__lexer_8cc_a838ce943cf44ef7769480714fc6c3ba9}{flex\+\_\+int32\+\_\+t}}
+\item 
+typedef unsigned char \mbox{\hyperlink{annot__lexer_8cc_a0fac5ea484f64e75dbe6eba4aa61750c}{flex\+\_\+uint8\+\_\+t}}
+\item 
+typedef unsigned short int \mbox{\hyperlink{annot__lexer_8cc_ac50cdb9eefbef83a1cec89e3a7f6e1d2}{flex\+\_\+uint16\+\_\+t}}
+\item 
+typedef unsigned int \mbox{\hyperlink{annot__lexer_8cc_a36869712de12820c73aae736762e8e88}{flex\+\_\+uint32\+\_\+t}}
+\item 
+typedef struct \mbox{\hyperlink{structyy__buffer__state}{yy\+\_\+buffer\+\_\+state}} $\ast$ \mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}}
+\item 
+typedef size\+\_\+t \mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}}
+\item 
+typedef \mbox{\hyperlink{annot__lexer_8cc_a0fac5ea484f64e75dbe6eba4aa61750c}{flex\+\_\+uint8\+\_\+t}} \mbox{\hyperlink{annot__lexer_8cc_acc1e625a829554ffed5e4307d4a5f6b7}{YY\+\_\+\+CHAR}}
+\item 
+typedef int \mbox{\hyperlink{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}{yy\+\_\+state\+\_\+type}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_ab657ddef65d43cc3ab8dfc2cad0ac5b8}{yyrestart}} (FILE $\ast$input\+\_\+file)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_a3098c48a74ef8fd852f7dd4b3331cbce}{yy\+\_\+switch\+\_\+to\+\_\+buffer}} (\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} new\+\_\+buffer)
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} \mbox{\hyperlink{annot__lexer_8cc_a5bc6f1a5f7812508f425b08283f13ae8}{yy\+\_\+create\+\_\+buffer}} (FILE $\ast$file, int size)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_ae6ac796aa6c45d433a4b89bf45e6e9dc}{yy\+\_\+delete\+\_\+buffer}} (\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} b)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_a2f59cc88e85e5455c62e4ef7ce095ea8}{yy\+\_\+flush\+\_\+buffer}} (\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} b)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_a4bf8969e5234aef8b46cce9a67a62724}{yypush\+\_\+buffer\+\_\+state}} (\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} new\+\_\+buffer)
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} \mbox{\hyperlink{annot__lexer_8cc_af81595b30c0da73f9034ffb511db6388}{yy\+\_\+scan\+\_\+buffer}} (char $\ast$base, \mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}} size)
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} \mbox{\hyperlink{annot__lexer_8cc_aaba3a8c0a4caad352ee68b5742c4a9d1}{yy\+\_\+scan\+\_\+string}} (const char $\ast$yy\+\_\+str)
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} \mbox{\hyperlink{annot__lexer_8cc_acbf193b612e891a3fca6a810daa18c66}{yy\+\_\+scan\+\_\+bytes}} (const char $\ast$bytes, int len)
+\item 
+void $\ast$ \mbox{\hyperlink{annot__lexer_8cc_a7da304d8ef6c688c0835d35296fe61c2}{yyalloc}} (\mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}})
+\item 
+void $\ast$ \mbox{\hyperlink{annot__lexer_8cc_abcb4148bc13fe254059384c2fdf472b7}{yyrealloc}} (void $\ast$, \mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}})
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_a70f82d43d4797bb2a50f7678ddbfbda5}{yyfree}} (void $\ast$)
+\item 
+string \mbox{\hyperlink{annot__lexer_8cc_a385003376e93603c240c912ac645bd98}{stripquotes}} (string s)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_ac571eade4cca933e8ccdf6759c527fe7}{yyset\+\_\+debug}} (int debug\+\_\+flag)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_a2df391b304dadab17608192b116af2a1}{yyset\+\_\+extra}} (\mbox{\hyperlink{lexer_8hh_a26938d921de835f6183c02e54cf08828}{YY\+\_\+\+EXTRA\+\_\+\+TYPE}} user\+\_\+defined)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_a14346b28ae39537ab27caacebfcb31a7}{yyset\+\_\+in}} (FILE $\ast$\+\_\+in\+\_\+str)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_ad8174301995e5a61ab330516ec081e35}{yyset\+\_\+out}} (FILE $\ast$\+\_\+out\+\_\+str)
+\item 
+void \mbox{\hyperlink{annot__lexer_8cc_aca0fe76da7a277561738a9a14ab8cb0a}{yyset\+\_\+lineno}} (int \+\_\+line\+\_\+number)
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{if}} (!(yy\+\_\+init))
+\item 
+\mbox{\hyperlink{annot__parser_8cc_af986ec87d7a65aa829cf446fdfc824b9}{aloc}} \mbox{\hyperlink{annot__lexer_8cc_af4f3e8c74fdd11c0a2af61ed6fdbc93f}{step}} ()
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_a8fdafe3be7e00ce3d4f0cb50a9a5eb39}{while}} (1)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}
+\item 
+FILE $\ast$ \mbox{\hyperlink{annot__lexer_8cc_a46af646807e0797e72b6e8945e7ea88b}{yyin}} = NULL
+\item 
+FILE $\ast$ \mbox{\hyperlink{annot__lexer_8cc_a296847b42b0baa62e2af36cb79f3c0eb}{yyout}} = NULL
+\item 
+int \mbox{\hyperlink{annot__lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}{yylineno}} = 1
+\item 
+char $\ast$ \mbox{\hyperlink{annot__lexer_8cc_ad9264b77d56b6971f29739e2bda77f51}{yytext}}
+\item 
+int \mbox{\hyperlink{annot__lexer_8cc_a7411c3bab9eca1afee90113c2d22da37}{yy\+\_\+flex\+\_\+debug}} = 0
+\item 
+\mbox{\hyperlink{annot__lexer_8cc_abcefb20c54ce0f92452cfbb9cf657670}{YY\+\_\+\+DECL}}
+\item 
+char $\ast$ \mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\+\_\+cp}}
+\item 
+char $\ast$ \mbox{\hyperlink{annot__lexer_8cc_aa749693ef7d0c10b137e887638fdc5b2}{yy\+\_\+bp}}
+\item 
+int \mbox{\hyperlink{annot__lexer_8cc_a483da4c691e92dcb79c40a3514759b6b}{yy\+\_\+act}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{annot__lexer_8cc_ae361fc49a025d44bf3a739cfdadf4fc7}\label{annot__lexer_8cc_ae361fc49a025d44bf3a739cfdadf4fc7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_create\_buffer\_ALREADY\_DEFINED@{annot\_create\_buffer\_ALREADY\_DEFINED}}
+\index{annot\_create\_buffer\_ALREADY\_DEFINED@{annot\_create\_buffer\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_create\_buffer\_ALREADY\_DEFINED}{annot\_create\_buffer\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+create\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_af7a8251bf8ee678e6e031b5d135065e5}\label{annot__lexer_8cc_af7a8251bf8ee678e6e031b5d135065e5}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_delete\_buffer\_ALREADY\_DEFINED@{annot\_delete\_buffer\_ALREADY\_DEFINED}}
+\index{annot\_delete\_buffer\_ALREADY\_DEFINED@{annot\_delete\_buffer\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_delete\_buffer\_ALREADY\_DEFINED}{annot\_delete\_buffer\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+delete\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_afe61e1e636674e39e9406d7e6b313d16}\label{annot__lexer_8cc_afe61e1e636674e39e9406d7e6b313d16}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_flex\_debug\_ALREADY\_DEFINED@{annot\_flex\_debug\_ALREADY\_DEFINED}}
+\index{annot\_flex\_debug\_ALREADY\_DEFINED@{annot\_flex\_debug\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_flex\_debug\_ALREADY\_DEFINED}{annot\_flex\_debug\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+flex\+\_\+debug\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a60057eb60f34af3ec55372d7b0f59d8e}\label{annot__lexer_8cc_a60057eb60f34af3ec55372d7b0f59d8e}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_flush\_buffer\_ALREADY\_DEFINED@{annot\_flush\_buffer\_ALREADY\_DEFINED}}
+\index{annot\_flush\_buffer\_ALREADY\_DEFINED@{annot\_flush\_buffer\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_flush\_buffer\_ALREADY\_DEFINED}{annot\_flush\_buffer\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+flush\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_afff5823769abeb4459f340290fe3723b}\label{annot__lexer_8cc_afff5823769abeb4459f340290fe3723b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_init\_buffer\_ALREADY\_DEFINED@{annot\_init\_buffer\_ALREADY\_DEFINED}}
+\index{annot\_init\_buffer\_ALREADY\_DEFINED@{annot\_init\_buffer\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_init\_buffer\_ALREADY\_DEFINED}{annot\_init\_buffer\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+init\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae8f72a49e89a74b59c8d0d66239b496f}\label{annot__lexer_8cc_ae8f72a49e89a74b59c8d0d66239b496f}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_load\_buffer\_state\_ALREADY\_DEFINED@{annot\_load\_buffer\_state\_ALREADY\_DEFINED}}
+\index{annot\_load\_buffer\_state\_ALREADY\_DEFINED@{annot\_load\_buffer\_state\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_load\_buffer\_state\_ALREADY\_DEFINED}{annot\_load\_buffer\_state\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+load\+\_\+buffer\+\_\+state\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_af60218461f06560fb8e8a039eade2053}\label{annot__lexer_8cc_af60218461f06560fb8e8a039eade2053}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_scan\_buffer\_ALREADY\_DEFINED@{annot\_scan\_buffer\_ALREADY\_DEFINED}}
+\index{annot\_scan\_buffer\_ALREADY\_DEFINED@{annot\_scan\_buffer\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_scan\_buffer\_ALREADY\_DEFINED}{annot\_scan\_buffer\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+scan\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a4d581d1fa5a509f6cca4516bd7ac845d}\label{annot__lexer_8cc_a4d581d1fa5a509f6cca4516bd7ac845d}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_scan\_bytes\_ALREADY\_DEFINED@{annot\_scan\_bytes\_ALREADY\_DEFINED}}
+\index{annot\_scan\_bytes\_ALREADY\_DEFINED@{annot\_scan\_bytes\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_scan\_bytes\_ALREADY\_DEFINED}{annot\_scan\_bytes\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+scan\+\_\+bytes\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a784c35246c5bcd4b1e757e8afeb08ed2}\label{annot__lexer_8cc_a784c35246c5bcd4b1e757e8afeb08ed2}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_scan\_string\_ALREADY\_DEFINED@{annot\_scan\_string\_ALREADY\_DEFINED}}
+\index{annot\_scan\_string\_ALREADY\_DEFINED@{annot\_scan\_string\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_scan\_string\_ALREADY\_DEFINED}{annot\_scan\_string\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+scan\+\_\+string\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a0c2111c91ef72bef6ae342dcaab77769}\label{annot__lexer_8cc_a0c2111c91ef72bef6ae342dcaab77769}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annot\_switch\_to\_buffer\_ALREADY\_DEFINED@{annot\_switch\_to\_buffer\_ALREADY\_DEFINED}}
+\index{annot\_switch\_to\_buffer\_ALREADY\_DEFINED@{annot\_switch\_to\_buffer\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annot\_switch\_to\_buffer\_ALREADY\_DEFINED}{annot\_switch\_to\_buffer\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annot\+\_\+switch\+\_\+to\+\_\+buffer\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a7273256a0cc6e5783ddb2ed5c8d2d9db}\label{annot__lexer_8cc_a7273256a0cc6e5783ddb2ed5c8d2d9db}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotalloc\_ALREADY\_DEFINED@{annotalloc\_ALREADY\_DEFINED}}
+\index{annotalloc\_ALREADY\_DEFINED@{annotalloc\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotalloc\_ALREADY\_DEFINED}{annotalloc\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotalloc\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a96bdf6d5b4e750e1686608f3711ab425}\label{annot__lexer_8cc_a96bdf6d5b4e750e1686608f3711ab425}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotensure\_buffer\_stack\_ALREADY\_DEFINED@{annotensure\_buffer\_stack\_ALREADY\_DEFINED}}
+\index{annotensure\_buffer\_stack\_ALREADY\_DEFINED@{annotensure\_buffer\_stack\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotensure\_buffer\_stack\_ALREADY\_DEFINED}{annotensure\_buffer\_stack\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotensure\+\_\+buffer\+\_\+stack\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_af49b07c2e26d77ad88d36e748254863f}\label{annot__lexer_8cc_af49b07c2e26d77ad88d36e748254863f}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotfree\_ALREADY\_DEFINED@{annotfree\_ALREADY\_DEFINED}}
+\index{annotfree\_ALREADY\_DEFINED@{annotfree\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotfree\_ALREADY\_DEFINED}{annotfree\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotfree\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a7d5e6d38dd049a580613753d8b31939b}\label{annot__lexer_8cc_a7d5e6d38dd049a580613753d8b31939b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotin\_ALREADY\_DEFINED@{annotin\_ALREADY\_DEFINED}}
+\index{annotin\_ALREADY\_DEFINED@{annotin\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotin\_ALREADY\_DEFINED}{annotin\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotin\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aaa06e0834c31fcf1448ecfbddf6d55b0}\label{annot__lexer_8cc_aaa06e0834c31fcf1448ecfbddf6d55b0}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotleng\_ALREADY\_DEFINED@{annotleng\_ALREADY\_DEFINED}}
+\index{annotleng\_ALREADY\_DEFINED@{annotleng\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotleng\_ALREADY\_DEFINED}{annotleng\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotleng\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aef5e2cc86d57e5523482fb6253d3ab13}\label{annot__lexer_8cc_aef5e2cc86d57e5523482fb6253d3ab13}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotlex\_ALREADY\_DEFINED@{annotlex\_ALREADY\_DEFINED}}
+\index{annotlex\_ALREADY\_DEFINED@{annotlex\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotlex\_ALREADY\_DEFINED}{annotlex\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotlex\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_acdb95728e23fc181795bb1009b30a6e6}\label{annot__lexer_8cc_acdb95728e23fc181795bb1009b30a6e6}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotlineno\_ALREADY\_DEFINED@{annotlineno\_ALREADY\_DEFINED}}
+\index{annotlineno\_ALREADY\_DEFINED@{annotlineno\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotlineno\_ALREADY\_DEFINED}{annotlineno\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotlineno\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a4bac733de2fdc5023c145f6b25079467}\label{annot__lexer_8cc_a4bac733de2fdc5023c145f6b25079467}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotout\_ALREADY\_DEFINED@{annotout\_ALREADY\_DEFINED}}
+\index{annotout\_ALREADY\_DEFINED@{annotout\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotout\_ALREADY\_DEFINED}{annotout\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotout\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a7d9aed3b4ef279052b9a2f95d6d28a9e}\label{annot__lexer_8cc_a7d9aed3b4ef279052b9a2f95d6d28a9e}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotpop\_buffer\_state\_ALREADY\_DEFINED@{annotpop\_buffer\_state\_ALREADY\_DEFINED}}
+\index{annotpop\_buffer\_state\_ALREADY\_DEFINED@{annotpop\_buffer\_state\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotpop\_buffer\_state\_ALREADY\_DEFINED}{annotpop\_buffer\_state\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotpop\+\_\+buffer\+\_\+state\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a47d2059983b53921d3ab6cbd8d1148e7}\label{annot__lexer_8cc_a47d2059983b53921d3ab6cbd8d1148e7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotpush\_buffer\_state\_ALREADY\_DEFINED@{annotpush\_buffer\_state\_ALREADY\_DEFINED}}
+\index{annotpush\_buffer\_state\_ALREADY\_DEFINED@{annotpush\_buffer\_state\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotpush\_buffer\_state\_ALREADY\_DEFINED}{annotpush\_buffer\_state\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotpush\+\_\+buffer\+\_\+state\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a6c59a3e7da19e12670398035cc40071b}\label{annot__lexer_8cc_a6c59a3e7da19e12670398035cc40071b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotrealloc\_ALREADY\_DEFINED@{annotrealloc\_ALREADY\_DEFINED}}
+\index{annotrealloc\_ALREADY\_DEFINED@{annotrealloc\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotrealloc\_ALREADY\_DEFINED}{annotrealloc\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotrealloc\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_acddce17cc21a33aa4dd097ca7247e2da}\label{annot__lexer_8cc_acddce17cc21a33aa4dd097ca7247e2da}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotrestart\_ALREADY\_DEFINED@{annotrestart\_ALREADY\_DEFINED}}
+\index{annotrestart\_ALREADY\_DEFINED@{annotrestart\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotrestart\_ALREADY\_DEFINED}{annotrestart\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotrestart\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a411d7d7524ab2e9838d7da16964127b9}\label{annot__lexer_8cc_a411d7d7524ab2e9838d7da16964127b9}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annottext\_ALREADY\_DEFINED@{annottext\_ALREADY\_DEFINED}}
+\index{annottext\_ALREADY\_DEFINED@{annottext\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annottext\_ALREADY\_DEFINED}{annottext\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annottext\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a06db2cf6e3abb586a4a1158ab29c4888}\label{annot__lexer_8cc_a06db2cf6e3abb586a4a1158ab29c4888}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotwrap@{annotwrap}}
+\index{annotwrap@{annotwrap}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotwrap}{annotwrap}}
+{\footnotesize\ttfamily \#define annotwrap(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~(/$\ast$CONSTCOND$\ast$/1)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab9ca54d1ffbec5641e333b81f670b787}\label{annot__lexer_8cc_ab9ca54d1ffbec5641e333b81f670b787}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!annotwrap\_ALREADY\_DEFINED@{annotwrap\_ALREADY\_DEFINED}}
+\index{annotwrap\_ALREADY\_DEFINED@{annotwrap\_ALREADY\_DEFINED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{annotwrap\_ALREADY\_DEFINED}{annotwrap\_ALREADY\_DEFINED}}
+{\footnotesize\ttfamily \#define annotwrap\+\_\+\+ALREADY\+\_\+\+DEFINED}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab766bbbee08d04b67e3fe599d6900873}\label{annot__lexer_8cc_ab766bbbee08d04b67e3fe599d6900873}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!BEGIN@{BEGIN}}
+\index{BEGIN@{BEGIN}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{BEGIN}{BEGIN}}
+{\footnotesize\ttfamily \#define BEGIN~(yy\+\_\+start) = 1 + 2 $\ast$}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aad1dc60a04a1d8cfc8b3ded13601e361}\label{annot__lexer_8cc_aad1dc60a04a1d8cfc8b3ded13601e361}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!ECHO@{ECHO}}
+\index{ECHO@{ECHO}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{ECHO}{ECHO}}
+{\footnotesize\ttfamily \#define ECHO~do \{ \mbox{\hyperlink{lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}{if}} (fwrite( \mbox{\hyperlink{lexer_8hh_ad9264b77d56b6971f29739e2bda77f51}{yytext}}, (size\+\_\+t) \mbox{\hyperlink{lexer_8hh_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}, 1, \mbox{\hyperlink{lexer_8hh_a296847b42b0baa62e2af36cb79f3c0eb}{yyout}} )) \{\} \} \mbox{\hyperlink{lexer_8cc_a8fdafe3be7e00ce3d4f0cb50a9a5eb39}{while}} (0)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_adf4b0db227e07782e28ade353a7ba7a1}\label{annot__lexer_8cc_adf4b0db227e07782e28ade353a7ba7a1}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!EOB\_ACT\_CONTINUE\_SCAN@{EOB\_ACT\_CONTINUE\_SCAN}}
+\index{EOB\_ACT\_CONTINUE\_SCAN@{EOB\_ACT\_CONTINUE\_SCAN}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{EOB\_ACT\_CONTINUE\_SCAN}{EOB\_ACT\_CONTINUE\_SCAN}}
+{\footnotesize\ttfamily \#define EOB\+\_\+\+ACT\+\_\+\+CONTINUE\+\_\+\+SCAN~0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a7f71d7fa2c403eb4b2f38cb9536f3c63}\label{annot__lexer_8cc_a7f71d7fa2c403eb4b2f38cb9536f3c63}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!EOB\_ACT\_END\_OF\_FILE@{EOB\_ACT\_END\_OF\_FILE}}
+\index{EOB\_ACT\_END\_OF\_FILE@{EOB\_ACT\_END\_OF\_FILE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{EOB\_ACT\_END\_OF\_FILE}{EOB\_ACT\_END\_OF\_FILE}}
+{\footnotesize\ttfamily \#define EOB\+\_\+\+ACT\+\_\+\+END\+\_\+\+OF\+\_\+\+FILE~1}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ad1a0b5ebcabffe388e9e9ebb2619c1fb}\label{annot__lexer_8cc_ad1a0b5ebcabffe388e9e9ebb2619c1fb}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!EOB\_ACT\_LAST\_MATCH@{EOB\_ACT\_LAST\_MATCH}}
+\index{EOB\_ACT\_LAST\_MATCH@{EOB\_ACT\_LAST\_MATCH}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{EOB\_ACT\_LAST\_MATCH}{EOB\_ACT\_LAST\_MATCH}}
+{\footnotesize\ttfamily \#define EOB\+\_\+\+ACT\+\_\+\+LAST\+\_\+\+MATCH~2}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a9465c9986fdda27730c9dff8d16a0887}\label{annot__lexer_8cc_a9465c9986fdda27730c9dff8d16a0887}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!FLEX\_BETA@{FLEX\_BETA}}
+\index{FLEX\_BETA@{FLEX\_BETA}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{FLEX\_BETA}{FLEX\_BETA}}
+{\footnotesize\ttfamily \#define FLEX\+\_\+\+BETA}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a3c3d1ef92e93b0bc81d7760a73d5c3b6}\label{annot__lexer_8cc_a3c3d1ef92e93b0bc81d7760a73d5c3b6}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!FLEX\_SCANNER@{FLEX\_SCANNER}}
+\index{FLEX\_SCANNER@{FLEX\_SCANNER}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{FLEX\_SCANNER}{FLEX\_SCANNER}}
+{\footnotesize\ttfamily \#define FLEX\+\_\+\+SCANNER}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aec980b5a71bbe6d67931df20f0ebaec4}\label{annot__lexer_8cc_aec980b5a71bbe6d67931df20f0ebaec4}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!FLEXINT\_H@{FLEXINT\_H}}
+\index{FLEXINT\_H@{FLEXINT\_H}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{FLEXINT\_H}{FLEXINT\_H}}
+{\footnotesize\ttfamily \#define FLEXINT\+\_\+H}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa3d063564f6ab16f6d408b8369d0e9ff}\label{annot__lexer_8cc_aa3d063564f6ab16f6d408b8369d0e9ff}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INITIAL@{INITIAL}}
+\index{INITIAL@{INITIAL}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INITIAL}{INITIAL}}
+{\footnotesize\ttfamily \#define INITIAL~0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac58f2c111cc9989c86db2a7dc4fd84ca}\label{annot__lexer_8cc_ac58f2c111cc9989c86db2a7dc4fd84ca}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INT16\_MAX@{INT16\_MAX}}
+\index{INT16\_MAX@{INT16\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INT16\_MAX}{INT16\_MAX}}
+{\footnotesize\ttfamily \#define INT16\+\_\+\+MAX~(32767)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ad4e9955955b27624963643eac448118a}\label{annot__lexer_8cc_ad4e9955955b27624963643eac448118a}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INT16\_MIN@{INT16\_MIN}}
+\index{INT16\_MIN@{INT16\_MIN}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INT16\_MIN}{INT16\_MIN}}
+{\footnotesize\ttfamily \#define INT16\+\_\+\+MIN~(-\/32767-\/1)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a181807730d4a375f848ba139813ce04f}\label{annot__lexer_8cc_a181807730d4a375f848ba139813ce04f}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INT32\_MAX@{INT32\_MAX}}
+\index{INT32\_MAX@{INT32\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INT32\_MAX}{INT32\_MAX}}
+{\footnotesize\ttfamily \#define INT32\+\_\+\+MAX~(2147483647)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a688eb21a22db27c2b2bd5836943cdcbe}\label{annot__lexer_8cc_a688eb21a22db27c2b2bd5836943cdcbe}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INT32\_MIN@{INT32\_MIN}}
+\index{INT32\_MIN@{INT32\_MIN}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INT32\_MIN}{INT32\_MIN}}
+{\footnotesize\ttfamily \#define INT32\+\_\+\+MIN~(-\/2147483647-\/1)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aaf7f29f45f1a513b4748a4e5014ddf6a}\label{annot__lexer_8cc_aaf7f29f45f1a513b4748a4e5014ddf6a}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INT8\_MAX@{INT8\_MAX}}
+\index{INT8\_MAX@{INT8\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INT8\_MAX}{INT8\_MAX}}
+{\footnotesize\ttfamily \#define INT8\+\_\+\+MAX~(127)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aadcf2a81af243df333b31efa6461ab8e}\label{annot__lexer_8cc_aadcf2a81af243df333b31efa6461ab8e}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!INT8\_MIN@{INT8\_MIN}}
+\index{INT8\_MIN@{INT8\_MIN}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{INT8\_MIN}{INT8\_MIN}}
+{\footnotesize\ttfamily \#define INT8\+\_\+\+MIN~(-\/128)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a835f10dd1ab4bf9a80c4cd80ee6e3058}\label{annot__lexer_8cc_a835f10dd1ab4bf9a80c4cd80ee6e3058}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!REJECT@{REJECT}}
+\index{REJECT@{REJECT}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{REJECT}{REJECT}}
+{\footnotesize\ttfamily \#define REJECT~reject\+\_\+used\+\_\+but\+\_\+not\+\_\+detected}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a3c75bb398badb69c7577b21486f9963f}\label{annot__lexer_8cc_a3c75bb398badb69c7577b21486f9963f}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!SIZE\_MAX@{SIZE\_MAX}}
+\index{SIZE\_MAX@{SIZE\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{SIZE\_MAX}{SIZE\_MAX}}
+{\footnotesize\ttfamily \#define SIZE\+\_\+\+MAX~($\sim$(size\+\_\+t)0)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a3ea490c9b3617d4479bd80ef93cd5602}\label{annot__lexer_8cc_a3ea490c9b3617d4479bd80ef93cd5602}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!UINT16\_MAX@{UINT16\_MAX}}
+\index{UINT16\_MAX@{UINT16\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{UINT16\_MAX}{UINT16\_MAX}}
+{\footnotesize\ttfamily \#define UINT16\+\_\+\+MAX~(65535U)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab5eb23180f7cc12b7d6c04a8ec067fdd}\label{annot__lexer_8cc_ab5eb23180f7cc12b7d6c04a8ec067fdd}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!UINT32\_MAX@{UINT32\_MAX}}
+\index{UINT32\_MAX@{UINT32\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{UINT32\_MAX}{UINT32\_MAX}}
+{\footnotesize\ttfamily \#define UINT32\+\_\+\+MAX~(4294967295U)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aeb4e270a084ee26fe73e799861bd0252}\label{annot__lexer_8cc_aeb4e270a084ee26fe73e799861bd0252}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!UINT8\_MAX@{UINT8\_MAX}}
+\index{UINT8\_MAX@{UINT8\_MAX}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{UINT8\_MAX}{UINT8\_MAX}}
+{\footnotesize\ttfamily \#define UINT8\+\_\+\+MAX~(255U)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a448a4e9041a09588332733c6846c770c}\label{annot__lexer_8cc_a448a4e9041a09588332733c6846c770c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!unput@{unput}}
+\index{unput@{unput}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{unput}{unput}}
+{\footnotesize\ttfamily \#define unput(\begin{DoxyParamCaption}\item[{}]{c }\end{DoxyParamCaption})~yyunput( c, (\mbox{\hyperlink{lexer_8hh_a790a191a93ef4d3b8c0bb43fd7480052}{yytext\+\_\+ptr}})  )}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a71ca89b3656acd0552f14949a571560b}\label{annot__lexer_8cc_a71ca89b3656acd0552f14949a571560b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_AT\_BOL@{YY\_AT\_BOL}}
+\index{YY\_AT\_BOL@{YY\_AT\_BOL}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_AT\_BOL}{YY\_AT\_BOL}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+AT\+\_\+\+BOL(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~(\mbox{\hyperlink{lexer_8cc_a817a6a24af62508b5a35f4bed5f56a2e}{YY\+\_\+\+CURRENT\+\_\+\+BUFFER\+\_\+\+LVALUE}}-\/$>$yy\+\_\+at\+\_\+bol)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a3cc40a460ad7df816678bcc05241e84c}\label{annot__lexer_8cc_a3cc40a460ad7df816678bcc05241e84c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_BREAK@{YY\_BREAK}}
+\index{YY\_BREAK@{YY\_BREAK}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_BREAK}{YY\_BREAK}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+BREAK~/$\ast$LINTED$\ast$/break;}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae7e51116e747d3390e7a6cfc6532834c}\label{annot__lexer_8cc_ae7e51116e747d3390e7a6cfc6532834c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_BUF\_SIZE@{YY\_BUF\_SIZE}}
+\index{YY\_BUF\_SIZE@{YY\_BUF\_SIZE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_BUF\_SIZE}{YY\_BUF\_SIZE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+BUF\+\_\+\+SIZE~16384}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ad689d97c15e807a6116ace7a420cea57}\label{annot__lexer_8cc_ad689d97c15e807a6116ace7a420cea57}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_BUFFER\_EOF\_PENDING@{YY\_BUFFER\_EOF\_PENDING}}
+\index{YY\_BUFFER\_EOF\_PENDING@{YY\_BUFFER\_EOF\_PENDING}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_BUFFER\_EOF\_PENDING}{YY\_BUFFER\_EOF\_PENDING}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+BUFFER\+\_\+\+EOF\+\_\+\+PENDING~2}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a53579db42834b88199458993912c646d}\label{annot__lexer_8cc_a53579db42834b88199458993912c646d}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_BUFFER\_NEW@{YY\_BUFFER\_NEW}}
+\index{YY\_BUFFER\_NEW@{YY\_BUFFER\_NEW}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_BUFFER\_NEW}{YY\_BUFFER\_NEW}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+BUFFER\+\_\+\+NEW~0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a609d19f40900ecc2a5f812d9388c21fb}\label{annot__lexer_8cc_a609d19f40900ecc2a5f812d9388c21fb}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_BUFFER\_NORMAL@{YY\_BUFFER\_NORMAL}}
+\index{YY\_BUFFER\_NORMAL@{YY\_BUFFER\_NORMAL}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_BUFFER\_NORMAL}{YY\_BUFFER\_NORMAL}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+BUFFER\+\_\+\+NORMAL~1}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac86ea8173dfcfc5c989d3295a77e2f95}\label{annot__lexer_8cc_ac86ea8173dfcfc5c989d3295a77e2f95}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_create\_buffer@{yy\_create\_buffer}}
+\index{yy\_create\_buffer@{yy\_create\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_create\_buffer}{yy\_create\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+create\+\_\+buffer~annot\+\_\+create\+\_\+buffer}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa093d500a6330d06d8e4760c494fac33}\label{annot__lexer_8cc_aa093d500a6330d06d8e4760c494fac33}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_CURRENT\_BUFFER@{YY\_CURRENT\_BUFFER}}
+\index{YY\_CURRENT\_BUFFER@{YY\_CURRENT\_BUFFER}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_CURRENT\_BUFFER}{YY\_CURRENT\_BUFFER}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+CURRENT\+\_\+\+BUFFER}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                          ( (yy\_buffer\_stack) \(\backslash\)}
+\DoxyCodeLine{                          ? (yy\_buffer\_stack)[(yy\_buffer\_stack\_top)] \(\backslash\)}
+\DoxyCodeLine{                          : NULL)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_a817a6a24af62508b5a35f4bed5f56a2e}\label{annot__lexer_8cc_a817a6a24af62508b5a35f4bed5f56a2e}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_CURRENT\_BUFFER\_LVALUE@{YY\_CURRENT\_BUFFER\_LVALUE}}
+\index{YY\_CURRENT\_BUFFER\_LVALUE@{YY\_CURRENT\_BUFFER\_LVALUE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_CURRENT\_BUFFER\_LVALUE}{YY\_CURRENT\_BUFFER\_LVALUE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+CURRENT\+\_\+\+BUFFER\+\_\+\+LVALUE~(yy\+\_\+buffer\+\_\+stack)\mbox{[}(yy\+\_\+buffer\+\_\+stack\+\_\+top)\mbox{]}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae5b01ac2fa5a6ad5fb97559638abe686}\label{annot__lexer_8cc_ae5b01ac2fa5a6ad5fb97559638abe686}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_DECL@{YY\_DECL}}
+\index{YY\_DECL@{YY\_DECL}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_DECL}{YY\_DECL}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+DECL~\mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{annot\+::parser\+::symbol\+\_\+type}} annotlex (\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$m)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ad1868c6b38b45af25a4a0f449912a808}\label{annot__lexer_8cc_ad1868c6b38b45af25a4a0f449912a808}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_delete\_buffer@{yy\_delete\_buffer}}
+\index{yy\_delete\_buffer@{yy\_delete\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_delete\_buffer}{yy\_delete\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+delete\+\_\+buffer~annot\+\_\+delete\+\_\+buffer}
+
+\mbox{\Hypertarget{annot__lexer_8cc_acc3486d769af4e4b2820346a0093cc79}\label{annot__lexer_8cc_acc3486d769af4e4b2820346a0093cc79}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_DO\_BEFORE\_ACTION@{YY\_DO\_BEFORE\_ACTION}}
+\index{YY\_DO\_BEFORE\_ACTION@{YY\_DO\_BEFORE\_ACTION}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_DO\_BEFORE\_ACTION}{YY\_DO\_BEFORE\_ACTION}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+DO\+\_\+\+BEFORE\+\_\+\+ACTION}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    (\mbox{\hyperlink{annot__lexer_8cc_a790a191a93ef4d3b8c0bb43fd7480052}{yytext\_ptr}}) = \mbox{\hyperlink{annot__lexer_8cc_aa749693ef7d0c10b137e887638fdc5b2}{yy\_bp}}; \(\backslash\)}
+\DoxyCodeLine{    yyleng = (int) (\mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\_cp}} -\/ \mbox{\hyperlink{annot__lexer_8cc_aa749693ef7d0c10b137e887638fdc5b2}{yy\_bp}}); \(\backslash\)}
+\DoxyCodeLine{    (yy\_hold\_char) = *\mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\_cp}}; \(\backslash\)}
+\DoxyCodeLine{    *\mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\_cp}} = \textcolor{charliteral}{'\(\backslash\)0'}; \(\backslash\)}
+\DoxyCodeLine{    (yy\_c\_buf\_p) = \mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\_cp}};}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_ab2708fd42cff29ce6a0a52b91bea40d1}\label{annot__lexer_8cc_ab2708fd42cff29ce6a0a52b91bea40d1}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_END\_OF\_BUFFER@{YY\_END\_OF\_BUFFER}}
+\index{YY\_END\_OF\_BUFFER@{YY\_END\_OF\_BUFFER}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_END\_OF\_BUFFER}{YY\_END\_OF\_BUFFER}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+END\+\_\+\+OF\+\_\+\+BUFFER~16}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab866a64da164ed2d4d444df1ef1fc9b3}\label{annot__lexer_8cc_ab866a64da164ed2d4d444df1ef1fc9b3}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_END\_OF\_BUFFER\_CHAR@{YY\_END\_OF\_BUFFER\_CHAR}}
+\index{YY\_END\_OF\_BUFFER\_CHAR@{YY\_END\_OF\_BUFFER\_CHAR}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_END\_OF\_BUFFER\_CHAR}{YY\_END\_OF\_BUFFER\_CHAR}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+END\+\_\+\+OF\+\_\+\+BUFFER\+\_\+\+CHAR~0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae93e67b85c44f6bd31ead14a552a35c8}\label{annot__lexer_8cc_ae93e67b85c44f6bd31ead14a552a35c8}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_EXIT\_FAILURE@{YY\_EXIT\_FAILURE}}
+\index{YY\_EXIT\_FAILURE@{YY\_EXIT\_FAILURE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_EXIT\_FAILURE}{YY\_EXIT\_FAILURE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+EXIT\+\_\+\+FAILURE~2}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a26938d921de835f6183c02e54cf08828}\label{annot__lexer_8cc_a26938d921de835f6183c02e54cf08828}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_EXTRA\_TYPE@{YY\_EXTRA\_TYPE}}
+\index{YY\_EXTRA\_TYPE@{YY\_EXTRA\_TYPE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_EXTRA\_TYPE}{YY\_EXTRA\_TYPE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+EXTRA\+\_\+\+TYPE~void $\ast$}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac0586b8b0b092d02f4ba7d45abe328f2}\label{annot__lexer_8cc_ac0586b8b0b092d02f4ba7d45abe328f2}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_FATAL\_ERROR@{YY\_FATAL\_ERROR}}
+\index{YY\_FATAL\_ERROR@{YY\_FATAL\_ERROR}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_FATAL\_ERROR}{YY\_FATAL\_ERROR}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+FATAL\+\_\+\+ERROR(\begin{DoxyParamCaption}\item[{}]{msg }\end{DoxyParamCaption})~yy\+\_\+fatal\+\_\+error( msg )}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a7411c3bab9eca1afee90113c2d22da37}\label{annot__lexer_8cc_a7411c3bab9eca1afee90113c2d22da37}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_flex\_debug@{yy\_flex\_debug}}
+\index{yy\_flex\_debug@{yy\_flex\_debug}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_flex\_debug}{yy\_flex\_debug}}
+{\footnotesize\ttfamily int yy\+\_\+flex\+\_\+debug~annot\+\_\+flex\+\_\+debug}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a243ca1d30872935faf05ea5118ed6fdc}\label{annot__lexer_8cc_a243ca1d30872935faf05ea5118ed6fdc}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_FLEX\_MAJOR\_VERSION@{YY\_FLEX\_MAJOR\_VERSION}}
+\index{YY\_FLEX\_MAJOR\_VERSION@{YY\_FLEX\_MAJOR\_VERSION}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_FLEX\_MAJOR\_VERSION}{YY\_FLEX\_MAJOR\_VERSION}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+FLEX\+\_\+\+MAJOR\+\_\+\+VERSION~2}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a90f9d458829400869e47efb68a865677}\label{annot__lexer_8cc_a90f9d458829400869e47efb68a865677}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_FLEX\_MINOR\_VERSION@{YY\_FLEX\_MINOR\_VERSION}}
+\index{YY\_FLEX\_MINOR\_VERSION@{YY\_FLEX\_MINOR\_VERSION}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_FLEX\_MINOR\_VERSION}{YY\_FLEX\_MINOR\_VERSION}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+FLEX\+\_\+\+MINOR\+\_\+\+VERSION~6}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac676bd06869180ea493e9b6d7c078dbb}\label{annot__lexer_8cc_ac676bd06869180ea493e9b6d7c078dbb}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_FLEX\_SUBMINOR\_VERSION@{YY\_FLEX\_SUBMINOR\_VERSION}}
+\index{YY\_FLEX\_SUBMINOR\_VERSION@{YY\_FLEX\_SUBMINOR\_VERSION}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_FLEX\_SUBMINOR\_VERSION}{YY\_FLEX\_SUBMINOR\_VERSION}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+FLEX\+\_\+\+SUBMINOR\+\_\+\+VERSION~4}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab01a4c7245136f22a63acac7c0ceb343}\label{annot__lexer_8cc_ab01a4c7245136f22a63acac7c0ceb343}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_flush\_buffer@{yy\_flush\_buffer}}
+\index{yy\_flush\_buffer@{yy\_flush\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_flush\_buffer}{yy\_flush\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+flush\+\_\+buffer~annot\+\_\+flush\+\_\+buffer}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac5d478d90ea9a2ecd43d579067a2e89d}\label{annot__lexer_8cc_ac5d478d90ea9a2ecd43d579067a2e89d}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_FLUSH\_BUFFER@{YY\_FLUSH\_BUFFER}}
+\index{YY\_FLUSH\_BUFFER@{YY\_FLUSH\_BUFFER}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_FLUSH\_BUFFER}{YY\_FLUSH\_BUFFER}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+FLUSH\+\_\+\+BUFFER~\mbox{\hyperlink{lexer_8hh_a2f59cc88e85e5455c62e4ef7ce095ea8}{yy\+\_\+flush\+\_\+buffer}}( \mbox{\hyperlink{lexer_8cc_aa093d500a6330d06d8e4760c494fac33}{YY\+\_\+\+CURRENT\+\_\+\+BUFFER}} )}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa14efad9f9c24106a3e3398a4f6621c2}\label{annot__lexer_8cc_aa14efad9f9c24106a3e3398a4f6621c2}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_init\_buffer@{yy\_init\_buffer}}
+\index{yy\_init\_buffer@{yy\_init\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_init\_buffer}{yy\_init\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+init\+\_\+buffer~annot\+\_\+init\+\_\+buffer}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aacfdca45fa4beb8b06172525a53c424a}\label{annot__lexer_8cc_aacfdca45fa4beb8b06172525a53c424a}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_INPUT@{YY\_INPUT}}
+\index{YY\_INPUT@{YY\_INPUT}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_INPUT}{YY\_INPUT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+INPUT(\begin{DoxyParamCaption}\item[{}]{buf,  }\item[{}]{result,  }\item[{}]{max\+\_\+size }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{if} ( \mbox{\hyperlink{annot__lexer_8cc_a817a6a24af62508b5a35f4bed5f56a2e}{YY\_CURRENT\_BUFFER\_LVALUE}}-\/>yy\_is\_interactive ) \(\backslash\)}
+\DoxyCodeLine{        \{ \(\backslash\)}
+\DoxyCodeLine{        int c = \textcolor{charliteral}{'*'}; \(\backslash\)}
+\DoxyCodeLine{        int n; \(\backslash\)}
+\DoxyCodeLine{        for ( n = 0; n < max\_size \&\& \(\backslash\)}
+\DoxyCodeLine{                 (c = getc( \mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}} )) != EOF \&\& c != \textcolor{charliteral}{'\(\backslash\)n'}; ++n ) \(\backslash\)}
+\DoxyCodeLine{            buf[n] = (\textcolor{keywordtype}{char}) c; \(\backslash\)}
+\DoxyCodeLine{        if ( c == \textcolor{charliteral}{'\(\backslash\)n'} ) \(\backslash\)}
+\DoxyCodeLine{            buf[n++] = (char) c; \(\backslash\)}
+\DoxyCodeLine{        if ( c == EOF \&\& ferror( \mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}} ) ) \(\backslash\)}
+\DoxyCodeLine{            YY\_FATAL\_ERROR( \textcolor{stringliteral}{"{}input in flex scanner failed"{}} ); \(\backslash\)}
+\DoxyCodeLine{        result = n; \(\backslash\)}
+\DoxyCodeLine{        \} \(\backslash\)}
+\DoxyCodeLine{    else \(\backslash\)}
+\DoxyCodeLine{        \{ \(\backslash\)}
+\DoxyCodeLine{        errno=0; \(\backslash\)}
+\DoxyCodeLine{        while ( (result = (\textcolor{keywordtype}{int}) fread(buf, 1, (\mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\_size\_t}}) max\_size, \mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}})) == 0 \&\& ferror(\mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}})) \(\backslash\)}
+\DoxyCodeLine{            \{ \(\backslash\)}
+\DoxyCodeLine{            if( errno != EINTR) \(\backslash\)}
+\DoxyCodeLine{                \{ \(\backslash\)}
+\DoxyCodeLine{                YY\_FATAL\_ERROR( \textcolor{stringliteral}{"{}input in flex scanner failed"{}} ); \(\backslash\)}
+\DoxyCodeLine{                break; \(\backslash\)}
+\DoxyCodeLine{                \} \(\backslash\)}
+\DoxyCodeLine{            errno=0; \(\backslash\)}
+\DoxyCodeLine{            clearerr(\mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}}); \(\backslash\)}
+\DoxyCodeLine{            \} \(\backslash\)}
+\DoxyCodeLine{        \}\(\backslash\)}
+\DoxyCodeLine{\(\backslash\)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_a1ae16e642a197fa4948998525813c6f5}\label{annot__lexer_8cc_a1ae16e642a197fa4948998525813c6f5}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_INT\_ALIGNED@{YY\_INT\_ALIGNED}}
+\index{YY\_INT\_ALIGNED@{YY\_INT\_ALIGNED}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_INT\_ALIGNED}{YY\_INT\_ALIGNED}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+INT\+\_\+\+ALIGNED~short int}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a12e5f3a76911433480bca7f4edba6119}\label{annot__lexer_8cc_a12e5f3a76911433480bca7f4edba6119}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_LESS\_LINENO@{YY\_LESS\_LINENO}}
+\index{YY\_LESS\_LINENO@{YY\_LESS\_LINENO}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_LESS\_LINENO}{YY\_LESS\_LINENO}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+LESS\+\_\+\+LINENO(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a5206f64af3a299a0dc820c385cf0c489}\label{annot__lexer_8cc_a5206f64af3a299a0dc820c385cf0c489}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_LINENO\_REWIND\_TO@{YY\_LINENO\_REWIND\_TO}}
+\index{YY\_LINENO\_REWIND\_TO@{YY\_LINENO\_REWIND\_TO}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_LINENO\_REWIND\_TO}{YY\_LINENO\_REWIND\_TO}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+LINENO\+\_\+\+REWIND\+\_\+\+TO(\begin{DoxyParamCaption}\item[{}]{ptr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_af59010f39becd2a037cb1ccf0523f5d1}\label{annot__lexer_8cc_af59010f39becd2a037cb1ccf0523f5d1}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_load\_buffer\_state@{yy\_load\_buffer\_state}}
+\index{yy\_load\_buffer\_state@{yy\_load\_buffer\_state}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_load\_buffer\_state}{yy\_load\_buffer\_state}}
+{\footnotesize\ttfamily static void yy\+\_\+load\+\_\+buffer\+\_\+state(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annot\+\_\+load\+\_\+buffer\+\_\+state}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a68792d73820bc46a71d3d4e613f0b977}\label{annot__lexer_8cc_a68792d73820bc46a71d3d4e613f0b977}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_MORE\_ADJ@{YY\_MORE\_ADJ}}
+\index{YY\_MORE\_ADJ@{YY\_MORE\_ADJ}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_MORE\_ADJ}{YY\_MORE\_ADJ}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+MORE\+\_\+\+ADJ~0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab7eb911e18655f2f78e63afe5a8a4a12}\label{annot__lexer_8cc_ab7eb911e18655f2f78e63afe5a8a4a12}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_new\_buffer@{yy\_new\_buffer}}
+\index{yy\_new\_buffer@{yy\_new\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_new\_buffer}{yy\_new\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+new\+\_\+buffer~\mbox{\hyperlink{lexer_8hh_a5bc6f1a5f7812508f425b08283f13ae8}{yy\+\_\+create\+\_\+buffer}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a0406739e64fb5750cf995d2ae68ce69d}\label{annot__lexer_8cc_a0406739e64fb5750cf995d2ae68ce69d}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_NEW\_FILE@{YY\_NEW\_FILE}}
+\index{YY\_NEW\_FILE@{YY\_NEW\_FILE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_NEW\_FILE}{YY\_NEW\_FILE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NEW\+\_\+\+FILE~\mbox{\hyperlink{lexer_8hh_ab657ddef65d43cc3ab8dfc2cad0ac5b8}{yyrestart}}( \mbox{\hyperlink{lexer_8hh_a46af646807e0797e72b6e8945e7ea88b}{yyin}}  )}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a85523a0c7d95c059d251b4e9829947aa}\label{annot__lexer_8cc_a85523a0c7d95c059d251b4e9829947aa}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_NO\_INPUT@{YY\_NO\_INPUT}}
+\index{YY\_NO\_INPUT@{YY\_NO\_INPUT}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_NO\_INPUT}{YY\_NO\_INPUT}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NO\+\_\+\+INPUT~1}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a8e0bcf8f8a5b613ea583347f8bc31cbf}\label{annot__lexer_8cc_a8e0bcf8f8a5b613ea583347f8bc31cbf}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_NULL@{YY\_NULL}}
+\index{YY\_NULL@{YY\_NULL}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_NULL}{YY\_NULL}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NULL~0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae558785bb896e090901c2b905f6790c6}\label{annot__lexer_8cc_ae558785bb896e090901c2b905f6790c6}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_NUM\_RULES@{YY\_NUM\_RULES}}
+\index{YY\_NUM\_RULES@{YY\_NUM\_RULES}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_NUM\_RULES}{YY\_NUM\_RULES}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+NUM\+\_\+\+RULES~15}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aab1491ceccb1c95c14320b2903773a1c}\label{annot__lexer_8cc_aab1491ceccb1c95c14320b2903773a1c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_READ\_BUF\_SIZE@{YY\_READ\_BUF\_SIZE}}
+\index{YY\_READ\_BUF\_SIZE@{YY\_READ\_BUF\_SIZE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_READ\_BUF\_SIZE}{YY\_READ\_BUF\_SIZE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+READ\+\_\+\+BUF\+\_\+\+SIZE~8192}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a56858d18c7eda4f53664496ef566f651}\label{annot__lexer_8cc_a56858d18c7eda4f53664496ef566f651}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_RESTORE\_YY\_MORE\_OFFSET@{YY\_RESTORE\_YY\_MORE\_OFFSET}}
+\index{YY\_RESTORE\_YY\_MORE\_OFFSET@{YY\_RESTORE\_YY\_MORE\_OFFSET}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_RESTORE\_YY\_MORE\_OFFSET}{YY\_RESTORE\_YY\_MORE\_OFFSET}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+RESTORE\+\_\+\+YY\+\_\+\+MORE\+\_\+\+OFFSET}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a690504b662e4281515bf12722df178ba}\label{annot__lexer_8cc_a690504b662e4281515bf12722df178ba}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_RULE\_SETUP@{YY\_RULE\_SETUP}}
+\index{YY\_RULE\_SETUP@{YY\_RULE\_SETUP}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_RULE\_SETUP}{YY\_RULE\_SETUP}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+RULE\+\_\+\+SETUP~ \mbox{\hyperlink{lexer_8cc_a6198b2fcf96178b24ad4efff2a3debb0}{YY\+\_\+\+USER\+\_\+\+ACTION}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_af1185350b7a92cf8aa5324c68850c8a6}\label{annot__lexer_8cc_af1185350b7a92cf8aa5324c68850c8a6}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_SC\_TO\_UI@{YY\_SC\_TO\_UI}}
+\index{YY\_SC\_TO\_UI@{YY\_SC\_TO\_UI}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_SC\_TO\_UI}{YY\_SC\_TO\_UI}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+SC\+\_\+\+TO\+\_\+\+UI(\begin{DoxyParamCaption}\item[{}]{c }\end{DoxyParamCaption})~((\mbox{\hyperlink{annot__lexer_8cc_acc1e625a829554ffed5e4307d4a5f6b7}{YY\+\_\+\+CHAR}}) (c))}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a6849452203fd033f103556fdf858fd33}\label{annot__lexer_8cc_a6849452203fd033f103556fdf858fd33}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_scan\_buffer@{yy\_scan\_buffer}}
+\index{yy\_scan\_buffer@{yy\_scan\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_scan\_buffer}{yy\_scan\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+scan\+\_\+buffer~annot\+\_\+scan\+\_\+buffer}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a3b70699ea880c5d25a1c75f4ad96c315}\label{annot__lexer_8cc_a3b70699ea880c5d25a1c75f4ad96c315}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_scan\_bytes@{yy\_scan\_bytes}}
+\index{yy\_scan\_bytes@{yy\_scan\_bytes}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_scan\_bytes}{yy\_scan\_bytes}}
+{\footnotesize\ttfamily \#define yy\+\_\+scan\+\_\+bytes~annot\+\_\+scan\+\_\+bytes}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a6c5cf8c3b7a69bf60a87dd6eb00fe579}\label{annot__lexer_8cc_a6c5cf8c3b7a69bf60a87dd6eb00fe579}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_scan\_string@{yy\_scan\_string}}
+\index{yy\_scan\_string@{yy\_scan\_string}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_scan\_string}{yy\_scan\_string}}
+{\footnotesize\ttfamily \#define yy\+\_\+scan\+\_\+string~annot\+\_\+scan\+\_\+string}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a12e30d13a76a94e78010db9996d39c50}\label{annot__lexer_8cc_a12e30d13a76a94e78010db9996d39c50}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_set\_bol@{yy\_set\_bol}}
+\index{yy\_set\_bol@{yy\_set\_bol}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_set\_bol}{yy\_set\_bol}}
+{\footnotesize\ttfamily \#define yy\+\_\+set\+\_\+bol(\begin{DoxyParamCaption}\item[{}]{at\+\_\+bol }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \{ \(\backslash\)}
+\DoxyCodeLine{    if ( ! \mbox{\hyperlink{annot__lexer_8cc_aa093d500a6330d06d8e4760c494fac33}{YY\_CURRENT\_BUFFER}} )\{\(\backslash\)}
+\DoxyCodeLine{        yyensure\_buffer\_stack (); \(\backslash\)}
+\DoxyCodeLine{        YY\_CURRENT\_BUFFER\_LVALUE =    \(\backslash\)}
+\DoxyCodeLine{            yy\_create\_buffer( \mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}}, \mbox{\hyperlink{annot__lexer_8cc_ae7e51116e747d3390e7a6cfc6532834c}{YY\_BUF\_SIZE}} ); \(\backslash\)}
+\DoxyCodeLine{    \} \(\backslash\)}
+\DoxyCodeLine{    YY\_CURRENT\_BUFFER\_LVALUE-\/>yy\_at\_bol = at\_bol; \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_ac56eb96366c08862bf0efe5d83d1fc4c}\label{annot__lexer_8cc_ac56eb96366c08862bf0efe5d83d1fc4c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_set\_interactive@{yy\_set\_interactive}}
+\index{yy\_set\_interactive@{yy\_set\_interactive}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_set\_interactive}{yy\_set\_interactive}}
+{\footnotesize\ttfamily \#define yy\+\_\+set\+\_\+interactive(\begin{DoxyParamCaption}\item[{}]{is\+\_\+interactive }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \{ \(\backslash\)}
+\DoxyCodeLine{    if ( ! \mbox{\hyperlink{annot__lexer_8cc_aa093d500a6330d06d8e4760c494fac33}{YY\_CURRENT\_BUFFER}} )\{ \(\backslash\)}
+\DoxyCodeLine{        yyensure\_buffer\_stack (); \(\backslash\)}
+\DoxyCodeLine{        YY\_CURRENT\_BUFFER\_LVALUE =    \(\backslash\)}
+\DoxyCodeLine{            yy\_create\_buffer( \mbox{\hyperlink{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}{yyin}}, \mbox{\hyperlink{annot__lexer_8cc_ae7e51116e747d3390e7a6cfc6532834c}{YY\_BUF\_SIZE}} ); \(\backslash\)}
+\DoxyCodeLine{    \} \(\backslash\)}
+\DoxyCodeLine{    YY\_CURRENT\_BUFFER\_LVALUE-\/>yy\_is\_interactive = is\_interactive; \(\backslash\)}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_ae1ef5933028cbc587d31328e53d11a99}\label{annot__lexer_8cc_ae1ef5933028cbc587d31328e53d11a99}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_SKIP\_YYWRAP@{YY\_SKIP\_YYWRAP}}
+\index{YY\_SKIP\_YYWRAP@{YY\_SKIP\_YYWRAP}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_SKIP\_YYWRAP}{YY\_SKIP\_YYWRAP}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+SKIP\+\_\+\+YYWRAP}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a8e14785f9eab7a997d659b25af9584c5}\label{annot__lexer_8cc_a8e14785f9eab7a997d659b25af9584c5}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_START@{YY\_START}}
+\index{YY\_START@{YY\_START}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_START}{YY\_START}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+START~(((yy\+\_\+start) -\/ 1) / 2)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a227e75c43b9e0cd41529974230be7e75}\label{annot__lexer_8cc_a227e75c43b9e0cd41529974230be7e75}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_START\_STACK\_INCR@{YY\_START\_STACK\_INCR}}
+\index{YY\_START\_STACK\_INCR@{YY\_START\_STACK\_INCR}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_START\_STACK\_INCR}{YY\_START\_STACK\_INCR}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+START\+\_\+\+STACK\+\_\+\+INCR~25}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac2f8b6fccdc516d96b02ac09a4dc01bd}\label{annot__lexer_8cc_ac2f8b6fccdc516d96b02ac09a4dc01bd}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_STATE\_BUF\_SIZE@{YY\_STATE\_BUF\_SIZE}}
+\index{YY\_STATE\_BUF\_SIZE@{YY\_STATE\_BUF\_SIZE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_STATE\_BUF\_SIZE}{YY\_STATE\_BUF\_SIZE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+STATE\+\_\+\+BUF\+\_\+\+SIZE~((\mbox{\hyperlink{lexer_8hh_ae7e51116e747d3390e7a6cfc6532834c}{YY\+\_\+\+BUF\+\_\+\+SIZE}} + 2) $\ast$ sizeof(\mbox{\hyperlink{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}{yy\+\_\+state\+\_\+type}}))}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab3077e60914fc54dcc55ecae1ce9700b}\label{annot__lexer_8cc_ab3077e60914fc54dcc55ecae1ce9700b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_STATE\_EOF@{YY\_STATE\_EOF}}
+\index{YY\_STATE\_EOF@{YY\_STATE\_EOF}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_STATE\_EOF}{YY\_STATE\_EOF}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+STATE\+\_\+\+EOF(\begin{DoxyParamCaption}\item[{}]{state }\end{DoxyParamCaption})~(\mbox{\hyperlink{lexer_8cc_ab2708fd42cff29ce6a0a52b91bea40d1}{YY\+\_\+\+END\+\_\+\+OF\+\_\+\+BUFFER}} + state + 1)}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a8aaa9e1fa7f13d6954d045ef973a9c84}\label{annot__lexer_8cc_a8aaa9e1fa7f13d6954d045ef973a9c84}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_STRUCT\_YY\_BUFFER\_STATE@{YY\_STRUCT\_YY\_BUFFER\_STATE}}
+\index{YY\_STRUCT\_YY\_BUFFER\_STATE@{YY\_STRUCT\_YY\_BUFFER\_STATE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_STRUCT\_YY\_BUFFER\_STATE}{YY\_STRUCT\_YY\_BUFFER\_STATE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+STRUCT\+\_\+\+YY\+\_\+\+BUFFER\+\_\+\+STATE}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a968d5b9e7e06a38bfca977b343d47d5c}\label{annot__lexer_8cc_a968d5b9e7e06a38bfca977b343d47d5c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_switch\_to\_buffer@{yy\_switch\_to\_buffer}}
+\index{yy\_switch\_to\_buffer@{yy\_switch\_to\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_switch\_to\_buffer}{yy\_switch\_to\_buffer}}
+{\footnotesize\ttfamily \#define yy\+\_\+switch\+\_\+to\+\_\+buffer~annot\+\_\+switch\+\_\+to\+\_\+buffer}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa79d63ed3ff8d2249baf1732a73089f5}\label{annot__lexer_8cc_aa79d63ed3ff8d2249baf1732a73089f5}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_TYPEDEF\_YY\_BUFFER\_STATE@{YY\_TYPEDEF\_YY\_BUFFER\_STATE}}
+\index{YY\_TYPEDEF\_YY\_BUFFER\_STATE@{YY\_TYPEDEF\_YY\_BUFFER\_STATE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_TYPEDEF\_YY\_BUFFER\_STATE}{YY\_TYPEDEF\_YY\_BUFFER\_STATE}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+TYPEDEF\+\_\+\+YY\+\_\+\+BUFFER\+\_\+\+STATE}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae0f2b0b5f04b2338367826b5670774f9}\label{annot__lexer_8cc_ae0f2b0b5f04b2338367826b5670774f9}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_TYPEDEF\_YY\_SIZE\_T@{YY\_TYPEDEF\_YY\_SIZE\_T}}
+\index{YY\_TYPEDEF\_YY\_SIZE\_T@{YY\_TYPEDEF\_YY\_SIZE\_T}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_TYPEDEF\_YY\_SIZE\_T}{YY\_TYPEDEF\_YY\_SIZE\_T}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+TYPEDEF\+\_\+\+YY\+\_\+\+SIZE\+\_\+T}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a6198b2fcf96178b24ad4efff2a3debb0}\label{annot__lexer_8cc_a6198b2fcf96178b24ad4efff2a3debb0}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_USER\_ACTION@{YY\_USER\_ACTION}}
+\index{YY\_USER\_ACTION@{YY\_USER\_ACTION}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_USER\_ACTION}{YY\_USER\_ACTION}}
+{\footnotesize\ttfamily \#define YY\+\_\+\+USER\+\_\+\+ACTION~aloc.\+columns (\mbox{\hyperlink{lexer_8hh_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}});}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a803397ab738ee8630166680646a2d913}\label{annot__lexer_8cc_a803397ab738ee8630166680646a2d913}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyalloc@{yyalloc}}
+\index{yyalloc@{yyalloc}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyalloc}{yyalloc}}
+{\footnotesize\ttfamily \#define yyalloc~annotalloc}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa2f1a918be586b44bf08126bde2d7cc9}\label{annot__lexer_8cc_aa2f1a918be586b44bf08126bde2d7cc9}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyconst@{yyconst}}
+\index{yyconst@{yyconst}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyconst}{yyconst}}
+{\footnotesize\ttfamily \#define yyconst~const}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a95b647b6ab42aa91ec5407a3276ad8cf}\label{annot__lexer_8cc_a95b647b6ab42aa91ec5407a3276ad8cf}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyensure\_buffer\_stack@{yyensure\_buffer\_stack}}
+\index{yyensure\_buffer\_stack@{yyensure\_buffer\_stack}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyensure\_buffer\_stack}{yyensure\_buffer\_stack}}
+{\footnotesize\ttfamily static void yyensure\+\_\+buffer\+\_\+stack(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotensure\+\_\+buffer\+\_\+stack}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a4fa4368d47620ea80150b516e8884f6b}\label{annot__lexer_8cc_a4fa4368d47620ea80150b516e8884f6b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyfree@{yyfree}}
+\index{yyfree@{yyfree}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyfree}{yyfree}}
+{\footnotesize\ttfamily \#define yyfree~annotfree}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a81c1f6c4ad68be7dbf300e73961f38cf}\label{annot__lexer_8cc_a81c1f6c4ad68be7dbf300e73961f38cf}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_debug@{yyget\_debug}}
+\index{yyget\_debug@{yyget\_debug}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_debug}{yyget\_debug}}
+{\footnotesize\ttfamily int yyget\+\_\+debug(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotget\+\_\+debug}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a0484e07fe35238d8031c34f287a9b749}\label{annot__lexer_8cc_a0484e07fe35238d8031c34f287a9b749}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_extra@{yyget\_extra}}
+\index{yyget\_extra@{yyget\_extra}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_extra}{yyget\_extra}}
+{\footnotesize\ttfamily \mbox{\hyperlink{lexer_8hh_a26938d921de835f6183c02e54cf08828}{YY\+\_\+\+EXTRA\+\_\+\+TYPE}} yyget\+\_\+extra~annotget\+\_\+extra}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa6f5243e96af1d42bd6f3d6b3299bffa}\label{annot__lexer_8cc_aa6f5243e96af1d42bd6f3d6b3299bffa}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_in@{yyget\_in}}
+\index{yyget\_in@{yyget\_in}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_in}{yyget\_in}}
+{\footnotesize\ttfamily FILE $\ast$ yyget\+\_\+in(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotget\+\_\+in}
+
+Get the input stream. \mbox{\Hypertarget{annot__lexer_8cc_a07590ba42ef871984a197d5104a4a9e0}\label{annot__lexer_8cc_a07590ba42ef871984a197d5104a4a9e0}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_leng@{yyget\_leng}}
+\index{yyget\_leng@{yyget\_leng}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_leng}{yyget\_leng}}
+{\footnotesize\ttfamily int yyget\+\_\+leng(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotget\+\_\+leng}
+
+Get the length of the current token. \mbox{\Hypertarget{annot__lexer_8cc_a5b042f5ec81dac297969a70684a7cb1b}\label{annot__lexer_8cc_a5b042f5ec81dac297969a70684a7cb1b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_lineno@{yyget\_lineno}}
+\index{yyget\_lineno@{yyget\_lineno}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_lineno}{yyget\_lineno}}
+{\footnotesize\ttfamily int yyget\+\_\+lineno(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotget\+\_\+lineno}
+
+Get the current line number. \mbox{\Hypertarget{annot__lexer_8cc_ac269c11a8e1e7488ec43d1dee26db8a1}\label{annot__lexer_8cc_ac269c11a8e1e7488ec43d1dee26db8a1}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_out@{yyget\_out}}
+\index{yyget\_out@{yyget\_out}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_out}{yyget\_out}}
+{\footnotesize\ttfamily FILE $\ast$ yyget\+\_\+out(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotget\+\_\+out}
+
+Get the output stream. \mbox{\Hypertarget{annot__lexer_8cc_a456cd16577fb85716b25d43deb56eaff}\label{annot__lexer_8cc_a456cd16577fb85716b25d43deb56eaff}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyget\_text@{yyget\_text}}
+\index{yyget\_text@{yyget\_text}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyget\_text}{yyget\_text}}
+{\footnotesize\ttfamily char $\ast$ yyget\+\_\+text(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotget\+\_\+text}
+
+Get the current token. \mbox{\Hypertarget{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}\label{annot__lexer_8cc_a87a127afa8f6c307fbfba10390675406}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyin@{yyin}}
+\index{yyin@{yyin}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyin}{yyin}}
+{\footnotesize\ttfamily FILE $\ast$ yyin~annotin}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}\label{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyleng@{yyleng}}
+\index{yyleng@{yyleng}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyleng}{yyleng}}
+{\footnotesize\ttfamily int yyleng~annotleng}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ae65cb72d09db0abdc4b8e8c4d533ab14}\label{annot__lexer_8cc_ae65cb72d09db0abdc4b8e8c4d533ab14}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyless@{yyless}}
+\index{yyless@{yyless}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyless}{yyless}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define yyless(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{do} \(\backslash\)}
+\DoxyCodeLine{        \{ \(\backslash\)}
+\DoxyCodeLine{        \textcolor{comment}{/* Undo effects of setting up yytext. */} \(\backslash\)}
+\DoxyCodeLine{        int yyless\_macro\_arg = (n); \(\backslash\)}
+\DoxyCodeLine{        YY\_LESS\_LINENO(yyless\_macro\_arg);\(\backslash\)}
+\DoxyCodeLine{        *\mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\_cp}} = (yy\_hold\_char); \(\backslash\)}
+\DoxyCodeLine{        YY\_RESTORE\_YY\_MORE\_OFFSET \(\backslash\)}
+\DoxyCodeLine{        (yy\_c\_buf\_p) = \mbox{\hyperlink{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}{yy\_cp}} = \mbox{\hyperlink{annot__lexer_8cc_aa749693ef7d0c10b137e887638fdc5b2}{yy\_bp}} + yyless\_macro\_arg -\/ \mbox{\hyperlink{annot__lexer_8cc_a68792d73820bc46a71d3d4e613f0b977}{YY\_MORE\_ADJ}}; \(\backslash\)}
+\DoxyCodeLine{        YY\_DO\_BEFORE\_ACTION; \textcolor{comment}{/* set up yytext again */} \(\backslash\)}
+\DoxyCodeLine{        \} \(\backslash\)}
+\DoxyCodeLine{    while ( 0 )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_ae65cb72d09db0abdc4b8e8c4d533ab14}\label{annot__lexer_8cc_ae65cb72d09db0abdc4b8e8c4d533ab14}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyless@{yyless}}
+\index{yyless@{yyless}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyless}{yyless}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define yyless(\begin{DoxyParamCaption}\item[{}]{n }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordflow}{do} \(\backslash\)}
+\DoxyCodeLine{        \{ \(\backslash\)}
+\DoxyCodeLine{        \textcolor{comment}{/* Undo effects of setting up yytext. */} \(\backslash\)}
+\DoxyCodeLine{        int yyless\_macro\_arg = (n); \(\backslash\)}
+\DoxyCodeLine{        YY\_LESS\_LINENO(yyless\_macro\_arg);\(\backslash\)}
+\DoxyCodeLine{        yytext[\mbox{\hyperlink{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}{yyleng}}] = (yy\_hold\_char); \(\backslash\)}
+\DoxyCodeLine{        (yy\_c\_buf\_p) = \mbox{\hyperlink{annot__lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}{yytext}} + yyless\_macro\_arg; \(\backslash\)}
+\DoxyCodeLine{        (yy\_hold\_char) = *(yy\_c\_buf\_p); \(\backslash\)}
+\DoxyCodeLine{        *(yy\_c\_buf\_p) = \textcolor{charliteral}{'\(\backslash\)0'}; \(\backslash\)}
+\DoxyCodeLine{        yyleng = yyless\_macro\_arg; \(\backslash\)}
+\DoxyCodeLine{        \} \(\backslash\)}
+\DoxyCodeLine{    while ( 0 )}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{annot__lexer_8cc_a3bfa55ce11beedbbf77929b1be152067}\label{annot__lexer_8cc_a3bfa55ce11beedbbf77929b1be152067}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yylex@{yylex}}
+\index{yylex@{yylex}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yylex}{yylex}}
+{\footnotesize\ttfamily int yylex~annotlex}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a0180d5b750112a6cfb27817966e99fff}\label{annot__lexer_8cc_a0180d5b750112a6cfb27817966e99fff}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yylex\_destroy@{yylex\_destroy}}
+\index{yylex\_destroy@{yylex\_destroy}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yylex\_destroy}{yylex\_destroy}}
+{\footnotesize\ttfamily int yylex\+\_\+destroy(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotlex\+\_\+destroy}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a1abe53179d3512124a969f758a7e8008}\label{annot__lexer_8cc_a1abe53179d3512124a969f758a7e8008}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yylex\_init@{yylex\_init}}
+\index{yylex\_init@{yylex\_init}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yylex\_init}{yylex\_init}}
+{\footnotesize\ttfamily \#define yylex\+\_\+init~annotlex\+\_\+init}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a3e35658077c5654d17265289032c8911}\label{annot__lexer_8cc_a3e35658077c5654d17265289032c8911}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yylex\_init\_extra@{yylex\_init\_extra}}
+\index{yylex\_init\_extra@{yylex\_init\_extra}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yylex\_init\_extra}{yylex\_init\_extra}}
+{\footnotesize\ttfamily \#define yylex\+\_\+init\+\_\+extra~annotlex\+\_\+init\+\_\+extra}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}\label{annot__lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yylineno@{yylineno}}
+\index{yylineno@{yylineno}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yylineno}{yylineno}}
+{\footnotesize\ttfamily int yylineno~annotlineno}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a745d37b5e002b2e5f93ad42ea7b554be}\label{annot__lexer_8cc_a745d37b5e002b2e5f93ad42ea7b554be}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yymore@{yymore}}
+\index{yymore@{yymore}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yymore}{yymore}}
+{\footnotesize\ttfamily \#define yymore(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~yymore\+\_\+used\+\_\+but\+\_\+not\+\_\+detected}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a452d0647f1848fea42589793f3e2d1f4}\label{annot__lexer_8cc_a452d0647f1848fea42589793f3e2d1f4}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yynoreturn@{yynoreturn}}
+\index{yynoreturn@{yynoreturn}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yynoreturn}{yynoreturn}}
+{\footnotesize\ttfamily \#define yynoreturn}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a296847b42b0baa62e2af36cb79f3c0eb}\label{annot__lexer_8cc_a296847b42b0baa62e2af36cb79f3c0eb}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyout@{yyout}}
+\index{yyout@{yyout}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyout}{yyout}}
+{\footnotesize\ttfamily FILE $\ast$ yyout~annotout}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa6416fe813d70fe9b2febdc776174577}\label{annot__lexer_8cc_aa6416fe813d70fe9b2febdc776174577}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yypop\_buffer\_state@{yypop\_buffer\_state}}
+\index{yypop\_buffer\_state@{yypop\_buffer\_state}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yypop\_buffer\_state}{yypop\_buffer\_state}}
+{\footnotesize\ttfamily void yypop\+\_\+buffer\+\_\+state(\begin{DoxyParamCaption}\item[{}]{void }\end{DoxyParamCaption})~annotpop\+\_\+buffer\+\_\+state}
+
+Removes and deletes the top of the stack, if present. The next element becomes the new top. \mbox{\Hypertarget{annot__lexer_8cc_a498ea96bb65e39b1eab5c51cf16ead13}\label{annot__lexer_8cc_a498ea96bb65e39b1eab5c51cf16ead13}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yypush\_buffer\_state@{yypush\_buffer\_state}}
+\index{yypush\_buffer\_state@{yypush\_buffer\_state}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yypush\_buffer\_state}{yypush\_buffer\_state}}
+{\footnotesize\ttfamily \#define yypush\+\_\+buffer\+\_\+state~annotpush\+\_\+buffer\+\_\+state}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab1eba250555ca003eb39387bb1a41d39}\label{annot__lexer_8cc_ab1eba250555ca003eb39387bb1a41d39}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyrealloc@{yyrealloc}}
+\index{yyrealloc@{yyrealloc}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyrealloc}{yyrealloc}}
+{\footnotesize\ttfamily \#define yyrealloc~annotrealloc}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a2259355ac49295f72feab070a34a9b11}\label{annot__lexer_8cc_a2259355ac49295f72feab070a34a9b11}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyrestart@{yyrestart}}
+\index{yyrestart@{yyrestart}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyrestart}{yyrestart}}
+{\footnotesize\ttfamily \#define yyrestart~annotrestart}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a254eae02eef471e53fba6c926f9ea9af}\label{annot__lexer_8cc_a254eae02eef471e53fba6c926f9ea9af}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_debug@{yyset\_debug}}
+\index{yyset\_debug@{yyset\_debug}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_debug}{yyset\_debug}}
+{\footnotesize\ttfamily \#define yyset\+\_\+debug~annotset\+\_\+debug}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a04fd4c8badc07e7080dbd371b6bc4811}\label{annot__lexer_8cc_a04fd4c8badc07e7080dbd371b6bc4811}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_extra@{yyset\_extra}}
+\index{yyset\_extra@{yyset\_extra}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_extra}{yyset\_extra}}
+{\footnotesize\ttfamily \#define yyset\+\_\+extra~annotset\+\_\+extra}
+
+\mbox{\Hypertarget{annot__lexer_8cc_afca8968a4317529bdbdc6ed77cd1e479}\label{annot__lexer_8cc_afca8968a4317529bdbdc6ed77cd1e479}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_in@{yyset\_in}}
+\index{yyset\_in@{yyset\_in}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_in}{yyset\_in}}
+{\footnotesize\ttfamily \#define yyset\+\_\+in~annotset\+\_\+in}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a10055b24aa335a47aec5deaac1a47603}\label{annot__lexer_8cc_a10055b24aa335a47aec5deaac1a47603}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_lineno@{yyset\_lineno}}
+\index{yyset\_lineno@{yyset\_lineno}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_lineno}{yyset\_lineno}}
+{\footnotesize\ttfamily \#define yyset\+\_\+lineno~annotset\+\_\+lineno}
+
+\mbox{\Hypertarget{annot__lexer_8cc_add96a0e9a95289d7fc2a45adfaf0f9ef}\label{annot__lexer_8cc_add96a0e9a95289d7fc2a45adfaf0f9ef}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_out@{yyset\_out}}
+\index{yyset\_out@{yyset\_out}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_out}{yyset\_out}}
+{\footnotesize\ttfamily \#define yyset\+\_\+out~annotset\+\_\+out}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a32b5b960944f946b192d54f672569cd9}\label{annot__lexer_8cc_a32b5b960944f946b192d54f672569cd9}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YYSTATE@{YYSTATE}}
+\index{YYSTATE@{YYSTATE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YYSTATE}{YYSTATE}}
+{\footnotesize\ttfamily \#define YYSTATE~\mbox{\hyperlink{lexer_8cc_a8e14785f9eab7a997d659b25af9584c5}{YY\+\_\+\+START}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a828cc83270f8f5bb1688e14dd4e28128}\label{annot__lexer_8cc_a828cc83270f8f5bb1688e14dd4e28128}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YYTABLES\_NAME@{YYTABLES\_NAME}}
+\index{YYTABLES\_NAME@{YYTABLES\_NAME}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YYTABLES\_NAME}{YYTABLES\_NAME}}
+{\footnotesize\ttfamily \#define YYTABLES\+\_\+\+NAME~\char`\"{}yytables\char`\"{}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac3286b18a2e91b4571b97df96a118e84}\label{annot__lexer_8cc_ac3286b18a2e91b4571b97df96a118e84}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyterminate@{yyterminate}}
+\index{yyterminate@{yyterminate}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyterminate}{yyterminate}}
+{\footnotesize\ttfamily \#define yyterminate(\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})~return \mbox{\hyperlink{lexer_8cc_a8e0bcf8f8a5b613ea583347f8bc31cbf}{YY\+\_\+\+NULL}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}\label{annot__lexer_8cc_a35b96d819f6a8f8638894c429e68b02a}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yytext@{yytext}}
+\index{yytext@{yytext}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yytext}{yytext}}
+{\footnotesize\ttfamily char $\ast$ yytext~annottext}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a790a191a93ef4d3b8c0bb43fd7480052}\label{annot__lexer_8cc_a790a191a93ef4d3b8c0bb43fd7480052}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yytext\_ptr@{yytext\_ptr}}
+\index{yytext\_ptr@{yytext\_ptr}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yytext\_ptr}{yytext\_ptr}}
+{\footnotesize\ttfamily \#define yytext\+\_\+ptr~\mbox{\hyperlink{lexer_8hh_ad9264b77d56b6971f29739e2bda77f51}{yytext}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a5be541efdb129f7cefb2437f52fe7359}\label{annot__lexer_8cc_a5be541efdb129f7cefb2437f52fe7359}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yywrap@{yywrap}}
+\index{yywrap@{yywrap}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yywrap}{yywrap}}
+{\footnotesize\ttfamily \#define yywrap~\mbox{\hyperlink{annot__lexer_8hh_a06db2cf6e3abb586a4a1158ab29c4888}{annotwrap}}}
+
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{annot__lexer_8cc_a2e73b2c75126814585525fb2e9d51159}\label{annot__lexer_8cc_a2e73b2c75126814585525fb2e9d51159}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!flex\_int16\_t@{flex\_int16\_t}}
+\index{flex\_int16\_t@{flex\_int16\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{flex\_int16\_t}{flex\_int16\_t}}
+{\footnotesize\ttfamily typedef short int \mbox{\hyperlink{annot__lexer_8cc_a2e73b2c75126814585525fb2e9d51159}{flex\+\_\+int16\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a838ce943cf44ef7769480714fc6c3ba9}\label{annot__lexer_8cc_a838ce943cf44ef7769480714fc6c3ba9}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!flex\_int32\_t@{flex\_int32\_t}}
+\index{flex\_int32\_t@{flex\_int32\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{flex\_int32\_t}{flex\_int32\_t}}
+{\footnotesize\ttfamily typedef int \mbox{\hyperlink{annot__lexer_8cc_a838ce943cf44ef7769480714fc6c3ba9}{flex\+\_\+int32\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a7b0840dff4a2ef1702118aa12264b2a7}\label{annot__lexer_8cc_a7b0840dff4a2ef1702118aa12264b2a7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!flex\_int8\_t@{flex\_int8\_t}}
+\index{flex\_int8\_t@{flex\_int8\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{flex\_int8\_t}{flex\_int8\_t}}
+{\footnotesize\ttfamily typedef signed char \mbox{\hyperlink{annot__lexer_8cc_a7b0840dff4a2ef1702118aa12264b2a7}{flex\+\_\+int8\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ac50cdb9eefbef83a1cec89e3a7f6e1d2}\label{annot__lexer_8cc_ac50cdb9eefbef83a1cec89e3a7f6e1d2}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!flex\_uint16\_t@{flex\_uint16\_t}}
+\index{flex\_uint16\_t@{flex\_uint16\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{flex\_uint16\_t}{flex\_uint16\_t}}
+{\footnotesize\ttfamily typedef unsigned short int \mbox{\hyperlink{annot__lexer_8cc_ac50cdb9eefbef83a1cec89e3a7f6e1d2}{flex\+\_\+uint16\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a36869712de12820c73aae736762e8e88}\label{annot__lexer_8cc_a36869712de12820c73aae736762e8e88}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!flex\_uint32\_t@{flex\_uint32\_t}}
+\index{flex\_uint32\_t@{flex\_uint32\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{flex\_uint32\_t}{flex\_uint32\_t}}
+{\footnotesize\ttfamily typedef unsigned int \mbox{\hyperlink{annot__lexer_8cc_a36869712de12820c73aae736762e8e88}{flex\+\_\+uint32\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a0fac5ea484f64e75dbe6eba4aa61750c}\label{annot__lexer_8cc_a0fac5ea484f64e75dbe6eba4aa61750c}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!flex\_uint8\_t@{flex\_uint8\_t}}
+\index{flex\_uint8\_t@{flex\_uint8\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{flex\_uint8\_t}{flex\_uint8\_t}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{annot__lexer_8cc_a0fac5ea484f64e75dbe6eba4aa61750c}{flex\+\_\+uint8\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}\label{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_BUFFER\_STATE@{YY\_BUFFER\_STATE}}
+\index{YY\_BUFFER\_STATE@{YY\_BUFFER\_STATE}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_BUFFER\_STATE}{YY\_BUFFER\_STATE}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structyy__buffer__state}{yy\+\_\+buffer\+\_\+state}}$\ast$ \mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_acc1e625a829554ffed5e4307d4a5f6b7}\label{annot__lexer_8cc_acc1e625a829554ffed5e4307d4a5f6b7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_CHAR@{YY\_CHAR}}
+\index{YY\_CHAR@{YY\_CHAR}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_CHAR}{YY\_CHAR}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{annot__lexer_8cc_a0fac5ea484f64e75dbe6eba4aa61750c}{flex\+\_\+uint8\+\_\+t}} \mbox{\hyperlink{annot__lexer_8cc_acc1e625a829554ffed5e4307d4a5f6b7}{YY\+\_\+\+CHAR}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}\label{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_size\_t@{yy\_size\_t}}
+\index{yy\_size\_t@{yy\_size\_t}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_size\_t}{yy\_size\_t}}
+{\footnotesize\ttfamily typedef size\+\_\+t \mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}}}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}\label{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_state\_type@{yy\_state\_type}}
+\index{yy\_state\_type@{yy\_state\_type}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_state\_type}{yy\_state\_type}}
+{\footnotesize\ttfamily typedef int \mbox{\hyperlink{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}{yy\+\_\+state\+\_\+type}}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{annot__lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}\label{annot__lexer_8cc_ad4a65b873df5c05570846b5413b41dfd}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!if@{if}}
+\index{if@{if}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{if()}{if()}}
+{\footnotesize\ttfamily if (\begin{DoxyParamCaption}\item[{!}]{yy\+\_\+init }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_af4f3e8c74fdd11c0a2af61ed6fdbc93f}\label{annot__lexer_8cc_af4f3e8c74fdd11c0a2af61ed6fdbc93f}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!step@{step}}
+\index{step@{step}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{annot__parser_8cc_af986ec87d7a65aa829cf446fdfc824b9}{aloc}} step (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a385003376e93603c240c912ac645bd98}\label{annot__lexer_8cc_a385003376e93603c240c912ac645bd98}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!stripquotes@{stripquotes}}
+\index{stripquotes@{stripquotes}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{stripquotes()}{stripquotes()}}
+{\footnotesize\ttfamily string stripquotes (\begin{DoxyParamCaption}\item[{string}]{s }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a8fdafe3be7e00ce3d4f0cb50a9a5eb39}\label{annot__lexer_8cc_a8fdafe3be7e00ce3d4f0cb50a9a5eb39}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!while@{while}}
+\index{while@{while}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{while()}{while()}}
+{\footnotesize\ttfamily while (\begin{DoxyParamCaption}\item[{1}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a5bc6f1a5f7812508f425b08283f13ae8}\label{annot__lexer_8cc_a5bc6f1a5f7812508f425b08283f13ae8}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_create\_buffer@{yy\_create\_buffer}}
+\index{yy\_create\_buffer@{yy\_create\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_create\_buffer()}{yy\_create\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} yy\+\_\+create\+\_\+buffer (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{file,  }\item[{int}]{size }\end{DoxyParamCaption})}
+
+Allocate and initialize an input buffer state. 
+\begin{DoxyParams}{Parameters}
+{\em file} & A readable stream. \\
+\hline
+{\em size} & The character buffer size in bytes. When in doubt, use {\ttfamily YY\+\_\+\+BUF\+\_\+\+SIZE}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the allocated buffer state. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{annot__lexer_8cc_ae6ac796aa6c45d433a4b89bf45e6e9dc}\label{annot__lexer_8cc_ae6ac796aa6c45d433a4b89bf45e6e9dc}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_delete\_buffer@{yy\_delete\_buffer}}
+\index{yy\_delete\_buffer@{yy\_delete\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_delete\_buffer()}{yy\_delete\_buffer()}}
+{\footnotesize\ttfamily void yy\+\_\+delete\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}}}]{b }\end{DoxyParamCaption})}
+
+Destroy the buffer. 
+\begin{DoxyParams}{Parameters}
+{\em b} & a buffer created with \mbox{\hyperlink{annot__lexer_8cc_ac86ea8173dfcfc5c989d3295a77e2f95}{yy\+\_\+create\+\_\+buffer()}} \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{annot__lexer_8cc_a2f59cc88e85e5455c62e4ef7ce095ea8}\label{annot__lexer_8cc_a2f59cc88e85e5455c62e4ef7ce095ea8}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_flush\_buffer@{yy\_flush\_buffer}}
+\index{yy\_flush\_buffer@{yy\_flush\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_flush\_buffer()}{yy\_flush\_buffer()}}
+{\footnotesize\ttfamily void yy\+\_\+flush\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}}}]{b }\end{DoxyParamCaption})}
+
+Discard all buffered characters. On the next scan, YY\+\_\+\+INPUT will be called. 
+\begin{DoxyParams}{Parameters}
+{\em b} & the buffer state to be flushed, usually {\ttfamily YY\+\_\+\+CURRENT\+\_\+\+BUFFER}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{annot__lexer_8cc_af81595b30c0da73f9034ffb511db6388}\label{annot__lexer_8cc_af81595b30c0da73f9034ffb511db6388}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_scan\_buffer@{yy\_scan\_buffer}}
+\index{yy\_scan\_buffer@{yy\_scan\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_scan\_buffer()}{yy\_scan\_buffer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} yy\+\_\+scan\+\_\+buffer (\begin{DoxyParamCaption}\item[{char $\ast$}]{base,  }\item[{\mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}}}]{size }\end{DoxyParamCaption})}
+
+Setup the input buffer state to scan directly from a user-\/specified character buffer. 
+\begin{DoxyParams}{Parameters}
+{\em base} & the character buffer \\
+\hline
+{\em size} & the size in bytes of the character buffer\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the newly allocated buffer state object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{annot__lexer_8cc_acbf193b612e891a3fca6a810daa18c66}\label{annot__lexer_8cc_acbf193b612e891a3fca6a810daa18c66}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_scan\_bytes@{yy\_scan\_bytes}}
+\index{yy\_scan\_bytes@{yy\_scan\_bytes}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_scan\_bytes()}{yy\_scan\_bytes()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} yy\+\_\+scan\+\_\+bytes (\begin{DoxyParamCaption}\item[{const char $\ast$}]{yybytes,  }\item[{int}]{\+\_\+yybytes\+\_\+len }\end{DoxyParamCaption})}
+
+Setup the input buffer state to scan the given bytes. The next call to \mbox{\hyperlink{annot__lexer_8cc_a3bfa55ce11beedbbf77929b1be152067}{yylex()}} will scan from a {\itshape copy} of {\itshape bytes}. 
+\begin{DoxyParams}{Parameters}
+{\em yybytes} & the byte buffer to scan \\
+\hline
+{\em \+\_\+yybytes\+\_\+len} & the number of bytes in the buffer pointed to by {\itshape bytes}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the newly allocated buffer state object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{annot__lexer_8cc_aaba3a8c0a4caad352ee68b5742c4a9d1}\label{annot__lexer_8cc_aaba3a8c0a4caad352ee68b5742c4a9d1}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_scan\_string@{yy\_scan\_string}}
+\index{yy\_scan\_string@{yy\_scan\_string}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_scan\_string()}{yy\_scan\_string()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}} yy\+\_\+scan\+\_\+string (\begin{DoxyParamCaption}\item[{const char $\ast$}]{yystr }\end{DoxyParamCaption})}
+
+Setup the input buffer state to scan a string. The next call to \mbox{\hyperlink{annot__lexer_8cc_a3bfa55ce11beedbbf77929b1be152067}{yylex()}} will scan from a {\itshape copy} of {\itshape str}. 
+\begin{DoxyParams}{Parameters}
+{\em yystr} & a NUL-\/terminated string to scan\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the newly allocated buffer state object. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If you want to scan bytes that may contain NUL values, then use \mbox{\hyperlink{annot__lexer_8cc_a3b70699ea880c5d25a1c75f4ad96c315}{yy\+\_\+scan\+\_\+bytes()}} instead. 
+\end{DoxyNote}
+\mbox{\Hypertarget{annot__lexer_8cc_a3098c48a74ef8fd852f7dd4b3331cbce}\label{annot__lexer_8cc_a3098c48a74ef8fd852f7dd4b3331cbce}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_switch\_to\_buffer@{yy\_switch\_to\_buffer}}
+\index{yy\_switch\_to\_buffer@{yy\_switch\_to\_buffer}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_switch\_to\_buffer()}{yy\_switch\_to\_buffer()}}
+{\footnotesize\ttfamily void yy\+\_\+switch\+\_\+to\+\_\+buffer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}}}]{new\+\_\+buffer }\end{DoxyParamCaption})}
+
+Switch to a different input buffer. 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+buffer} & The new input buffer. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{annot__lexer_8cc_a7da304d8ef6c688c0835d35296fe61c2}\label{annot__lexer_8cc_a7da304d8ef6c688c0835d35296fe61c2}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyalloc@{yyalloc}}
+\index{yyalloc@{yyalloc}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyalloc()}{yyalloc()}}
+{\footnotesize\ttfamily void $\ast$ yyalloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}}}]{size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a70f82d43d4797bb2a50f7678ddbfbda5}\label{annot__lexer_8cc_a70f82d43d4797bb2a50f7678ddbfbda5}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyfree@{yyfree}}
+\index{yyfree@{yyfree}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyfree()}{yyfree()}}
+{\footnotesize\ttfamily void yyfree (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a4bf8969e5234aef8b46cce9a67a62724}\label{annot__lexer_8cc_a4bf8969e5234aef8b46cce9a67a62724}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yypush\_buffer\_state@{yypush\_buffer\_state}}
+\index{yypush\_buffer\_state@{yypush\_buffer\_state}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yypush\_buffer\_state()}{yypush\_buffer\_state()}}
+{\footnotesize\ttfamily void yypush\+\_\+buffer\+\_\+state (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{annot__lexer_8cc_a4e5bd2d129903df83f3d13effaf8f3e4}{YY\+\_\+\+BUFFER\+\_\+\+STATE}}}]{new\+\_\+buffer }\end{DoxyParamCaption})}
+
+Pushes the new state onto the stack. The new state becomes the current state. This function will allocate the stack if necessary. 
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+buffer} & The new state. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{annot__lexer_8cc_abcb4148bc13fe254059384c2fdf472b7}\label{annot__lexer_8cc_abcb4148bc13fe254059384c2fdf472b7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyrealloc@{yyrealloc}}
+\index{yyrealloc@{yyrealloc}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyrealloc()}{yyrealloc()}}
+{\footnotesize\ttfamily void $\ast$ yyrealloc (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{\mbox{\hyperlink{annot__lexer_8cc_ad557845057f187eec4be07e2717d2afa}{yy\+\_\+size\+\_\+t}}}]{size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ab657ddef65d43cc3ab8dfc2cad0ac5b8}\label{annot__lexer_8cc_ab657ddef65d43cc3ab8dfc2cad0ac5b8}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyrestart@{yyrestart}}
+\index{yyrestart@{yyrestart}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyrestart()}{yyrestart()}}
+{\footnotesize\ttfamily void yyrestart (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{input\+\_\+file }\end{DoxyParamCaption})}
+
+Immediately switch to a different input stream. 
+\begin{DoxyParams}{Parameters}
+{\em input\+\_\+file} & A readable stream.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function does not reset the start condition to {\ttfamily INITIAL} . 
+\end{DoxyNote}
+\mbox{\Hypertarget{annot__lexer_8cc_ac571eade4cca933e8ccdf6759c527fe7}\label{annot__lexer_8cc_ac571eade4cca933e8ccdf6759c527fe7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_debug@{yyset\_debug}}
+\index{yyset\_debug@{yyset\_debug}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_debug()}{yyset\_debug()}}
+{\footnotesize\ttfamily void yyset\+\_\+debug (\begin{DoxyParamCaption}\item[{int}]{debug\+\_\+flag }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a2df391b304dadab17608192b116af2a1}\label{annot__lexer_8cc_a2df391b304dadab17608192b116af2a1}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_extra@{yyset\_extra}}
+\index{yyset\_extra@{yyset\_extra}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_extra()}{yyset\_extra()}}
+{\footnotesize\ttfamily void yyset\+\_\+extra (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{lexer_8hh_a26938d921de835f6183c02e54cf08828}{YY\+\_\+\+EXTRA\+\_\+\+TYPE}}}]{user\+\_\+defined }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a14346b28ae39537ab27caacebfcb31a7}\label{annot__lexer_8cc_a14346b28ae39537ab27caacebfcb31a7}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_in@{yyset\_in}}
+\index{yyset\_in@{yyset\_in}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_in()}{yyset\_in()}}
+{\footnotesize\ttfamily void yyset\+\_\+in (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{\+\_\+in\+\_\+str }\end{DoxyParamCaption})}
+
+Set the input stream. This does not discard the current input buffer. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+in\+\_\+str} & A readable stream.\\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{annot__lexer_8cc_a968d5b9e7e06a38bfca977b343d47d5c}{yy\+\_\+switch\+\_\+to\+\_\+buffer}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{annot__lexer_8cc_aca0fe76da7a277561738a9a14ab8cb0a}\label{annot__lexer_8cc_aca0fe76da7a277561738a9a14ab8cb0a}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_lineno@{yyset\_lineno}}
+\index{yyset\_lineno@{yyset\_lineno}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_lineno()}{yyset\_lineno()}}
+{\footnotesize\ttfamily void yyset\+\_\+lineno (\begin{DoxyParamCaption}\item[{int}]{\+\_\+line\+\_\+number }\end{DoxyParamCaption})}
+
+Set the current line number. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+line\+\_\+number} & line number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{annot__lexer_8cc_ad8174301995e5a61ab330516ec081e35}\label{annot__lexer_8cc_ad8174301995e5a61ab330516ec081e35}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyset\_out@{yyset\_out}}
+\index{yyset\_out@{yyset\_out}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyset\_out()}{yyset\_out()}}
+{\footnotesize\ttfamily void yyset\+\_\+out (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{\+\_\+out\+\_\+str }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{annot__lexer_8cc_a483da4c691e92dcb79c40a3514759b6b}\label{annot__lexer_8cc_a483da4c691e92dcb79c40a3514759b6b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_act@{yy\_act}}
+\index{yy\_act@{yy\_act}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_act}{yy\_act}}
+{\footnotesize\ttfamily int yy\+\_\+act}
+
+\mbox{\Hypertarget{annot__lexer_8cc_aa749693ef7d0c10b137e887638fdc5b2}\label{annot__lexer_8cc_aa749693ef7d0c10b137e887638fdc5b2}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_bp@{yy\_bp}}
+\index{yy\_bp@{yy\_bp}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_bp}{yy\_bp}}
+{\footnotesize\ttfamily char $\ast$ yy\+\_\+bp}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}\label{annot__lexer_8cc_a61b01b6b236b05090b972f8fd95da539}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_cp@{yy\_cp}}
+\index{yy\_cp@{yy\_cp}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_cp}{yy\_cp}}
+{\footnotesize\ttfamily char$\ast$ yy\+\_\+cp}
+
+\mbox{\Hypertarget{annot__lexer_8cc_abcefb20c54ce0f92452cfbb9cf657670}\label{annot__lexer_8cc_abcefb20c54ce0f92452cfbb9cf657670}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!YY\_DECL@{YY\_DECL}}
+\index{YY\_DECL@{YY\_DECL}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{YY\_DECL}{YY\_DECL}}
+{\footnotesize\ttfamily YY\+\_\+\+DECL}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \mbox{\hyperlink{annot__lexer_8cc_a9ba7c416f135b0f0c1f4addded4616b5}{yy\_state\_type}} yy\_current\_state}
+
+\end{DoxyCode}
+The main scanner function which does all the work. \mbox{\Hypertarget{annot__lexer_8cc_a7411c3bab9eca1afee90113c2d22da37}\label{annot__lexer_8cc_a7411c3bab9eca1afee90113c2d22da37}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yy\_flex\_debug@{yy\_flex\_debug}}
+\index{yy\_flex\_debug@{yy\_flex\_debug}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yy\_flex\_debug}{yy\_flex\_debug}}
+{\footnotesize\ttfamily int yy\+\_\+flex\+\_\+debug = 0}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a46af646807e0797e72b6e8945e7ea88b}\label{annot__lexer_8cc_a46af646807e0797e72b6e8945e7ea88b}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyin@{yyin}}
+\index{yyin@{yyin}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyin}{yyin}}
+{\footnotesize\ttfamily FILE$\ast$ yyin = NULL}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}\label{annot__lexer_8cc_a1b5865350b5ca5c1d69f429c2a652953}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyleng@{yyleng}}
+\index{yyleng@{yyleng}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyleng}{yyleng}}
+{\footnotesize\ttfamily int yyleng}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}\label{annot__lexer_8cc_a5e36364965360da7b7cdfc2188e0af84}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yylineno@{yylineno}}
+\index{yylineno@{yylineno}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yylineno}{yylineno}}
+{\footnotesize\ttfamily int yylineno = 1}
+
+\mbox{\Hypertarget{annot__lexer_8cc_a296847b42b0baa62e2af36cb79f3c0eb}\label{annot__lexer_8cc_a296847b42b0baa62e2af36cb79f3c0eb}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yyout@{yyout}}
+\index{yyout@{yyout}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yyout}{yyout}}
+{\footnotesize\ttfamily FILE $\ast$ yyout = NULL}
+
+\mbox{\Hypertarget{annot__lexer_8cc_ad9264b77d56b6971f29739e2bda77f51}\label{annot__lexer_8cc_ad9264b77d56b6971f29739e2bda77f51}} 
+\index{annot\_lexer.cc@{annot\_lexer.cc}!yytext@{yytext}}
+\index{yytext@{yytext}!annot\_lexer.cc@{annot\_lexer.cc}}
+\doxysubsubsection{\texorpdfstring{yytext}{yytext}}
+{\footnotesize\ttfamily char$\ast$ yytext}
+

@@ -1,0 +1,175 @@
+\hypertarget{graph_8hh}{}\doxysection{graph.\+hh File Reference}
+\label{graph_8hh}\index{graph.hh@{graph.hh}}
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$regex.\+h$>$}\newline
+{\ttfamily \#include $<$nodesize.\+hh$>$}\newline
+Include dependency graph for graph.\+hh\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{graph_8hh__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{graph_8hh__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classnode}{node}}
+\item 
+class \mbox{\hyperlink{classsinglenode}{singlenode}}
+\item 
+class \mbox{\hyperlink{classrailnode}{railnode}}
+\item 
+class \mbox{\hyperlink{classmultinode}{multinode}}
+\item 
+class \mbox{\hyperlink{classnontermnode}{nontermnode}}
+\item 
+class \mbox{\hyperlink{classtermnode}{termnode}}
+\item 
+class \mbox{\hyperlink{classnullnode}{nullnode}}
+\item 
+class \mbox{\hyperlink{classnewlinenode}{newlinenode}}
+\item 
+class \mbox{\hyperlink{classrownode}{rownode}}
+\item 
+class \mbox{\hyperlink{classchoicenode}{choicenode}}
+\item 
+class \mbox{\hyperlink{classloopnode}{loopnode}}
+\item 
+class \mbox{\hyperlink{classconcatnode}{concatnode}}
+\item 
+class \mbox{\hyperlink{classproductionnode}{productionnode}}
+\item 
+class \mbox{\hyperlink{classgrammar}{grammar}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef map$<$ string, string $>$ \mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}}
+\item 
+typedef pair$<$ string, string $>$ \mbox{\hyperlink{graph_8hh_a81b902e00124c95d161bffd863b12c27}{annot\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340}{vrailside}} \{ \mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340adb45120aafd37a973140edee24708065}{LEFT}}
+, \mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340aec8379af7490bb9eaaf579cf17876f38}{RIGHT}}
+ \}
+\item 
+enum \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} \{ \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5affaba595d8bca8bc5e67c37c0a9d89becfa}{UP}}
+, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5affa9b0b4a95b99523966e0e34ffdadac9da}{DOWN}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{graph_8hh_aa89ac808dbec9735565f485e2ff34bb7}{latexwrite}} (string fontspec, string s)
+\item 
+string \mbox{\hyperlink{graph_8hh_a70975df74a75e40240bb9da7c2f2a14f}{next\+Coord}} ()
+\item 
+string \mbox{\hyperlink{graph_8hh_a52f34c281dbe69f93d404ee2c5358cd9}{next\+Node}} ()
+\item 
+string \mbox{\hyperlink{graph_8hh_a8b37bc3a6437e202413a26faf4dcea4b}{next\+Chain}} ()
+\item 
+string \mbox{\hyperlink{graph_8hh_af48070ee5ebf35ab57c5ab422445d28b}{next\+Fit}} ()
+\item 
+string \mbox{\hyperlink{graph_8hh_aa8b634c2e93ec3622c5c511005d86fe5}{strip\+Special}} (string s)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{graph_8hh_a81b902e00124c95d161bffd863b12c27}\label{graph_8hh_a81b902e00124c95d161bffd863b12c27}} 
+\index{graph.hh@{graph.hh}!annot\_t@{annot\_t}}
+\index{annot\_t@{annot\_t}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{annot\_t}{annot\_t}}
+{\footnotesize\ttfamily typedef pair$<$string,string$>$ \mbox{\hyperlink{graph_8hh_a81b902e00124c95d161bffd863b12c27}{annot\+\_\+t}}}
+
+\mbox{\Hypertarget{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}\label{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}} 
+\index{graph.hh@{graph.hh}!annotmap@{annotmap}}
+\index{annotmap@{annotmap}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{annotmap}{annotmap}}
+{\footnotesize\ttfamily typedef map$<$string,string$>$ \mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{graph_8hh_a52423b195df8f906e87d6486168b5aff}\label{graph_8hh_a52423b195df8f906e87d6486168b5aff}} 
+\index{graph.hh@{graph.hh}!vraildir@{vraildir}}
+\index{vraildir@{vraildir}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{vraildir}{vraildir}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UP@{UP}!graph.hh@{graph.hh}}\index{graph.hh@{graph.hh}!UP@{UP}}}\mbox{\Hypertarget{graph_8hh_a52423b195df8f906e87d6486168b5affaba595d8bca8bc5e67c37c0a9d89becfa}\label{graph_8hh_a52423b195df8f906e87d6486168b5affaba595d8bca8bc5e67c37c0a9d89becfa}} 
+UP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DOWN@{DOWN}!graph.hh@{graph.hh}}\index{graph.hh@{graph.hh}!DOWN@{DOWN}}}\mbox{\Hypertarget{graph_8hh_a52423b195df8f906e87d6486168b5affa9b0b4a95b99523966e0e34ffdadac9da}\label{graph_8hh_a52423b195df8f906e87d6486168b5affa9b0b4a95b99523966e0e34ffdadac9da}} 
+DOWN&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{graph_8hh_aff7de561e5246db02d672e0510025340}\label{graph_8hh_aff7de561e5246db02d672e0510025340}} 
+\index{graph.hh@{graph.hh}!vrailside@{vrailside}}
+\index{vrailside@{vrailside}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{vrailside}{vrailside}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{graph_8hh_aff7de561e5246db02d672e0510025340}{vrailside}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT@{LEFT}!graph.hh@{graph.hh}}\index{graph.hh@{graph.hh}!LEFT@{LEFT}}}\mbox{\Hypertarget{graph_8hh_aff7de561e5246db02d672e0510025340adb45120aafd37a973140edee24708065}\label{graph_8hh_aff7de561e5246db02d672e0510025340adb45120aafd37a973140edee24708065}} 
+LEFT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT@{RIGHT}!graph.hh@{graph.hh}}\index{graph.hh@{graph.hh}!RIGHT@{RIGHT}}}\mbox{\Hypertarget{graph_8hh_aff7de561e5246db02d672e0510025340aec8379af7490bb9eaaf579cf17876f38}\label{graph_8hh_aff7de561e5246db02d672e0510025340aec8379af7490bb9eaaf579cf17876f38}} 
+RIGHT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{graph_8hh_aa89ac808dbec9735565f485e2ff34bb7}\label{graph_8hh_aa89ac808dbec9735565f485e2ff34bb7}} 
+\index{graph.hh@{graph.hh}!latexwrite@{latexwrite}}
+\index{latexwrite@{latexwrite}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{latexwrite()}{latexwrite()}}
+{\footnotesize\ttfamily string latexwrite (\begin{DoxyParamCaption}\item[{string}]{fontspec,  }\item[{string}]{s }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{graph_8hh_a8b37bc3a6437e202413a26faf4dcea4b}\label{graph_8hh_a8b37bc3a6437e202413a26faf4dcea4b}} 
+\index{graph.hh@{graph.hh}!nextChain@{nextChain}}
+\index{nextChain@{nextChain}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{nextChain()}{nextChain()}}
+{\footnotesize\ttfamily string next\+Chain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{graph_8hh_a70975df74a75e40240bb9da7c2f2a14f}\label{graph_8hh_a70975df74a75e40240bb9da7c2f2a14f}} 
+\index{graph.hh@{graph.hh}!nextCoord@{nextCoord}}
+\index{nextCoord@{nextCoord}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{nextCoord()}{nextCoord()}}
+{\footnotesize\ttfamily string next\+Coord (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{graph_8hh_af48070ee5ebf35ab57c5ab422445d28b}\label{graph_8hh_af48070ee5ebf35ab57c5ab422445d28b}} 
+\index{graph.hh@{graph.hh}!nextFit@{nextFit}}
+\index{nextFit@{nextFit}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{nextFit()}{nextFit()}}
+{\footnotesize\ttfamily string next\+Fit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{graph_8hh_a52f34c281dbe69f93d404ee2c5358cd9}\label{graph_8hh_a52f34c281dbe69f93d404ee2c5358cd9}} 
+\index{graph.hh@{graph.hh}!nextNode@{nextNode}}
+\index{nextNode@{nextNode}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{nextNode()}{nextNode()}}
+{\footnotesize\ttfamily string next\+Node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{graph_8hh_aa8b634c2e93ec3622c5c511005d86fe5}\label{graph_8hh_aa8b634c2e93ec3622c5c511005d86fe5}} 
+\index{graph.hh@{graph.hh}!stripSpecial@{stripSpecial}}
+\index{stripSpecial@{stripSpecial}!graph.hh@{graph.hh}}
+\doxysubsubsection{\texorpdfstring{stripSpecial()}{stripSpecial()}}
+{\footnotesize\ttfamily string strip\+Special (\begin{DoxyParamCaption}\item[{string}]{s }\end{DoxyParamCaption})}
+

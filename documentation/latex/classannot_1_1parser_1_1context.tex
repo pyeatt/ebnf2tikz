@@ -1,0 +1,61 @@
+\hypertarget{classannot_1_1parser_1_1context}{}\doxysection{annot\+::parser\+::context Class Reference}
+\label{classannot_1_1parser_1_1context}\index{annot::parser::context@{annot::parser::context}}
+
+
+{\ttfamily \#include $<$annot\+\_\+parser.\+hh$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1parser_1_1context_aa471a677d6b939718638913d80364260}{context}} (const \mbox{\hyperlink{classannot_1_1parser}{parser}} \&yyparser, const \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \&yyla)
+\item 
+const \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \& \mbox{\hyperlink{classannot_1_1parser_1_1context_ae1a0807be0c1188b05b0e044d6ae20eb}{lookahead}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_1_1context_a54142a3d0676c93212bec02a45e8ed10}{token}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\item 
+const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \& \mbox{\hyperlink{classannot_1_1parser_1_1context_a1db5b968cdd8e7aba38362de2d71772d}{location}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\item 
+int \mbox{\hyperlink{classannot_1_1parser_1_1context_ac2aed1204056af22b8f2b540fe82708c}{expected\+\_\+tokens}} (\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} yyarg\mbox{[}$\,$\mbox{]}, int yyargn) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classannot_1_1parser_1_1context_aa471a677d6b939718638913d80364260}\label{classannot_1_1parser_1_1context_aa471a677d6b939718638913d80364260}} 
+\index{annot::parser::context@{annot::parser::context}!context@{context}}
+\index{context@{context}!annot::parser::context@{annot::parser::context}}
+\doxysubsubsection{\texorpdfstring{context()}{context()}}
+{\footnotesize\ttfamily annot\+::parser\+::context\+::context (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser}{parser}} \&}]{yyparser,  }\item[{const \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \&}]{yyla }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classannot_1_1parser_1_1context_ac2aed1204056af22b8f2b540fe82708c}\label{classannot_1_1parser_1_1context_ac2aed1204056af22b8f2b540fe82708c}} 
+\index{annot::parser::context@{annot::parser::context}!expected\_tokens@{expected\_tokens}}
+\index{expected\_tokens@{expected\_tokens}!annot::parser::context@{annot::parser::context}}
+\doxysubsubsection{\texorpdfstring{expected\_tokens()}{expected\_tokens()}}
+{\footnotesize\ttfamily int annot\+::parser\+::context\+::expected\+\_\+tokens (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}}}]{yyarg\mbox{[}$\,$\mbox{]},  }\item[{int}]{yyargn }\end{DoxyParamCaption}) const}
+
+Put in YYARG at most YYARGN of the expected tokens, and return the number of tokens stored in YYARG. If YYARG is null, return the number of expected tokens (guaranteed to be less than YYNTOKENS). \mbox{\Hypertarget{classannot_1_1parser_1_1context_a1db5b968cdd8e7aba38362de2d71772d}\label{classannot_1_1parser_1_1context_a1db5b968cdd8e7aba38362de2d71772d}} 
+\index{annot::parser::context@{annot::parser::context}!location@{location}}
+\index{location@{location}!annot::parser::context@{annot::parser::context}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}}\& annot\+::parser\+::context\+::location (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_1_1context_ae1a0807be0c1188b05b0e044d6ae20eb}\label{classannot_1_1parser_1_1context_ae1a0807be0c1188b05b0e044d6ae20eb}} 
+\index{annot::parser::context@{annot::parser::context}!lookahead@{lookahead}}
+\index{lookahead@{lookahead}!annot::parser::context@{annot::parser::context}}
+\doxysubsubsection{\texorpdfstring{lookahead()}{lookahead()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}}\& annot\+::parser\+::context\+::lookahead (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_1_1context_a54142a3d0676c93212bec02a45e8ed10}\label{classannot_1_1parser_1_1context_a54142a3d0676c93212bec02a45e8ed10}} 
+\index{annot::parser::context@{annot::parser::context}!token@{token}}
+\index{token@{token}!annot::parser::context@{annot::parser::context}}
+\doxysubsubsection{\texorpdfstring{token()}{token()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} annot\+::parser\+::context\+::token (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{annot__parser_8hh}{annot\+\_\+parser.\+hh}}\item 
+\mbox{\hyperlink{annot__parser_8cc}{annot\+\_\+parser.\+cc}}\end{DoxyCompactItemize}
