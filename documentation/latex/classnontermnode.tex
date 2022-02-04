@@ -1,0 +1,302 @@
+\hypertarget{classnontermnode}{}\doxysection{nontermnode Class Reference}
+\label{classnontermnode}\index{nontermnode@{nontermnode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for nontermnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{classnontermnode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for nontermnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{classnontermnode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classnontermnode_a83327f0565c2e2967cf8a9e275d52c19}{nontermnode}} (string s)
+\item 
+\mbox{\hyperlink{classnontermnode_ad050aa113985931a172e0bf4976a89ff}{nontermnode}} (const \mbox{\hyperlink{classnontermnode}{nontermnode}} \&original)
+\item 
+virtual \mbox{\hyperlink{classnontermnode}{nontermnode}} $\ast$ \mbox{\hyperlink{classnontermnode_a6a5528c6a48f5378d10646f9e5fa82b4}{clone}} () const
+\item 
+virtual \mbox{\hyperlink{classnontermnode_aea0f34ffb5d4a77b03597ea1e24dcf77}{$\sim$nontermnode}} ()
+\item 
+virtual void \mbox{\hyperlink{classnontermnode_ad10599340d4ee0a23b6c14b30afab1b7}{forget\+Child}} (int n)
+\item 
+virtual void \mbox{\hyperlink{classnontermnode_a9dafccfa08e463d5a802418843e5b347}{dump}} (int depth) const
+\item 
+virtual string \mbox{\hyperlink{classnontermnode_ad32dca10dd97b94123c43e0eac421d2d}{tex\+Name}} ()
+\item 
+virtual \mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classnontermnode_a1cee82ae6b19583c1ed9e4b585645cd6}{place}} (ofstream \&outs, int draw, int drawrails, \mbox{\hyperlink{classcoordinate}{coordinate}} start, \mbox{\hyperlink{classnode}{node}} $\ast$\mbox{\hyperlink{classnode_a5e88137f1d0e2f7a940bccf4c3d3a4d3}{parent}}, int depth)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_ad3540152ef5696d10db0f4e46db786da}{merge\+Concats}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_a0bca0108948b27e01d7fbb9a9464912a}{merge\+Choices}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_a604ae9e6560dd89ac4a2ad199cd75851}{lift\+Concats}} (int depth)
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classnontermnode_ac46b5cf204bc3d90e6c51788bd19043d}{get\+Child}} (int n)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_adf3bb3da5f7b39ce5e63abd64489311f}{analyze\+Opt\+Loops}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_a0448d3742e44a767f61d2c8c54213c62}{analyze\+Non\+Opt\+Loops}} (int depth)
+\item 
+virtual void \mbox{\hyperlink{classnontermnode_ad8d649808f818a0894811d18684302e9}{draw\+To\+Left\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classnontermnode_aaa01f66ee21d9224a52850b0b9e41e08}{draw\+To\+Right\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_aaabe40fd9fc0daab2b1da094a73f96e9}{operator==}} (\mbox{\hyperlink{classnode}{node}} \&r)
+\item 
+virtual int \mbox{\hyperlink{classnontermnode_a1d9651739179ad8d63c55013a7838bb9}{operator!=}} (\mbox{\hyperlink{classnode}{node}} \&r)
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classnontermnode_a4a487925f93aa881e2b3c54848fac4e6}{subsume}} (regex\+\_\+t $\ast$name, \mbox{\hyperlink{classnode}{node}} $\ast$replacement)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{classnontermnode_a423e013c08018eec6062c899769c84b8}{style}}
+\item 
+string \mbox{\hyperlink{classnontermnode_ab2ba737251788981589b18e0161736ea}{format}}
+\item 
+string \mbox{\hyperlink{classnontermnode_aceb300e153cf85858f10778162618211}{str}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classnontermnode_a83327f0565c2e2967cf8a9e275d52c19}\label{classnontermnode_a83327f0565c2e2967cf8a9e275d52c19}} 
+\index{nontermnode@{nontermnode}!nontermnode@{nontermnode}}
+\index{nontermnode@{nontermnode}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{nontermnode()}{nontermnode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily nontermnode\+::nontermnode (\begin{DoxyParamCaption}\item[{string}]{s }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classnontermnode_ad050aa113985931a172e0bf4976a89ff}\label{classnontermnode_ad050aa113985931a172e0bf4976a89ff}} 
+\index{nontermnode@{nontermnode}!nontermnode@{nontermnode}}
+\index{nontermnode@{nontermnode}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{nontermnode()}{nontermnode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily nontermnode\+::nontermnode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classnontermnode}{nontermnode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classnontermnode_aea0f34ffb5d4a77b03597ea1e24dcf77}\label{classnontermnode_aea0f34ffb5d4a77b03597ea1e24dcf77}} 
+\index{nontermnode@{nontermnode}!````~nontermnode@{$\sim$nontermnode}}
+\index{````~nontermnode@{$\sim$nontermnode}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{$\sim$nontermnode()}{~nontermnode()}}
+{\footnotesize\ttfamily virtual nontermnode\+::$\sim$nontermnode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classnontermnode_a0448d3742e44a767f61d2c8c54213c62}\label{classnontermnode_a0448d3742e44a767f61d2c8c54213c62}} 
+\index{nontermnode@{nontermnode}!analyzeNonOptLoops@{analyzeNonOptLoops}}
+\index{analyzeNonOptLoops@{analyzeNonOptLoops}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{analyzeNonOptLoops()}{analyzeNonOptLoops()}}
+{\footnotesize\ttfamily virtual int nontermnode\+::analyze\+Non\+Opt\+Loops (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a27eb07086a3484b1012e24dabe0567d9}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_adf3bb3da5f7b39ce5e63abd64489311f}\label{classnontermnode_adf3bb3da5f7b39ce5e63abd64489311f}} 
+\index{nontermnode@{nontermnode}!analyzeOptLoops@{analyzeOptLoops}}
+\index{analyzeOptLoops@{analyzeOptLoops}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{analyzeOptLoops()}{analyzeOptLoops()}}
+{\footnotesize\ttfamily virtual int nontermnode\+::analyze\+Opt\+Loops (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ab48a637bc7e1a4143cfdcd673e2e1f4b}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_a6a5528c6a48f5378d10646f9e5fa82b4}\label{classnontermnode_a6a5528c6a48f5378d10646f9e5fa82b4}} 
+\index{nontermnode@{nontermnode}!clone@{clone}}
+\index{clone@{clone}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnontermnode}{nontermnode}} $\ast$ nontermnode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classnode_ac47eff3133679324ea84b5d32af17cb1}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classnullnode_a858203f792ad928f38fd8145ed433583}{nullnode}}, and \mbox{\hyperlink{classtermnode_abc44bcd273c75a5954959913f7a63d80}{termnode}}.
+
+\mbox{\Hypertarget{classnontermnode_ad8d649808f818a0894811d18684302e9}\label{classnontermnode_ad8d649808f818a0894811d18684302e9}} 
+\index{nontermnode@{nontermnode}!drawToLeftRail@{drawToLeftRail}}
+\index{drawToLeftRail@{drawToLeftRail}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{drawToLeftRail()}{drawToLeftRail()}}
+{\footnotesize\ttfamily void nontermnode\+::draw\+To\+Left\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_aeb62d9eb826818fca32fbfc5cc918706}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_aaa01f66ee21d9224a52850b0b9e41e08}\label{classnontermnode_aaa01f66ee21d9224a52850b0b9e41e08}} 
+\index{nontermnode@{nontermnode}!drawToRightRail@{drawToRightRail}}
+\index{drawToRightRail@{drawToRightRail}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{drawToRightRail()}{drawToRightRail()}}
+{\footnotesize\ttfamily void nontermnode\+::draw\+To\+Right\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adb96728ae6876de3744c761b0946df6f}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_a9dafccfa08e463d5a802418843e5b347}\label{classnontermnode_a9dafccfa08e463d5a802418843e5b347}} 
+\index{nontermnode@{nontermnode}!dump@{dump}}
+\index{dump@{dump}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void nontermnode\+::dump (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adbb5e9bcbe37e287419af5919dccfc12}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_ad10599340d4ee0a23b6c14b30afab1b7}\label{classnontermnode_ad10599340d4ee0a23b6c14b30afab1b7}} 
+\index{nontermnode@{nontermnode}!forgetChild@{forgetChild}}
+\index{forgetChild@{forgetChild}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{forgetChild()}{forgetChild()}}
+{\footnotesize\ttfamily virtual void nontermnode\+::forget\+Child (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ae9b0858d86cfd2742a8820cf1bd24dda}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_ac46b5cf204bc3d90e6c51788bd19043d}\label{classnontermnode_ac46b5cf204bc3d90e6c51788bd19043d}} 
+\index{nontermnode@{nontermnode}!getChild@{getChild}}
+\index{getChild@{getChild}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{getChild()}{getChild()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{classnode}{node}}$\ast$ nontermnode\+::get\+Child (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a40ba4b6dc7b1f98a917a4ad482eacf59}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_a604ae9e6560dd89ac4a2ad199cd75851}\label{classnontermnode_a604ae9e6560dd89ac4a2ad199cd75851}} 
+\index{nontermnode@{nontermnode}!liftConcats@{liftConcats}}
+\index{liftConcats@{liftConcats}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{liftConcats()}{liftConcats()}}
+{\footnotesize\ttfamily virtual int nontermnode\+::lift\+Concats (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_af35e20bb92ed3954e3dd9c61d69a3021}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_a0bca0108948b27e01d7fbb9a9464912a}\label{classnontermnode_a0bca0108948b27e01d7fbb9a9464912a}} 
+\index{nontermnode@{nontermnode}!mergeChoices@{mergeChoices}}
+\index{mergeChoices@{mergeChoices}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{mergeChoices()}{mergeChoices()}}
+{\footnotesize\ttfamily virtual int nontermnode\+::merge\+Choices (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a9df2d151d3be24d0c7d11c79c1f3626c}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_ad3540152ef5696d10db0f4e46db786da}\label{classnontermnode_ad3540152ef5696d10db0f4e46db786da}} 
+\index{nontermnode@{nontermnode}!mergeConcats@{mergeConcats}}
+\index{mergeConcats@{mergeConcats}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{mergeConcats()}{mergeConcats()}}
+{\footnotesize\ttfamily virtual int nontermnode\+::merge\+Concats (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a0c307ad1b8e0318b1ac7758f0eafe37f}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_a1d9651739179ad8d63c55013a7838bb9}\label{classnontermnode_a1d9651739179ad8d63c55013a7838bb9}} 
+\index{nontermnode@{nontermnode}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily virtual int nontermnode\+::operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a0eca8182c12110a0599a601b6263df6b}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_aaabe40fd9fc0daab2b1da094a73f96e9}\label{classnontermnode_aaabe40fd9fc0daab2b1da094a73f96e9}} 
+\index{nontermnode@{nontermnode}!operator==@{operator==}}
+\index{operator==@{operator==}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily int nontermnode\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a14b207f963ce8a03d7d8e153ea6f1d14}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_a1cee82ae6b19583c1ed9e4b585645cd6}\label{classnontermnode_a1cee82ae6b19583c1ed9e4b585645cd6}} 
+\index{nontermnode@{nontermnode}!place@{place}}
+\index{place@{place}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{place()}{place()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoordinate}{coordinate}} nontermnode\+::place (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{int}]{draw,  }\item[{int}]{drawrails,  }\item[{\mbox{\hyperlink{classcoordinate}{coordinate}}}]{start,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{parent,  }\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a15666552a0f184c0275500e4d85ec54c}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classnullnode_acf48eeac13e4dbfdff3e5dcbc22ad2b9}{nullnode}}.
+
+\mbox{\Hypertarget{classnontermnode_a4a487925f93aa881e2b3c54848fac4e6}\label{classnontermnode_a4a487925f93aa881e2b3c54848fac4e6}} 
+\index{nontermnode@{nontermnode}!subsume@{subsume}}
+\index{subsume@{subsume}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{subsume()}{subsume()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ nontermnode\+::subsume (\begin{DoxyParamCaption}\item[{regex\+\_\+t $\ast$}]{name,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{replacement }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a048b9c394838fbd7e8fd120145215f31}{node}}.
+
+\mbox{\Hypertarget{classnontermnode_ad32dca10dd97b94123c43e0eac421d2d}\label{classnontermnode_ad32dca10dd97b94123c43e0eac421d2d}} 
+\index{nontermnode@{nontermnode}!texName@{texName}}
+\index{texName@{texName}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{texName()}{texName()}}
+{\footnotesize\ttfamily virtual string nontermnode\+::tex\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_af2abb77259119cbe7a917303f30b2fdf}{node}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classnullnode_ab0e71f4b1b04867b90cb868ea27fd54a}{nullnode}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classnontermnode_ab2ba737251788981589b18e0161736ea}\label{classnontermnode_ab2ba737251788981589b18e0161736ea}} 
+\index{nontermnode@{nontermnode}!format@{format}}
+\index{format@{format}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{format}{format}}
+{\footnotesize\ttfamily string nontermnode\+::format\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classnontermnode_aceb300e153cf85858f10778162618211}\label{classnontermnode_aceb300e153cf85858f10778162618211}} 
+\index{nontermnode@{nontermnode}!str@{str}}
+\index{str@{str}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{str}{str}}
+{\footnotesize\ttfamily string nontermnode\+::str\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classnontermnode_a423e013c08018eec6062c899769c84b8}\label{classnontermnode_a423e013c08018eec6062c899769c84b8}} 
+\index{nontermnode@{nontermnode}!style@{style}}
+\index{style@{style}!nontermnode@{nontermnode}}
+\doxysubsubsection{\texorpdfstring{style}{style}}
+{\footnotesize\ttfamily string nontermnode\+::style\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

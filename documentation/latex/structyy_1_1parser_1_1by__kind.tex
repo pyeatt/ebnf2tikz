@@ -1,0 +1,140 @@
+\hypertarget{structyy_1_1parser_1_1by__kind}{}\doxysection{yy\+::parser\+::by\+\_\+kind Struct Reference}
+\label{structyy_1_1parser_1_1by__kind}\index{yy::parser::by\_kind@{yy::parser::by\_kind}}
+
+
+Type access provider for token (enum) based symbols.  
+
+
+
+
+{\ttfamily \#include $<$parser.\+hh$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structyy_1_1parser_1_1token_ab561d3a79cccd0ed5351ea539a152fab}{token\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a78894a74b0819b4cf8540afc2793b67e}{kind\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em The symbol kind as needed by the constructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a522132783bfeccff8ff3238594c2cd10}{by\+\_\+kind}} () \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structyy_1_1parser_1_1by__kind_aa3e70e97f70b5531ee350db213adf180}{by\+\_\+kind}} (const \mbox{\hyperlink{structyy_1_1parser_1_1by__kind}{by\+\_\+kind}} \&that) \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a20776e9586d51a359b235a487c89333b}{by\+\_\+kind}} (\mbox{\hyperlink{structyy_1_1parser_1_1token_ab561d3a79cccd0ed5351ea539a152fab}{kind\+\_\+type}} t) \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Constructor from (external) token numbers. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a1764f779b339f2879f973becd29ccaaf}{clear}} () \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Record that this symbol is empty. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a051530959a3072fc94cdf8ac16718d60}{move}} (\mbox{\hyperlink{structyy_1_1parser_1_1by__kind}{by\+\_\+kind}} \&that)
+\begin{DoxyCompactList}\small\item\em Steal the symbol kind from {\itshape that}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind_a46fcdcdfbaa6f37816fa5478529f73a5}{symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a9ce3a47881b6fed3ae0a81b5f4baf252}{kind}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind_a46fcdcdfbaa6f37816fa5478529f73a5}{symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a027a4f8c1e1a51fd2414be39e0b86d2f}{type\+\_\+get}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Backward compatibility (Bison 3.\+6). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind_a46fcdcdfbaa6f37816fa5478529f73a5}{symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structyy_1_1parser_1_1by__kind_a2ea31b0e4d38ed393a82e87970f3430f}{kind\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Type access provider for token (enum) based symbols. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a78894a74b0819b4cf8540afc2793b67e}\label{structyy_1_1parser_1_1by__kind_a78894a74b0819b4cf8540afc2793b67e}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!kind\_type@{kind\_type}}
+\index{kind\_type@{kind\_type}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{kind\_type}{kind\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structyy_1_1parser_1_1token_ab561d3a79cccd0ed5351ea539a152fab}{token\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structyy_1_1parser_1_1token_ab561d3a79cccd0ed5351ea539a152fab}{yy\+::parser\+::by\+\_\+kind\+::kind\+\_\+type}}}
+
+
+
+The symbol kind as needed by the constructor. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a522132783bfeccff8ff3238594c2cd10}\label{structyy_1_1parser_1_1by__kind_a522132783bfeccff8ff3238594c2cd10}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!by\_kind@{by\_kind}}
+\index{by\_kind@{by\_kind}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{by\_kind()}{by\_kind()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily yy\+::parser\+::by\+\_\+kind\+::by\+\_\+kind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Default constructor. 
+
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_aa3e70e97f70b5531ee350db213adf180}\label{structyy_1_1parser_1_1by__kind_aa3e70e97f70b5531ee350db213adf180}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!by\_kind@{by\_kind}}
+\index{by\_kind@{by\_kind}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{by\_kind()}{by\_kind()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily yy\+::parser\+::by\+\_\+kind\+::by\+\_\+kind (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structyy_1_1parser_1_1by__kind}{by\+\_\+kind}} \&}]{that }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy constructor. 
+
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a20776e9586d51a359b235a487c89333b}\label{structyy_1_1parser_1_1by__kind_a20776e9586d51a359b235a487c89333b}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!by\_kind@{by\_kind}}
+\index{by\_kind@{by\_kind}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{by\_kind()}{by\_kind()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily yy\+::parser\+::by\+\_\+kind\+::by\+\_\+kind (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structyy_1_1parser_1_1token_ab561d3a79cccd0ed5351ea539a152fab}{kind\+\_\+type}}}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor from (external) token numbers. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a1764f779b339f2879f973becd29ccaaf}\label{structyy_1_1parser_1_1by__kind_a1764f779b339f2879f973becd29ccaaf}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!clear@{clear}}
+\index{clear@{clear}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void yy\+::parser\+::by\+\_\+kind\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Record that this symbol is empty. 
+
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a9ce3a47881b6fed3ae0a81b5f4baf252}\label{structyy_1_1parser_1_1by__kind_a9ce3a47881b6fed3ae0a81b5f4baf252}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!kind@{kind}}
+\index{kind@{kind}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{kind()}{kind()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind_a46fcdcdfbaa6f37816fa5478529f73a5}{parser\+::symbol\+\_\+kind\+\_\+type}} yy\+::parser\+::by\+\_\+kind\+::kind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+The (internal) type number (corresponding to {\itshape type}). {\itshape empty} when empty. \mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a051530959a3072fc94cdf8ac16718d60}\label{structyy_1_1parser_1_1by__kind_a051530959a3072fc94cdf8ac16718d60}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!move@{move}}
+\index{move@{move}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void yy\+::parser\+::by\+\_\+kind\+::move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structyy_1_1parser_1_1by__kind}{by\+\_\+kind}} \&}]{that }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Steal the symbol kind from {\itshape that}. 
+
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a027a4f8c1e1a51fd2414be39e0b86d2f}\label{structyy_1_1parser_1_1by__kind_a027a4f8c1e1a51fd2414be39e0b86d2f}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!type\_get@{type\_get}}
+\index{type\_get@{type\_get}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{type\_get()}{type\_get()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind_a46fcdcdfbaa6f37816fa5478529f73a5}{parser\+::symbol\+\_\+kind\+\_\+type}} yy\+::parser\+::by\+\_\+kind\+::type\+\_\+get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Backward compatibility (Bison 3.\+6). 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structyy_1_1parser_1_1by__kind_a2ea31b0e4d38ed393a82e87970f3430f}\label{structyy_1_1parser_1_1by__kind_a2ea31b0e4d38ed393a82e87970f3430f}} 
+\index{yy::parser::by\_kind@{yy::parser::by\_kind}!kind\_@{kind\_}}
+\index{kind\_@{kind\_}!yy::parser::by\_kind@{yy::parser::by\_kind}}
+\doxysubsubsection{\texorpdfstring{kind\_}{kind\_}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structyy_1_1parser_1_1symbol__kind_a46fcdcdfbaa6f37816fa5478529f73a5}{symbol\+\_\+kind\+\_\+type}} yy\+::parser\+::by\+\_\+kind\+::kind\+\_\+}
+
+The symbol kind. {\itshape S\+\_\+\+YYEMPTY} when empty. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{parser_8hh}{parser.\+hh}}\end{DoxyCompactItemize}

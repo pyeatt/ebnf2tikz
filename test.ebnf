@@ -1,5 +1,5 @@
 simple_expression =
-	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , term } ;
+	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
 
 
 newlines =

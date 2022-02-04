@@ -1,0 +1,221 @@
+\hypertarget{classyy_1_1parser_1_1value__type}{}\doxysection{yy\+::parser\+::value\+\_\+type Class Reference}
+\label{classyy_1_1parser_1_1value__type}\index{yy::parser::value\_type@{yy::parser::value\_type}}
+
+
+{\ttfamily \#include $<$parser.\+hh$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{classyy_1_1parser_1_1value__type}{value\+\_\+type}} \mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type of $\ast$this. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classyy_1_1parser_1_1value__type_a10e757d9e3591678274c309ff3080898}{value\+\_\+type}} () \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Empty construction. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\\mbox{\hyperlink{classyy_1_1parser_1_1value__type_acb734af472d9b6d1639f73e59bc39bfa}{value\+\_\+type}} (\mbox{\hyperlink{parser_8hh_a136a1225ab9f41786793cf23145b58dd}{YY\+\_\+\+RVREF}}(T) t)
+\begin{DoxyCompactList}\small\item\em Construct and fill. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classyy_1_1parser_1_1value__type_af4833f9c090af89e831eac1d5032c34a}{$\sim$value\+\_\+type}} () \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Destruction, allowed only if empty. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \& \mbox{\hyperlink{classyy_1_1parser_1_1value__type_ab2fed6d8e81d41b7da7366b584a739ce}{emplace}} ()
+\begin{DoxyCompactList}\small\item\em Instantiate an empty {\itshape T} in here. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \& \mbox{\hyperlink{classyy_1_1parser_1_1value__type_a8b4ab022f7735ca6583f6d04f9d4f021}{emplace}} (const T \&t)
+\begin{DoxyCompactList}\small\item\em Instantiate a {\itshape T} in here from {\itshape t}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \& \mbox{\hyperlink{classyy_1_1parser_1_1value__type_a1e771ddca905dd65f37f95824d01e141}{build}} ()
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \& \mbox{\hyperlink{classyy_1_1parser_1_1value__type_ac1b9d75979723df439345de0928669dd}{build}} (const T \&t)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \& \mbox{\hyperlink{classyy_1_1parser_1_1value__type_ae937365d24d28dcd81f7b831d958217b}{as}} () \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Accessor to a built {\itshape T}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\const T \& \mbox{\hyperlink{classyy_1_1parser_1_1value__type_a48b168d72d91fbac6f3921293df0d97c}{as}} () const \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Const accessor to a built {\itshape T} (for printer). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classyy_1_1parser_1_1value__type_ad6693fb395cf9e85da0f0f5707b622ab}{swap}} (\mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}} \&that) \mbox{\hyperlink{parser_8hh_a986b895e8d279ff24380891c280bc9f4}{YY\+\_\+\+NOEXCEPT}}
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classyy_1_1parser_1_1value__type_a56a81f06a1fe24c01561cbe5c9e0a2ae}{move}} (\mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}} \&that)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classyy_1_1parser_1_1value__type_ac287d1c33125c958b1415cfbb3c4aacc}{copy}} (const \mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}} \&that)
+\begin{DoxyCompactList}\small\item\em Copy the content of {\itshape that} to this. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classyy_1_1parser_1_1value__type_a8f7f6a6da83dd14a479bc95de89669b1}{destroy}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the stored {\itshape T}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A buffer to store and retrieve objects.
+
+Sort of a variant, but does not keep track of the nature of the stored data, since that knowledge is available via the current parser state. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}\label{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!self\_type@{self\_type}}
+\index{self\_type@{self\_type}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{self\_type}{self\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{classyy_1_1parser_1_1value__type}{value\+\_\+type}} \mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{yy\+::parser\+::value\+\_\+type\+::self\+\_\+type}}}
+
+
+
+Type of $\ast$this. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_a10e757d9e3591678274c309ff3080898}\label{classyy_1_1parser_1_1value__type_a10e757d9e3591678274c309ff3080898}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!value\_type@{value\_type}}
+\index{value\_type@{value\_type}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{value\_type()}{value\_type()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily yy\+::parser\+::value\+\_\+type\+::value\+\_\+type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Empty construction. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_acb734af472d9b6d1639f73e59bc39bfa}\label{classyy_1_1parser_1_1value__type_acb734af472d9b6d1639f73e59bc39bfa}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!value\_type@{value\_type}}
+\index{value\_type@{value\_type}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{value\_type()}{value\_type()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+yy\+::parser\+::value\+\_\+type\+::value\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{parser_8hh_a136a1225ab9f41786793cf23145b58dd}{YY\+\_\+\+RVREF}}(T)}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct and fill. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_af4833f9c090af89e831eac1d5032c34a}\label{classyy_1_1parser_1_1value__type_af4833f9c090af89e831eac1d5032c34a}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!````~value\_type@{$\sim$value\_type}}
+\index{````~value\_type@{$\sim$value\_type}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{$\sim$value\_type()}{~value\_type()}}
+{\footnotesize\ttfamily yy\+::parser\+::value\+\_\+type\+::$\sim$value\+\_\+type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destruction, allowed only if empty. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_a48b168d72d91fbac6f3921293df0d97c}\label{classyy_1_1parser_1_1value__type_a48b168d72d91fbac6f3921293df0d97c}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!as@{as}}
+\index{as@{as}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{as()}{as()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+const T\& yy\+::parser\+::value\+\_\+type\+::as (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Const accessor to a built {\itshape T} (for printer). 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ae937365d24d28dcd81f7b831d958217b}\label{classyy_1_1parser_1_1value__type_ae937365d24d28dcd81f7b831d958217b}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!as@{as}}
+\index{as@{as}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{as()}{as()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T\& yy\+::parser\+::value\+\_\+type\+::as (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor to a built {\itshape T}. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_a1e771ddca905dd65f37f95824d01e141}\label{classyy_1_1parser_1_1value__type_a1e771ddca905dd65f37f95824d01e141}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!build@{build}}
+\index{build@{build}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T\& yy\+::parser\+::value\+\_\+type\+::build (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Instantiate an empty {\itshape T} in here. Obsolete, use emplace. \mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ac1b9d75979723df439345de0928669dd}\label{classyy_1_1parser_1_1value__type_ac1b9d75979723df439345de0928669dd}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!build@{build}}
+\index{build@{build}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T\& yy\+::parser\+::value\+\_\+type\+::build (\begin{DoxyParamCaption}\item[{const T \&}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Instantiate a {\itshape T} in here from {\itshape t}. Obsolete, use emplace. \mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ac287d1c33125c958b1415cfbb3c4aacc}\label{classyy_1_1parser_1_1value__type_ac287d1c33125c958b1415cfbb3c4aacc}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!copy@{copy}}
+\index{copy@{copy}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void yy\+::parser\+::value\+\_\+type\+::copy (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}} \&}]{that }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Copy the content of {\itshape that} to this. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_a8f7f6a6da83dd14a479bc95de89669b1}\label{classyy_1_1parser_1_1value__type_a8f7f6a6da83dd14a479bc95de89669b1}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!destroy@{destroy}}
+\index{destroy@{destroy}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{destroy()}{destroy()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void yy\+::parser\+::value\+\_\+type\+::destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destroy the stored {\itshape T}. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ab2fed6d8e81d41b7da7366b584a739ce}\label{classyy_1_1parser_1_1value__type_ab2fed6d8e81d41b7da7366b584a739ce}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!emplace@{emplace}}
+\index{emplace@{emplace}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{emplace()}{emplace()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T\& yy\+::parser\+::value\+\_\+type\+::emplace (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Instantiate an empty {\itshape T} in here. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_a8b4ab022f7735ca6583f6d04f9d4f021}\label{classyy_1_1parser_1_1value__type_a8b4ab022f7735ca6583f6d04f9d4f021}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!emplace@{emplace}}
+\index{emplace@{emplace}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{emplace()}{emplace()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T\& yy\+::parser\+::value\+\_\+type\+::emplace (\begin{DoxyParamCaption}\item[{const T \&}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Instantiate a {\itshape T} in here from {\itshape t}. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_a56a81f06a1fe24c01561cbe5c9e0a2ae}\label{classyy_1_1parser_1_1value__type_a56a81f06a1fe24c01561cbe5c9e0a2ae}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!move@{move}}
+\index{move@{move}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void yy\+::parser\+::value\+\_\+type\+::move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}} \&}]{that }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Move the content of {\itshape that} to this.
+
+Destroys {\itshape that}. \mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ad6693fb395cf9e85da0f0f5707b622ab}\label{classyy_1_1parser_1_1value__type_ad6693fb395cf9e85da0f0f5707b622ab}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!swap@{swap}}
+\index{swap@{swap}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{swap()}{swap()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void yy\+::parser\+::value\+\_\+type\+::swap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classyy_1_1parser_1_1value__type_abb7f0684f8dc707651c4136fd668e43e}{self\+\_\+type}} \&}]{that }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Swap the content with {\itshape that}, of same type.
+
+Both variants must be built beforehand, because swapping the actual data requires reading it (with \mbox{\hyperlink{classyy_1_1parser_1_1value__type_ae937365d24d28dcd81f7b831d958217b}{as()}}), and this is not possible on unconstructed variants\+: it would require some dynamic testing, which should not be the variant\textquotesingle{}s responsibility. Swapping between built and (possibly) non-\/built is done with \mbox{\hyperlink{classyy_1_1parser_1_1value__type_a56a81f06a1fe24c01561cbe5c9e0a2ae}{self\+\_\+type\+::move}} (). 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ac60d668e4ae13e53a636f0548a14ac50}\label{classyy_1_1parser_1_1value__type_ac60d668e4ae13e53a636f0548a14ac50}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!yyalign\_me\_@{yyalign\_me\_}}
+\index{yyalign\_me\_@{yyalign\_me\_}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{yyalign\_me\_}{yyalign\_me\_}}
+{\footnotesize\ttfamily long double yy\+::parser\+::value\+\_\+type\+::yyalign\+\_\+me\+\_\+}
+
+
+
+Strongest alignment constraints. 
+
+\mbox{\Hypertarget{classyy_1_1parser_1_1value__type_ab0693d676b9d90ed68d898216a001b28}\label{classyy_1_1parser_1_1value__type_ab0693d676b9d90ed68d898216a001b28}} 
+\index{yy::parser::value\_type@{yy::parser::value\_type}!yyraw\_@{yyraw\_}}
+\index{yyraw\_@{yyraw\_}!yy::parser::value\_type@{yy::parser::value\_type}}
+\doxysubsubsection{\texorpdfstring{yyraw\_}{yyraw\_}}
+{\footnotesize\ttfamily char yy\+::parser\+::value\+\_\+type\+::yyraw\+\_\+\mbox{[}size\mbox{]}}
+
+
+
+A buffer large enough to store any of the semantic values. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{parser_8hh}{parser.\+hh}}\end{DoxyCompactItemize}

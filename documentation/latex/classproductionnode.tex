@@ -1,0 +1,177 @@
+\hypertarget{classproductionnode}{}\doxysection{productionnode Class Reference}
+\label{classproductionnode}\index{productionnode@{productionnode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for productionnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=163pt]{classproductionnode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for productionnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=279pt]{classproductionnode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classproductionnode_a57c6cb7e21975f022e7bcfdb9e976889}{productionnode}} (\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$subsumespec, string s, \mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+\mbox{\hyperlink{classproductionnode_a0d9afe037b089d0fe896e8f8ef822274}{productionnode}} (const \mbox{\hyperlink{classproductionnode}{productionnode}} \&original)
+\item 
+virtual \mbox{\hyperlink{classproductionnode}{productionnode}} $\ast$ \mbox{\hyperlink{classproductionnode_a615d238356a292351182791afa4da012}{clone}} () const
+\item 
+virtual \mbox{\hyperlink{classproductionnode_a40fdafe5753988315c262014632f4f31}{$\sim$productionnode}} ()
+\item 
+virtual regex\+\_\+t $\ast$ \mbox{\hyperlink{classproductionnode_a0fc479137d18540c53809ce849add9f0}{get\+Subsume}} ()
+\item 
+virtual string \mbox{\hyperlink{classproductionnode_a75971bd79a9b57b5c01894bb402f14b4}{get\+Name}} ()
+\item 
+void \mbox{\hyperlink{classproductionnode_a73cdb5bfc032fa20288653e0ba52ff91}{optimize}} ()
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classproductionnode_a0ad1a323b502dfc5741223102421e77c}{subsume}} (regex\+\_\+t $\ast$name, \mbox{\hyperlink{classnode}{node}} $\ast$replacement)
+\item 
+virtual void \mbox{\hyperlink{classproductionnode_ad1f60ad6bbe139e91ad2230970d2f653}{dump}} (int depth) const
+\item 
+virtual \mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classproductionnode_ae2b8ff0ef49690c9484033ee41bfbd20}{place}} (ofstream \&outs, int draw, int drawrails, \mbox{\hyperlink{classcoordinate}{coordinate}} start, \mbox{\hyperlink{classnode}{node}} $\ast$\mbox{\hyperlink{classnode_a5e88137f1d0e2f7a940bccf4c3d3a4d3}{parent}}, int depth)
+\item 
+virtual void \mbox{\hyperlink{classproductionnode_a09d6eb52c1ba5e2d9cfdba7b30a5e971}{fix\+Skips}} ()
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classproductionnode_a00affa873a2936a83eda3eb12f306aed}{create\+Rows}} ()
+\item 
+virtual string \mbox{\hyperlink{classproductionnode_a778856b140c11f16072ab28507c6cf0e}{tex\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classproductionnode_a57c6cb7e21975f022e7bcfdb9e976889}\label{classproductionnode_a57c6cb7e21975f022e7bcfdb9e976889}} 
+\index{productionnode@{productionnode}!productionnode@{productionnode}}
+\index{productionnode@{productionnode}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{productionnode()}{productionnode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily productionnode\+::productionnode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$}]{subsumespec,  }\item[{string}]{s,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classproductionnode_a0d9afe037b089d0fe896e8f8ef822274}\label{classproductionnode_a0d9afe037b089d0fe896e8f8ef822274}} 
+\index{productionnode@{productionnode}!productionnode@{productionnode}}
+\index{productionnode@{productionnode}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{productionnode()}{productionnode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily productionnode\+::productionnode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classproductionnode}{productionnode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classproductionnode_a40fdafe5753988315c262014632f4f31}\label{classproductionnode_a40fdafe5753988315c262014632f4f31}} 
+\index{productionnode@{productionnode}!````~productionnode@{$\sim$productionnode}}
+\index{````~productionnode@{$\sim$productionnode}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{$\sim$productionnode()}{~productionnode()}}
+{\footnotesize\ttfamily virtual productionnode\+::$\sim$productionnode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classproductionnode_a615d238356a292351182791afa4da012}\label{classproductionnode_a615d238356a292351182791afa4da012}} 
+\index{productionnode@{productionnode}!clone@{clone}}
+\index{clone@{clone}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classproductionnode}{productionnode}} $\ast$ productionnode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classsinglenode_a33a0daa73869685e89522f9fc3956484}{singlenode}}.
+
+\mbox{\Hypertarget{classproductionnode_a00affa873a2936a83eda3eb12f306aed}\label{classproductionnode_a00affa873a2936a83eda3eb12f306aed}} 
+\index{productionnode@{productionnode}!createRows@{createRows}}
+\index{createRows@{createRows}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{createRows()}{createRows()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ productionnode\+::create\+Rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ad9e6cf224ceb66051358b64a2f184e3a}{node}}.
+
+\mbox{\Hypertarget{classproductionnode_ad1f60ad6bbe139e91ad2230970d2f653}\label{classproductionnode_ad1f60ad6bbe139e91ad2230970d2f653}} 
+\index{productionnode@{productionnode}!dump@{dump}}
+\index{dump@{dump}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void productionnode\+::dump (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adbb5e9bcbe37e287419af5919dccfc12}{node}}.
+
+\mbox{\Hypertarget{classproductionnode_a09d6eb52c1ba5e2d9cfdba7b30a5e971}\label{classproductionnode_a09d6eb52c1ba5e2d9cfdba7b30a5e971}} 
+\index{productionnode@{productionnode}!fixSkips@{fixSkips}}
+\index{fixSkips@{fixSkips}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{fixSkips()}{fixSkips()}}
+{\footnotesize\ttfamily virtual void productionnode\+::fix\+Skips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classsinglenode_ad10566ba4010eb8cc0c1bb0b416548ed}{singlenode}}.
+
+\mbox{\Hypertarget{classproductionnode_a75971bd79a9b57b5c01894bb402f14b4}\label{classproductionnode_a75971bd79a9b57b5c01894bb402f14b4}} 
+\index{productionnode@{productionnode}!getName@{getName}}
+\index{getName@{getName}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily virtual string productionnode\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classproductionnode_a0fc479137d18540c53809ce849add9f0}\label{classproductionnode_a0fc479137d18540c53809ce849add9f0}} 
+\index{productionnode@{productionnode}!getSubsume@{getSubsume}}
+\index{getSubsume@{getSubsume}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{getSubsume()}{getSubsume()}}
+{\footnotesize\ttfamily virtual regex\+\_\+t$\ast$ productionnode\+::get\+Subsume (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{classproductionnode_a73cdb5bfc032fa20288653e0ba52ff91}\label{classproductionnode_a73cdb5bfc032fa20288653e0ba52ff91}} 
+\index{productionnode@{productionnode}!optimize@{optimize}}
+\index{optimize@{optimize}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{optimize()}{optimize()}}
+{\footnotesize\ttfamily void productionnode\+::optimize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classproductionnode_ae2b8ff0ef49690c9484033ee41bfbd20}\label{classproductionnode_ae2b8ff0ef49690c9484033ee41bfbd20}} 
+\index{productionnode@{productionnode}!place@{place}}
+\index{place@{place}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{place()}{place()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoordinate}{coordinate}} productionnode\+::place (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{int}]{draw,  }\item[{int}]{drawrails,  }\item[{\mbox{\hyperlink{classcoordinate}{coordinate}}}]{start,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{parent,  }\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_a15666552a0f184c0275500e4d85ec54c}{node}}.
+
+\mbox{\Hypertarget{classproductionnode_a0ad1a323b502dfc5741223102421e77c}\label{classproductionnode_a0ad1a323b502dfc5741223102421e77c}} 
+\index{productionnode@{productionnode}!subsume@{subsume}}
+\index{subsume@{subsume}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{subsume()}{subsume()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ productionnode\+::subsume (\begin{DoxyParamCaption}\item[{regex\+\_\+t $\ast$}]{name,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{replacement }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classsinglenode_a4b57100df4bf68437904da07a8686ef0}{singlenode}}.
+
+\mbox{\Hypertarget{classproductionnode_a778856b140c11f16072ab28507c6cf0e}\label{classproductionnode_a778856b140c11f16072ab28507c6cf0e}} 
+\index{productionnode@{productionnode}!texName@{texName}}
+\index{texName@{texName}!productionnode@{productionnode}}
+\doxysubsubsection{\texorpdfstring{texName()}{texName()}}
+{\footnotesize\ttfamily virtual string productionnode\+::tex\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classsinglenode_a9013e35856dc7498cf1b242600a83ed0}{singlenode}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{optimize_8cc}{optimize.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

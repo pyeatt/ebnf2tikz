@@ -1,0 +1,2896 @@
+\begin{theindex}
+
+  \item {$\sim$basic\_symbol}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{28}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{34}
+  \item {$\sim$choicenode}
+    \subitem {choicenode}, \hyperpage{43}
+  \item {$\sim$concatnode}
+    \subitem {concatnode}, \hyperpage{47}
+  \item {$\sim$grammar}
+    \subitem {grammar}, \hyperpage{57}
+  \item {$\sim$loopnode}
+    \subitem {loopnode}, \hyperpage{67}
+  \item {$\sim$multinode}
+    \subitem {multinode}, \hyperpage{71}
+  \item {$\sim$newlinenode}
+    \subitem {newlinenode}, \hyperpage{78}
+  \item {$\sim$node}
+    \subitem {node}, \hyperpage{83}
+  \item {$\sim$nodesizes}
+    \subitem {nodesizes}, \hyperpage{96}
+  \item {$\sim$nontermnode}
+    \subitem {nontermnode}, \hyperpage{99}
+  \item {$\sim$parser}
+    \subitem {annot::parser}, \hyperpage{108}
+    \subitem {yy::parser}, \hyperpage{115}
+  \item {$\sim$productionnode}
+    \subitem {productionnode}, \hyperpage{128}
+  \item {$\sim$railnode}
+    \subitem {railnode}, \hyperpage{132}
+  \item {$\sim$rownode}
+    \subitem {rownode}, \hyperpage{137}
+  \item {$\sim$semantic\_type}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{139}
+  \item {$\sim$singlenode}
+    \subitem {singlenode}, \hyperpage{144}
+  \item {$\sim$syntax\_error}
+    \subitem {annot::parser::syntax\_error}, \hyperpage{159}
+    \subitem {yy::parser::syntax\_error}, \hyperpage{161}
+  \item {$\sim$termnode}
+    \subitem {termnode}, \hyperpage{163}
+  \item {$\sim$value\_type}
+    \subitem {yy::parser::value\_type}, \hyperpage{168}
+
+  \indexspace
+
+  \item {A}
+    \subitem {lexer.cc}, \hyperpage{248}
+  \item {addString}
+    \subitem {driver}, \hyperpage{55}
+  \item {addTerminal}
+    \subitem {driver}, \hyperpage{55}
+  \item {aloc}
+    \subitem {annot\_parser.cc}, \hyperpage{233}
+  \item {analyzeNonOptLoops}
+    \subitem {concatnode}, \hyperpage{47}
+    \subitem {multinode}, \hyperpage{72}
+    \subitem {node}, \hyperpage{83}
+    \subitem {nontermnode}, \hyperpage{99}
+    \subitem {singlenode}, \hyperpage{144}
+  \item {analyzeOptLoops}
+    \subitem {concatnode}, \hyperpage{47}
+    \subitem {multinode}, \hyperpage{72}
+    \subitem {node}, \hyperpage{83}
+    \subitem {nontermnode}, \hyperpage{99}
+    \subitem {singlenode}, \hyperpage{144}
+  \item {annot}, \hyperpage{17}
+    \subitem {operator$<$$<$}, \hyperpage{19, 20}
+    \subitem {operator+}, \hyperpage{18}
+    \subitem {operator+=}, \hyperpage{18}
+    \subitem {operator-\/}, \hyperpage{19}
+    \subitem {operator-\/=}, \hyperpage{19}
+  \item {annot::location}, \hyperpage{59}
+    \subitem {begin}, \hyperpage{62}
+    \subitem {columns}, \hyperpage{61}
+    \subitem {counter\_type}, \hyperpage{60}
+    \subitem {end}, \hyperpage{62}
+    \subitem {filename\_type}, \hyperpage{60}
+    \subitem {initialize}, \hyperpage{61}
+    \subitem {lines}, \hyperpage{61}
+    \subitem {location}, \hyperpage{60, 61}
+    \subitem {step}, \hyperpage{61}
+  \item {annot::parser}, \hyperpage{105}
+    \subitem {$\sim$parser}, \hyperpage{108}
+    \subitem {by\_type}, \hyperpage{107}
+    \subitem {error}, \hyperpage{108}
+    \subitem {location\_type}, \hyperpage{107}
+    \subitem {make\_AEND}, \hyperpage{109}
+    \subitem {make\_ANNOTerror}, \hyperpage{109}
+    \subitem {make\_ANNOTUNDEF}, \hyperpage{109}
+    \subitem {make\_AS}, \hyperpage{109}
+    \subitem {make\_ASTART}, \hyperpage{109}
+    \subitem {make\_CAPTION}, \hyperpage{109}
+    \subitem {make\_END}, \hyperpage{109}
+    \subitem {make\_SEMICOLON}, \hyperpage{110}
+    \subitem {make\_SIDEWAYS}, \hyperpage{110}
+    \subitem {make\_STRING}, \hyperpage{110}
+    \subitem {make\_SUBSUME}, \hyperpage{110}
+    \subitem {make\_UNEXP}, \hyperpage{110}
+    \subitem {operator()}, \hyperpage{110}
+    \subitem {parse}, \hyperpage{111}
+    \subitem {parser}, \hyperpage{108}
+    \subitem {symbol\_kind\_type}, \hyperpage{107}
+    \subitem {symbol\_name}, \hyperpage{111}
+    \subitem {token\_kind\_type}, \hyperpage{107}
+    \subitem {token\_type}, \hyperpage{107}
+    \subitem {YYNTOKENS}, \hyperpage{111}
+  \item {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{25}
+    \subitem {$\sim$basic\_symbol}, \hyperpage{28}
+    \subitem {basic\_symbol}, \hyperpage{27, 28}
+    \subitem {clear}, \hyperpage{29}
+    \subitem {empty}, \hyperpage{29}
+    \subitem {location}, \hyperpage{30}
+    \subitem {move}, \hyperpage{29}
+    \subitem {name}, \hyperpage{29}
+    \subitem {super\_type}, \hyperpage{27}
+    \subitem {type\_get}, \hyperpage{29}
+    \subitem {value}, \hyperpage{30}
+  \item {annot::parser::by\_kind}, \hyperpage{36}
+    \subitem {by\_kind}, \hyperpage{37}
+    \subitem {clear}, \hyperpage{37}
+    \subitem {kind}, \hyperpage{38}
+    \subitem {kind\_}, \hyperpage{38}
+    \subitem {kind\_type}, \hyperpage{37}
+    \subitem {move}, \hyperpage{38}
+    \subitem {type\_get}, \hyperpage{38}
+  \item {annot::parser::context}, \hyperpage{50}
+    \subitem {context}, \hyperpage{50}
+    \subitem {expected\_tokens}, \hyperpage{50}
+    \subitem {location}, \hyperpage{50}
+    \subitem {lookahead}, \hyperpage{51}
+    \subitem {token}, \hyperpage{51}
+  \item {annot::parser::semantic\_type}, \hyperpage{138}
+    \subitem {$\sim$semantic\_type}, \hyperpage{139}
+    \subitem {as}, \hyperpage{140}
+    \subitem {build}, \hyperpage{140}
+    \subitem {copy}, \hyperpage{140}
+    \subitem {destroy}, \hyperpage{140}
+    \subitem {emplace}, \hyperpage{141}
+    \subitem {move}, \hyperpage{141}
+    \subitem {self\_type}, \hyperpage{139}
+    \subitem {semantic\_type}, \hyperpage{139}
+    \subitem {swap}, \hyperpage{141}
+    \subitem {yyalign\_me}, \hyperpage{142}
+    \subitem {yyraw}, \hyperpage{142}
+  \item {annot::parser::stack$<$ T, S $>$::slice}, \hyperpage{148}
+    \subitem {operator[]}, \hyperpage{149}
+    \subitem {slice}, \hyperpage{149}
+  \item {annot::parser::symbol\_kind}, \hyperpage{150}
+    \subitem {S\_AEND}, \hyperpage{151}
+    \subitem {S\_annot}, \hyperpage{151}
+    \subitem {S\_annotations}, \hyperpage{151}
+    \subitem {S\_annots}, \hyperpage{151}
+    \subitem {S\_AS}, \hyperpage{151}
+    \subitem {S\_ASTART}, \hyperpage{151}
+    \subitem {S\_CAPTION}, \hyperpage{151}
+    \subitem {S\_SEMICOLON}, \hyperpage{151}
+    \subitem {S\_SIDEWAYS}, \hyperpage{151}
+    \subitem {S\_STRING}, \hyperpage{151}
+    \subitem {S\_SUBSUME}, \hyperpage{151}
+    \subitem {S\_UNEXP}, \hyperpage{151}
+    \subitem {S\_YYACCEPT}, \hyperpage{151}
+    \subitem {S\_YYEMPTY}, \hyperpage{151}
+    \subitem {S\_YYEOF}, \hyperpage{151}
+    \subitem {S\_YYerror}, \hyperpage{151}
+    \subitem {S\_YYUNDEF}, \hyperpage{151}
+    \subitem {symbol\_kind\_type}, \hyperpage{151}
+    \subitem {YYNTOKENS}, \hyperpage{151}
+  \item {annot::parser::symbol\_type}, \hyperpage{153}
+    \subitem {super\_type}, \hyperpage{154}
+    \subitem {symbol\_type}, \hyperpage{154, 155}
+  \item {annot::parser::syntax\_error}, \hyperpage{158}
+    \subitem {$\sim$syntax\_error}, \hyperpage{159}
+    \subitem {location}, \hyperpage{159}
+    \subitem {syntax\_error}, \hyperpage{159}
+  \item {annot::parser::token}, \hyperpage{164}
+    \subitem {TOK\_AEND}, \hyperpage{164}
+    \subitem {TOK\_ANNOTEMPTY}, \hyperpage{164}
+    \subitem {TOK\_ANNOTerror}, \hyperpage{164}
+    \subitem {TOK\_ANNOTUNDEF}, \hyperpage{164}
+    \subitem {TOK\_AS}, \hyperpage{164}
+    \subitem {TOK\_ASTART}, \hyperpage{164}
+    \subitem {TOK\_CAPTION}, \hyperpage{164}
+    \subitem {TOK\_END}, \hyperpage{164}
+    \subitem {TOK\_SEMICOLON}, \hyperpage{164}
+    \subitem {TOK\_SIDEWAYS}, \hyperpage{164}
+    \subitem {TOK\_STRING}, \hyperpage{164}
+    \subitem {TOK\_SUBSUME}, \hyperpage{164}
+    \subitem {TOK\_UNEXP}, \hyperpage{164}
+    \subitem {token\_kind\_type}, \hyperpage{164}
+    \subitem {yytokentype}, \hyperpage{164}
+  \item {annot::position}, \hyperpage{120}
+    \subitem {column}, \hyperpage{122}
+    \subitem {columns}, \hyperpage{122}
+    \subitem {counter\_type}, \hyperpage{121}
+    \subitem {filename}, \hyperpage{123}
+    \subitem {filename\_type}, \hyperpage{121}
+    \subitem {initialize}, \hyperpage{122}
+    \subitem {line}, \hyperpage{123}
+    \subitem {lines}, \hyperpage{122}
+    \subitem {position}, \hyperpage{122}
+  \item {ANNOT\_ASSERT}
+    \subitem {annot\_parser.hh}, \hyperpage{235}
+  \item {annot\_create\_buffer\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{179}
+  \item {annot\_delete\_buffer\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{179}
+  \item {annot\_flex\_debug\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{179}
+  \item {annot\_flush\_buffer\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_init\_buffer\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_lexer.cc}, \hyperpage{175}
+    \subitem {annot\_create\_buffer\_ALREADY\_DEFINED}, \hyperpage{179}
+    \subitem {annot\_delete\_buffer\_ALREADY\_DEFINED}, \hyperpage{179}
+    \subitem {annot\_flex\_debug\_ALREADY\_DEFINED}, \hyperpage{179}
+    \subitem {annot\_flush\_buffer\_ALREADY\_DEFINED}, \hyperpage{180}
+    \subitem {annot\_init\_buffer\_ALREADY\_DEFINED}, \hyperpage{180}
+    \subitem {annot\_load\_buffer\_state\_ALREADY\_DEFINED}, 
+		\hyperpage{180}
+    \subitem {annot\_scan\_buffer\_ALREADY\_DEFINED}, \hyperpage{180}
+    \subitem {annot\_scan\_bytes\_ALREADY\_DEFINED}, \hyperpage{180}
+    \subitem {annot\_scan\_string\_ALREADY\_DEFINED}, \hyperpage{180}
+    \subitem {annot\_switch\_to\_buffer\_ALREADY\_DEFINED}, 
+		\hyperpage{180}
+    \subitem {annotalloc\_ALREADY\_DEFINED}, \hyperpage{180}
+    \subitem {annotensure\_buffer\_stack\_ALREADY\_DEFINED}, 
+		\hyperpage{181}
+    \subitem {annotfree\_ALREADY\_DEFINED}, \hyperpage{181}
+    \subitem {annotin\_ALREADY\_DEFINED}, \hyperpage{181}
+    \subitem {annotleng\_ALREADY\_DEFINED}, \hyperpage{181}
+    \subitem {annotlex\_ALREADY\_DEFINED}, \hyperpage{181}
+    \subitem {annotlineno\_ALREADY\_DEFINED}, \hyperpage{181}
+    \subitem {annotout\_ALREADY\_DEFINED}, \hyperpage{181}
+    \subitem {annotpop\_buffer\_state\_ALREADY\_DEFINED}, 
+		\hyperpage{181}
+    \subitem {annotpush\_buffer\_state\_ALREADY\_DEFINED}, 
+		\hyperpage{182}
+    \subitem {annotrealloc\_ALREADY\_DEFINED}, \hyperpage{182}
+    \subitem {annotrestart\_ALREADY\_DEFINED}, \hyperpage{182}
+    \subitem {annottext\_ALREADY\_DEFINED}, \hyperpage{182}
+    \subitem {annotwrap}, \hyperpage{182}
+    \subitem {annotwrap\_ALREADY\_DEFINED}, \hyperpage{182}
+    \subitem {BEGIN}, \hyperpage{182}
+    \subitem {ECHO}, \hyperpage{182}
+    \subitem {EOB\_ACT\_CONTINUE\_SCAN}, \hyperpage{183}
+    \subitem {EOB\_ACT\_END\_OF\_FILE}, \hyperpage{183}
+    \subitem {EOB\_ACT\_LAST\_MATCH}, \hyperpage{183}
+    \subitem {FLEX\_BETA}, \hyperpage{183}
+    \subitem {flex\_int16\_t}, \hyperpage{199}
+    \subitem {flex\_int32\_t}, \hyperpage{199}
+    \subitem {flex\_int8\_t}, \hyperpage{199}
+    \subitem {FLEX\_SCANNER}, \hyperpage{183}
+    \subitem {flex\_uint16\_t}, \hyperpage{200}
+    \subitem {flex\_uint32\_t}, \hyperpage{200}
+    \subitem {flex\_uint8\_t}, \hyperpage{200}
+    \subitem {FLEXINT\_H}, \hyperpage{183}
+    \subitem {if}, \hyperpage{201}
+    \subitem {INITIAL}, \hyperpage{183}
+    \subitem {INT16\_MAX}, \hyperpage{183}
+    \subitem {INT16\_MIN}, \hyperpage{184}
+    \subitem {INT32\_MAX}, \hyperpage{184}
+    \subitem {INT32\_MIN}, \hyperpage{184}
+    \subitem {INT8\_MAX}, \hyperpage{184}
+    \subitem {INT8\_MIN}, \hyperpage{184}
+    \subitem {REJECT}, \hyperpage{184}
+    \subitem {SIZE\_MAX}, \hyperpage{184}
+    \subitem {step}, \hyperpage{201}
+    \subitem {stripquotes}, \hyperpage{201}
+    \subitem {UINT16\_MAX}, \hyperpage{184}
+    \subitem {UINT32\_MAX}, \hyperpage{185}
+    \subitem {UINT8\_MAX}, \hyperpage{185}
+    \subitem {unput}, \hyperpage{185}
+    \subitem {while}, \hyperpage{201}
+    \subitem {yy\_act}, \hyperpage{206}
+    \subitem {YY\_AT\_BOL}, \hyperpage{185}
+    \subitem {yy\_bp}, \hyperpage{206}
+    \subitem {YY\_BREAK}, \hyperpage{185}
+    \subitem {YY\_BUF\_SIZE}, \hyperpage{185}
+    \subitem {YY\_BUFFER\_EOF\_PENDING}, \hyperpage{185}
+    \subitem {YY\_BUFFER\_NEW}, \hyperpage{186}
+    \subitem {YY\_BUFFER\_NORMAL}, \hyperpage{186}
+    \subitem {YY\_BUFFER\_STATE}, \hyperpage{200}
+    \subitem {YY\_CHAR}, \hyperpage{200}
+    \subitem {yy\_cp}, \hyperpage{206}
+    \subitem {yy\_create\_buffer}, \hyperpage{186}, \hyperpage{201}
+    \subitem {YY\_CURRENT\_BUFFER}, \hyperpage{186}
+    \subitem {YY\_CURRENT\_BUFFER\_LVALUE}, \hyperpage{186}
+    \subitem {YY\_DECL}, \hyperpage{186}, \hyperpage{206}
+    \subitem {yy\_delete\_buffer}, \hyperpage{186}, \hyperpage{202}
+    \subitem {YY\_DO\_BEFORE\_ACTION}, \hyperpage{187}
+    \subitem {YY\_END\_OF\_BUFFER}, \hyperpage{187}
+    \subitem {YY\_END\_OF\_BUFFER\_CHAR}, \hyperpage{187}
+    \subitem {YY\_EXIT\_FAILURE}, \hyperpage{187}
+    \subitem {YY\_EXTRA\_TYPE}, \hyperpage{187}
+    \subitem {YY\_FATAL\_ERROR}, \hyperpage{187}
+    \subitem {yy\_flex\_debug}, \hyperpage{187}, \hyperpage{206}
+    \subitem {YY\_FLEX\_MAJOR\_VERSION}, \hyperpage{188}
+    \subitem {YY\_FLEX\_MINOR\_VERSION}, \hyperpage{188}
+    \subitem {YY\_FLEX\_SUBMINOR\_VERSION}, \hyperpage{188}
+    \subitem {YY\_FLUSH\_BUFFER}, \hyperpage{188}
+    \subitem {yy\_flush\_buffer}, \hyperpage{188}, \hyperpage{202}
+    \subitem {yy\_init\_buffer}, \hyperpage{188}
+    \subitem {YY\_INPUT}, \hyperpage{188}
+    \subitem {YY\_INT\_ALIGNED}, \hyperpage{189}
+    \subitem {YY\_LESS\_LINENO}, \hyperpage{189}
+    \subitem {YY\_LINENO\_REWIND\_TO}, \hyperpage{189}
+    \subitem {yy\_load\_buffer\_state}, \hyperpage{189}
+    \subitem {YY\_MORE\_ADJ}, \hyperpage{190}
+    \subitem {yy\_new\_buffer}, \hyperpage{190}
+    \subitem {YY\_NEW\_FILE}, \hyperpage{190}
+    \subitem {YY\_NO\_INPUT}, \hyperpage{190}
+    \subitem {YY\_NULL}, \hyperpage{190}
+    \subitem {YY\_NUM\_RULES}, \hyperpage{190}
+    \subitem {YY\_READ\_BUF\_SIZE}, \hyperpage{190}
+    \subitem {YY\_RESTORE\_YY\_MORE\_OFFSET}, \hyperpage{191}
+    \subitem {YY\_RULE\_SETUP}, \hyperpage{191}
+    \subitem {YY\_SC\_TO\_UI}, \hyperpage{191}
+    \subitem {yy\_scan\_buffer}, \hyperpage{191}, \hyperpage{202}
+    \subitem {yy\_scan\_bytes}, \hyperpage{191}, \hyperpage{203}
+    \subitem {yy\_scan\_string}, \hyperpage{191}, \hyperpage{203}
+    \subitem {yy\_set\_bol}, \hyperpage{191}
+    \subitem {yy\_set\_interactive}, \hyperpage{192}
+    \subitem {yy\_size\_t}, \hyperpage{200}
+    \subitem {YY\_SKIP\_YYWRAP}, \hyperpage{192}
+    \subitem {YY\_START}, \hyperpage{192}
+    \subitem {YY\_START\_STACK\_INCR}, \hyperpage{192}
+    \subitem {YY\_STATE\_BUF\_SIZE}, \hyperpage{192}
+    \subitem {YY\_STATE\_EOF}, \hyperpage{193}
+    \subitem {yy\_state\_type}, \hyperpage{200}
+    \subitem {YY\_STRUCT\_YY\_BUFFER\_STATE}, \hyperpage{193}
+    \subitem {yy\_switch\_to\_buffer}, \hyperpage{193}, \hyperpage{203}
+    \subitem {YY\_TYPEDEF\_YY\_BUFFER\_STATE}, \hyperpage{193}
+    \subitem {YY\_TYPEDEF\_YY\_SIZE\_T}, \hyperpage{193}
+    \subitem {YY\_USER\_ACTION}, \hyperpage{193}
+    \subitem {yyalloc}, \hyperpage{193}, \hyperpage{204}
+    \subitem {yyconst}, \hyperpage{194}
+    \subitem {yyensure\_buffer\_stack}, \hyperpage{194}
+    \subitem {yyfree}, \hyperpage{194}, \hyperpage{204}
+    \subitem {yyget\_debug}, \hyperpage{194}
+    \subitem {yyget\_extra}, \hyperpage{194}
+    \subitem {yyget\_in}, \hyperpage{194}
+    \subitem {yyget\_leng}, \hyperpage{194}
+    \subitem {yyget\_lineno}, \hyperpage{195}
+    \subitem {yyget\_out}, \hyperpage{195}
+    \subitem {yyget\_text}, \hyperpage{195}
+    \subitem {yyin}, \hyperpage{195}, \hyperpage{207}
+    \subitem {yyleng}, \hyperpage{195}, \hyperpage{207}
+    \subitem {yyless}, \hyperpage{195, 196}
+    \subitem {yylex}, \hyperpage{196}
+    \subitem {yylex\_destroy}, \hyperpage{196}
+    \subitem {yylex\_init}, \hyperpage{196}
+    \subitem {yylex\_init\_extra}, \hyperpage{196}
+    \subitem {yylineno}, \hyperpage{197}, \hyperpage{207}
+    \subitem {yymore}, \hyperpage{197}
+    \subitem {yynoreturn}, \hyperpage{197}
+    \subitem {yyout}, \hyperpage{197}, \hyperpage{207}
+    \subitem {yypop\_buffer\_state}, \hyperpage{197}
+    \subitem {yypush\_buffer\_state}, \hyperpage{197}, \hyperpage{204}
+    \subitem {yyrealloc}, \hyperpage{197}, \hyperpage{204}
+    \subitem {yyrestart}, \hyperpage{198}, \hyperpage{204}
+    \subitem {yyset\_debug}, \hyperpage{198}, \hyperpage{205}
+    \subitem {yyset\_extra}, \hyperpage{198}, \hyperpage{205}
+    \subitem {yyset\_in}, \hyperpage{198}, \hyperpage{205}
+    \subitem {yyset\_lineno}, \hyperpage{198}, \hyperpage{205}
+    \subitem {yyset\_out}, \hyperpage{198}, \hyperpage{206}
+    \subitem {YYSTATE}, \hyperpage{198}
+    \subitem {YYTABLES\_NAME}, \hyperpage{198}
+    \subitem {yyterminate}, \hyperpage{199}
+    \subitem {yytext}, \hyperpage{199}, \hyperpage{207}
+    \subitem {yytext\_ptr}, \hyperpage{199}
+    \subitem {yywrap}, \hyperpage{199}
+  \item {annot\_lexer.hh}, \hyperpage{208}
+    \subitem {annotIN\_HEADER}, \hyperpage{210}
+    \subitem {annotwrap}, \hyperpage{211}
+    \subitem {FLEX\_BETA}, \hyperpage{211}
+    \subitem {flex\_int16\_t}, \hyperpage{220}
+    \subitem {flex\_int32\_t}, \hyperpage{220}
+    \subitem {flex\_int8\_t}, \hyperpage{220}
+    \subitem {FLEX\_SCANNER}, \hyperpage{211}
+    \subitem {flex\_uint16\_t}, \hyperpage{220}
+    \subitem {flex\_uint32\_t}, \hyperpage{220}
+    \subitem {flex\_uint8\_t}, \hyperpage{221}
+    \subitem {FLEXINT\_H}, \hyperpage{211}
+    \subitem {INT16\_MAX}, \hyperpage{211}
+    \subitem {INT16\_MIN}, \hyperpage{211}
+    \subitem {INT32\_MAX}, \hyperpage{211}
+    \subitem {INT32\_MIN}, \hyperpage{211}
+    \subitem {INT8\_MAX}, \hyperpage{212}
+    \subitem {INT8\_MIN}, \hyperpage{212}
+    \subitem {SIZE\_MAX}, \hyperpage{212}
+    \subitem {UINT16\_MAX}, \hyperpage{212}
+    \subitem {UINT32\_MAX}, \hyperpage{212}
+    \subitem {UINT8\_MAX}, \hyperpage{212}
+    \subitem {YY\_BUF\_SIZE}, \hyperpage{212}
+    \subitem {YY\_BUFFER\_STATE}, \hyperpage{221}
+    \subitem {yy\_create\_buffer}, \hyperpage{212}, \hyperpage{221}
+    \subitem {YY\_DECL}, \hyperpage{213}
+    \subitem {YY\_DECL\_IS\_OURS}, \hyperpage{213}
+    \subitem {yy\_delete\_buffer}, \hyperpage{213}, \hyperpage{221}
+    \subitem {YY\_EXTRA\_TYPE}, \hyperpage{213}
+    \subitem {yy\_flex\_debug}, \hyperpage{213}
+    \subitem {YY\_FLEX\_MAJOR\_VERSION}, \hyperpage{213}
+    \subitem {YY\_FLEX\_MINOR\_VERSION}, \hyperpage{213}
+    \subitem {YY\_FLEX\_SUBMINOR\_VERSION}, \hyperpage{213}
+    \subitem {yy\_flush\_buffer}, \hyperpage{214}, \hyperpage{222}
+    \subitem {yy\_init\_buffer}, \hyperpage{214}
+    \subitem {YY\_INT\_ALIGNED}, \hyperpage{214}
+    \subitem {yy\_load\_buffer\_state}, \hyperpage{214}
+    \subitem {YY\_READ\_BUF\_SIZE}, \hyperpage{214}
+    \subitem {yy\_scan\_buffer}, \hyperpage{214}, \hyperpage{222}
+    \subitem {yy\_scan\_bytes}, \hyperpage{214}, \hyperpage{222}
+    \subitem {yy\_scan\_string}, \hyperpage{215}, \hyperpage{223}
+    \subitem {yy\_size\_t}, \hyperpage{221}
+    \subitem {YY\_SKIP\_YYWRAP}, \hyperpage{215}
+    \subitem {YY\_START\_STACK\_INCR}, \hyperpage{215}
+    \subitem {YY\_STRUCT\_YY\_BUFFER\_STATE}, \hyperpage{215}
+    \subitem {yy\_switch\_to\_buffer}, \hyperpage{215}, \hyperpage{223}
+    \subitem {YY\_TYPEDEF\_YY\_BUFFER\_STATE}, \hyperpage{215}
+    \subitem {YY\_TYPEDEF\_YY\_SIZE\_T}, \hyperpage{215}
+    \subitem {yyalloc}, \hyperpage{215}, \hyperpage{223}
+    \subitem {yyconst}, \hyperpage{216}
+    \subitem {yyensure\_buffer\_stack}, \hyperpage{216}
+    \subitem {yyfree}, \hyperpage{216}, \hyperpage{224}
+    \subitem {yyget\_debug}, \hyperpage{216}
+    \subitem {yyget\_extra}, \hyperpage{216}
+    \subitem {yyget\_in}, \hyperpage{216}
+    \subitem {yyget\_leng}, \hyperpage{216}
+    \subitem {yyget\_lineno}, \hyperpage{217}
+    \subitem {yyget\_out}, \hyperpage{217}
+    \subitem {yyget\_text}, \hyperpage{217}
+    \subitem {yyin}, \hyperpage{217}, \hyperpage{226}
+    \subitem {yyleng}, \hyperpage{217}, \hyperpage{226}
+    \subitem {yylex}, \hyperpage{217}
+    \subitem {yylex\_destroy}, \hyperpage{217}
+    \subitem {yylex\_init}, \hyperpage{218}
+    \subitem {yylex\_init\_extra}, \hyperpage{218}
+    \subitem {yylineno}, \hyperpage{218}, \hyperpage{226}
+    \subitem {yynoreturn}, \hyperpage{218}
+    \subitem {yyout}, \hyperpage{218}, \hyperpage{226}
+    \subitem {yypop\_buffer\_state}, \hyperpage{218}
+    \subitem {yypush\_buffer\_state}, \hyperpage{218}, \hyperpage{224}
+    \subitem {yyrealloc}, \hyperpage{219}, \hyperpage{224}
+    \subitem {yyrestart}, \hyperpage{219}, \hyperpage{224}
+    \subitem {yyset\_debug}, \hyperpage{219}, \hyperpage{225}
+    \subitem {yyset\_extra}, \hyperpage{219}, \hyperpage{225}
+    \subitem {yyset\_in}, \hyperpage{219}, \hyperpage{225}
+    \subitem {yyset\_lineno}, \hyperpage{219}, \hyperpage{225}
+    \subitem {yyset\_out}, \hyperpage{219}, \hyperpage{226}
+    \subitem {yytext}, \hyperpage{219}, \hyperpage{226}
+    \subitem {yytext\_ptr}, \hyperpage{220}
+    \subitem {yywrap}, \hyperpage{220}
+  \item {annot\_load\_buffer\_state\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_location.hh}, \hyperpage{227}
+    \subitem {YY\_NULLPTR}, \hyperpage{228}
+  \item {annot\_parser.cc}, \hyperpage{229}
+    \subitem {aloc}, \hyperpage{233}
+    \subitem {loc}, \hyperpage{233}
+    \subitem {scanAnnot}, \hyperpage{232}
+    \subitem {YY\_}, \hyperpage{230}
+    \subitem {YY\_DECL}, \hyperpage{230}, \hyperpage{233}
+    \subitem {YY\_EXCEPTIONS}, \hyperpage{230}
+    \subitem {YY\_REDUCE\_PRINT}, \hyperpage{230}
+    \subitem {YY\_STACK\_PRINT}, \hyperpage{230}
+    \subitem {YY\_SYMBOL\_PRINT}, \hyperpage{230}
+    \subitem {YYABORT}, \hyperpage{230}
+    \subitem {YYACCEPT}, \hyperpage{231}
+    \subitem {YYCASE\_}, \hyperpage{231}
+    \subitem {YYCDEBUG}, \hyperpage{231}
+    \subitem {yyclearin}, \hyperpage{231}
+    \subitem {yyerrok}, \hyperpage{231}
+    \subitem {YYERROR}, \hyperpage{231}
+    \subitem {yylex}, \hyperpage{231}
+    \subitem {YYLLOC\_DEFAULT}, \hyperpage{232}
+    \subitem {YYRECOVERING}, \hyperpage{232}
+    \subitem {YYRHSLOC}, \hyperpage{232}
+  \item {annot\_parser.hh}, \hyperpage{233}
+    \subitem {ANNOT\_ASSERT}, \hyperpage{235}
+    \subitem {ANNOTDEBUG}, \hyperpage{235}
+    \subitem {YY\_ATTRIBUTE\_PURE}, \hyperpage{235}
+    \subitem {YY\_ATTRIBUTE\_UNUSED}, \hyperpage{235}
+    \subitem {YY\_CAST}, \hyperpage{235}
+    \subitem {YY\_CONSTEXPR}, \hyperpage{236}
+    \subitem {YY\_COPY}, \hyperpage{236}
+    \subitem {YY\_CPLUSPLUS}, \hyperpage{236}
+    \subitem {YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}, \hyperpage{236}
+    \subitem {YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}, \hyperpage{236}
+    \subitem {YY\_IGNORE\_USELESS\_CAST\_BEGIN}, \hyperpage{236}
+    \subitem {YY\_IGNORE\_USELESS\_CAST\_END}, \hyperpage{236}
+    \subitem {YY\_INITIAL\_VALUE}, \hyperpage{237}
+    \subitem {YY\_MOVE}, \hyperpage{237}
+    \subitem {YY\_MOVE\_OR\_COPY}, \hyperpage{237}
+    \subitem {YY\_MOVE\_REF}, \hyperpage{237}
+    \subitem {YY\_NOEXCEPT}, \hyperpage{237}
+    \subitem {YY\_NOTHROW}, \hyperpage{237}
+    \subitem {YY\_REINTERPRET\_CAST}, \hyperpage{237}
+    \subitem {YY\_RVREF}, \hyperpage{238}
+    \subitem {YY\_USE}, \hyperpage{238}
+  \item {annot\_scan\_buffer\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_scan\_bytes\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_scan\_string\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_switch\_to\_buffer\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {annot\_t}
+    \subitem {graph.hh}, \hyperpage{243}
+  \item {annotalloc\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{180}
+  \item {ANNOTDEBUG}
+    \subitem {annot\_parser.hh}, \hyperpage{235}
+  \item {annotensure\_buffer\_stack\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotfree\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotin\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotIN\_HEADER}
+    \subitem {annot\_lexer.hh}, \hyperpage{210}
+  \item {annotleng\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotlex\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotlineno\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotmap}
+    \subitem {graph.hh}, \hyperpage{243}
+  \item {annotout\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotpop\_buffer\_state\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{181}
+  \item {annotpush\_buffer\_state\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+  \item {annotrealloc\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+  \item {annotrestart\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+  \item {annottext\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+  \item {annotwrap}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+  \item {annotwrap\_ALREADY\_DEFINED}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+  \item {ARRAY\_SIZE}
+    \subitem {subsume.cc}, \hyperpage{300}
+  \item {as}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{140}
+    \subitem {yy::parser::value\_type}, \hyperpage{168}
+
+  \indexspace
+
+  \item {basic\_symbol}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, 
+		\hyperpage{27, 28}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, 
+		\hyperpage{32--34}
+  \item {beforeskip}
+    \subitem {node}, \hyperpage{93}
+  \item {BEGIN}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+    \subitem {lexer.cc}, \hyperpage{248}
+  \item {begin}
+    \subitem {annot::location}, \hyperpage{62}
+    \subitem {yy::location}, \hyperpage{65}
+  \item {body}
+    \subitem {singlenode}, \hyperpage{148}
+  \item {bottom}
+    \subitem {railnode}, \hyperpage{134}
+  \item {build}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{140}
+    \subitem {yy::parser::value\_type}, \hyperpage{168, 169}
+  \item {by\_kind}
+    \subitem {annot::parser::by\_kind}, \hyperpage{37}
+    \subitem {yy::parser::by\_kind}, \hyperpage{39, 40}
+  \item {by\_type}
+    \subitem {annot::parser}, \hyperpage{107}
+    \subitem {yy::parser}, \hyperpage{114}
+
+  \indexspace
+
+  \item {camelcase}
+    \subitem {util.cc}, \hyperpage{300}
+    \subitem {util.hh}, \hyperpage{301}
+  \item {CHOICE}
+    \subitem {node}, \hyperpage{83}
+  \item {choicenode}, \hyperpage{41}
+    \subitem {$\sim$choicenode}, \hyperpage{43}
+    \subitem {choicenode}, \hyperpage{42, 43}
+    \subitem {clone}, \hyperpage{43}
+    \subitem {drawToLeftRail}, \hyperpage{43}
+    \subitem {drawToRightRail}, \hyperpage{43}
+    \subitem {dump}, \hyperpage{44}
+    \subitem {fixSkips}, \hyperpage{44}
+    \subitem {insert}, \hyperpage{44}
+    \subitem {mergeChoices}, \hyperpage{44}
+    \subitem {rail\_left}, \hyperpage{44}
+    \subitem {rail\_right}, \hyperpage{45}
+    \subitem {texName}, \hyperpage{45}
+  \item {clear}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{29}
+    \subitem {annot::parser::by\_kind}, \hyperpage{37}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{34}
+    \subitem {yy::parser::by\_kind}, \hyperpage{40}
+  \item {clone}
+    \subitem {choicenode}, \hyperpage{43}
+    \subitem {concatnode}, \hyperpage{47}
+    \subitem {loopnode}, \hyperpage{67}
+    \subitem {multinode}, \hyperpage{72}
+    \subitem {newlinenode}, \hyperpage{78}
+    \subitem {node}, \hyperpage{84}
+    \subitem {nontermnode}, \hyperpage{99}
+    \subitem {nullnode}, \hyperpage{105}
+    \subitem {productionnode}, \hyperpage{128}
+    \subitem {railnode}, \hyperpage{132}
+    \subitem {rownode}, \hyperpage{137}
+    \subitem {singlenode}, \hyperpage{144}
+    \subitem {termnode}, \hyperpage{163}
+  \item {CODE\_OF\_CONDUCT.md}, \hyperpage{238}
+  \item {colsep}
+    \subitem {nodesizes}, \hyperpage{96}
+  \item {column}
+    \subitem {annot::position}, \hyperpage{122}
+    \subitem {yy::position}, \hyperpage{125}
+  \item {columns}
+    \subitem {annot::location}, \hyperpage{61}
+    \subitem {annot::position}, \hyperpage{122}
+    \subitem {yy::location}, \hyperpage{64}
+    \subitem {yy::position}, \hyperpage{125}
+  \item {CONCAT}
+    \subitem {node}, \hyperpage{83}
+  \item {concatnode}, \hyperpage{45}
+    \subitem {$\sim$concatnode}, \hyperpage{47}
+    \subitem {analyzeNonOptLoops}, \hyperpage{47}
+    \subitem {analyzeOptLoops}, \hyperpage{47}
+    \subitem {clone}, \hyperpage{47}
+    \subitem {concatnode}, \hyperpage{46, 47}
+    \subitem {createRows}, \hyperpage{47}
+    \subitem {drawToLeftRail}, \hyperpage{48}
+    \subitem {drawToRightRail}, \hyperpage{48}
+    \subitem {dump}, \hyperpage{48}
+    \subitem {fixSkips}, \hyperpage{48}
+    \subitem {insert}, \hyperpage{48}
+    \subitem {mergeConcats}, \hyperpage{49}
+    \subitem {mergeRails}, \hyperpage{49}
+    \subitem {multinode}, \hyperpage{76}
+    \subitem {place}, \hyperpage{49}
+    \subitem {setNext}, \hyperpage{49}
+    \subitem {setPrevious}, \hyperpage{49}
+  \item {context}
+    \subitem {annot::parser::context}, \hyperpage{50}
+    \subitem {yy::parser::context}, \hyperpage{51}
+  \item {CONTRIBUTING.md}, \hyperpage{238}
+  \item {coordinate}, \hyperpage{52}
+    \subitem {coordinate}, \hyperpage{53}
+    \subitem {operator$<$$<$}, \hyperpage{54}
+    \subitem {operator+}, \hyperpage{53}
+    \subitem {operator-\/}, \hyperpage{53}
+    \subitem {operator=}, \hyperpage{53}
+    \subitem {x}, \hyperpage{54}
+    \subitem {y}, \hyperpage{54}
+  \item {copy}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{140}
+    \subitem {yy::parser::value\_type}, \hyperpage{169}
+  \item {counter\_type}
+    \subitem {annot::location}, \hyperpage{60}
+    \subitem {annot::position}, \hyperpage{121}
+    \subitem {yy::location}, \hyperpage{63}
+    \subitem {yy::position}, \hyperpage{124}
+  \item {createRows}
+    \subitem {concatnode}, \hyperpage{47}
+    \subitem {grammar}, \hyperpage{57}
+    \subitem {node}, \hyperpage{84}
+    \subitem {productionnode}, \hyperpage{128}
+
+  \indexspace
+
+  \item {dead}
+    \subitem {node}, \hyperpage{93}
+  \item {debug\_level}
+    \subitem {yy::parser}, \hyperpage{115}
+  \item {debug\_level\_type}
+    \subitem {yy::parser}, \hyperpage{114}
+  \item {debug\_stream}
+    \subitem {yy::parser}, \hyperpage{115}
+  \item {deleteData}
+    \subitem {node}, \hyperpage{84}
+  \item {description}
+    \subitem {main.cc}, \hyperpage{287}
+  \item {destroy}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{140}
+    \subitem {yy::parser::value\_type}, \hyperpage{169}
+  \item {direction}
+    \subitem {railnode}, \hyperpage{134}
+  \item {DOWN}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {drawToLeftRail}
+    \subitem {choicenode}, \hyperpage{43}
+    \subitem {concatnode}, \hyperpage{48}
+    \subitem {loopnode}, \hyperpage{68}
+    \subitem {node}, \hyperpage{84}
+    \subitem {nontermnode}, \hyperpage{100}
+    \subitem {singlenode}, \hyperpage{145}
+  \item {drawtoprev}
+    \subitem {node}, \hyperpage{93}
+  \item {drawToRightRail}
+    \subitem {choicenode}, \hyperpage{43}
+    \subitem {concatnode}, \hyperpage{48}
+    \subitem {loopnode}, \hyperpage{68}
+    \subitem {node}, \hyperpage{84}
+    \subitem {nontermnode}, \hyperpage{100}
+    \subitem {singlenode}, \hyperpage{145}
+  \item {driver}, \hyperpage{54}
+    \subitem {addString}, \hyperpage{55}
+    \subitem {addTerminal}, \hyperpage{55}
+    \subitem {driver}, \hyperpage{55}
+    \subitem {get\_location}, \hyperpage{55}
+    \subitem {get\_result}, \hyperpage{55}
+    \subitem {outs}, \hyperpage{55}
+    \subitem {parse}, \hyperpage{55}
+    \subitem {scan\_begin}, \hyperpage{56}
+    \subitem {scan\_end}, \hyperpage{56}
+  \item {driver.cc}, \hyperpage{238}
+  \item {driver.hh}, \hyperpage{239}
+    \subitem {YY\_DECL}, \hyperpage{240}
+  \item {dump}
+    \subitem {choicenode}, \hyperpage{44}
+    \subitem {concatnode}, \hyperpage{48}
+    \subitem {grammar}, \hyperpage{57}
+    \subitem {loopnode}, \hyperpage{68}
+    \subitem {newlinenode}, \hyperpage{78}
+    \subitem {node}, \hyperpage{85}
+    \subitem {nontermnode}, \hyperpage{100}
+    \subitem {productionnode}, \hyperpage{128}
+    \subitem {railnode}, \hyperpage{132}
+    \subitem {rownode}, \hyperpage{137}
+
+  \indexspace
+
+  \item {ea}
+    \subitem {node}, \hyperpage{93}
+  \item {east}
+    \subitem {node}, \hyperpage{85}
+  \item {ECHO}
+    \subitem {annot\_lexer.cc}, \hyperpage{182}
+    \subitem {lexer.cc}, \hyperpage{248}
+  \item {emplace}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{141}
+    \subitem {yy::parser::value\_type}, \hyperpage{169}
+  \item {empty}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{29}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{34}
+  \item {end}
+    \subitem {annot::location}, \hyperpage{62}
+    \subitem {yy::location}, \hyperpage{65}
+  \item {EOB\_ACT\_CONTINUE\_SCAN}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {lexer.cc}, \hyperpage{249}
+  \item {EOB\_ACT\_END\_OF\_FILE}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {lexer.cc}, \hyperpage{249}
+  \item {EOB\_ACT\_LAST\_MATCH}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {lexer.cc}, \hyperpage{249}
+  \item {error}
+    \subitem {annot::parser}, \hyperpage{108}
+    \subitem {yy::parser}, \hyperpage{115, 116}
+  \item {expected\_tokens}
+    \subitem {annot::parser::context}, \hyperpage{50}
+    \subitem {yy::parser::context}, \hyperpage{52}
+
+  \indexspace
+
+  \item {filename}
+    \subitem {annot::position}, \hyperpage{123}
+    \subitem {yy::position}, \hyperpage{125}
+  \item {filename\_type}
+    \subitem {annot::location}, \hyperpage{60}
+    \subitem {annot::position}, \hyperpage{121}
+    \subitem {yy::location}, \hyperpage{63}
+    \subitem {yy::position}, \hyperpage{124}
+  \item {fixSkips}
+    \subitem {choicenode}, \hyperpage{44}
+    \subitem {concatnode}, \hyperpage{48}
+    \subitem {grammar}, \hyperpage{57}
+    \subitem {loopnode}, \hyperpage{68}
+    \subitem {multinode}, \hyperpage{72}
+    \subitem {node}, \hyperpage{85}
+    \subitem {productionnode}, \hyperpage{128}
+    \subitem {singlenode}, \hyperpage{145}
+  \item {FLEX\_BETA}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{249}
+    \subitem {lexer.hh}, \hyperpage{271}
+  \item {FLEX\_DEBUG}
+    \subitem {lexer.cc}, \hyperpage{249}
+    \subitem {lexer.hh}, \hyperpage{271}
+  \item {flex\_int16\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{259}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {flex\_int32\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{259}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {flex\_int8\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{259}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {FLEX\_SCANNER}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{249}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {flex\_uint16\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{260}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {flex\_uint32\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{260}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {flex\_uint8\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {annot\_lexer.hh}, \hyperpage{221}
+    \subitem {lexer.cc}, \hyperpage{260}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {FLEXINT\_H}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{249}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {forgetChild}
+    \subitem {multinode}, \hyperpage{72}
+    \subitem {node}, \hyperpage{85}
+    \subitem {nontermnode}, \hyperpage{100}
+    \subitem {singlenode}, \hyperpage{145}
+  \item {format}
+    \subitem {nontermnode}, \hyperpage{102}
+
+  \indexspace
+
+  \item {get\_location}
+    \subitem {driver}, \hyperpage{55}
+  \item {get\_result}
+    \subitem {driver}, \hyperpage{55}
+  \item {getBeforeSkip}
+    \subitem {node}, \hyperpage{85}
+  \item {getBody}
+    \subitem {loopnode}, \hyperpage{68}
+  \item {getBottom}
+    \subitem {railnode}, \hyperpage{132}
+  \item {getChild}
+    \subitem {multinode}, \hyperpage{73}
+    \subitem {node}, \hyperpage{85}
+    \subitem {nontermnode}, \hyperpage{100}
+    \subitem {singlenode}, \hyperpage{145}
+  \item {getColSep}
+    \subitem {node}, \hyperpage{86}
+  \item {getDrawToPrev}
+    \subitem {node}, \hyperpage{86}
+  \item {getLeftRail}
+    \subitem {node}, \hyperpage{86}
+  \item {getName}
+    \subitem {productionnode}, \hyperpage{129}
+  \item {getNext}
+    \subitem {node}, \hyperpage{86}
+  \item {getParent}
+    \subitem {node}, \hyperpage{86}
+  \item {getPrevious}
+    \subitem {node}, \hyperpage{86}
+  \item {getRailDir}
+    \subitem {railnode}, \hyperpage{133}
+  \item {getRepeat}
+    \subitem {loopnode}, \hyperpage{69}
+  \item {getRightRail}
+    \subitem {node}, \hyperpage{86}
+  \item {getSize}
+    \subitem {nodesizes}, \hyperpage{96}
+  \item {getSubsume}
+    \subitem {productionnode}, \hyperpage{129}
+  \item {GRAMMAR}
+    \subitem {node}, \hyperpage{83}
+  \item {grammar}, \hyperpage{56}
+    \subitem {$\sim$grammar}, \hyperpage{57}
+    \subitem {createRows}, \hyperpage{57}
+    \subitem {dump}, \hyperpage{57}
+    \subitem {fixSkips}, \hyperpage{57}
+    \subitem {grammar}, \hyperpage{57}
+    \subitem {insert}, \hyperpage{57}
+    \subitem {mergeRails}, \hyperpage{57}
+    \subitem {optimize}, \hyperpage{58}
+    \subitem {place}, \hyperpage{58}
+    \subitem {setNext}, \hyperpage{58}
+    \subitem {setParent}, \hyperpage{58}
+    \subitem {setPrevious}, \hyperpage{58}
+    \subitem {subsume}, \hyperpage{58}
+  \item {graph.cc}, \hyperpage{240}
+    \subitem {latexwrite}, \hyperpage{241}
+    \subitem {nextChain}, \hyperpage{241}
+    \subitem {nextCoord}, \hyperpage{241}
+    \subitem {nextFit}, \hyperpage{241}
+    \subitem {nextNode}, \hyperpage{241}
+    \subitem {stripSpecial}, \hyperpage{241}
+  \item {graph.hh}, \hyperpage{242}
+    \subitem {annot\_t}, \hyperpage{243}
+    \subitem {annotmap}, \hyperpage{243}
+    \subitem {DOWN}, \hyperpage{244}
+    \subitem {latexwrite}, \hyperpage{244}
+    \subitem {LEFT}, \hyperpage{244}
+    \subitem {nextChain}, \hyperpage{244}
+    \subitem {nextCoord}, \hyperpage{244}
+    \subitem {nextFit}, \hyperpage{244}
+    \subitem {nextNode}, \hyperpage{244}
+    \subitem {RIGHT}, \hyperpage{244}
+    \subitem {stripSpecial}, \hyperpage{245}
+    \subitem {UP}, \hyperpage{244}
+    \subitem {vraildir}, \hyperpage{243}
+    \subitem {vrailside}, \hyperpage{244}
+
+  \indexspace
+
+  \item {height}
+    \subitem {node}, \hyperpage{87}
+
+  \indexspace
+
+  \item {if}
+    \subitem {annot\_lexer.cc}, \hyperpage{201}
+    \subitem {lexer.cc}, \hyperpage{261}
+  \item {INITIAL}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {lexer.cc}, \hyperpage{249}
+  \item {initialize}
+    \subitem {annot::location}, \hyperpage{61}
+    \subitem {annot::position}, \hyperpage{122}
+    \subitem {yy::location}, \hyperpage{64}
+    \subitem {yy::position}, \hyperpage{125}
+  \item {insert}
+    \subitem {choicenode}, \hyperpage{44}
+    \subitem {concatnode}, \hyperpage{48}
+    \subitem {grammar}, \hyperpage{57}
+    \subitem {multinode}, \hyperpage{73}
+    \subitem {node}, \hyperpage{87}
+  \item {insertFirst}
+    \subitem {multinode}, \hyperpage{73}
+  \item {INT16\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{183}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {INT16\_MIN}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {INT32\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {INT32\_MIN}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{211}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {INT8\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {INT8\_MIN}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{272}
+  \item {is\_choice}
+    \subitem {node}, \hyperpage{87}
+  \item {is\_concat}
+    \subitem {node}, \hyperpage{87}
+  \item {is\_loop}
+    \subitem {node}, \hyperpage{87}
+  \item {is\_newline}
+    \subitem {node}, \hyperpage{87}
+  \item {is\_nonterm}
+    \subitem {node}, \hyperpage{87}
+  \item {is\_null}
+    \subitem {node}, \hyperpage{88}
+  \item {is\_production}
+    \subitem {node}, \hyperpage{88}
+  \item {is\_rail}
+    \subitem {node}, \hyperpage{88}
+  \item {is\_row}
+    \subitem {node}, \hyperpage{88}
+  \item {is\_terminal}
+    \subitem {node}, \hyperpage{88}
+  \item {isDead}
+    \subitem {node}, \hyperpage{88}
+
+  \indexspace
+
+  \item {kind}
+    \subitem {annot::parser::by\_kind}, \hyperpage{38}
+    \subitem {yy::parser::by\_kind}, \hyperpage{40}
+  \item {kind\_}
+    \subitem {annot::parser::by\_kind}, \hyperpage{38}
+    \subitem {yy::parser::by\_kind}, \hyperpage{41}
+  \item {kind\_type}
+    \subitem {annot::parser::by\_kind}, \hyperpage{37}
+    \subitem {yy::parser::by\_kind}, \hyperpage{39}
+
+  \indexspace
+
+  \item {latexwrite}
+    \subitem {graph.cc}, \hyperpage{241}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {LEFT}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {leftrail}
+    \subitem {node}, \hyperpage{93}
+  \item {lexer.cc}, \hyperpage{245}
+    \subitem {A}, \hyperpage{248}
+    \subitem {BEGIN}, \hyperpage{248}
+    \subitem {ECHO}, \hyperpage{248}
+    \subitem {EOB\_ACT\_CONTINUE\_SCAN}, \hyperpage{249}
+    \subitem {EOB\_ACT\_END\_OF\_FILE}, \hyperpage{249}
+    \subitem {EOB\_ACT\_LAST\_MATCH}, \hyperpage{249}
+    \subitem {FLEX\_BETA}, \hyperpage{249}
+    \subitem {FLEX\_DEBUG}, \hyperpage{249}
+    \subitem {flex\_int16\_t}, \hyperpage{259}
+    \subitem {flex\_int32\_t}, \hyperpage{259}
+    \subitem {flex\_int8\_t}, \hyperpage{259}
+    \subitem {FLEX\_SCANNER}, \hyperpage{249}
+    \subitem {flex\_uint16\_t}, \hyperpage{260}
+    \subitem {flex\_uint32\_t}, \hyperpage{260}
+    \subitem {flex\_uint8\_t}, \hyperpage{260}
+    \subitem {FLEXINT\_H}, \hyperpage{249}
+    \subitem {if}, \hyperpage{261}
+    \subitem {INITIAL}, \hyperpage{249}
+    \subitem {INT16\_MAX}, \hyperpage{250}
+    \subitem {INT16\_MIN}, \hyperpage{250}
+    \subitem {INT32\_MAX}, \hyperpage{250}
+    \subitem {INT32\_MIN}, \hyperpage{250}
+    \subitem {INT8\_MAX}, \hyperpage{250}
+    \subitem {INT8\_MIN}, \hyperpage{250}
+    \subitem {REJECT}, \hyperpage{250}
+    \subitem {SIZE\_MAX}, \hyperpage{250}
+    \subitem {step}, \hyperpage{261}
+    \subitem {subloc}, \hyperpage{267}
+    \subitem {UINT16\_MAX}, \hyperpage{251}
+    \subitem {UINT32\_MAX}, \hyperpage{251}
+    \subitem {UINT8\_MAX}, \hyperpage{251}
+    \subitem {unput}, \hyperpage{251}
+    \subitem {while}, \hyperpage{261}
+    \subitem {yy\_act}, \hyperpage{267}
+    \subitem {YY\_AT\_BOL}, \hyperpage{251}
+    \subitem {yy\_bp}, \hyperpage{267}
+    \subitem {YY\_BREAK}, \hyperpage{251}
+    \subitem {YY\_BUF\_SIZE}, \hyperpage{251}
+    \subitem {YY\_BUFFER\_EOF\_PENDING}, \hyperpage{252}
+    \subitem {YY\_BUFFER\_NEW}, \hyperpage{252}
+    \subitem {YY\_BUFFER\_NORMAL}, \hyperpage{252}
+    \subitem {YY\_BUFFER\_STATE}, \hyperpage{260}
+    \subitem {YY\_CHAR}, \hyperpage{260}
+    \subitem {yy\_cp}, \hyperpage{267}
+    \subitem {yy\_create\_buffer}, \hyperpage{261}
+    \subitem {YY\_CURRENT\_BUFFER}, \hyperpage{252}
+    \subitem {YY\_CURRENT\_BUFFER\_LVALUE}, \hyperpage{252}
+    \subitem {YY\_DECL}, \hyperpage{268}
+    \subitem {yy\_delete\_buffer}, \hyperpage{261}
+    \subitem {YY\_DO\_BEFORE\_ACTION}, \hyperpage{252}
+    \subitem {YY\_END\_OF\_BUFFER}, \hyperpage{252}
+    \subitem {YY\_END\_OF\_BUFFER\_CHAR}, \hyperpage{253}
+    \subitem {YY\_EXIT\_FAILURE}, \hyperpage{253}
+    \subitem {YY\_EXTRA\_TYPE}, \hyperpage{253}
+    \subitem {YY\_FATAL\_ERROR}, \hyperpage{253}
+    \subitem {yy\_flex\_debug}, \hyperpage{268}
+    \subitem {YY\_FLEX\_MAJOR\_VERSION}, \hyperpage{253}
+    \subitem {YY\_FLEX\_MINOR\_VERSION}, \hyperpage{253}
+    \subitem {YY\_FLEX\_SUBMINOR\_VERSION}, \hyperpage{253}
+    \subitem {YY\_FLUSH\_BUFFER}, \hyperpage{254}
+    \subitem {yy\_flush\_buffer}, \hyperpage{262}
+    \subitem {YY\_INPUT}, \hyperpage{254}
+    \subitem {YY\_INT\_ALIGNED}, \hyperpage{254}
+    \subitem {YY\_LESS\_LINENO}, \hyperpage{254}
+    \subitem {YY\_LINENO\_REWIND\_TO}, \hyperpage{254}
+    \subitem {YY\_MORE\_ADJ}, \hyperpage{254}
+    \subitem {yy\_new\_buffer}, \hyperpage{254}
+    \subitem {YY\_NEW\_FILE}, \hyperpage{255}
+    \subitem {YY\_NO\_INPUT}, \hyperpage{255}
+    \subitem {YY\_NULL}, \hyperpage{255}
+    \subitem {YY\_NUM\_RULES}, \hyperpage{255}
+    \subitem {YY\_READ\_BUF\_SIZE}, \hyperpage{255}
+    \subitem {YY\_RESTORE\_YY\_MORE\_OFFSET}, \hyperpage{255}
+    \subitem {YY\_RULE\_SETUP}, \hyperpage{255}
+    \subitem {YY\_SC\_TO\_UI}, \hyperpage{255}
+    \subitem {yy\_scan\_buffer}, \hyperpage{262}
+    \subitem {yy\_scan\_bytes}, \hyperpage{262}
+    \subitem {yy\_scan\_string}, \hyperpage{263}
+    \subitem {yy\_set\_bol}, \hyperpage{256}
+    \subitem {yy\_set\_interactive}, \hyperpage{256}
+    \subitem {yy\_size\_t}, \hyperpage{260}
+    \subitem {YY\_SKIP\_YYWRAP}, \hyperpage{256}
+    \subitem {YY\_START}, \hyperpage{256}
+    \subitem {YY\_START\_STACK\_INCR}, \hyperpage{256}
+    \subitem {YY\_STATE\_BUF\_SIZE}, \hyperpage{257}
+    \subitem {YY\_STATE\_EOF}, \hyperpage{257}
+    \subitem {yy\_state\_type}, \hyperpage{260}
+    \subitem {YY\_STRUCT\_YY\_BUFFER\_STATE}, \hyperpage{257}
+    \subitem {yy\_switch\_to\_buffer}, \hyperpage{263}
+    \subitem {YY\_TYPEDEF\_YY\_BUFFER\_STATE}, \hyperpage{257}
+    \subitem {YY\_TYPEDEF\_YY\_SIZE\_T}, \hyperpage{257}
+    \subitem {YY\_USER\_ACTION}, \hyperpage{257}
+    \subitem {yyalloc}, \hyperpage{263}
+    \subitem {yyconst}, \hyperpage{257}
+    \subitem {yyfree}, \hyperpage{264}
+    \subitem {yyget\_debug}, \hyperpage{264}
+    \subitem {yyget\_extra}, \hyperpage{264}
+    \subitem {yyget\_in}, \hyperpage{264}
+    \subitem {yyget\_leng}, \hyperpage{264}
+    \subitem {yyget\_lineno}, \hyperpage{264}
+    \subitem {yyget\_out}, \hyperpage{264}
+    \subitem {yyget\_text}, \hyperpage{265}
+    \subitem {yyin}, \hyperpage{268}
+    \subitem {yyleng}, \hyperpage{268}
+    \subitem {yyless}, \hyperpage{258}
+    \subitem {yylex\_destroy}, \hyperpage{265}
+    \subitem {yylineno}, \hyperpage{268}
+    \subitem {yymore}, \hyperpage{258}
+    \subitem {yynoreturn}, \hyperpage{258}
+    \subitem {yyout}, \hyperpage{268}
+    \subitem {yypop\_buffer\_state}, \hyperpage{265}
+    \subitem {yypush\_buffer\_state}, \hyperpage{265}
+    \subitem {yyrealloc}, \hyperpage{265}
+    \subitem {yyrestart}, \hyperpage{265}
+    \subitem {yyset\_debug}, \hyperpage{266}
+    \subitem {yyset\_extra}, \hyperpage{266}
+    \subitem {yyset\_in}, \hyperpage{266}
+    \subitem {yyset\_lineno}, \hyperpage{266}
+    \subitem {yyset\_out}, \hyperpage{267}
+    \subitem {YYSTATE}, \hyperpage{258}
+    \subitem {YYTABLES\_NAME}, \hyperpage{259}
+    \subitem {yyterminate}, \hyperpage{259}
+    \subitem {yytext}, \hyperpage{268}
+    \subitem {yytext\_ptr}, \hyperpage{259}
+    \subitem {yywrap}, \hyperpage{259}
+  \item {lexer.hh}, \hyperpage{269}
+    \subitem {FLEX\_BETA}, \hyperpage{271}
+    \subitem {FLEX\_DEBUG}, \hyperpage{271}
+    \subitem {flex\_int16\_t}, \hyperpage{276}
+    \subitem {flex\_int32\_t}, \hyperpage{276}
+    \subitem {flex\_int8\_t}, \hyperpage{276}
+    \subitem {FLEX\_SCANNER}, \hyperpage{272}
+    \subitem {flex\_uint16\_t}, \hyperpage{276}
+    \subitem {flex\_uint32\_t}, \hyperpage{276}
+    \subitem {flex\_uint8\_t}, \hyperpage{276}
+    \subitem {FLEXINT\_H}, \hyperpage{272}
+    \subitem {INT16\_MAX}, \hyperpage{272}
+    \subitem {INT16\_MIN}, \hyperpage{272}
+    \subitem {INT32\_MAX}, \hyperpage{272}
+    \subitem {INT32\_MIN}, \hyperpage{272}
+    \subitem {INT8\_MAX}, \hyperpage{272}
+    \subitem {INT8\_MIN}, \hyperpage{272}
+    \subitem {SIZE\_MAX}, \hyperpage{273}
+    \subitem {UINT16\_MAX}, \hyperpage{273}
+    \subitem {UINT32\_MAX}, \hyperpage{273}
+    \subitem {UINT8\_MAX}, \hyperpage{273}
+    \subitem {YY\_BUF\_SIZE}, \hyperpage{273}
+    \subitem {YY\_BUFFER\_STATE}, \hyperpage{276}
+    \subitem {yy\_create\_buffer}, \hyperpage{277}
+    \subitem {YY\_DECL}, \hyperpage{273}
+    \subitem {YY\_DECL\_IS\_OURS}, \hyperpage{273}
+    \subitem {yy\_delete\_buffer}, \hyperpage{277}
+    \subitem {YY\_EXTRA\_TYPE}, \hyperpage{273}
+    \subitem {YY\_FLEX\_MAJOR\_VERSION}, \hyperpage{274}
+    \subitem {YY\_FLEX\_MINOR\_VERSION}, \hyperpage{274}
+    \subitem {YY\_FLEX\_SUBMINOR\_VERSION}, \hyperpage{274}
+    \subitem {yy\_flush\_buffer}, \hyperpage{277}
+    \subitem {YY\_INT\_ALIGNED}, \hyperpage{274}
+    \subitem {YY\_READ\_BUF\_SIZE}, \hyperpage{274}
+    \subitem {yy\_scan\_buffer}, \hyperpage{278}
+    \subitem {yy\_scan\_bytes}, \hyperpage{278}
+    \subitem {yy\_scan\_string}, \hyperpage{278}
+    \subitem {yy\_size\_t}, \hyperpage{276}
+    \subitem {YY\_SKIP\_YYWRAP}, \hyperpage{274}
+    \subitem {YY\_START\_STACK\_INCR}, \hyperpage{274}
+    \subitem {YY\_STRUCT\_YY\_BUFFER\_STATE}, \hyperpage{274}
+    \subitem {yy\_switch\_to\_buffer}, \hyperpage{279}
+    \subitem {YY\_TYPEDEF\_YY\_BUFFER\_STATE}, \hyperpage{275}
+    \subitem {YY\_TYPEDEF\_YY\_SIZE\_T}, \hyperpage{275}
+    \subitem {yyalloc}, \hyperpage{279}
+    \subitem {yyconst}, \hyperpage{275}
+    \subitem {yyfree}, \hyperpage{279}
+    \subitem {yyget\_debug}, \hyperpage{279}
+    \subitem {yyget\_extra}, \hyperpage{279}
+    \subitem {yyget\_in}, \hyperpage{280}
+    \subitem {yyget\_leng}, \hyperpage{280}
+    \subitem {yyget\_lineno}, \hyperpage{280}
+    \subitem {yyget\_out}, \hyperpage{280}
+    \subitem {yyget\_text}, \hyperpage{280}
+    \subitem {yyin}, \hyperpage{283}
+    \subitem {yyIN\_HEADER}, \hyperpage{275}
+    \subitem {yyleng}, \hyperpage{283}
+    \subitem {yylex}, \hyperpage{280}
+    \subitem {yylex\_destroy}, \hyperpage{280}
+    \subitem {yylineno}, \hyperpage{283}
+    \subitem {yynoreturn}, \hyperpage{275}
+    \subitem {yyout}, \hyperpage{283}
+    \subitem {yypop\_buffer\_state}, \hyperpage{281}
+    \subitem {yypush\_buffer\_state}, \hyperpage{281}
+    \subitem {yyrealloc}, \hyperpage{281}
+    \subitem {yyrestart}, \hyperpage{281}
+    \subitem {yyset\_debug}, \hyperpage{282}
+    \subitem {yyset\_extra}, \hyperpage{282}
+    \subitem {yyset\_in}, \hyperpage{282}
+    \subitem {yyset\_lineno}, \hyperpage{282}
+    \subitem {yyset\_out}, \hyperpage{283}
+    \subitem {yytext}, \hyperpage{283}
+    \subitem {yytext\_ptr}, \hyperpage{275}
+    \subitem {yywrap}, \hyperpage{275}
+  \item {liftConcats}
+    \subitem {multinode}, \hyperpage{73}
+    \subitem {node}, \hyperpage{88}
+    \subitem {nontermnode}, \hyperpage{101}
+    \subitem {singlenode}, \hyperpage{146}
+  \item {line}
+    \subitem {annot::position}, \hyperpage{123}
+    \subitem {node}, \hyperpage{89}
+    \subitem {yy::position}, \hyperpage{125}
+  \item {lines}
+    \subitem {annot::location}, \hyperpage{61}
+    \subitem {annot::position}, \hyperpage{122}
+    \subitem {yy::location}, \hyperpage{65}
+    \subitem {yy::position}, \hyperpage{125}
+  \item {loadData}
+    \subitem {node}, \hyperpage{89}
+    \subitem {nodesizes}, \hyperpage{96}
+  \item {loc}
+    \subitem {annot\_parser.cc}, \hyperpage{233}
+    \subitem {parser.cc}, \hyperpage{293}
+  \item {location}
+    \subitem {annot::location}, \hyperpage{60, 61}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{30}
+    \subitem {annot::parser::context}, \hyperpage{50}
+    \subitem {annot::parser::syntax\_error}, \hyperpage{159}
+    \subitem {node}, \hyperpage{94}
+    \subitem {yy::location}, \hyperpage{64}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{35}
+    \subitem {yy::parser::context}, \hyperpage{52}
+    \subitem {yy::parser::syntax\_error}, \hyperpage{161}
+  \item {location.hh}, \hyperpage{284}
+    \subitem {YY\_NULLPTR}, \hyperpage{285}
+  \item {location\_type}
+    \subitem {annot::parser}, \hyperpage{107}
+    \subitem {yy::parser}, \hyperpage{114}
+  \item {lookahead}
+    \subitem {annot::parser::context}, \hyperpage{51}
+    \subitem {yy::parser::context}, \hyperpage{52}
+  \item {LOOP}
+    \subitem {node}, \hyperpage{83}
+  \item {loopnode}, \hyperpage{66}
+    \subitem {$\sim$loopnode}, \hyperpage{67}
+    \subitem {clone}, \hyperpage{67}
+    \subitem {drawToLeftRail}, \hyperpage{68}
+    \subitem {drawToRightRail}, \hyperpage{68}
+    \subitem {dump}, \hyperpage{68}
+    \subitem {fixSkips}, \hyperpage{68}
+    \subitem {getBody}, \hyperpage{68}
+    \subitem {getRepeat}, \hyperpage{69}
+    \subitem {loopnode}, \hyperpage{67}
+    \subitem {setBody}, \hyperpage{69}
+    \subitem {setRepeat}, \hyperpage{69}
+    \subitem {texName}, \hyperpage{69}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cc}, \hyperpage{286}
+  \item {main.cc}, \hyperpage{286}
+    \subitem {description}, \hyperpage{287}
+    \subitem {main}, \hyperpage{286}
+    \subitem {options}, \hyperpage{287}
+    \subitem {optstring}, \hyperpage{287}
+    \subitem {usage}, \hyperpage{286}
+  \item {make\_AEND}
+    \subitem {annot::parser}, \hyperpage{109}
+  \item {make\_ANNOTATION}
+    \subitem {yy::parser}, \hyperpage{116}
+  \item {make\_ANNOTerror}
+    \subitem {annot::parser}, \hyperpage{109}
+  \item {make\_ANNOTUNDEF}
+    \subitem {annot::parser}, \hyperpage{109}
+  \item {make\_AS}
+    \subitem {annot::parser}, \hyperpage{109}
+  \item {make\_ASTART}
+    \subitem {annot::parser}, \hyperpage{109}
+  \item {make\_CAPTION}
+    \subitem {annot::parser}, \hyperpage{109}
+  \item {make\_COMMA}
+    \subitem {yy::parser}, \hyperpage{116}
+  \item {make\_END}
+    \subitem {annot::parser}, \hyperpage{109}
+    \subitem {yy::parser}, \hyperpage{116}
+  \item {make\_EQUAL}
+    \subitem {yy::parser}, \hyperpage{116}
+  \item {make\_LBRACE}
+    \subitem {yy::parser}, \hyperpage{116}
+  \item {make\_LBRACK}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_LPAREN}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_NEWLINE}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_PIPE}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_RBRACE}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_RBRACK}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_RPAREN}
+    \subitem {yy::parser}, \hyperpage{117}
+  \item {make\_SEMICOLON}
+    \subitem {annot::parser}, \hyperpage{110}
+    \subitem {yy::parser}, \hyperpage{118}
+  \item {make\_SIDEWAYS}
+    \subitem {annot::parser}, \hyperpage{110}
+  \item {make\_STRING}
+    \subitem {annot::parser}, \hyperpage{110}
+    \subitem {yy::parser}, \hyperpage{118}
+  \item {make\_SUBSUME}
+    \subitem {annot::parser}, \hyperpage{110}
+  \item {make\_TERM}
+    \subitem {yy::parser}, \hyperpage{118}
+  \item {make\_UNEXP}
+    \subitem {annot::parser}, \hyperpage{110}
+    \subitem {yy::parser}, \hyperpage{118}
+  \item {make\_YYerror}
+    \subitem {yy::parser}, \hyperpage{118}
+  \item {make\_YYUNDEF}
+    \subitem {yy::parser}, \hyperpage{118}
+  \item {makeDead}
+    \subitem {node}, \hyperpage{89}
+  \item {mergeChoices}
+    \subitem {choicenode}, \hyperpage{44}
+    \subitem {multinode}, \hyperpage{73}
+    \subitem {node}, \hyperpage{89}
+    \subitem {nontermnode}, \hyperpage{101}
+    \subitem {singlenode}, \hyperpage{146}
+  \item {mergeConcats}
+    \subitem {concatnode}, \hyperpage{49}
+    \subitem {multinode}, \hyperpage{74}
+    \subitem {node}, \hyperpage{89}
+    \subitem {nontermnode}, \hyperpage{101}
+    \subitem {singlenode}, \hyperpage{146}
+  \item {mergeRails}
+    \subitem {concatnode}, \hyperpage{49}
+    \subitem {grammar}, \hyperpage{57}
+    \subitem {multinode}, \hyperpage{74}
+    \subitem {node}, \hyperpage{89}
+    \subitem {singlenode}, \hyperpage{146}
+  \item {minsize}
+    \subitem {nodesizes}, \hyperpage{96}
+  \item {move}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{29}
+    \subitem {annot::parser::by\_kind}, \hyperpage{38}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{141}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{34}
+    \subitem {yy::parser::by\_kind}, \hyperpage{40}
+    \subitem {yy::parser::value\_type}, \hyperpage{169}
+  \item {multinode}, \hyperpage{70}
+    \subitem {$\sim$multinode}, \hyperpage{71}
+    \subitem {analyzeNonOptLoops}, \hyperpage{72}
+    \subitem {analyzeOptLoops}, \hyperpage{72}
+    \subitem {clone}, \hyperpage{72}
+    \subitem {concatnode}, \hyperpage{76}
+    \subitem {fixSkips}, \hyperpage{72}
+    \subitem {forgetChild}, \hyperpage{72}
+    \subitem {getChild}, \hyperpage{73}
+    \subitem {insert}, \hyperpage{73}
+    \subitem {insertFirst}, \hyperpage{73}
+    \subitem {liftConcats}, \hyperpage{73}
+    \subitem {mergeChoices}, \hyperpage{73}
+    \subitem {mergeConcats}, \hyperpage{74}
+    \subitem {mergeRails}, \hyperpage{74}
+    \subitem {multinode}, \hyperpage{71}
+    \subitem {nodes}, \hyperpage{76}
+    \subitem {numChildren}, \hyperpage{74}
+    \subitem {operator!=}, \hyperpage{74}
+    \subitem {operator==}, \hyperpage{74}
+    \subitem {place}, \hyperpage{75}
+    \subitem {setNext}, \hyperpage{75}
+    \subitem {setParent}, \hyperpage{75}
+    \subitem {setPrevious}, \hyperpage{75}
+    \subitem {subsume}, \hyperpage{75}
+    \subitem {texName}, \hyperpage{76}
+  \item {myHeight}
+    \subitem {node}, \hyperpage{94}
+  \item {myWidth}
+    \subitem {node}, \hyperpage{94}
+
+  \indexspace
+
+  \item {name}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{29}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{35}
+  \item {NEWLINE}
+    \subitem {node}, \hyperpage{83}
+  \item {newlinenode}, \hyperpage{77}
+    \subitem {$\sim$newlinenode}, \hyperpage{78}
+    \subitem {clone}, \hyperpage{78}
+    \subitem {dump}, \hyperpage{78}
+    \subitem {newlinenode}, \hyperpage{78}
+    \subitem {place}, \hyperpage{79}
+    \subitem {rail\_left}, \hyperpage{79}
+    \subitem {rail\_right}, \hyperpage{79}
+    \subitem {setLineHeight}, \hyperpage{79}
+  \item {next}
+    \subitem {node}, \hyperpage{94}
+  \item {nextChain}
+    \subitem {graph.cc}, \hyperpage{241}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {nextCoord}
+    \subitem {graph.cc}, \hyperpage{241}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {nextFit}
+    \subitem {graph.cc}, \hyperpage{241}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {nextNode}
+    \subitem {graph.cc}, \hyperpage{241}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {node}, \hyperpage{80}
+    \subitem {$\sim$node}, \hyperpage{83}
+    \subitem {analyzeNonOptLoops}, \hyperpage{83}
+    \subitem {analyzeOptLoops}, \hyperpage{83}
+    \subitem {beforeskip}, \hyperpage{93}
+    \subitem {CHOICE}, \hyperpage{83}
+    \subitem {clone}, \hyperpage{84}
+    \subitem {CONCAT}, \hyperpage{83}
+    \subitem {createRows}, \hyperpage{84}
+    \subitem {dead}, \hyperpage{93}
+    \subitem {deleteData}, \hyperpage{84}
+    \subitem {drawToLeftRail}, \hyperpage{84}
+    \subitem {drawtoprev}, \hyperpage{93}
+    \subitem {drawToRightRail}, \hyperpage{84}
+    \subitem {dump}, \hyperpage{85}
+    \subitem {ea}, \hyperpage{93}
+    \subitem {east}, \hyperpage{85}
+    \subitem {fixSkips}, \hyperpage{85}
+    \subitem {forgetChild}, \hyperpage{85}
+    \subitem {getBeforeSkip}, \hyperpage{85}
+    \subitem {getChild}, \hyperpage{85}
+    \subitem {getColSep}, \hyperpage{86}
+    \subitem {getDrawToPrev}, \hyperpage{86}
+    \subitem {getLeftRail}, \hyperpage{86}
+    \subitem {getNext}, \hyperpage{86}
+    \subitem {getParent}, \hyperpage{86}
+    \subitem {getPrevious}, \hyperpage{86}
+    \subitem {getRightRail}, \hyperpage{86}
+    \subitem {GRAMMAR}, \hyperpage{83}
+    \subitem {height}, \hyperpage{87}
+    \subitem {insert}, \hyperpage{87}
+    \subitem {is\_choice}, \hyperpage{87}
+    \subitem {is\_concat}, \hyperpage{87}
+    \subitem {is\_loop}, \hyperpage{87}
+    \subitem {is\_newline}, \hyperpage{87}
+    \subitem {is\_nonterm}, \hyperpage{87}
+    \subitem {is\_null}, \hyperpage{88}
+    \subitem {is\_production}, \hyperpage{88}
+    \subitem {is\_rail}, \hyperpage{88}
+    \subitem {is\_row}, \hyperpage{88}
+    \subitem {is\_terminal}, \hyperpage{88}
+    \subitem {isDead}, \hyperpage{88}
+    \subitem {leftrail}, \hyperpage{93}
+    \subitem {liftConcats}, \hyperpage{88}
+    \subitem {line}, \hyperpage{89}
+    \subitem {loadData}, \hyperpage{89}
+    \subitem {location}, \hyperpage{94}
+    \subitem {LOOP}, \hyperpage{83}
+    \subitem {makeDead}, \hyperpage{89}
+    \subitem {mergeChoices}, \hyperpage{89}
+    \subitem {mergeConcats}, \hyperpage{89}
+    \subitem {mergeRails}, \hyperpage{89}
+    \subitem {myHeight}, \hyperpage{94}
+    \subitem {myWidth}, \hyperpage{94}
+    \subitem {NEWLINE}, \hyperpage{83}
+    \subitem {next}, \hyperpage{94}
+    \subitem {node}, \hyperpage{83}
+    \subitem {nodename}, \hyperpage{94}
+    \subitem {nodetype}, \hyperpage{82}
+    \subitem {NONTERM}, \hyperpage{83}
+    \subitem {NULLNODE}, \hyperpage{83}
+    \subitem {numChildren}, \hyperpage{90}
+    \subitem {operator!=}, \hyperpage{90}
+    \subitem {operator==}, \hyperpage{90}
+    \subitem {parent}, \hyperpage{94}
+    \subitem {place}, \hyperpage{90}
+    \subitem {previous}, \hyperpage{94}
+    \subitem {PRODUCTION}, \hyperpage{83}
+    \subitem {RAIL}, \hyperpage{83}
+    \subitem {rawName}, \hyperpage{90}
+    \subitem {rightrail}, \hyperpage{94}
+    \subitem {ROW}, \hyperpage{83}
+    \subitem {same\_type}, \hyperpage{91}
+    \subitem {setBeforeSkip}, \hyperpage{91}
+    \subitem {setDrawToPrev}, \hyperpage{91}
+    \subitem {setheight}, \hyperpage{91}
+    \subitem {setLeftRail}, \hyperpage{91}
+    \subitem {setNext}, \hyperpage{91}
+    \subitem {setParent}, \hyperpage{91}
+    \subitem {setPrevious}, \hyperpage{92}
+    \subitem {setRightRail}, \hyperpage{92}
+    \subitem {setwidth}, \hyperpage{92}
+    \subitem {sizes}, \hyperpage{95}
+    \subitem {subsume}, \hyperpage{92}
+    \subitem {TERMINAL}, \hyperpage{83}
+    \subitem {texName}, \hyperpage{92}
+    \subitem {type}, \hyperpage{95}
+    \subitem {UNKNOWN}, \hyperpage{83}
+    \subitem {vrailStr}, \hyperpage{92}
+    \subitem {wa}, \hyperpage{95}
+    \subitem {west}, \hyperpage{93}
+    \subitem {width}, \hyperpage{93}
+  \item {nodename}
+    \subitem {node}, \hyperpage{94}
+  \item {nodes}
+    \subitem {multinode}, \hyperpage{76}
+  \item {nodesize.hh}, \hyperpage{288}
+  \item {nodesizes}, \hyperpage{95}
+    \subitem {$\sim$nodesizes}, \hyperpage{96}
+    \subitem {colsep}, \hyperpage{96}
+    \subitem {getSize}, \hyperpage{96}
+    \subitem {loadData}, \hyperpage{96}
+    \subitem {minsize}, \hyperpage{96}
+    \subitem {nodesizes}, \hyperpage{96}
+    \subitem {rowsep}, \hyperpage{97}
+  \item {nodetype}
+    \subitem {node}, \hyperpage{82}
+  \item {NONTERM}
+    \subitem {node}, \hyperpage{83}
+  \item {nontermnode}, \hyperpage{97}
+    \subitem {$\sim$nontermnode}, \hyperpage{99}
+    \subitem {analyzeNonOptLoops}, \hyperpage{99}
+    \subitem {analyzeOptLoops}, \hyperpage{99}
+    \subitem {clone}, \hyperpage{99}
+    \subitem {drawToLeftRail}, \hyperpage{100}
+    \subitem {drawToRightRail}, \hyperpage{100}
+    \subitem {dump}, \hyperpage{100}
+    \subitem {forgetChild}, \hyperpage{100}
+    \subitem {format}, \hyperpage{102}
+    \subitem {getChild}, \hyperpage{100}
+    \subitem {liftConcats}, \hyperpage{101}
+    \subitem {mergeChoices}, \hyperpage{101}
+    \subitem {mergeConcats}, \hyperpage{101}
+    \subitem {nontermnode}, \hyperpage{99}
+    \subitem {operator!=}, \hyperpage{101}
+    \subitem {operator==}, \hyperpage{101}
+    \subitem {place}, \hyperpage{101}
+    \subitem {str}, \hyperpage{102}
+    \subitem {style}, \hyperpage{102}
+    \subitem {subsume}, \hyperpage{102}
+    \subitem {texName}, \hyperpage{102}
+  \item {NULLNODE}
+    \subitem {node}, \hyperpage{83}
+  \item {nullnode}, \hyperpage{103}
+    \subitem {clone}, \hyperpage{105}
+    \subitem {nullnode}, \hyperpage{104}
+    \subitem {place}, \hyperpage{105}
+    \subitem {texName}, \hyperpage{105}
+  \item {numChildren}
+    \subitem {multinode}, \hyperpage{74}
+    \subitem {node}, \hyperpage{90}
+    \subitem {singlenode}, \hyperpage{146}
+
+  \indexspace
+
+  \item {operator!=}
+    \subitem {multinode}, \hyperpage{74}
+    \subitem {node}, \hyperpage{90}
+    \subitem {nontermnode}, \hyperpage{101}
+    \subitem {railnode}, \hyperpage{133}
+    \subitem {singlenode}, \hyperpage{146}
+  \item {operator$<$$<$}
+    \subitem {annot}, \hyperpage{19, 20}
+    \subitem {coordinate}, \hyperpage{54}
+    \subitem {yy}, \hyperpage{23}
+  \item {operator()}
+    \subitem {annot::parser}, \hyperpage{110}
+    \subitem {yy::parser}, \hyperpage{119}
+  \item {operator+}
+    \subitem {annot}, \hyperpage{18}
+    \subitem {coordinate}, \hyperpage{53}
+    \subitem {yy}, \hyperpage{21}
+  \item {operator+=}
+    \subitem {annot}, \hyperpage{18}
+    \subitem {yy}, \hyperpage{21, 22}
+  \item {operator-\/}
+    \subitem {annot}, \hyperpage{19}
+    \subitem {coordinate}, \hyperpage{53}
+    \subitem {yy}, \hyperpage{22}
+  \item {operator-\/=}
+    \subitem {annot}, \hyperpage{19}
+    \subitem {yy}, \hyperpage{22, 23}
+  \item {operator=}
+    \subitem {coordinate}, \hyperpage{53}
+  \item {operator==}
+    \subitem {multinode}, \hyperpage{74}
+    \subitem {node}, \hyperpage{90}
+    \subitem {nontermnode}, \hyperpage{101}
+    \subitem {railnode}, \hyperpage{133}
+    \subitem {singlenode}, \hyperpage{147}
+  \item {operator[]}
+    \subitem {annot::parser::stack$<$ T, S $>$::slice}, \hyperpage{149}
+    \subitem {yy::parser::stack$<$ T, S $>$::slice}, \hyperpage{150}
+  \item {optimize}
+    \subitem {grammar}, \hyperpage{58}
+    \subitem {productionnode}, \hyperpage{129}
+  \item {optimize.cc}, \hyperpage{288}
+  \item {options}
+    \subitem {main.cc}, \hyperpage{287}
+  \item {optstring}
+    \subitem {main.cc}, \hyperpage{287}
+  \item {output.cc}, \hyperpage{289}
+  \item {outs}
+    \subitem {driver}, \hyperpage{55}
+
+  \indexspace
+
+  \item {parent}
+    \subitem {node}, \hyperpage{94}
+  \item {parse}
+    \subitem {annot::parser}, \hyperpage{111}
+    \subitem {driver}, \hyperpage{55}
+    \subitem {yy::parser}, \hyperpage{119}
+  \item {parser}
+    \subitem {annot::parser}, \hyperpage{108}
+    \subitem {yy::parser}, \hyperpage{115}
+  \item {parser.cc}, \hyperpage{290}
+    \subitem {loc}, \hyperpage{293}
+    \subitem {wrapChoice}, \hyperpage{293}
+    \subitem {YY\_}, \hyperpage{291}
+    \subitem {YY\_EXCEPTIONS}, \hyperpage{291}
+    \subitem {YY\_REDUCE\_PRINT}, \hyperpage{291}
+    \subitem {YY\_STACK\_PRINT}, \hyperpage{291}
+    \subitem {YY\_SYMBOL\_PRINT}, \hyperpage{291}
+    \subitem {YYABORT}, \hyperpage{291}
+    \subitem {YYACCEPT}, \hyperpage{292}
+    \subitem {YYCASE\_}, \hyperpage{292}
+    \subitem {YYCDEBUG}, \hyperpage{292}
+    \subitem {yyclearin}, \hyperpage{292}
+    \subitem {yyerrok}, \hyperpage{292}
+    \subitem {YYERROR}, \hyperpage{292}
+    \subitem {YYLLOC\_DEFAULT}, \hyperpage{292}
+    \subitem {YYRECOVERING}, \hyperpage{293}
+    \subitem {YYRHSLOC}, \hyperpage{293}
+  \item {parser.hh}, \hyperpage{294}
+    \subitem {scanAnnot}, \hyperpage{299}
+    \subitem {YY\_ASSERT}, \hyperpage{296}
+    \subitem {YY\_ATTRIBUTE\_PURE}, \hyperpage{296}
+    \subitem {YY\_ATTRIBUTE\_UNUSED}, \hyperpage{296}
+    \subitem {YY\_CAST}, \hyperpage{296}
+    \subitem {YY\_CONSTEXPR}, \hyperpage{296}
+    \subitem {YY\_COPY}, \hyperpage{296}
+    \subitem {YY\_CPLUSPLUS}, \hyperpage{296}
+    \subitem {YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}, \hyperpage{297}
+    \subitem {YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}, \hyperpage{297}
+    \subitem {YY\_IGNORE\_USELESS\_CAST\_BEGIN}, \hyperpage{297}
+    \subitem {YY\_IGNORE\_USELESS\_CAST\_END}, \hyperpage{297}
+    \subitem {YY\_INITIAL\_VALUE}, \hyperpage{297}
+    \subitem {YY\_MOVE}, \hyperpage{297}
+    \subitem {YY\_MOVE\_OR\_COPY}, \hyperpage{297}
+    \subitem {YY\_MOVE\_REF}, \hyperpage{298}
+    \subitem {YY\_NOEXCEPT}, \hyperpage{298}
+    \subitem {YY\_NOTHROW}, \hyperpage{298}
+    \subitem {YY\_REINTERPRET\_CAST}, \hyperpage{298}
+    \subitem {YY\_RVREF}, \hyperpage{298}
+    \subitem {YY\_USE}, \hyperpage{298}
+    \subitem {YYDEBUG}, \hyperpage{298}
+  \item {place}
+    \subitem {concatnode}, \hyperpage{49}
+    \subitem {grammar}, \hyperpage{58}
+    \subitem {multinode}, \hyperpage{75}
+    \subitem {newlinenode}, \hyperpage{79}
+    \subitem {node}, \hyperpage{90}
+    \subitem {nontermnode}, \hyperpage{101}
+    \subitem {nullnode}, \hyperpage{105}
+    \subitem {productionnode}, \hyperpage{129}
+    \subitem {railnode}, \hyperpage{133}
+    \subitem {rownode}, \hyperpage{137}
+  \item {position}
+    \subitem {annot::position}, \hyperpage{122}
+    \subitem {yy::position}, \hyperpage{124}
+  \item {previous}
+    \subitem {node}, \hyperpage{94}
+  \item {PRODUCTION}
+    \subitem {node}, \hyperpage{83}
+  \item {productionnode}, \hyperpage{126}
+    \subitem {$\sim$productionnode}, \hyperpage{128}
+    \subitem {clone}, \hyperpage{128}
+    \subitem {createRows}, \hyperpage{128}
+    \subitem {dump}, \hyperpage{128}
+    \subitem {fixSkips}, \hyperpage{128}
+    \subitem {getName}, \hyperpage{129}
+    \subitem {getSubsume}, \hyperpage{129}
+    \subitem {optimize}, \hyperpage{129}
+    \subitem {place}, \hyperpage{129}
+    \subitem {productionnode}, \hyperpage{127, 128}
+    \subitem {subsume}, \hyperpage{129}
+    \subitem {texName}, \hyperpage{129}
+
+  \indexspace
+
+  \item {RAIL}
+    \subitem {node}, \hyperpage{83}
+  \item {rail\_left}
+    \subitem {choicenode}, \hyperpage{44}
+    \subitem {newlinenode}, \hyperpage{79}
+  \item {rail\_right}
+    \subitem {choicenode}, \hyperpage{45}
+    \subitem {newlinenode}, \hyperpage{79}
+  \item {railnode}, \hyperpage{130}
+    \subitem {$\sim$railnode}, \hyperpage{132}
+    \subitem {bottom}, \hyperpage{134}
+    \subitem {clone}, \hyperpage{132}
+    \subitem {direction}, \hyperpage{134}
+    \subitem {dump}, \hyperpage{132}
+    \subitem {getBottom}, \hyperpage{132}
+    \subitem {getRailDir}, \hyperpage{133}
+    \subitem {operator!=}, \hyperpage{133}
+    \subitem {operator==}, \hyperpage{133}
+    \subitem {place}, \hyperpage{133}
+    \subitem {railnode}, \hyperpage{131, 132}
+    \subitem {setBottom}, \hyperpage{133}
+    \subitem {setRailDir}, \hyperpage{134}
+    \subitem {side}, \hyperpage{134}
+    \subitem {texName}, \hyperpage{134}
+    \subitem {top}, \hyperpage{134}
+  \item {rawName}
+    \subitem {node}, \hyperpage{90}
+  \item {README.md}, \hyperpage{299}
+  \item {REJECT}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {lexer.cc}, \hyperpage{250}
+  \item {RIGHT}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {rightrail}
+    \subitem {node}, \hyperpage{94}
+  \item {ROW}
+    \subitem {node}, \hyperpage{83}
+  \item {rownode}, \hyperpage{135}
+    \subitem {$\sim$rownode}, \hyperpage{137}
+    \subitem {clone}, \hyperpage{137}
+    \subitem {dump}, \hyperpage{137}
+    \subitem {place}, \hyperpage{137}
+    \subitem {rownode}, \hyperpage{136}
+    \subitem {texName}, \hyperpage{137}
+  \item {rowsep}
+    \subitem {nodesizes}, \hyperpage{97}
+
+  \indexspace
+
+  \item {S\_AEND}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_annot}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_ANNOTATION}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_annotations}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_annots}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_AS}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_ASTART}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_CAPTION}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_COMMA}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_EQUAL}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_expression}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_grammar}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_LBRACE}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_LBRACK}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_LPAREN}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_NEWLINE}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_PIPE}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_primary}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_production}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_productions}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_RBRACE}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_RBRACK}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_rows}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_RPAREN}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_SEMICOLON}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_SIDEWAYS}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_STRING}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_SUBSUME}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+  \item {S\_TERM}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_UNEXP}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_YYACCEPT}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_YYEMPTY}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_YYEOF}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_YYerror}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {S\_YYUNDEF}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {same\_type}
+    \subitem {node}, \hyperpage{91}
+  \item {scan\_begin}
+    \subitem {driver}, \hyperpage{56}
+  \item {scan\_end}
+    \subitem {driver}, \hyperpage{56}
+  \item {scanAnnot}
+    \subitem {annot\_parser.cc}, \hyperpage{232}
+    \subitem {parser.hh}, \hyperpage{299}
+  \item {self\_type}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{139}
+    \subitem {yy::parser::value\_type}, \hyperpage{167}
+  \item {semantic\_type}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{139}
+    \subitem {yy::parser}, \hyperpage{114}
+  \item {set\_debug\_level}
+    \subitem {yy::parser}, \hyperpage{119}
+  \item {set\_debug\_stream}
+    \subitem {yy::parser}, \hyperpage{119}
+  \item {setBeforeSkip}
+    \subitem {node}, \hyperpage{91}
+  \item {setBody}
+    \subitem {loopnode}, \hyperpage{69}
+  \item {setBottom}
+    \subitem {railnode}, \hyperpage{133}
+  \item {setDrawToPrev}
+    \subitem {node}, \hyperpage{91}
+  \item {setheight}
+    \subitem {node}, \hyperpage{91}
+  \item {setLeftRail}
+    \subitem {node}, \hyperpage{91}
+  \item {setLineHeight}
+    \subitem {newlinenode}, \hyperpage{79}
+  \item {setNext}
+    \subitem {concatnode}, \hyperpage{49}
+    \subitem {grammar}, \hyperpage{58}
+    \subitem {multinode}, \hyperpage{75}
+    \subitem {node}, \hyperpage{91}
+    \subitem {singlenode}, \hyperpage{147}
+  \item {setParent}
+    \subitem {grammar}, \hyperpage{58}
+    \subitem {multinode}, \hyperpage{75}
+    \subitem {node}, \hyperpage{91}
+    \subitem {singlenode}, \hyperpage{147}
+  \item {setPrevious}
+    \subitem {concatnode}, \hyperpage{49}
+    \subitem {grammar}, \hyperpage{58}
+    \subitem {multinode}, \hyperpage{75}
+    \subitem {node}, \hyperpage{92}
+    \subitem {singlenode}, \hyperpage{147}
+  \item {setRailDir}
+    \subitem {railnode}, \hyperpage{134}
+  \item {setRepeat}
+    \subitem {loopnode}, \hyperpage{69}
+  \item {setRightRail}
+    \subitem {node}, \hyperpage{92}
+  \item {setwidth}
+    \subitem {node}, \hyperpage{92}
+  \item {side}
+    \subitem {railnode}, \hyperpage{134}
+  \item {singlenode}, \hyperpage{142}
+    \subitem {$\sim$singlenode}, \hyperpage{144}
+    \subitem {analyzeNonOptLoops}, \hyperpage{144}
+    \subitem {analyzeOptLoops}, \hyperpage{144}
+    \subitem {body}, \hyperpage{148}
+    \subitem {clone}, \hyperpage{144}
+    \subitem {drawToLeftRail}, \hyperpage{145}
+    \subitem {drawToRightRail}, \hyperpage{145}
+    \subitem {fixSkips}, \hyperpage{145}
+    \subitem {forgetChild}, \hyperpage{145}
+    \subitem {getChild}, \hyperpage{145}
+    \subitem {liftConcats}, \hyperpage{146}
+    \subitem {mergeChoices}, \hyperpage{146}
+    \subitem {mergeConcats}, \hyperpage{146}
+    \subitem {mergeRails}, \hyperpage{146}
+    \subitem {numChildren}, \hyperpage{146}
+    \subitem {operator!=}, \hyperpage{146}
+    \subitem {operator==}, \hyperpage{147}
+    \subitem {setNext}, \hyperpage{147}
+    \subitem {setParent}, \hyperpage{147}
+    \subitem {setPrevious}, \hyperpage{147}
+    \subitem {singlenode}, \hyperpage{144}
+    \subitem {subsume}, \hyperpage{147}
+    \subitem {texName}, \hyperpage{148}
+  \item {SIZE\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{250}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {sizes}
+    \subitem {node}, \hyperpage{95}
+  \item {slice}
+    \subitem {annot::parser::stack$<$ T, S $>$::slice}, \hyperpage{149}
+    \subitem {yy::parser::stack$<$ T, S $>$::slice}, \hyperpage{150}
+  \item {step}
+    \subitem {annot::location}, \hyperpage{61}
+    \subitem {annot\_lexer.cc}, \hyperpage{201}
+    \subitem {lexer.cc}, \hyperpage{261}
+    \subitem {yy::location}, \hyperpage{65}
+  \item {str}
+    \subitem {nontermnode}, \hyperpage{102}
+  \item {stripquotes}
+    \subitem {annot\_lexer.cc}, \hyperpage{201}
+  \item {stripSpecial}
+    \subitem {graph.cc}, \hyperpage{241}
+    \subitem {graph.hh}, \hyperpage{245}
+  \item {style}
+    \subitem {nontermnode}, \hyperpage{102}
+  \item {subloc}
+    \subitem {lexer.cc}, \hyperpage{267}
+  \item {subsume}
+    \subitem {grammar}, \hyperpage{58}
+    \subitem {multinode}, \hyperpage{75}
+    \subitem {node}, \hyperpage{92}
+    \subitem {nontermnode}, \hyperpage{102}
+    \subitem {productionnode}, \hyperpage{129}
+    \subitem {singlenode}, \hyperpage{147}
+  \item {subsume.cc}, \hyperpage{299}
+    \subitem {ARRAY\_SIZE}, \hyperpage{300}
+  \item {super\_type}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{27}
+    \subitem {annot::parser::symbol\_type}, \hyperpage{154}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{32}
+    \subitem {yy::parser::symbol\_type}, \hyperpage{156}
+  \item {swap}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{141}
+    \subitem {yy::parser::value\_type}, \hyperpage{170}
+  \item {symbol\_kind\_type}
+    \subitem {annot::parser}, \hyperpage{107}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser}, \hyperpage{114}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {symbol\_name}
+    \subitem {annot::parser}, \hyperpage{111}
+    \subitem {yy::parser}, \hyperpage{120}
+  \item {symbol\_type}
+    \subitem {annot::parser::symbol\_type}, \hyperpage{154, 155}
+    \subitem {yy::parser::symbol\_type}, \hyperpage{157}
+  \item {syntax\_error}
+    \subitem {annot::parser::syntax\_error}, \hyperpage{159}
+    \subitem {yy::parser::syntax\_error}, \hyperpage{161}
+
+  \indexspace
+
+  \item {TERMINAL}
+    \subitem {node}, \hyperpage{83}
+  \item {termnode}, \hyperpage{162}
+    \subitem {$\sim$termnode}, \hyperpage{163}
+    \subitem {clone}, \hyperpage{163}
+    \subitem {termnode}, \hyperpage{163}
+  \item {texName}
+    \subitem {choicenode}, \hyperpage{45}
+    \subitem {loopnode}, \hyperpage{69}
+    \subitem {multinode}, \hyperpage{76}
+    \subitem {node}, \hyperpage{92}
+    \subitem {nontermnode}, \hyperpage{102}
+    \subitem {nullnode}, \hyperpage{105}
+    \subitem {productionnode}, \hyperpage{129}
+    \subitem {railnode}, \hyperpage{134}
+    \subitem {rownode}, \hyperpage{137}
+    \subitem {singlenode}, \hyperpage{148}
+  \item {TOK\_AEND}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_ANNOTATION}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_ANNOTEMPTY}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_ANNOTerror}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_ANNOTUNDEF}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_AS}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_ASTART}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_CAPTION}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_COMMA}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_END}
+    \subitem {annot::parser::token}, \hyperpage{164}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_EQUAL}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_LBRACE}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_LBRACK}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_LPAREN}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_NEWLINE}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_PIPE}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_RBRACE}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_RBRACK}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_RPAREN}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_SEMICOLON}
+    \subitem {annot::parser::token}, \hyperpage{164}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_SIDEWAYS}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_STRING}
+    \subitem {annot::parser::token}, \hyperpage{164}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_SUBSUME}
+    \subitem {annot::parser::token}, \hyperpage{164}
+  \item {TOK\_TERM}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_UNEXP}
+    \subitem {annot::parser::token}, \hyperpage{164}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_YYEMPTY}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_YYerror}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {TOK\_YYUNDEF}
+    \subitem {yy::parser::token}, \hyperpage{166}
+  \item {token}
+    \subitem {annot::parser::context}, \hyperpage{51}
+    \subitem {yy::parser::context}, \hyperpage{52}
+  \item {token\_kind\_type}
+    \subitem {annot::parser}, \hyperpage{107}
+    \subitem {annot::parser::token}, \hyperpage{164}
+    \subitem {yy::parser}, \hyperpage{114}
+    \subitem {yy::parser::token}, \hyperpage{165}
+  \item {token\_type}
+    \subitem {annot::parser}, \hyperpage{107}
+    \subitem {yy::parser}, \hyperpage{115}
+  \item {top}
+    \subitem {railnode}, \hyperpage{134}
+  \item {type}
+    \subitem {node}, \hyperpage{95}
+  \item {type\_get}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{29}
+    \subitem {annot::parser::by\_kind}, \hyperpage{38}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{35}
+    \subitem {yy::parser::by\_kind}, \hyperpage{40}
+
+  \indexspace
+
+  \item {UINT16\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{184}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{251}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {UINT32\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{251}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {UINT8\_MAX}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{251}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {UNKNOWN}
+    \subitem {node}, \hyperpage{83}
+  \item {unput}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {lexer.cc}, \hyperpage{251}
+  \item {UP}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {usage}
+    \subitem {main.cc}, \hyperpage{286}
+  \item {util.cc}, \hyperpage{300}
+    \subitem {camelcase}, \hyperpage{300}
+  \item {util.hh}, \hyperpage{301}
+    \subitem {camelcase}, \hyperpage{301}
+
+  \indexspace
+
+  \item {value}
+    \subitem {annot::parser::basic\_symbol$<$ Base $>$}, \hyperpage{30}
+    \subitem {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{35}
+  \item {value\_type}
+    \subitem {yy::parser::value\_type}, \hyperpage{167, 168}
+  \item {vraildir}
+    \subitem {graph.hh}, \hyperpage{243}
+  \item {vrailside}
+    \subitem {graph.hh}, \hyperpage{244}
+  \item {vrailStr}
+    \subitem {node}, \hyperpage{92}
+
+  \indexspace
+
+  \item {wa}
+    \subitem {node}, \hyperpage{95}
+  \item {west}
+    \subitem {node}, \hyperpage{93}
+  \item {while}
+    \subitem {annot\_lexer.cc}, \hyperpage{201}
+    \subitem {lexer.cc}, \hyperpage{261}
+  \item {width}
+    \subitem {node}, \hyperpage{93}
+  \item {wrapChoice}
+    \subitem {parser.cc}, \hyperpage{293}
+
+  \indexspace
+
+  \item {x}
+    \subitem {coordinate}, \hyperpage{54}
+
+  \indexspace
+
+  \item {y}
+    \subitem {coordinate}, \hyperpage{54}
+  \item {yy}, \hyperpage{20}
+    \subitem {operator$<$$<$}, \hyperpage{23}
+    \subitem {operator+}, \hyperpage{21}
+    \subitem {operator+=}, \hyperpage{21, 22}
+    \subitem {operator-\/}, \hyperpage{22}
+    \subitem {operator-\/=}, \hyperpage{22, 23}
+  \item {yy::location}, \hyperpage{62}
+    \subitem {begin}, \hyperpage{65}
+    \subitem {columns}, \hyperpage{64}
+    \subitem {counter\_type}, \hyperpage{63}
+    \subitem {end}, \hyperpage{65}
+    \subitem {filename\_type}, \hyperpage{63}
+    \subitem {initialize}, \hyperpage{64}
+    \subitem {lines}, \hyperpage{65}
+    \subitem {location}, \hyperpage{64}
+    \subitem {step}, \hyperpage{65}
+  \item {yy::parser}, \hyperpage{112}
+    \subitem {$\sim$parser}, \hyperpage{115}
+    \subitem {by\_type}, \hyperpage{114}
+    \subitem {debug\_level}, \hyperpage{115}
+    \subitem {debug\_level\_type}, \hyperpage{114}
+    \subitem {debug\_stream}, \hyperpage{115}
+    \subitem {error}, \hyperpage{115, 116}
+    \subitem {location\_type}, \hyperpage{114}
+    \subitem {make\_ANNOTATION}, \hyperpage{116}
+    \subitem {make\_COMMA}, \hyperpage{116}
+    \subitem {make\_END}, \hyperpage{116}
+    \subitem {make\_EQUAL}, \hyperpage{116}
+    \subitem {make\_LBRACE}, \hyperpage{116}
+    \subitem {make\_LBRACK}, \hyperpage{117}
+    \subitem {make\_LPAREN}, \hyperpage{117}
+    \subitem {make\_NEWLINE}, \hyperpage{117}
+    \subitem {make\_PIPE}, \hyperpage{117}
+    \subitem {make\_RBRACE}, \hyperpage{117}
+    \subitem {make\_RBRACK}, \hyperpage{117}
+    \subitem {make\_RPAREN}, \hyperpage{117}
+    \subitem {make\_SEMICOLON}, \hyperpage{118}
+    \subitem {make\_STRING}, \hyperpage{118}
+    \subitem {make\_TERM}, \hyperpage{118}
+    \subitem {make\_UNEXP}, \hyperpage{118}
+    \subitem {make\_YYerror}, \hyperpage{118}
+    \subitem {make\_YYUNDEF}, \hyperpage{118}
+    \subitem {operator()}, \hyperpage{119}
+    \subitem {parse}, \hyperpage{119}
+    \subitem {parser}, \hyperpage{115}
+    \subitem {semantic\_type}, \hyperpage{114}
+    \subitem {set\_debug\_level}, \hyperpage{119}
+    \subitem {set\_debug\_stream}, \hyperpage{119}
+    \subitem {symbol\_kind\_type}, \hyperpage{114}
+    \subitem {symbol\_name}, \hyperpage{120}
+    \subitem {token\_kind\_type}, \hyperpage{114}
+    \subitem {token\_type}, \hyperpage{115}
+    \subitem {YYNTOKENS}, \hyperpage{120}
+  \item {yy::parser::basic\_symbol$<$ Base $>$}, \hyperpage{30}
+    \subitem {$\sim$basic\_symbol}, \hyperpage{34}
+    \subitem {basic\_symbol}, \hyperpage{32--34}
+    \subitem {clear}, \hyperpage{34}
+    \subitem {empty}, \hyperpage{34}
+    \subitem {location}, \hyperpage{35}
+    \subitem {move}, \hyperpage{34}
+    \subitem {name}, \hyperpage{35}
+    \subitem {super\_type}, \hyperpage{32}
+    \subitem {type\_get}, \hyperpage{35}
+    \subitem {value}, \hyperpage{35}
+  \item {yy::parser::by\_kind}, \hyperpage{38}
+    \subitem {by\_kind}, \hyperpage{39, 40}
+    \subitem {clear}, \hyperpage{40}
+    \subitem {kind}, \hyperpage{40}
+    \subitem {kind\_}, \hyperpage{41}
+    \subitem {kind\_type}, \hyperpage{39}
+    \subitem {move}, \hyperpage{40}
+    \subitem {type\_get}, \hyperpage{40}
+  \item {yy::parser::context}, \hyperpage{51}
+    \subitem {context}, \hyperpage{51}
+    \subitem {expected\_tokens}, \hyperpage{52}
+    \subitem {location}, \hyperpage{52}
+    \subitem {lookahead}, \hyperpage{52}
+    \subitem {token}, \hyperpage{52}
+  \item {yy::parser::stack$<$ T, S $>$::slice}, \hyperpage{149}
+    \subitem {operator[]}, \hyperpage{150}
+    \subitem {slice}, \hyperpage{150}
+  \item {yy::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {S\_ANNOTATION}, \hyperpage{152}
+    \subitem {S\_annotations}, \hyperpage{152}
+    \subitem {S\_COMMA}, \hyperpage{152}
+    \subitem {S\_EQUAL}, \hyperpage{152}
+    \subitem {S\_expression}, \hyperpage{152}
+    \subitem {S\_grammar}, \hyperpage{152}
+    \subitem {S\_LBRACE}, \hyperpage{152}
+    \subitem {S\_LBRACK}, \hyperpage{152}
+    \subitem {S\_LPAREN}, \hyperpage{152}
+    \subitem {S\_NEWLINE}, \hyperpage{152}
+    \subitem {S\_PIPE}, \hyperpage{152}
+    \subitem {S\_primary}, \hyperpage{152}
+    \subitem {S\_production}, \hyperpage{152}
+    \subitem {S\_productions}, \hyperpage{152}
+    \subitem {S\_RBRACE}, \hyperpage{152}
+    \subitem {S\_RBRACK}, \hyperpage{152}
+    \subitem {S\_rows}, \hyperpage{152}
+    \subitem {S\_RPAREN}, \hyperpage{152}
+    \subitem {S\_SEMICOLON}, \hyperpage{152}
+    \subitem {S\_STRING}, \hyperpage{152}
+    \subitem {S\_TERM}, \hyperpage{152}
+    \subitem {S\_UNEXP}, \hyperpage{152}
+    \subitem {S\_YYACCEPT}, \hyperpage{152}
+    \subitem {S\_YYEMPTY}, \hyperpage{152}
+    \subitem {S\_YYEOF}, \hyperpage{152}
+    \subitem {S\_YYerror}, \hyperpage{152}
+    \subitem {S\_YYUNDEF}, \hyperpage{152}
+    \subitem {symbol\_kind\_type}, \hyperpage{152}
+    \subitem {YYNTOKENS}, \hyperpage{152}
+  \item {yy::parser::symbol\_type}, \hyperpage{155}
+    \subitem {super\_type}, \hyperpage{156}
+    \subitem {symbol\_type}, \hyperpage{157}
+  \item {yy::parser::syntax\_error}, \hyperpage{160}
+    \subitem {$\sim$syntax\_error}, \hyperpage{161}
+    \subitem {location}, \hyperpage{161}
+    \subitem {syntax\_error}, \hyperpage{161}
+  \item {yy::parser::token}, \hyperpage{165}
+    \subitem {TOK\_ANNOTATION}, \hyperpage{166}
+    \subitem {TOK\_COMMA}, \hyperpage{166}
+    \subitem {TOK\_END}, \hyperpage{166}
+    \subitem {TOK\_EQUAL}, \hyperpage{166}
+    \subitem {TOK\_LBRACE}, \hyperpage{166}
+    \subitem {TOK\_LBRACK}, \hyperpage{166}
+    \subitem {TOK\_LPAREN}, \hyperpage{166}
+    \subitem {TOK\_NEWLINE}, \hyperpage{166}
+    \subitem {TOK\_PIPE}, \hyperpage{166}
+    \subitem {TOK\_RBRACE}, \hyperpage{166}
+    \subitem {TOK\_RBRACK}, \hyperpage{166}
+    \subitem {TOK\_RPAREN}, \hyperpage{166}
+    \subitem {TOK\_SEMICOLON}, \hyperpage{166}
+    \subitem {TOK\_STRING}, \hyperpage{166}
+    \subitem {TOK\_TERM}, \hyperpage{166}
+    \subitem {TOK\_UNEXP}, \hyperpage{166}
+    \subitem {TOK\_YYEMPTY}, \hyperpage{166}
+    \subitem {TOK\_YYerror}, \hyperpage{166}
+    \subitem {TOK\_YYUNDEF}, \hyperpage{166}
+    \subitem {token\_kind\_type}, \hyperpage{165}
+    \subitem {yytokentype}, \hyperpage{165}
+  \item {yy::parser::value\_type}, \hyperpage{166}
+    \subitem {$\sim$value\_type}, \hyperpage{168}
+    \subitem {as}, \hyperpage{168}
+    \subitem {build}, \hyperpage{168, 169}
+    \subitem {copy}, \hyperpage{169}
+    \subitem {destroy}, \hyperpage{169}
+    \subitem {emplace}, \hyperpage{169}
+    \subitem {move}, \hyperpage{169}
+    \subitem {self\_type}, \hyperpage{167}
+    \subitem {swap}, \hyperpage{170}
+    \subitem {value\_type}, \hyperpage{167, 168}
+    \subitem {yyalign\_me\_}, \hyperpage{170}
+    \subitem {yyraw\_}, \hyperpage{170}
+  \item {yy::position}, \hyperpage{123}
+    \subitem {column}, \hyperpage{125}
+    \subitem {columns}, \hyperpage{125}
+    \subitem {counter\_type}, \hyperpage{124}
+    \subitem {filename}, \hyperpage{125}
+    \subitem {filename\_type}, \hyperpage{124}
+    \subitem {initialize}, \hyperpage{125}
+    \subitem {line}, \hyperpage{125}
+    \subitem {lines}, \hyperpage{125}
+    \subitem {position}, \hyperpage{124}
+  \item {YY\_}
+    \subitem {annot\_parser.cc}, \hyperpage{230}
+    \subitem {parser.cc}, \hyperpage{291}
+  \item {yy\_act}
+    \subitem {annot\_lexer.cc}, \hyperpage{206}
+    \subitem {lexer.cc}, \hyperpage{267}
+  \item {YY\_ASSERT}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {YY\_AT\_BOL}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {lexer.cc}, \hyperpage{251}
+  \item {yy\_at\_bol}
+    \subitem {yy\_buffer\_state}, \hyperpage{171}
+  \item {YY\_ATTRIBUTE\_PURE}
+    \subitem {annot\_parser.hh}, \hyperpage{235}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {YY\_ATTRIBUTE\_UNUSED}
+    \subitem {annot\_parser.hh}, \hyperpage{235}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {yy\_bp}
+    \subitem {annot\_lexer.cc}, \hyperpage{206}
+    \subitem {lexer.cc}, \hyperpage{267}
+  \item {YY\_BREAK}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {lexer.cc}, \hyperpage{251}
+  \item {yy\_bs\_column}
+    \subitem {yy\_buffer\_state}, \hyperpage{171}
+  \item {yy\_bs\_lineno}
+    \subitem {yy\_buffer\_state}, \hyperpage{171}
+  \item {yy\_buf\_pos}
+    \subitem {yy\_buffer\_state}, \hyperpage{171}
+  \item {YY\_BUF\_SIZE}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}
+    \subitem {lexer.cc}, \hyperpage{251}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {yy\_buf\_size}
+    \subitem {yy\_buffer\_state}, \hyperpage{171}
+  \item {YY\_BUFFER\_EOF\_PENDING}
+    \subitem {annot\_lexer.cc}, \hyperpage{185}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_BUFFER\_NEW}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_BUFFER\_NORMAL}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_BUFFER\_STATE}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {annot\_lexer.hh}, \hyperpage{221}
+    \subitem {lexer.cc}, \hyperpage{260}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {yy\_buffer\_state}, \hyperpage{170}
+    \subitem {yy\_at\_bol}, \hyperpage{171}
+    \subitem {yy\_bs\_column}, \hyperpage{171}
+    \subitem {yy\_bs\_lineno}, \hyperpage{171}
+    \subitem {yy\_buf\_pos}, \hyperpage{171}
+    \subitem {yy\_buf\_size}, \hyperpage{171}
+    \subitem {yy\_buffer\_status}, \hyperpage{171}
+    \subitem {yy\_ch\_buf}, \hyperpage{172}
+    \subitem {yy\_fill\_buffer}, \hyperpage{172}
+    \subitem {yy\_input\_file}, \hyperpage{172}
+    \subitem {yy\_is\_interactive}, \hyperpage{172}
+    \subitem {yy\_is\_our\_buffer}, \hyperpage{172}
+    \subitem {yy\_n\_chars}, \hyperpage{172}
+  \item {yy\_buffer\_status}
+    \subitem {yy\_buffer\_state}, \hyperpage{171}
+  \item {YY\_CAST}
+    \subitem {annot\_parser.hh}, \hyperpage{235}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {yy\_ch\_buf}
+    \subitem {yy\_buffer\_state}, \hyperpage{172}
+  \item {YY\_CHAR}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {lexer.cc}, \hyperpage{260}
+  \item {YY\_CONSTEXPR}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {YY\_COPY}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {yy\_cp}
+    \subitem {annot\_lexer.cc}, \hyperpage{206}
+    \subitem {lexer.cc}, \hyperpage{267}
+  \item {YY\_CPLUSPLUS}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{296}
+  \item {yy\_create\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}, \hyperpage{201}
+    \subitem {annot\_lexer.hh}, \hyperpage{212}, \hyperpage{221}
+    \subitem {lexer.cc}, \hyperpage{261}
+    \subitem {lexer.hh}, \hyperpage{277}
+  \item {YY\_CURRENT\_BUFFER}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_CURRENT\_BUFFER\_LVALUE}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_DECL}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}, \hyperpage{206}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {annot\_parser.cc}, \hyperpage{230}, \hyperpage{233}
+    \subitem {driver.hh}, \hyperpage{240}
+    \subitem {lexer.cc}, \hyperpage{268}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {YY\_DECL\_IS\_OURS}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {yy\_delete\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{186}, \hyperpage{202}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}, \hyperpage{221}
+    \subitem {lexer.cc}, \hyperpage{261}
+    \subitem {lexer.hh}, \hyperpage{277}
+  \item {YY\_DO\_BEFORE\_ACTION}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_END\_OF\_BUFFER}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}
+    \subitem {lexer.cc}, \hyperpage{252}
+  \item {YY\_END\_OF\_BUFFER\_CHAR}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}
+    \subitem {lexer.cc}, \hyperpage{253}
+  \item {YY\_EXCEPTIONS}
+    \subitem {annot\_parser.cc}, \hyperpage{230}
+    \subitem {parser.cc}, \hyperpage{291}
+  \item {YY\_EXIT\_FAILURE}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}
+    \subitem {lexer.cc}, \hyperpage{253}
+  \item {YY\_EXTRA\_TYPE}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {lexer.cc}, \hyperpage{253}
+    \subitem {lexer.hh}, \hyperpage{273}
+  \item {YY\_FATAL\_ERROR}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}
+    \subitem {lexer.cc}, \hyperpage{253}
+  \item {yy\_fill\_buffer}
+    \subitem {yy\_buffer\_state}, \hyperpage{172}
+  \item {yy\_flex\_debug}
+    \subitem {annot\_lexer.cc}, \hyperpage{187}, \hyperpage{206}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {lexer.cc}, \hyperpage{268}
+  \item {YY\_FLEX\_MAJOR\_VERSION}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {lexer.cc}, \hyperpage{253}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {YY\_FLEX\_MINOR\_VERSION}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {lexer.cc}, \hyperpage{253}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {YY\_FLEX\_SUBMINOR\_VERSION}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}
+    \subitem {annot\_lexer.hh}, \hyperpage{213}
+    \subitem {lexer.cc}, \hyperpage{253}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {YY\_FLUSH\_BUFFER}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}
+    \subitem {lexer.cc}, \hyperpage{254}
+  \item {yy\_flush\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}, \hyperpage{202}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}, \hyperpage{222}
+    \subitem {lexer.cc}, \hyperpage{262}
+    \subitem {lexer.hh}, \hyperpage{277}
+  \item {YY\_IGNORE\_MAYBE\_UNINITIALIZED\_BEGIN}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {YY\_IGNORE\_MAYBE\_UNINITIALIZED\_END}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {YY\_IGNORE\_USELESS\_CAST\_BEGIN}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {YY\_IGNORE\_USELESS\_CAST\_END}
+    \subitem {annot\_parser.hh}, \hyperpage{236}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {yy\_init\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}
+  \item {YY\_INITIAL\_VALUE}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {YY\_INPUT}
+    \subitem {annot\_lexer.cc}, \hyperpage{188}
+    \subitem {lexer.cc}, \hyperpage{254}
+  \item {yy\_input\_file}
+    \subitem {yy\_buffer\_state}, \hyperpage{172}
+  \item {YY\_INT\_ALIGNED}
+    \subitem {annot\_lexer.cc}, \hyperpage{189}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}
+    \subitem {lexer.cc}, \hyperpage{254}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {yy\_is\_interactive}
+    \subitem {yy\_buffer\_state}, \hyperpage{172}
+  \item {yy\_is\_our\_buffer}
+    \subitem {yy\_buffer\_state}, \hyperpage{172}
+  \item {YY\_LESS\_LINENO}
+    \subitem {annot\_lexer.cc}, \hyperpage{189}
+    \subitem {lexer.cc}, \hyperpage{254}
+  \item {YY\_LINENO\_REWIND\_TO}
+    \subitem {annot\_lexer.cc}, \hyperpage{189}
+    \subitem {lexer.cc}, \hyperpage{254}
+  \item {yy\_load\_buffer\_state}
+    \subitem {annot\_lexer.cc}, \hyperpage{189}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}
+  \item {YY\_MORE\_ADJ}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {lexer.cc}, \hyperpage{254}
+  \item {YY\_MOVE}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {YY\_MOVE\_OR\_COPY}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{297}
+  \item {YY\_MOVE\_REF}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {yy\_n\_chars}
+    \subitem {yy\_buffer\_state}, \hyperpage{172}
+  \item {yy\_new\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {lexer.cc}, \hyperpage{254}
+  \item {YY\_NEW\_FILE}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {YY\_NO\_INPUT}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {YY\_NOEXCEPT}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {YY\_NOTHROW}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {YY\_NULL}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {YY\_NULLPTR}
+    \subitem {annot\_location.hh}, \hyperpage{228}
+    \subitem {location.hh}, \hyperpage{285}
+  \item {YY\_NUM\_RULES}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {yy\_nxt}
+    \subitem {yy\_trans\_info}, \hyperpage{173}
+  \item {YY\_READ\_BUF\_SIZE}
+    \subitem {annot\_lexer.cc}, \hyperpage{190}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}
+    \subitem {lexer.cc}, \hyperpage{255}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {YY\_REDUCE\_PRINT}
+    \subitem {annot\_parser.cc}, \hyperpage{230}
+    \subitem {parser.cc}, \hyperpage{291}
+  \item {YY\_REINTERPRET\_CAST}
+    \subitem {annot\_parser.hh}, \hyperpage{237}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {YY\_RESTORE\_YY\_MORE\_OFFSET}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {YY\_RULE\_SETUP}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {YY\_RVREF}
+    \subitem {annot\_parser.hh}, \hyperpage{238}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {YY\_SC\_TO\_UI}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}
+    \subitem {lexer.cc}, \hyperpage{255}
+  \item {yy\_scan\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}, \hyperpage{202}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}, \hyperpage{222}
+    \subitem {lexer.cc}, \hyperpage{262}
+    \subitem {lexer.hh}, \hyperpage{278}
+  \item {yy\_scan\_bytes}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}, \hyperpage{203}
+    \subitem {annot\_lexer.hh}, \hyperpage{214}, \hyperpage{222}
+    \subitem {lexer.cc}, \hyperpage{262}
+    \subitem {lexer.hh}, \hyperpage{278}
+  \item {yy\_scan\_string}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}, \hyperpage{203}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}, \hyperpage{223}
+    \subitem {lexer.cc}, \hyperpage{263}
+    \subitem {lexer.hh}, \hyperpage{278}
+  \item {yy\_set\_bol}
+    \subitem {annot\_lexer.cc}, \hyperpage{191}
+    \subitem {lexer.cc}, \hyperpage{256}
+  \item {yy\_set\_interactive}
+    \subitem {annot\_lexer.cc}, \hyperpage{192}
+    \subitem {lexer.cc}, \hyperpage{256}
+  \item {yy\_size\_t}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {annot\_lexer.hh}, \hyperpage{221}
+    \subitem {lexer.cc}, \hyperpage{260}
+    \subitem {lexer.hh}, \hyperpage{276}
+  \item {YY\_SKIP\_YYWRAP}
+    \subitem {annot\_lexer.cc}, \hyperpage{192}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}
+    \subitem {lexer.cc}, \hyperpage{256}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {YY\_STACK\_PRINT}
+    \subitem {annot\_parser.cc}, \hyperpage{230}
+    \subitem {parser.cc}, \hyperpage{291}
+  \item {YY\_START}
+    \subitem {annot\_lexer.cc}, \hyperpage{192}
+    \subitem {lexer.cc}, \hyperpage{256}
+  \item {YY\_START\_STACK\_INCR}
+    \subitem {annot\_lexer.cc}, \hyperpage{192}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}
+    \subitem {lexer.cc}, \hyperpage{256}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {YY\_STATE\_BUF\_SIZE}
+    \subitem {annot\_lexer.cc}, \hyperpage{192}
+    \subitem {lexer.cc}, \hyperpage{257}
+  \item {YY\_STATE\_EOF}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}
+    \subitem {lexer.cc}, \hyperpage{257}
+  \item {yy\_state\_type}
+    \subitem {annot\_lexer.cc}, \hyperpage{200}
+    \subitem {lexer.cc}, \hyperpage{260}
+  \item {YY\_STRUCT\_YY\_BUFFER\_STATE}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}
+    \subitem {lexer.cc}, \hyperpage{257}
+    \subitem {lexer.hh}, \hyperpage{274}
+  \item {yy\_switch\_to\_buffer}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}, \hyperpage{203}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}, \hyperpage{223}
+    \subitem {lexer.cc}, \hyperpage{263}
+    \subitem {lexer.hh}, \hyperpage{279}
+  \item {YY\_SYMBOL\_PRINT}
+    \subitem {annot\_parser.cc}, \hyperpage{230}
+    \subitem {parser.cc}, \hyperpage{291}
+  \item {yy\_trans\_info}, \hyperpage{173}
+    \subitem {yy\_nxt}, \hyperpage{173}
+    \subitem {yy\_verify}, \hyperpage{173}
+  \item {YY\_TYPEDEF\_YY\_BUFFER\_STATE}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}
+    \subitem {lexer.cc}, \hyperpage{257}
+    \subitem {lexer.hh}, \hyperpage{275}
+  \item {YY\_TYPEDEF\_YY\_SIZE\_T}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}
+    \subitem {lexer.cc}, \hyperpage{257}
+    \subitem {lexer.hh}, \hyperpage{275}
+  \item {YY\_USE}
+    \subitem {annot\_parser.hh}, \hyperpage{238}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {YY\_USER\_ACTION}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}
+    \subitem {lexer.cc}, \hyperpage{257}
+  \item {yy\_verify}
+    \subitem {yy\_trans\_info}, \hyperpage{173}
+  \item {YYABORT}
+    \subitem {annot\_parser.cc}, \hyperpage{230}
+    \subitem {parser.cc}, \hyperpage{291}
+  \item {YYACCEPT}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {yyalign\_me}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{142}
+  \item {yyalign\_me\_}
+    \subitem {yy::parser::value\_type}, \hyperpage{170}
+  \item {yyalloc}
+    \subitem {annot\_lexer.cc}, \hyperpage{193}, \hyperpage{204}
+    \subitem {annot\_lexer.hh}, \hyperpage{215}, \hyperpage{223}
+    \subitem {lexer.cc}, \hyperpage{263}
+    \subitem {lexer.hh}, \hyperpage{279}
+  \item {YYCASE\_}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {YYCDEBUG}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {yyclearin}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {yyconst}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}
+    \subitem {lexer.cc}, \hyperpage{257}
+    \subitem {lexer.hh}, \hyperpage{275}
+  \item {YYDEBUG}
+    \subitem {parser.hh}, \hyperpage{298}
+  \item {yyensure\_buffer\_stack}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}
+  \item {yyerrok}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {YYERROR}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {yyfree}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}, \hyperpage{204}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}, \hyperpage{224}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{279}
+  \item {yyget\_debug}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{279}
+  \item {yyget\_extra}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{279}
+  \item {yyget\_in}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yyget\_leng}
+    \subitem {annot\_lexer.cc}, \hyperpage{194}
+    \subitem {annot\_lexer.hh}, \hyperpage{216}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yyget\_lineno}
+    \subitem {annot\_lexer.cc}, \hyperpage{195}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yyget\_out}
+    \subitem {annot\_lexer.cc}, \hyperpage{195}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}
+    \subitem {lexer.cc}, \hyperpage{264}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yyget\_text}
+    \subitem {annot\_lexer.cc}, \hyperpage{195}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}
+    \subitem {lexer.cc}, \hyperpage{265}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yyin}
+    \subitem {annot\_lexer.cc}, \hyperpage{195}, \hyperpage{207}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}, \hyperpage{226}
+    \subitem {lexer.cc}, \hyperpage{268}
+    \subitem {lexer.hh}, \hyperpage{283}
+  \item {yyIN\_HEADER}
+    \subitem {lexer.hh}, \hyperpage{275}
+  \item {yyleng}
+    \subitem {annot\_lexer.cc}, \hyperpage{195}, \hyperpage{207}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}, \hyperpage{226}
+    \subitem {lexer.cc}, \hyperpage{268}
+    \subitem {lexer.hh}, \hyperpage{283}
+  \item {yyless}
+    \subitem {annot\_lexer.cc}, \hyperpage{195, 196}
+    \subitem {lexer.cc}, \hyperpage{258}
+  \item {yylex}
+    \subitem {annot\_lexer.cc}, \hyperpage{196}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}
+    \subitem {annot\_parser.cc}, \hyperpage{231}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yylex\_destroy}
+    \subitem {annot\_lexer.cc}, \hyperpage{196}
+    \subitem {annot\_lexer.hh}, \hyperpage{217}
+    \subitem {lexer.cc}, \hyperpage{265}
+    \subitem {lexer.hh}, \hyperpage{280}
+  \item {yylex\_init}
+    \subitem {annot\_lexer.cc}, \hyperpage{196}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}
+  \item {yylex\_init\_extra}
+    \subitem {annot\_lexer.cc}, \hyperpage{196}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}
+  \item {yylineno}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}, \hyperpage{207}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}, \hyperpage{226}
+    \subitem {lexer.cc}, \hyperpage{268}
+    \subitem {lexer.hh}, \hyperpage{283}
+  \item {YYLLOC\_DEFAULT}
+    \subitem {annot\_parser.cc}, \hyperpage{232}
+    \subitem {parser.cc}, \hyperpage{292}
+  \item {yymore}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}
+    \subitem {lexer.cc}, \hyperpage{258}
+  \item {yynoreturn}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}
+    \subitem {lexer.cc}, \hyperpage{258}
+    \subitem {lexer.hh}, \hyperpage{275}
+  \item {YYNTOKENS}
+    \subitem {annot::parser}, \hyperpage{111}
+    \subitem {annot::parser::symbol\_kind}, \hyperpage{151}
+    \subitem {yy::parser}, \hyperpage{120}
+    \subitem {yy::parser::symbol\_kind}, \hyperpage{152}
+  \item {yyout}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}, \hyperpage{207}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}, \hyperpage{226}
+    \subitem {lexer.cc}, \hyperpage{268}
+    \subitem {lexer.hh}, \hyperpage{283}
+  \item {yypop\_buffer\_state}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}
+    \subitem {lexer.cc}, \hyperpage{265}
+    \subitem {lexer.hh}, \hyperpage{281}
+  \item {yypush\_buffer\_state}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}, \hyperpage{204}
+    \subitem {annot\_lexer.hh}, \hyperpage{218}, \hyperpage{224}
+    \subitem {lexer.cc}, \hyperpage{265}
+    \subitem {lexer.hh}, \hyperpage{281}
+  \item {yyraw}
+    \subitem {annot::parser::semantic\_type}, \hyperpage{142}
+  \item {yyraw\_}
+    \subitem {yy::parser::value\_type}, \hyperpage{170}
+  \item {yyrealloc}
+    \subitem {annot\_lexer.cc}, \hyperpage{197}, \hyperpage{204}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{224}
+    \subitem {lexer.cc}, \hyperpage{265}
+    \subitem {lexer.hh}, \hyperpage{281}
+  \item {YYRECOVERING}
+    \subitem {annot\_parser.cc}, \hyperpage{232}
+    \subitem {parser.cc}, \hyperpage{293}
+  \item {yyrestart}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}, \hyperpage{204}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{224}
+    \subitem {lexer.cc}, \hyperpage{265}
+    \subitem {lexer.hh}, \hyperpage{281}
+  \item {YYRHSLOC}
+    \subitem {annot\_parser.cc}, \hyperpage{232}
+    \subitem {parser.cc}, \hyperpage{293}
+  \item {yyset\_debug}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}, \hyperpage{205}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{225}
+    \subitem {lexer.cc}, \hyperpage{266}
+    \subitem {lexer.hh}, \hyperpage{282}
+  \item {yyset\_extra}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}, \hyperpage{205}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{225}
+    \subitem {lexer.cc}, \hyperpage{266}
+    \subitem {lexer.hh}, \hyperpage{282}
+  \item {yyset\_in}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}, \hyperpage{205}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{225}
+    \subitem {lexer.cc}, \hyperpage{266}
+    \subitem {lexer.hh}, \hyperpage{282}
+  \item {yyset\_lineno}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}, \hyperpage{205}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{225}
+    \subitem {lexer.cc}, \hyperpage{266}
+    \subitem {lexer.hh}, \hyperpage{282}
+  \item {yyset\_out}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}, \hyperpage{206}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{226}
+    \subitem {lexer.cc}, \hyperpage{267}
+    \subitem {lexer.hh}, \hyperpage{283}
+  \item {YYSTATE}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}
+    \subitem {lexer.cc}, \hyperpage{258}
+  \item {YYTABLES\_NAME}
+    \subitem {annot\_lexer.cc}, \hyperpage{198}
+    \subitem {lexer.cc}, \hyperpage{259}
+  \item {yyterminate}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}
+    \subitem {lexer.cc}, \hyperpage{259}
+  \item {yytext}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}, \hyperpage{207}
+    \subitem {annot\_lexer.hh}, \hyperpage{219}, \hyperpage{226}
+    \subitem {lexer.cc}, \hyperpage{268}
+    \subitem {lexer.hh}, \hyperpage{283}
+  \item {yytext\_ptr}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{259}
+    \subitem {lexer.hh}, \hyperpage{275}
+  \item {yytokentype}
+    \subitem {annot::parser::token}, \hyperpage{164}
+    \subitem {yy::parser::token}, \hyperpage{165}
+  \item {yywrap}
+    \subitem {annot\_lexer.cc}, \hyperpage{199}
+    \subitem {annot\_lexer.hh}, \hyperpage{220}
+    \subitem {lexer.cc}, \hyperpage{259}
+    \subitem {lexer.hh}, \hyperpage{275}
+
+\end{theindex}

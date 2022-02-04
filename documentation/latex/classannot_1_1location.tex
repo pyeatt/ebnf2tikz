@@ -1,0 +1,186 @@
+\hypertarget{classannot_1_1location}{}\doxysection{annot\+::location Class Reference}
+\label{classannot_1_1location}\index{annot::location@{annot::location}}
+
+
+Two points in a source file.  
+
+
+
+
+{\ttfamily \#include $<$annot\+\_\+location.\+hh$>$}
+
+
+
+Collaboration diagram for annot\+::location\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{classannot_1_1location__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{position\+::filename\+\_\+type}} \mbox{\hyperlink{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}{filename\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type for file name. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{position\+::counter\+\_\+type}} \mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type for line and column numbers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1location_afe6dd22382fb50d05552815a266d5590}{location}} (const \mbox{\hyperlink{classannot_1_1position}{position}} \&b, const \mbox{\hyperlink{classannot_1_1position}{position}} \&e)
+\begin{DoxyCompactList}\small\item\em Construct a location from {\itshape b} to {\itshape e}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classannot_1_1location_adf2f417b47bd0a8740ffb3c248474689}{location}} (const \mbox{\hyperlink{classannot_1_1position}{position}} \&p=\mbox{\hyperlink{classannot_1_1position}{position}}())
+\begin{DoxyCompactList}\small\item\em Construct a 0-\/width location in {\itshape p}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classannot_1_1location_ad1ca305b255e0bbfc3e463e9e0bf5c4e}{location}} (\mbox{\hyperlink{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}{filename\+\_\+type}} $\ast$f, \mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}} l=1, \mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}} c=1)
+\begin{DoxyCompactList}\small\item\em Construct a 0-\/width location in {\itshape f}, {\itshape l}, {\itshape c}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classannot_1_1location_a6fb2576438893b589a9095c53df1cd4b}{initialize}} (\mbox{\hyperlink{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}{filename\+\_\+type}} $\ast$f=\mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}, \mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}} l=1, \mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}} c=1)
+\begin{DoxyCompactList}\small\item\em Initialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Line and Column related manipulators}\par
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classannot_1_1location_a2ca3119740fda5ea2fbeeab0f95bbb09}{step}} ()
+\begin{DoxyCompactList}\small\item\em Reset initial location to final location. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classannot_1_1location_a28d7a5218f6b5406da8697f6bd0238c6}{columns}} (\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}} count=1)
+\begin{DoxyCompactList}\small\item\em Extend the current location to the COUNT next columns. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classannot_1_1location_aa904c2f4a1f03e1694bf7703eeff8d11}{lines}} (\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}} count=1)
+\begin{DoxyCompactList}\small\item\em Extend the current location to the COUNT next lines. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1position}{position}} \mbox{\hyperlink{classannot_1_1location_a97d52fe0142a8dda9357dee77df88793}{begin}}
+\begin{DoxyCompactList}\small\item\em Beginning of the located region. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classannot_1_1position}{position}} \mbox{\hyperlink{classannot_1_1location_a2b324e6d1b62ac7aa0d6553a0cb577f6}{end}}
+\begin{DoxyCompactList}\small\item\em End of the located region. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Two points in a source file. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}\label{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}} 
+\index{annot::location@{annot::location}!counter\_type@{counter\_type}}
+\index{counter\_type@{counter\_type}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{counter\_type}{counter\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{position\+::counter\+\_\+type}} \mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{annot\+::location\+::counter\+\_\+type}}}
+
+
+
+Type for line and column numbers. 
+
+\mbox{\Hypertarget{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}\label{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}} 
+\index{annot::location@{annot::location}!filename\_type@{filename\_type}}
+\index{filename\_type@{filename\_type}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{filename\_type}{filename\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{position\+::filename\+\_\+type}} \mbox{\hyperlink{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}{annot\+::location\+::filename\+\_\+type}}}
+
+
+
+Type for file name. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classannot_1_1location_afe6dd22382fb50d05552815a266d5590}\label{classannot_1_1location_afe6dd22382fb50d05552815a266d5590}} 
+\index{annot::location@{annot::location}!location@{location}}
+\index{location@{location}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily annot\+::location\+::location (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1position}{position}} \&}]{b,  }\item[{const \mbox{\hyperlink{classannot_1_1position}{position}} \&}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a location from {\itshape b} to {\itshape e}. 
+
+\mbox{\Hypertarget{classannot_1_1location_adf2f417b47bd0a8740ffb3c248474689}\label{classannot_1_1location_adf2f417b47bd0a8740ffb3c248474689}} 
+\index{annot::location@{annot::location}!location@{location}}
+\index{location@{location}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily annot\+::location\+::location (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1position}{position}} \&}]{p = {\ttfamily \mbox{\hyperlink{classannot_1_1position}{position}}~()} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a 0-\/width location in {\itshape p}. 
+
+\mbox{\Hypertarget{classannot_1_1location_ad1ca305b255e0bbfc3e463e9e0bf5c4e}\label{classannot_1_1location_ad1ca305b255e0bbfc3e463e9e0bf5c4e}} 
+\index{annot::location@{annot::location}!location@{location}}
+\index{location@{location}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{location()}{location()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily annot\+::location\+::location (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}{filename\+\_\+type}} $\ast$}]{f,  }\item[{\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}}]{l = {\ttfamily 1},  }\item[{\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}}]{c = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a 0-\/width location in {\itshape f}, {\itshape l}, {\itshape c}. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classannot_1_1location_a28d7a5218f6b5406da8697f6bd0238c6}\label{classannot_1_1location_a28d7a5218f6b5406da8697f6bd0238c6}} 
+\index{annot::location@{annot::location}!columns@{columns}}
+\index{columns@{columns}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{columns()}{columns()}}
+{\footnotesize\ttfamily void annot\+::location\+::columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Extend the current location to the COUNT next columns. 
+
+\mbox{\Hypertarget{classannot_1_1location_a6fb2576438893b589a9095c53df1cd4b}\label{classannot_1_1location_a6fb2576438893b589a9095c53df1cd4b}} 
+\index{annot::location@{annot::location}!initialize@{initialize}}
+\index{initialize@{initialize}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void annot\+::location\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1location_a8d6bd229e39f638afb080a888073b589}{filename\+\_\+type}} $\ast$}]{f = {\ttfamily \mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}},  }\item[{\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}}]{l = {\ttfamily 1},  }\item[{\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}}]{c = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initialization. 
+
+\mbox{\Hypertarget{classannot_1_1location_aa904c2f4a1f03e1694bf7703eeff8d11}\label{classannot_1_1location_aa904c2f4a1f03e1694bf7703eeff8d11}} 
+\index{annot::location@{annot::location}!lines@{lines}}
+\index{lines@{lines}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{lines()}{lines()}}
+{\footnotesize\ttfamily void annot\+::location\+::lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1location_ab8cfc3b208e43c584381106a4d4d1d99}{counter\+\_\+type}}}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Extend the current location to the COUNT next lines. 
+
+\mbox{\Hypertarget{classannot_1_1location_a2ca3119740fda5ea2fbeeab0f95bbb09}\label{classannot_1_1location_a2ca3119740fda5ea2fbeeab0f95bbb09}} 
+\index{annot::location@{annot::location}!step@{step}}
+\index{step@{step}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{step()}{step()}}
+{\footnotesize\ttfamily void annot\+::location\+::step (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Reset initial location to final location. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classannot_1_1location_a97d52fe0142a8dda9357dee77df88793}\label{classannot_1_1location_a97d52fe0142a8dda9357dee77df88793}} 
+\index{annot::location@{annot::location}!begin@{begin}}
+\index{begin@{begin}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{begin}{begin}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classannot_1_1position}{position}} annot\+::location\+::begin}
+
+
+
+Beginning of the located region. 
+
+\mbox{\Hypertarget{classannot_1_1location_a2b324e6d1b62ac7aa0d6553a0cb577f6}\label{classannot_1_1location_a2b324e6d1b62ac7aa0d6553a0cb577f6}} 
+\index{annot::location@{annot::location}!end@{end}}
+\index{end@{end}!annot::location@{annot::location}}
+\doxysubsubsection{\texorpdfstring{end}{end}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classannot_1_1position}{position}} annot\+::location\+::end}
+
+
+
+End of the located region. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{annot__location_8hh}{annot\+\_\+location.\+hh}}\end{DoxyCompactItemize}

@@ -1,0 +1,237 @@
+\hypertarget{classconcatnode}{}\doxysection{concatnode Class Reference}
+\label{classconcatnode}\index{concatnode@{concatnode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for concatnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=147pt]{classconcatnode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for concatnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{classconcatnode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classconcatnode_a02fd31cf03a2df5ca91831bd14cde0f5}{concatnode}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+\mbox{\hyperlink{classconcatnode_a1889e920567878f164e3bd6809c8e18b}{concatnode}} (const \mbox{\hyperlink{classconcatnode}{concatnode}} \&original)
+\item 
+virtual \mbox{\hyperlink{classconcatnode}{concatnode}} $\ast$ \mbox{\hyperlink{classconcatnode_a56298f2f4841a99cdf9a6e2286b0fcf6}{clone}} () const
+\item 
+virtual \mbox{\hyperlink{classconcatnode_ab25edb2ca38a5ecea3a08706faa292e3}{$\sim$concatnode}} ()
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_a87c746f30a6bb9709e26d40b31f643cc}{dump}} (int depth) const
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_aa7963172fba83336aa850614bc9bf4b6}{insert}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+virtual \mbox{\hyperlink{classcoordinate}{coordinate}} \mbox{\hyperlink{classconcatnode_aa74a6691eaf293ccde629f34e95cb029}{place}} (ofstream \&outs, int draw, int drawrails, \mbox{\hyperlink{classcoordinate}{coordinate}} start, \mbox{\hyperlink{classnode}{node}} $\ast$\mbox{\hyperlink{classnode_a5e88137f1d0e2f7a940bccf4c3d3a4d3}{parent}}, int depth)
+\item 
+virtual int \mbox{\hyperlink{classconcatnode_a53a82dff3af0dbe7797e12621a32c527}{merge\+Concats}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classconcatnode_a636e1cbd7fc6d5a2c01b5eb89e8e0d23}{analyze\+Opt\+Loops}} (int depth)
+\item 
+virtual int \mbox{\hyperlink{classconcatnode_afb021a88224810fb0af42f1a35cc723b}{analyze\+Non\+Opt\+Loops}} (int depth)
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_acbfb01a679d7ad2b1109ac8c6253b37c}{draw\+To\+Left\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_adf14f6f9d8348642381d9e0a56431e4f}{draw\+To\+Right\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_a238b9c996e3b6c7c76d640ad2afee3b0}{merge\+Rails}} ()
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_a515ddfcbb1a0f5ad2da9dd7621681d5c}{set\+Previous}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_a766d0ae2c96987a3c0b35aa5cb55a0d1}{set\+Next}} (\mbox{\hyperlink{classnode}{node}} $\ast$p)
+\item 
+virtual void \mbox{\hyperlink{classconcatnode_afaef7c9b4365e1189f6b5f2889422340}{fix\+Skips}} ()
+\item 
+virtual \mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classconcatnode_a85602d5bc8b97b2a084c54ee6043994f}{create\+Rows}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classconcatnode_a02fd31cf03a2df5ca91831bd14cde0f5}\label{classconcatnode_a02fd31cf03a2df5ca91831bd14cde0f5}} 
+\index{concatnode@{concatnode}!concatnode@{concatnode}}
+\index{concatnode@{concatnode}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{concatnode()}{concatnode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily concatnode\+::concatnode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classconcatnode_a1889e920567878f164e3bd6809c8e18b}\label{classconcatnode_a1889e920567878f164e3bd6809c8e18b}} 
+\index{concatnode@{concatnode}!concatnode@{concatnode}}
+\index{concatnode@{concatnode}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{concatnode()}{concatnode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily concatnode\+::concatnode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classconcatnode}{concatnode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classconcatnode_ab25edb2ca38a5ecea3a08706faa292e3}\label{classconcatnode_ab25edb2ca38a5ecea3a08706faa292e3}} 
+\index{concatnode@{concatnode}!````~concatnode@{$\sim$concatnode}}
+\index{````~concatnode@{$\sim$concatnode}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{$\sim$concatnode()}{~concatnode()}}
+{\footnotesize\ttfamily virtual concatnode\+::$\sim$concatnode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classconcatnode_afb021a88224810fb0af42f1a35cc723b}\label{classconcatnode_afb021a88224810fb0af42f1a35cc723b}} 
+\index{concatnode@{concatnode}!analyzeNonOptLoops@{analyzeNonOptLoops}}
+\index{analyzeNonOptLoops@{analyzeNonOptLoops}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{analyzeNonOptLoops()}{analyzeNonOptLoops()}}
+{\footnotesize\ttfamily int concatnode\+::analyze\+Non\+Opt\+Loops (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a325af6f086db52d0aec2899a002c6108}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a636e1cbd7fc6d5a2c01b5eb89e8e0d23}\label{classconcatnode_a636e1cbd7fc6d5a2c01b5eb89e8e0d23}} 
+\index{concatnode@{concatnode}!analyzeOptLoops@{analyzeOptLoops}}
+\index{analyzeOptLoops@{analyzeOptLoops}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{analyzeOptLoops()}{analyzeOptLoops()}}
+{\footnotesize\ttfamily int concatnode\+::analyze\+Opt\+Loops (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_ac608339e9c6cf2cf85b2642036fd9106}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a56298f2f4841a99cdf9a6e2286b0fcf6}\label{classconcatnode_a56298f2f4841a99cdf9a6e2286b0fcf6}} 
+\index{concatnode@{concatnode}!clone@{clone}}
+\index{clone@{clone}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classconcatnode}{concatnode}} $\ast$ concatnode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_af215c2088f21e60808a6fd898dc178a6}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a85602d5bc8b97b2a084c54ee6043994f}\label{classconcatnode_a85602d5bc8b97b2a084c54ee6043994f}} 
+\index{concatnode@{concatnode}!createRows@{createRows}}
+\index{createRows@{createRows}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{createRows()}{createRows()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ concatnode\+::create\+Rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_ad9e6cf224ceb66051358b64a2f184e3a}{node}}.
+
+\mbox{\Hypertarget{classconcatnode_acbfb01a679d7ad2b1109ac8c6253b37c}\label{classconcatnode_acbfb01a679d7ad2b1109ac8c6253b37c}} 
+\index{concatnode@{concatnode}!drawToLeftRail@{drawToLeftRail}}
+\index{drawToLeftRail@{drawToLeftRail}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{drawToLeftRail()}{drawToLeftRail()}}
+{\footnotesize\ttfamily void concatnode\+::draw\+To\+Left\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_aeb62d9eb826818fca32fbfc5cc918706}{node}}.
+
+\mbox{\Hypertarget{classconcatnode_adf14f6f9d8348642381d9e0a56431e4f}\label{classconcatnode_adf14f6f9d8348642381d9e0a56431e4f}} 
+\index{concatnode@{concatnode}!drawToRightRail@{drawToRightRail}}
+\index{drawToRightRail@{drawToRightRail}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{drawToRightRail()}{drawToRightRail()}}
+{\footnotesize\ttfamily void concatnode\+::draw\+To\+Right\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adb96728ae6876de3744c761b0946df6f}{node}}.
+
+\mbox{\Hypertarget{classconcatnode_a87c746f30a6bb9709e26d40b31f643cc}\label{classconcatnode_a87c746f30a6bb9709e26d40b31f643cc}} 
+\index{concatnode@{concatnode}!dump@{dump}}
+\index{dump@{dump}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void concatnode\+::dump (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adbb5e9bcbe37e287419af5919dccfc12}{node}}.
+
+\mbox{\Hypertarget{classconcatnode_afaef7c9b4365e1189f6b5f2889422340}\label{classconcatnode_afaef7c9b4365e1189f6b5f2889422340}} 
+\index{concatnode@{concatnode}!fixSkips@{fixSkips}}
+\index{fixSkips@{fixSkips}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{fixSkips()}{fixSkips()}}
+{\footnotesize\ttfamily void concatnode\+::fix\+Skips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a47f441e547cac03febd03d0fdbeeb9d6}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_aa7963172fba83336aa850614bc9bf4b6}\label{classconcatnode_aa7963172fba83336aa850614bc9bf4b6}} 
+\index{concatnode@{concatnode}!insert@{insert}}
+\index{insert@{insert}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily void concatnode\+::insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_ae98cbd4c5e796f3ce4cf58ce62dcc0ff}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a53a82dff3af0dbe7797e12621a32c527}\label{classconcatnode_a53a82dff3af0dbe7797e12621a32c527}} 
+\index{concatnode@{concatnode}!mergeConcats@{mergeConcats}}
+\index{mergeConcats@{mergeConcats}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{mergeConcats()}{mergeConcats()}}
+{\footnotesize\ttfamily int concatnode\+::merge\+Concats (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a4a3f5096b852c4fa071acceb5cda6897}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a238b9c996e3b6c7c76d640ad2afee3b0}\label{classconcatnode_a238b9c996e3b6c7c76d640ad2afee3b0}} 
+\index{concatnode@{concatnode}!mergeRails@{mergeRails}}
+\index{mergeRails@{mergeRails}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{mergeRails()}{mergeRails()}}
+{\footnotesize\ttfamily void concatnode\+::merge\+Rails (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a9bab343e568181c30669e334f1df9695}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_aa74a6691eaf293ccde629f34e95cb029}\label{classconcatnode_aa74a6691eaf293ccde629f34e95cb029}} 
+\index{concatnode@{concatnode}!place@{place}}
+\index{place@{place}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{place()}{place()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcoordinate}{coordinate}} concatnode\+::place (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{int}]{draw,  }\item[{int}]{drawrails,  }\item[{\mbox{\hyperlink{classcoordinate}{coordinate}}}]{start,  }\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{parent,  }\item[{int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a5124799b41d94f795ac4682261307054}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a766d0ae2c96987a3c0b35aa5cb55a0d1}\label{classconcatnode_a766d0ae2c96987a3c0b35aa5cb55a0d1}} 
+\index{concatnode@{concatnode}!setNext@{setNext}}
+\index{setNext@{setNext}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{setNext()}{setNext()}}
+{\footnotesize\ttfamily void concatnode\+::set\+Next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a89800b33f8f1b3ee1540ab078e7380dc}{multinode}}.
+
+\mbox{\Hypertarget{classconcatnode_a515ddfcbb1a0f5ad2da9dd7621681d5c}\label{classconcatnode_a515ddfcbb1a0f5ad2da9dd7621681d5c}} 
+\index{concatnode@{concatnode}!setPrevious@{setPrevious}}
+\index{setPrevious@{setPrevious}!concatnode@{concatnode}}
+\doxysubsubsection{\texorpdfstring{setPrevious()}{setPrevious()}}
+{\footnotesize\ttfamily void concatnode\+::set\+Previous (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_adc00ddf824b8fcd9809f461d7c95c339}{multinode}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{optimize_8cc}{optimize.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

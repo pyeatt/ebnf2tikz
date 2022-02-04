@@ -1,0 +1,86 @@
+\hypertarget{main_8cc}{}\doxysection{main.\+cc File Reference}
+\label{main_8cc}\index{main.cc@{main.cc}}
+{\ttfamily \#include $<$getopt.\+h$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$driver.\+hh$>$}\newline
+Include dependency graph for main.\+cc\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cc__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cc_a1ad940455be56209415d328d78622715}{usage}} (char $\ast$name)
+\item 
+int \mbox{\hyperlink{main_8cc_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct option \mbox{\hyperlink{main_8cc_a149c8eb0297a1171aac6ed93ea959f76}{options}} \mbox{[}$\,$\mbox{]}
+\item 
+char $\ast$ \mbox{\hyperlink{main_8cc_ae131ea149fedfb0e50c397635d2028b0}{optstring}} = (char$\ast$)\char`\"{}nfh\char`\"{}
+\item 
+char $\ast$ \mbox{\hyperlink{main_8cc_a03c8020f3f07b3ea51f7886c14f6e575}{description}} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cc_a3c04138a5bfe5d72780bb7e82a18e627}\label{main_8cc_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{main.cc@{main.cc}!main@{main}}
+\index{main@{main}!main.cc@{main.cc}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cc_a1ad940455be56209415d328d78622715}\label{main_8cc_a1ad940455be56209415d328d78622715}} 
+\index{main.cc@{main.cc}!usage@{usage}}
+\index{usage@{usage}!main.cc@{main.cc}}
+\doxysubsubsection{\texorpdfstring{usage()}{usage()}}
+{\footnotesize\ttfamily void usage (\begin{DoxyParamCaption}\item[{char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8cc_a03c8020f3f07b3ea51f7886c14f6e575}\label{main_8cc_a03c8020f3f07b3ea51f7886c14f6e575}} 
+\index{main.cc@{main.cc}!description@{description}}
+\index{description@{description}!main.cc@{main.cc}}
+\doxysubsubsection{\texorpdfstring{description}{description}}
+{\footnotesize\ttfamily char$\ast$ description\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{  (\textcolor{keywordtype}{char}*)\textcolor{stringliteral}{"{}    Do not do any graph transformations."{}},}
+\DoxyCodeLine{  (\textcolor{keywordtype}{char}*)\textcolor{stringliteral}{"{}    Wrap all tikzpictures in figures and create commands"{}}}
+\DoxyCodeLine{         \textcolor{stringliteral}{"{}to place them."{}},}
+\DoxyCodeLine{  (\textcolor{keywordtype}{char}*)\textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{  (\textcolor{keywordtype}{char}*)\textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8cc_a149c8eb0297a1171aac6ed93ea959f76}\label{main_8cc_a149c8eb0297a1171aac6ed93ea959f76}} 
+\index{main.cc@{main.cc}!options@{options}}
+\index{options@{options}!main.cc@{main.cc}}
+\doxysubsubsection{\texorpdfstring{options}{options}}
+{\footnotesize\ttfamily struct option options\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{  \{\textcolor{stringliteral}{"{}nooptimize"{}}, no\_argument,  NULL, \textcolor{charliteral}{'n'}\},}
+\DoxyCodeLine{  \{\textcolor{stringliteral}{"{}makefigures"{}}, no\_argument,  NULL, \textcolor{charliteral}{'f'}\},}
+\DoxyCodeLine{  \{\textcolor{stringliteral}{"{}help"{}}, no\_argument,  NULL, \textcolor{charliteral}{'h'}\},}
+\DoxyCodeLine{  \{0, 0, 0, 0\}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8cc_ae131ea149fedfb0e50c397635d2028b0}\label{main_8cc_ae131ea149fedfb0e50c397635d2028b0}} 
+\index{main.cc@{main.cc}!optstring@{optstring}}
+\index{optstring@{optstring}!main.cc@{main.cc}}
+\doxysubsubsection{\texorpdfstring{optstring}{optstring}}
+{\footnotesize\ttfamily char$\ast$ optstring = (char$\ast$)\char`\"{}nfh\char`\"{}}
+

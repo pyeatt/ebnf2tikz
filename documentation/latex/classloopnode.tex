@@ -1,0 +1,172 @@
+\hypertarget{classloopnode}{}\doxysection{loopnode Class Reference}
+\label{classloopnode}\index{loopnode@{loopnode}}
+
+
+{\ttfamily \#include $<$graph.\+hh$>$}
+
+
+
+Inheritance diagram for loopnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{classloopnode__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for loopnode\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{classloopnode__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classloopnode_a1037fcdb7693dd643805574c48080312}{loopnode}} (\mbox{\hyperlink{classnode}{node}} $\ast$\mbox{\hyperlink{classnode}{node}})
+\item 
+\mbox{\hyperlink{classloopnode_ab59912cfcb948fd0fab908cbc5c2505d}{loopnode}} (const \mbox{\hyperlink{classloopnode}{loopnode}} \&original)
+\item 
+\mbox{\hyperlink{classloopnode}{loopnode}} $\ast$ \mbox{\hyperlink{classloopnode_adb129df76b41737385daf3d08378da6f}{clone}} () const
+\item 
+virtual \mbox{\hyperlink{classloopnode_a0926f0502fca47a8764c1ee6d8b462fa}{$\sim$loopnode}} ()
+\item 
+virtual void \mbox{\hyperlink{classloopnode_aff34fc056b8eca80a3cc60c849be03e6}{dump}} (int depth) const
+\item 
+virtual void \mbox{\hyperlink{classloopnode_a5d86dccaefb42672a3df61eaeb2c2f82}{draw\+To\+Left\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+virtual void \mbox{\hyperlink{classloopnode_a1017a7ea13f84b73d9bde23f6b25615b}{draw\+To\+Right\+Rail}} (ofstream \&outs, \mbox{\hyperlink{classrailnode}{railnode}} $\ast$p, \mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}} join, int drawself)
+\item 
+\mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classloopnode_a6974cd781f5779ed060d71e9d850910e}{get\+Repeat}} ()
+\item 
+void \mbox{\hyperlink{classloopnode_aec829f9e13095f948d9b5143072e5119}{set\+Repeat}} (\mbox{\hyperlink{classnode}{node}} $\ast$r)
+\item 
+\mbox{\hyperlink{classnode}{node}} $\ast$ \mbox{\hyperlink{classloopnode_a3788e23ed319d25e7ee0d817cf5e31f4}{get\+Body}} ()
+\item 
+void \mbox{\hyperlink{classloopnode_af8131d7da93d17445da77028867a68ef}{set\+Body}} (\mbox{\hyperlink{classnode}{node}} $\ast$r)
+\item 
+virtual void \mbox{\hyperlink{classloopnode_a5453791ffa32e767358b7f4044705a45}{fix\+Skips}} ()
+\item 
+virtual string \mbox{\hyperlink{classloopnode_ab3836a1d94d687e714fd11259d84bbe3}{tex\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classloopnode_a1037fcdb7693dd643805574c48080312}\label{classloopnode_a1037fcdb7693dd643805574c48080312}} 
+\index{loopnode@{loopnode}!loopnode@{loopnode}}
+\index{loopnode@{loopnode}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{loopnode()}{loopnode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily loopnode\+::loopnode (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classloopnode_ab59912cfcb948fd0fab908cbc5c2505d}\label{classloopnode_ab59912cfcb948fd0fab908cbc5c2505d}} 
+\index{loopnode@{loopnode}!loopnode@{loopnode}}
+\index{loopnode@{loopnode}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{loopnode()}{loopnode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily loopnode\+::loopnode (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classloopnode}{loopnode}} \&}]{original }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classloopnode_a0926f0502fca47a8764c1ee6d8b462fa}\label{classloopnode_a0926f0502fca47a8764c1ee6d8b462fa}} 
+\index{loopnode@{loopnode}!````~loopnode@{$\sim$loopnode}}
+\index{````~loopnode@{$\sim$loopnode}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{$\sim$loopnode()}{~loopnode()}}
+{\footnotesize\ttfamily virtual loopnode\+::$\sim$loopnode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classloopnode_adb129df76b41737385daf3d08378da6f}\label{classloopnode_adb129df76b41737385daf3d08378da6f}} 
+\index{loopnode@{loopnode}!clone@{clone}}
+\index{clone@{clone}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{clone()}{clone()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classloopnode}{loopnode}} $\ast$ loopnode\+::clone (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_af215c2088f21e60808a6fd898dc178a6}{multinode}}.
+
+\mbox{\Hypertarget{classloopnode_a5d86dccaefb42672a3df61eaeb2c2f82}\label{classloopnode_a5d86dccaefb42672a3df61eaeb2c2f82}} 
+\index{loopnode@{loopnode}!drawToLeftRail@{drawToLeftRail}}
+\index{drawToLeftRail@{drawToLeftRail}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{drawToLeftRail()}{drawToLeftRail()}}
+{\footnotesize\ttfamily void loopnode\+::draw\+To\+Left\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_aeb62d9eb826818fca32fbfc5cc918706}{node}}.
+
+\mbox{\Hypertarget{classloopnode_a1017a7ea13f84b73d9bde23f6b25615b}\label{classloopnode_a1017a7ea13f84b73d9bde23f6b25615b}} 
+\index{loopnode@{loopnode}!drawToRightRail@{drawToRightRail}}
+\index{drawToRightRail@{drawToRightRail}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{drawToRightRail()}{drawToRightRail()}}
+{\footnotesize\ttfamily void loopnode\+::draw\+To\+Right\+Rail (\begin{DoxyParamCaption}\item[{ofstream \&}]{outs,  }\item[{\mbox{\hyperlink{classrailnode}{railnode}} $\ast$}]{p,  }\item[{\mbox{\hyperlink{graph_8hh_a52423b195df8f906e87d6486168b5aff}{vraildir}}}]{join,  }\item[{int}]{drawself }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adb96728ae6876de3744c761b0946df6f}{node}}.
+
+\mbox{\Hypertarget{classloopnode_aff34fc056b8eca80a3cc60c849be03e6}\label{classloopnode_aff34fc056b8eca80a3cc60c849be03e6}} 
+\index{loopnode@{loopnode}!dump@{dump}}
+\index{dump@{dump}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{dump()}{dump()}}
+{\footnotesize\ttfamily void loopnode\+::dump (\begin{DoxyParamCaption}\item[{int}]{depth }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classnode_adbb5e9bcbe37e287419af5919dccfc12}{node}}.
+
+\mbox{\Hypertarget{classloopnode_a5453791ffa32e767358b7f4044705a45}\label{classloopnode_a5453791ffa32e767358b7f4044705a45}} 
+\index{loopnode@{loopnode}!fixSkips@{fixSkips}}
+\index{fixSkips@{fixSkips}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{fixSkips()}{fixSkips()}}
+{\footnotesize\ttfamily void loopnode\+::fix\+Skips (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_a47f441e547cac03febd03d0fdbeeb9d6}{multinode}}.
+
+\mbox{\Hypertarget{classloopnode_a3788e23ed319d25e7ee0d817cf5e31f4}\label{classloopnode_a3788e23ed319d25e7ee0d817cf5e31f4}} 
+\index{loopnode@{loopnode}!getBody@{getBody}}
+\index{getBody@{getBody}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{getBody()}{getBody()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ loopnode\+::get\+Body (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classloopnode_a6974cd781f5779ed060d71e9d850910e}\label{classloopnode_a6974cd781f5779ed060d71e9d850910e}} 
+\index{loopnode@{loopnode}!getRepeat@{getRepeat}}
+\index{getRepeat@{getRepeat}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{getRepeat()}{getRepeat()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classnode}{node}} $\ast$ loopnode\+::get\+Repeat (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classloopnode_af8131d7da93d17445da77028867a68ef}\label{classloopnode_af8131d7da93d17445da77028867a68ef}} 
+\index{loopnode@{loopnode}!setBody@{setBody}}
+\index{setBody@{setBody}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{setBody()}{setBody()}}
+{\footnotesize\ttfamily void loopnode\+::set\+Body (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classloopnode_aec829f9e13095f948d9b5143072e5119}\label{classloopnode_aec829f9e13095f948d9b5143072e5119}} 
+\index{loopnode@{loopnode}!setRepeat@{setRepeat}}
+\index{setRepeat@{setRepeat}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{setRepeat()}{setRepeat()}}
+{\footnotesize\ttfamily void loopnode\+::set\+Repeat (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classnode}{node}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classloopnode_ab3836a1d94d687e714fd11259d84bbe3}\label{classloopnode_ab3836a1d94d687e714fd11259d84bbe3}} 
+\index{loopnode@{loopnode}!texName@{texName}}
+\index{texName@{texName}!loopnode@{loopnode}}
+\doxysubsubsection{\texorpdfstring{texName()}{texName()}}
+{\footnotesize\ttfamily virtual string loopnode\+::tex\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmultinode_af0e01874f64bc4215669889d941233ef}{multinode}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{graph_8hh}{graph.\+hh}}\item 
+\mbox{\hyperlink{graph_8cc}{graph.\+cc}}\item 
+\mbox{\hyperlink{output_8cc}{output.\+cc}}\item 
+\mbox{\hyperlink{subsume_8cc}{subsume.\+cc}}\end{DoxyCompactItemize}

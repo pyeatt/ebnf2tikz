@@ -1,0 +1,152 @@
+\hypertarget{classannot_1_1position}{}\doxysection{annot\+::position Class Reference}
+\label{classannot_1_1position}\index{annot::position@{annot::position}}
+
+
+A point in a source file.  
+
+
+
+
+{\ttfamily \#include $<$annot\+\_\+location.\+hh$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef const std\+::string \mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type for file name. \end{DoxyCompactList}\item 
+typedef int \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Type for line and column numbers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1position_a4c17ca5f0a0e57fe1ac011fc2d02d1e7}{position}} (\mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}} $\ast$f=\mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}, \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} l=1, \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} c=1)
+\begin{DoxyCompactList}\small\item\em Construct a position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classannot_1_1position_accba91f0afb371191361cf718abc31ef}{initialize}} (\mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}} $\ast$fn=\mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}, \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} l=1, \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} c=1)
+\begin{DoxyCompactList}\small\item\em Initialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Line and Column related manipulators}\par
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classannot_1_1position_a7f6ecfd9c716a3971abd5bdd20907e1e}{lines}} (\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} count=1)
+\begin{DoxyCompactList}\small\item\em (line related) Advance to the COUNT next lines. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classannot_1_1position_ab890b6e8c2b7d73c84ad748862731f93}{columns}} (\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} count=1)
+\begin{DoxyCompactList}\small\item\em (column related) Advance to the COUNT next columns. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}} $\ast$ \mbox{\hyperlink{classannot_1_1position_a20650e489c5d3cb9ffa659727e745e72}{filename}}
+\begin{DoxyCompactList}\small\item\em File name to which this position refers. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} \mbox{\hyperlink{classannot_1_1position_a4ac04e84ee0d7f0222b83d2e9bc1d33c}{line}}
+\begin{DoxyCompactList}\small\item\em Current line number. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} \mbox{\hyperlink{classannot_1_1position_a33cdac971d5066081bc8ab4584f01758}{column}}
+\begin{DoxyCompactList}\small\item\em Current column number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A point in a source file. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}\label{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}} 
+\index{annot::position@{annot::position}!counter\_type@{counter\_type}}
+\index{counter\_type@{counter\_type}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{counter\_type}{counter\_type}}
+{\footnotesize\ttfamily typedef int \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{annot\+::position\+::counter\+\_\+type}}}
+
+
+
+Type for line and column numbers. 
+
+\mbox{\Hypertarget{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}\label{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}} 
+\index{annot::position@{annot::position}!filename\_type@{filename\_type}}
+\index{filename\_type@{filename\_type}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{filename\_type}{filename\_type}}
+{\footnotesize\ttfamily typedef const std\+::string \mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{annot\+::position\+::filename\+\_\+type}}}
+
+
+
+Type for file name. 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classannot_1_1position_a4c17ca5f0a0e57fe1ac011fc2d02d1e7}\label{classannot_1_1position_a4c17ca5f0a0e57fe1ac011fc2d02d1e7}} 
+\index{annot::position@{annot::position}!position@{position}}
+\index{position@{position}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{position()}{position()}}
+{\footnotesize\ttfamily annot\+::position\+::position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}} $\ast$}]{f = {\ttfamily \mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}},  }\item[{\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}}]{l = {\ttfamily 1},  }\item[{\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}}]{c = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a position. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classannot_1_1position_ab890b6e8c2b7d73c84ad748862731f93}\label{classannot_1_1position_ab890b6e8c2b7d73c84ad748862731f93}} 
+\index{annot::position@{annot::position}!columns@{columns}}
+\index{columns@{columns}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{columns()}{columns()}}
+{\footnotesize\ttfamily void annot\+::position\+::columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+(column related) Advance to the COUNT next columns. 
+
+\mbox{\Hypertarget{classannot_1_1position_accba91f0afb371191361cf718abc31ef}\label{classannot_1_1position_accba91f0afb371191361cf718abc31ef}} 
+\index{annot::position@{annot::position}!initialize@{initialize}}
+\index{initialize@{initialize}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void annot\+::position\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}} $\ast$}]{fn = {\ttfamily \mbox{\hyperlink{location_8hh_a5a6c82f7ce4ad9cc8c6c08b7a2de5b84}{YY\+\_\+\+NULLPTR}}},  }\item[{\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}}]{l = {\ttfamily 1},  }\item[{\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}}]{c = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initialization. 
+
+\mbox{\Hypertarget{classannot_1_1position_a7f6ecfd9c716a3971abd5bdd20907e1e}\label{classannot_1_1position_a7f6ecfd9c716a3971abd5bdd20907e1e}} 
+\index{annot::position@{annot::position}!lines@{lines}}
+\index{lines@{lines}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{lines()}{lines()}}
+{\footnotesize\ttfamily void annot\+::position\+::lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}}}]{count = {\ttfamily 1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+(line related) Advance to the COUNT next lines. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classannot_1_1position_a33cdac971d5066081bc8ab4584f01758}\label{classannot_1_1position_a33cdac971d5066081bc8ab4584f01758}} 
+\index{annot::position@{annot::position}!column@{column}}
+\index{column@{column}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{column}{column}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} annot\+::position\+::column}
+
+
+
+Current column number. 
+
+\mbox{\Hypertarget{classannot_1_1position_a20650e489c5d3cb9ffa659727e745e72}\label{classannot_1_1position_a20650e489c5d3cb9ffa659727e745e72}} 
+\index{annot::position@{annot::position}!filename@{filename}}
+\index{filename@{filename}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{filename}{filename}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classannot_1_1position_a11d2a996c7964f5e13f4778e8e15442a}{filename\+\_\+type}}$\ast$ annot\+::position\+::filename}
+
+
+
+File name to which this position refers. 
+
+\mbox{\Hypertarget{classannot_1_1position_a4ac04e84ee0d7f0222b83d2e9bc1d33c}\label{classannot_1_1position_a4ac04e84ee0d7f0222b83d2e9bc1d33c}} 
+\index{annot::position@{annot::position}!line@{line}}
+\index{line@{line}!annot::position@{annot::position}}
+\doxysubsubsection{\texorpdfstring{line}{line}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classannot_1_1position_aef66c9633cca99494e10f18374de49fa}{counter\+\_\+type}} annot\+::position\+::line}
+
+
+
+Current line number. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{annot__location_8hh}{annot\+\_\+location.\+hh}}\end{DoxyCompactItemize}

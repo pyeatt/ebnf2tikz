@@ -1,0 +1,316 @@
+\hypertarget{classannot_1_1parser}{}\doxysection{annot\+::parser Class Reference}
+\label{classannot_1_1parser}\index{annot::parser@{annot::parser}}
+
+
+A Bison parser.  
+
+
+
+
+{\ttfamily \#include $<$annot\+\_\+parser.\+hh$>$}
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structannot_1_1parser_1_1basic__symbol}{basic\+\_\+symbol}}
+\item 
+struct \mbox{\hyperlink{structannot_1_1parser_1_1by__kind}{by\+\_\+kind}}
+\begin{DoxyCompactList}\small\item\em Type access provider for token (enum) based symbols. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classannot_1_1parser_1_1context}{context}}
+\item 
+class \mbox{\hyperlink{classannot_1_1parser_1_1semantic__type}{semantic\+\_\+type}}
+\item 
+struct \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind}{symbol\+\_\+kind}}
+\begin{DoxyCompactList}\small\item\em Symbol kinds. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em \char`\"{}\+External\char`\"{} symbols\+: returned by the scanner. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structannot_1_1parser_1_1syntax__error}{syntax\+\_\+error}}
+\begin{DoxyCompactList}\small\item\em Syntax errors thrown from user actions. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structannot_1_1parser_1_1token}{token}}
+\begin{DoxyCompactList}\small\item\em Token kinds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{classannot_1_1location}{location}} \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Symbol locations. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{structannot_1_1parser_1_1token_a91f15aef04316eae6ea05c40322d751b}{token\+::yytokentype}} \mbox{\hyperlink{classannot_1_1parser_a5e518b9be2939b7205ef95e8a9a96c38}{token\+\_\+kind\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Token kind, as returned by yylex. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{structannot_1_1parser_1_1token_a91f15aef04316eae6ea05c40322d751b}{token\+\_\+kind\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_aac40b7b8f6301849d8f854a69eafa1a7}{token\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Backward compatibility alias (Bison 3.\+6). \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+::symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a9d8d90f96dc75c657a855d610043ecc9}{symbol\+\_\+kind\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em (Internal) symbol kind. \end{DoxyCompactList}\item 
+typedef \mbox{\hyperlink{structannot_1_1parser_1_1by__kind}{by\+\_\+kind}} \mbox{\hyperlink{classannot_1_1parser_aa20005336c2a5af3f6db357701ab1657}{by\+\_\+type}}
+\begin{DoxyCompactList}\small\item\em Backward compatibility for a private implementation detail (Bison 3.\+6). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classannot_1_1parser_a31b3346ea592f1e10e03c6d4c8d6150b}{parser}} (\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$m\+\_\+yyarg)
+\begin{DoxyCompactList}\small\item\em Build a parser object. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classannot_1_1parser_a932047e6fa540ea915a2c1b9548c1634}{$\sim$parser}} ()
+\item 
+int \mbox{\hyperlink{classannot_1_1parser_accde221d54cdd326532079f82fa49fa5}{operator()}} ()
+\item 
+virtual int \mbox{\hyperlink{classannot_1_1parser_aa5e9603a755400981c7805c54d1b56e6}{parse}} ()
+\item 
+virtual void \mbox{\hyperlink{classannot_1_1parser_ada2e2941d727f3a3c3a003c55a98473a}{error}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&\mbox{\hyperlink{parser_8cc_abaf70dc7df8e78acc6505d164cb2276b}{loc}}, const std\+::string \&msg)
+\item 
+void \mbox{\hyperlink{classannot_1_1parser_a6e84945244afaa697cdd9b6c3db56d22}{error}} (const \mbox{\hyperlink{structannot_1_1parser_1_1syntax__error}{syntax\+\_\+error}} \&err)
+\begin{DoxyCompactList}\small\item\em Report a syntax error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const char $\ast$ \mbox{\hyperlink{classannot_1_1parser_ad64ade71c6abd2934fb59402f54e57c8}{symbol\+\_\+name}} (\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} yysymbol)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a5367c6ba8edc2f1de912fb807f171bea}{make\+\_\+\+END}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_ad36acc52231ba40bbba6ede6d6df54e6}{make\+\_\+\+ANNOTerror}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a0d4763829412e29437de72b7204c9d10}{make\+\_\+\+ANNOTUNDEF}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a0ba1faec57d222c285070a7cc559f7f8}{make\+\_\+\+ASTART}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_ad80de65f5e0cdd8867c43e50d70bbd66}{make\+\_\+\+AEND}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_af25ba3434f496f807aaa156b23b34e99}{make\+\_\+\+SEMICOLON}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a7080755c6189cc19b358f8bf4ed0b248}{make\+\_\+\+SUBSUME}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a79a650146cf401f9fac04b9946b726de}{make\+\_\+\+AS}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_af1113957cde63e4cecb238abe0e1e06a}{make\+\_\+\+CAPTION}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a5017223bf2afa3dd0ff763151d7da8e7}{make\+\_\+\+SIDEWAYS}} (const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_afdf5cf43ab258ac0ca083f87a87797c6}{make\+\_\+\+UNEXP}} (const std\+::string \&v, const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\item 
+static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_ab3d2e4607b425fde1a27273cd189be4a}{make\+\_\+\+STRING}} (const std\+::string \&v, const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&l)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{classannot_1_1parser_a56fb419e02e03fea0c7c3c5e033425e1}{YYNTOKENS}} = symbol\+\_\+kind\+::\+YYNTOKENS
+\begin{DoxyCompactList}\small\item\em The number of tokens. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A Bison parser. 
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classannot_1_1parser_aa20005336c2a5af3f6db357701ab1657}\label{classannot_1_1parser_aa20005336c2a5af3f6db357701ab1657}} 
+\index{annot::parser@{annot::parser}!by\_type@{by\_type}}
+\index{by\_type@{by\_type}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{by\_type}{by\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structannot_1_1parser_1_1by__kind}{by\+\_\+kind}} \mbox{\hyperlink{classannot_1_1parser_aa20005336c2a5af3f6db357701ab1657}{annot\+::parser\+::by\+\_\+type}}}
+
+
+
+Backward compatibility for a private implementation detail (Bison 3.\+6). 
+
+\mbox{\Hypertarget{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}\label{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}} 
+\index{annot::parser@{annot::parser}!location\_type@{location\_type}}
+\index{location\_type@{location\_type}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{location\_type}{location\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{classannot_1_1location}{location}} \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{annot\+::parser\+::location\+\_\+type}}}
+
+
+
+Symbol locations. 
+
+\mbox{\Hypertarget{classannot_1_1parser_a9d8d90f96dc75c657a855d610043ecc9}\label{classannot_1_1parser_a9d8d90f96dc75c657a855d610043ecc9}} 
+\index{annot::parser@{annot::parser}!symbol\_kind\_type@{symbol\_kind\_type}}
+\index{symbol\_kind\_type@{symbol\_kind\_type}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{symbol\_kind\_type}{symbol\_kind\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+::symbol\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{annot\+::parser\+::symbol\+\_\+kind\+\_\+type}}}
+
+
+
+(Internal) symbol kind. 
+
+\mbox{\Hypertarget{classannot_1_1parser_a5e518b9be2939b7205ef95e8a9a96c38}\label{classannot_1_1parser_a5e518b9be2939b7205ef95e8a9a96c38}} 
+\index{annot::parser@{annot::parser}!token\_kind\_type@{token\_kind\_type}}
+\index{token\_kind\_type@{token\_kind\_type}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{token\_kind\_type}{token\_kind\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structannot_1_1parser_1_1token_a91f15aef04316eae6ea05c40322d751b}{token\+::yytokentype}} \mbox{\hyperlink{structannot_1_1parser_1_1token_a91f15aef04316eae6ea05c40322d751b}{annot\+::parser\+::token\+\_\+kind\+\_\+type}}}
+
+
+
+Token kind, as returned by yylex. 
+
+\mbox{\Hypertarget{classannot_1_1parser_aac40b7b8f6301849d8f854a69eafa1a7}\label{classannot_1_1parser_aac40b7b8f6301849d8f854a69eafa1a7}} 
+\index{annot::parser@{annot::parser}!token\_type@{token\_type}}
+\index{token\_type@{token\_type}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{token\_type}{token\_type}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structannot_1_1parser_1_1token_a91f15aef04316eae6ea05c40322d751b}{token\+\_\+kind\+\_\+type}} \mbox{\hyperlink{structannot_1_1parser_1_1token_a91f15aef04316eae6ea05c40322d751b}{annot\+::parser\+::token\+\_\+type}}}
+
+
+
+Backward compatibility alias (Bison 3.\+6). 
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classannot_1_1parser_a31b3346ea592f1e10e03c6d4c8d6150b}\label{classannot_1_1parser_a31b3346ea592f1e10e03c6d4c8d6150b}} 
+\index{annot::parser@{annot::parser}!parser@{parser}}
+\index{parser@{parser}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{parser()}{parser()}}
+{\footnotesize\ttfamily annot\+::parser\+::parser (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{graph_8hh_a6d6ecae38086dc88ebd50a949bebc214}{annotmap}} $\ast$}]{m\+\_\+yyarg }\end{DoxyParamCaption})}
+
+
+
+Build a parser object. 
+
+\mbox{\Hypertarget{classannot_1_1parser_a932047e6fa540ea915a2c1b9548c1634}\label{classannot_1_1parser_a932047e6fa540ea915a2c1b9548c1634}} 
+\index{annot::parser@{annot::parser}!````~parser@{$\sim$parser}}
+\index{````~parser@{$\sim$parser}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{$\sim$parser()}{~parser()}}
+{\footnotesize\ttfamily annot\+::parser\+::$\sim$parser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classannot_1_1parser_ada2e2941d727f3a3c3a003c55a98473a}\label{classannot_1_1parser_ada2e2941d727f3a3c3a003c55a98473a}} 
+\index{annot::parser@{annot::parser}!error@{error}}
+\index{error@{error}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{error()}{error()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void annot\+::parser\+::error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{loc,  }\item[{const std\+::string \&}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Report a syntax error. 
+\begin{DoxyParams}{Parameters}
+{\em loc} & where the syntax error is found. \\
+\hline
+{\em msg} & a description of the syntax error. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classannot_1_1parser_a6e84945244afaa697cdd9b6c3db56d22}\label{classannot_1_1parser_a6e84945244afaa697cdd9b6c3db56d22}} 
+\index{annot::parser@{annot::parser}!error@{error}}
+\index{error@{error}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{error()}{error()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void annot\+::parser\+::error (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structannot_1_1parser_1_1syntax__error}{syntax\+\_\+error}} \&}]{err }\end{DoxyParamCaption})}
+
+
+
+Report a syntax error. 
+
+\mbox{\Hypertarget{classannot_1_1parser_ad80de65f5e0cdd8867c43e50d70bbd66}\label{classannot_1_1parser_ad80de65f5e0cdd8867c43e50d70bbd66}} 
+\index{annot::parser@{annot::parser}!make\_AEND@{make\_AEND}}
+\index{make\_AEND@{make\_AEND}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_AEND()}{make\_AEND()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+AEND (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_ad36acc52231ba40bbba6ede6d6df54e6}\label{classannot_1_1parser_ad36acc52231ba40bbba6ede6d6df54e6}} 
+\index{annot::parser@{annot::parser}!make\_ANNOTerror@{make\_ANNOTerror}}
+\index{make\_ANNOTerror@{make\_ANNOTerror}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_ANNOTerror()}{make\_ANNOTerror()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+ANNOTerror (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_a0d4763829412e29437de72b7204c9d10}\label{classannot_1_1parser_a0d4763829412e29437de72b7204c9d10}} 
+\index{annot::parser@{annot::parser}!make\_ANNOTUNDEF@{make\_ANNOTUNDEF}}
+\index{make\_ANNOTUNDEF@{make\_ANNOTUNDEF}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_ANNOTUNDEF()}{make\_ANNOTUNDEF()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+ANNOTUNDEF (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_a79a650146cf401f9fac04b9946b726de}\label{classannot_1_1parser_a79a650146cf401f9fac04b9946b726de}} 
+\index{annot::parser@{annot::parser}!make\_AS@{make\_AS}}
+\index{make\_AS@{make\_AS}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_AS()}{make\_AS()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+AS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_a0ba1faec57d222c285070a7cc559f7f8}\label{classannot_1_1parser_a0ba1faec57d222c285070a7cc559f7f8}} 
+\index{annot::parser@{annot::parser}!make\_ASTART@{make\_ASTART}}
+\index{make\_ASTART@{make\_ASTART}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_ASTART()}{make\_ASTART()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+ASTART (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_af1113957cde63e4cecb238abe0e1e06a}\label{classannot_1_1parser_af1113957cde63e4cecb238abe0e1e06a}} 
+\index{annot::parser@{annot::parser}!make\_CAPTION@{make\_CAPTION}}
+\index{make\_CAPTION@{make\_CAPTION}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_CAPTION()}{make\_CAPTION()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+CAPTION (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_a5367c6ba8edc2f1de912fb807f171bea}\label{classannot_1_1parser_a5367c6ba8edc2f1de912fb807f171bea}} 
+\index{annot::parser@{annot::parser}!make\_END@{make\_END}}
+\index{make\_END@{make\_END}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_END()}{make\_END()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+END (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_af25ba3434f496f807aaa156b23b34e99}\label{classannot_1_1parser_af25ba3434f496f807aaa156b23b34e99}} 
+\index{annot::parser@{annot::parser}!make\_SEMICOLON@{make\_SEMICOLON}}
+\index{make\_SEMICOLON@{make\_SEMICOLON}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_SEMICOLON()}{make\_SEMICOLON()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+SEMICOLON (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_a5017223bf2afa3dd0ff763151d7da8e7}\label{classannot_1_1parser_a5017223bf2afa3dd0ff763151d7da8e7}} 
+\index{annot::parser@{annot::parser}!make\_SIDEWAYS@{make\_SIDEWAYS}}
+\index{make\_SIDEWAYS@{make\_SIDEWAYS}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_SIDEWAYS()}{make\_SIDEWAYS()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+SIDEWAYS (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_ab3d2e4607b425fde1a27273cd189be4a}\label{classannot_1_1parser_ab3d2e4607b425fde1a27273cd189be4a}} 
+\index{annot::parser@{annot::parser}!make\_STRING@{make\_STRING}}
+\index{make\_STRING@{make\_STRING}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_STRING()}{make\_STRING()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+STRING (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{v,  }\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_a7080755c6189cc19b358f8bf4ed0b248}\label{classannot_1_1parser_a7080755c6189cc19b358f8bf4ed0b248}} 
+\index{annot::parser@{annot::parser}!make\_SUBSUME@{make\_SUBSUME}}
+\index{make\_SUBSUME@{make\_SUBSUME}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_SUBSUME()}{make\_SUBSUME()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+SUBSUME (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_afdf5cf43ab258ac0ca083f87a87797c6}\label{classannot_1_1parser_afdf5cf43ab258ac0ca083f87a87797c6}} 
+\index{annot::parser@{annot::parser}!make\_UNEXP@{make\_UNEXP}}
+\index{make\_UNEXP@{make\_UNEXP}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{make\_UNEXP()}{make\_UNEXP()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structannot_1_1parser_1_1symbol__type}{symbol\+\_\+type}} annot\+::parser\+::make\+\_\+\+UNEXP (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{v,  }\item[{const \mbox{\hyperlink{classannot_1_1parser_afba85de62d46872b7d62829c5d1fcf6c}{location\+\_\+type}} \&}]{l }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\mbox{\Hypertarget{classannot_1_1parser_accde221d54cdd326532079f82fa49fa5}\label{classannot_1_1parser_accde221d54cdd326532079f82fa49fa5}} 
+\index{annot::parser@{annot::parser}!operator()@{operator()}}
+\index{operator()@{operator()}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily int annot\+::parser\+::operator() (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Parse. An alias for parse (). \begin{DoxyReturn}{Returns}
+0 iff parsing succeeded. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classannot_1_1parser_aa5e9603a755400981c7805c54d1b56e6}\label{classannot_1_1parser_aa5e9603a755400981c7805c54d1b56e6}} 
+\index{annot::parser@{annot::parser}!parse@{parse}}
+\index{parse@{parse}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily int annot\+::parser\+::parse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Parse. \begin{DoxyReturn}{Returns}
+0 iff parsing succeeded. 
+\end{DoxyReturn}
+Length of the RHS of the rule being reduced.
+
+The lookahead symbol.
+
+The locations where the error started and ended.
+
+The return value of parse ().
+
+Discard the LAC context in case there still is one left from a previous invocation.\mbox{\Hypertarget{classannot_1_1parser_ad64ade71c6abd2934fb59402f54e57c8}\label{classannot_1_1parser_ad64ade71c6abd2934fb59402f54e57c8}} 
+\index{annot::parser@{annot::parser}!symbol\_name@{symbol\_name}}
+\index{symbol\_name@{symbol\_name}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{symbol\_name()}{symbol\_name()}}
+{\footnotesize\ttfamily const char $\ast$ annot\+::parser\+::symbol\+\_\+name (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}}}]{yysymbol }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+The user-\/facing name of the symbol whose (internal) number is YYSYMBOL. No bounds checking. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classannot_1_1parser_a56fb419e02e03fea0c7c3c5e033425e1}\label{classannot_1_1parser_a56fb419e02e03fea0c7c3c5e033425e1}} 
+\index{annot::parser@{annot::parser}!YYNTOKENS@{YYNTOKENS}}
+\index{YYNTOKENS@{YYNTOKENS}!annot::parser@{annot::parser}}
+\doxysubsubsection{\texorpdfstring{YYNTOKENS}{YYNTOKENS}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structannot_1_1parser_1_1symbol__kind_afac53d2e5ac3f95b7e46017cb6740823}{symbol\+\_\+kind\+\_\+type}} annot\+::parser\+::\+YYNTOKENS = symbol\+\_\+kind\+::\+YYNTOKENS\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The number of tokens. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{annot__parser_8hh}{annot\+\_\+parser.\+hh}}\item 
+\mbox{\hyperlink{annot__parser_8cc}{annot\+\_\+parser.\+cc}}\end{DoxyCompactItemize}

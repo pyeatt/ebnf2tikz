@@ -1,0 +1,115 @@
+Author\+: Larry D. Pyeatt
+
+February, 2021\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{What Does It Do?}\label{md__r_e_a_d_m_e_autotoc_md8}
+It is an optimizing compiler that converts (possibly annotated) \href{https://en.wikipedia.org/wiki/Extended_Backus\%E2\%80\%93Naur_form}{\texttt{ Extended Backus–\+Naur Form}} (EBNF) to railroad diagrams expressed as La\+TeX \href{https://en.wikipedia.org/wiki/PGF/TikZ}{\texttt{ TikZ}} commands.
+
+For example, if you feed a file containing the following annotated EBNF into ebnf2tikz\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{case\_statement\_alternative =}
+\DoxyCodeLine{    'when' , choices , '=>', sequence\_of\_statements;}
+\DoxyCodeLine{}
+\DoxyCodeLine{subsume}
+\DoxyCodeLine{choices =}
+\DoxyCodeLine{    choice, \{ '|', choice \} ;}
+\DoxyCodeLine{}
+\DoxyCodeLine{subsume}
+\DoxyCodeLine{choice =}
+\DoxyCodeLine{    simple\_expression |}
+\DoxyCodeLine{    discrete\_range |}
+\DoxyCodeLine{    simple\_name |}
+\DoxyCodeLine{    'others' ;}
+
+\end{DoxyCode}
+ Then it will output the following TikZ code\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\(\backslash\)begin\{figure\}}
+\DoxyCodeLine{\(\backslash\)centerline\{}
+\DoxyCodeLine{\(\backslash\)begin\{tikzpicture\}}
+\DoxyCodeLine{\(\backslash\)node at (0pt,0pt)[anchor=west](name)\{\(\backslash\)railname\{case\(\backslash\)\_statement\(\backslash\)\_alternative\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)coordinate (node42) at (59.3677pt,-\/21pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node42linetop) at (59.3677pt,-\/27pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node42linebottom) at (59.3677pt,-\/101pt);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node42linetop) -\/-\/ (node42linebottom);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node42linetop) -\/-\/ (node42) -\/-\/ +(east:8pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node45) at (67.3677pt,-\/21pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node45linetop) at (67.3677pt,-\/27pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node45linebottom) at (67.3677pt,-\/79pt);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node45linetop) -\/-\/ (node45linebottom);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node45linetop) -\/-\/ (node45) -\/-\/ +(west:8pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node51) at (156.118pt,-\/21pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node51linetop) at (156.118pt,-\/27pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node51linebottom) at (156.118pt,-\/79pt);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node51linetop) -\/-\/ (node51linebottom);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node51linetop) -\/-\/ (node51) -\/-\/ +(east:8pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node53) at (164.118pt,-\/21pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node53linetop) at (164.118pt,-\/27pt);}
+\DoxyCodeLine{\(\backslash\)coordinate (node53linebottom) at (164.118pt,-\/101pt);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node53linetop) -\/-\/ (node53linebottom);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node53linetop) -\/-\/ (node53) -\/-\/ +(west:8pt);}
+\DoxyCodeLine{\(\backslash\)node (node1) at (16pt,-\/21pt)[anchor=west,terminal] \{\(\backslash\)railtermname\{when\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node1\}}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node1.east) -\/-\/ (node42.west);}
+\DoxyCodeLine{\(\backslash\)node (node47) at (75.3677pt,-\/21pt)[anchor=west,nonterminal] \{\(\backslash\)railname\{simple\(\backslash\)\_expression\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node47\}}
+\DoxyCodeLine{\(\backslash\)node (node48) at (83.5977pt,-\/43pt)[anchor=west,nonterminal] \{\(\backslash\)railname\{discrete\(\backslash\)\_range\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node48\}}
+\DoxyCodeLine{\(\backslash\)node (node49) at (84.5176pt,-\/65pt)[anchor=west,nonterminal] \{\(\backslash\)railname\{simple\(\backslash\)\_name\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node49\}}
+\DoxyCodeLine{\(\backslash\)node (node50) at (92.8288pt,-\/87pt)[anchor=west,terminal] \{\(\backslash\)railtermname\{others\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node50\}}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node45.east) -\/-\/ (node47.west);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node47.east) -\/-\/ (node51.west);}
+\DoxyCodeLine{\(\backslash\)node (node52) at (104.743pt,-\/109pt)[anchor=west,terminal] \{\(\backslash\)railtermname\{|\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node52\}}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node42.east) -\/-\/ (node45.west);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node51.east) -\/-\/ (node53.west);}
+\DoxyCodeLine{\(\backslash\)node (node4) at (172.118pt,-\/21pt)[anchor=west,terminal] \{\(\backslash\)railtermname\{=>\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node4\}}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node53.east) -\/-\/ (node4.west);}
+\DoxyCodeLine{\(\backslash\)node (node5) at (199.775pt,-\/21pt)[anchor=west,nonterminal] \{\(\backslash\)railname\{sequence\(\backslash\)\_of\(\backslash\)\_statements\(\backslash\)strut\}\};}
+\DoxyCodeLine{\(\backslash\)writenodesize\{node5\}}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node4.east) -\/-\/ (node5.west);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node48.west) -\/-\/ (node48.west-\/|node45) -\/-\/ (node45linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node49.west) -\/-\/ (node49.west-\/|node45) -\/-\/ (node45linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node50.west) -\/-\/ (node50.west-\/|node45) -\/-\/ (node45linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node52.west) -\/-\/ (node52.west-\/|node42) -\/-\/ (node42linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node48.east) -\/-\/ (node48.east-\/|node51) -\/-\/ (node51linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node49.east) -\/-\/ (node49.east-\/|node51) -\/-\/ (node51linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node50.east) -\/-\/ (node50.east-\/|node51) -\/-\/ (node51linetop);}
+\DoxyCodeLine{\(\backslash\)draw [rounded corners=\(\backslash\)railcorners] (node52.east) -\/-\/ (node52.east-\/|node53) -\/-\/ (node53linetop);}
+\DoxyCodeLine{\(\backslash\)end\{tikzpicture\}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{\(\backslash\)caption\{No Caption.\}}
+\DoxyCodeLine{\(\backslash\)label\{No Caption.\}}
+\DoxyCodeLine{\(\backslash\)end\{figure\}}
+
+\end{DoxyCode}
+
+
+You will need a {\ttfamily \textbackslash{}usepackage\{ebnf2tikz\}} command in the preamble of your La\+TeX document. Then you can just include the TikZ code in your La\+TeX document, and it will draw this\+:
+
+\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysection{About the Code}\label{md__r_e_a_d_m_e_autotoc_md9}
+This is a work in progress. There are still a couple of bugs that I am aware of, but nothing major. Some of the line drawing is not quite right, especially involving choice or loop nodes before and after newlines, and choices inside loops. I should have that fixed in a few days.
+
+Originally, I planned to have TikZ do most of the work. However, while I could get it to do small diagrams, it failed miserably when the level of nesting went beyond three. TikZ really does not have the concept of \char`\"{}sub-\/images\char`\"{} that have user-\/defined anchor points. I think it is possible because, ... look at Circui\+TikZ.
+
+Trying to get TikZ to do all of the work to lay out complex diagrams was a nightmare. It does not do recursive structures well. I put in some effort, then gave up and decided to go another direction. I now have ebnf2tikz do all of the layout, and just use TikZ to do the drawing. This does mean that ebnf2tikz needs some information from La\+TeX about how big the basic nodes are. Therefore, you have to run ebnf2tikz, then La\+TeX, then ebnf2tikz again, then La\+TeX again.
+
+I have written it so that you can\+:
+
+
+\begin{DoxyEnumerate}
+\item Run ebnf2tikz to produce all of the diagrams, but they are not correct.
+\item Run the incorrect diagrams through La\+TeX to get the dimensions of the basic nodes and the settings for railcolsep and railrowsep.
+\item After that, re-\/run ebnf2tikz and all of the diagrams are correct.
+\item Run La\+TeX again and everything looks good.
+\end{DoxyEnumerate}
+
+Any change to the ebnf file requires these four steps to get everything looking good again. It is not so different from bibtex, makeindex, etc. The bottom line is that you may have to run ebnf2tikz twice if you change its input files, and you will have to run it at least once if you change the input file or change railrowsep or railcolsep or any other layout settings.
+
+The good news is that this approach makes the diagrams as concise as they can possibly be. All of the layout is handled by ebnf2tikz, so La\+TeX does not spend a lot of time on them. Also, I may be able to do some sort of \char`\"{}auto-\/newline\char`\"{} thing.
+
+All nodes are placed using exact coordinates{\ttfamily \textbackslash{}node (nodename) at (exact coordinate)} but all lines are drawn using the node names.\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysection{To Do}\label{md__r_e_a_d_m_e_autotoc_md10}
+I have not written the {\ttfamily ebnf2tikz} style file, so the \`{}\`{}\`{} 

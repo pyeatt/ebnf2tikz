@@ -152,15 +152,15 @@ coordinate rownode::place(ofstream &outs,int draw, int drawrails,
       outs<<"\\coordinate ("<<coordname<<") at "<<attach<<";\n";
       
     }
-  if(previous!=NULL && previous->is_newline() && draw)
-    {
-      outs<<"% drawn by rownode "<<nodename<<endl;
-      if(body->is_concat()  && body->getChild(0)->is_rail())
-	childwest = body->getChild(1)->west();
-      else
-	childwest = body->west();
-      line(outs,childwest,childwest+"-|"+coordname,coordname);
-    }
+  // if(previous!=NULL && previous->is_newline() && draw)
+  //   {
+  //     outs<<"% drawn by rownode "<<nodename<<endl;
+  //     if(body->is_concat()  && body->getChild(0)->is_rail())
+  // 	childwest = body->getChild(1)->west();
+  //     else
+  // 	childwest = body->west();
+  //     line(outs,childwest,childwest+"-|"+coordname,coordname);
+  //   }
   ea = body->east();
   return nc + coordinate(sizes->colsep,0);
 }
