@@ -1,3 +1,7 @@
+simple_expression =
+	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , term } ;
+
+
 newlines =
  a \\ b \\ c;
 
