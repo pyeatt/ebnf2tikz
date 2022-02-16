@@ -62,22 +62,22 @@ coordinate railnode::place(ofstream &outs, int draw, int drawrails,
   
   top = start + coordinate(0,-sizes->rowsep);
 
-  if(side == LEFT)
-    {
-      if(previous != NULL && previous->is_newline())
-	{  
-	  // left newline rails have top and bottom inverted... makes
-	  // everything easier
-	  top = start + coordinate(0, sizes->colsep);
-	  bottom = start +  coordinate(0, sizes->rowsep);
-	}
-      else
-       	{
-	  top = start - coordinate(0,sizes->colsep);
-	  bottom = start -  coordinate(0, sizes->rowsep);
-	}
-    }
-  else
+  // if(side == LEFT)
+  //   {
+  //     if(previous != NULL && previous->is_newline())
+  // 	{  
+  // 	  // left newline rails have top and bottom inverted... makes
+  // 	  // everything easier
+  // 	  top = start + coordinate(0, sizes->colsep);
+  // 	  bottom = start +  coordinate(0, sizes->rowsep);
+  // 	}
+  //     else
+  //      	{
+  // 	  top = start - coordinate(0,sizes->colsep);
+  // 	  bottom = start -  coordinate(0, sizes->rowsep);
+  // 	}
+  //   }
+  // else
     if(next != NULL && next->is_newline())
       {
 	top = start - coordinate(0,sizes->rowsep);

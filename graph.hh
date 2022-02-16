@@ -215,11 +215,42 @@ public:
 };
 
 // ------------------------------------------------------------------------
-
-class railnode:public node{
+// vertical rail nodes
+// -------------------------------------------------------
+/* downgoing rails are drawn  ----
+                               \
+                                |
+ 
+   entries from left are drawn \  (except for bottom entry)
+                                
+   entries from right are drawn / (except for bottom entry)
+  --------------------------------------------------------
+   upgoing rails are drawn    ----
+                                /
+                               |
+   
+   entries from left are drawn /  (except for bottom entry)
+                                
+   entries from right are drawn \ (except for bottom entry)
+  -------------------------------------------------
+   newrow rails are drawn  -   at the end of the row
+                            \
+                             |
+  
+   and are drawn      -  at the beginning of the next row
+                     /
+                     |
+   a choice at the end of a row can use the downgoing row rail.
+   final choice also goes down instead of up
+   a choice at the beginning of a row can use the upgoing row rail.
+   first choice goes up instead of split down
+*/
+class railnode:public node{     
 protected:
-  vrailside side;       // LEFT or RIGHT: Which side of choice/loop is it on?
+  //  vrailside side;       // LEFT or RIGHT: Which side of choice/loop is it on?
   vraildir direction;   // UP or DOWN: Direction of travel down this rail.
+  vraildir bottomdir;   // LEFT or RIGHT: whether to turn left or right at bottom
+                        
   coordinate top,bottom;  // top is even with bottom of top child
                           // if UP, then bottom is even with top
                           // of bottom child.  Otherwise it is even with
