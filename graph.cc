@@ -487,13 +487,13 @@ railnode::railnode():node()
 railnode::railnode(vrailside s,vraildir d):node()
 {
   type=RAIL;
-  side = s;
+  //  side = s;
   direction = d;
 }
 
 railnode::railnode(const railnode &original):node(original)
 {
-  side=original.side;
+  //  side=original.side;
   direction=original.direction;
   top = original.top;
   bottom = original.bottom;
@@ -514,7 +514,8 @@ int railnode::operator ==(node &r)
   if(!same_type(r))
     return 0;
   railnode &rt = dynamic_cast<railnode&>(r);
-  return (side == rt.side && direction == rt.direction);
+  //  return (side == rt.side && direction == rt.direction);
+    return (direction == rt.direction);
 }
 
 
