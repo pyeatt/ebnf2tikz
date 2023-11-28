@@ -192,7 +192,7 @@ productions: productions production {
 
 // Finally getting to the meat.  A single production is described
 // as annotations, followed by a production name, followed by an
-// equal sign, followed by an expression, followed by a semicolon.
+// equal sign, followed by rows, followed by a semicolon.
 production: annotations STRING EQUAL rows SEMICOLON
   {
     concatnode *c = new concatnode(new nullnode("start1"));
@@ -224,8 +224,11 @@ annotations : ANNOTATION {
       $$=NULL;
   } ;
 
-// this is how we handle manual newline "\\" in the input
+// The body of a production is a concat of rows separated by newlines.
+// It may contain only one row.
 rows :
+  // in the first case, we have a concat containing at least one row,
+  // and need to add a newline node and an expression (row) to it.
   rows NEWLINE expression {
  //     $3 = wrapChoice($3);
       newlinenode *n = new newlinenode();
@@ -271,7 +274,9 @@ rows :
       $$->insert(n);
       $$->insert(row);
       $$->setDrawToPrev(0);
-     } | 
+     } |
+    // in this case, we need to create the initial concat, and add the
+    // row (expression) to it
     expression {
       //$1 = wrapChoice($1);
       //$$ = new rownode($1);
@@ -299,8 +304,7 @@ expression:
   //   } |
   expression PIPE expression
     {
-      // PIPE is left associative, so only need to check $1
-      
+      // PIPE is left associative, so only need to check $1      
       if(!$1->is_choice())
         {
           $$ = new choicenode($1);
