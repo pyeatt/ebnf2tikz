@@ -20,6 +20,7 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/*  This file contains the methods used to output the results */
 
 #include <graph.hh>
 #include <sstream>
@@ -421,11 +422,10 @@ void choicenode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 	join = p->getRailDir();
     }
   if(drawself) {
-    //  if(0) {
-    if(p->getRailDir()==UP)
+    if(p != NULL && p->getRailDir()==UP)
       line(outs,nodes.back()->west(),
 	   nodes.back()->west()+"-|"+p->rawName(),p->rawName()+"linetop");
-    else
+      else
       //TODO: make it so that only the last child of the last child will
       //actually draw to the top of the rail.
       if(parent->is_concat() &&
@@ -616,13 +616,16 @@ void choicenode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
       }
       else {
 	join=UP;
-	rightrail->setRailDir(UP);
-	line(outs,nodes.front()->east(),rightrail->west());
-	s<<"+right:"<<0.5*sizes->colsep<<"pt";
-	line(outs,nodes.back()->east(),
-	     nodes.back()->east()+"-|"+p->rawName(),
-	     p->rawName()+"|-"+nodes.front()->east(),
-	     s.str());
+	if(rightrail != NULL)
+	  {
+	    rightrail->setRailDir(UP);
+	    line(outs,nodes.front()->east(),rightrail->west());
+	    s<<"+right:"<<0.5*sizes->colsep<<"pt";
+	    line(outs,nodes.back()->east(),
+		 nodes.back()->east()+"-|"+p->rawName(),
+		 p->rawName()+"|-"+nodes.front()->east(),
+		 s.str());
+	  }
       }
     }
   }

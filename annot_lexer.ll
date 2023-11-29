@@ -20,6 +20,9 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/* This file contains the lexical analyzer that handle annotations.
+   Annotations begin with <<-- and end with -->>.
+*/
 
 
 

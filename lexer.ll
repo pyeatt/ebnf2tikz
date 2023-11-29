@@ -20,7 +20,10 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-
+/*
+   This file contains the main lexical analyzer.
+   There is a secondary lexical anlayzer that handles annotations
+*/
 
 
 %{ /* -*- C++ -*- */
