@@ -31,7 +31,7 @@ ebnf2tikz
 using namespace std;
 
 // choicenode and loopnode have associated left and right railnodes.
-// When the parser creates a choicenode or a loopnode,, it also
+// When the parser creates a choicenode or a loopnode, it also
 // creates the railnodes and inserts them into the current concat.
 // During optimization, adjacent rails can be merged if they are
 // compatible.  We can merge consecutive left choice rails,
@@ -52,9 +52,10 @@ typedef pair<string,string> annot_t ;
 typedef enum {LEFT,RIGHT} vrailside;
 //typedef enum {UP,DOWN,STARTNEWLINEUP,STARTNEWLINEDOWN} vraildir;
 typedef enum {UP,DOWN} vraildir;
+
 class railnode;
 
-// base class for all nodes in the parse tree
+// Base class for all nodes in the parse tree.
 class node {
 protected:
   static string vrailStr(vraildir d)
@@ -92,33 +93,46 @@ protected:
   // "coord3", "10,10", etc
   template <class ... Args>
   void line(ofstream &outs, Args ... args);
+  // Returns 0 if two nodes do not have the same type.
   int same_type(node &r){return type == r.type;}
 public:
+  // Constructors
   node();
   node(const node &original);
+  // Method to clone a node
   virtual node* clone() const = 0;
+  // Destructor
   virtual ~node();
+  // Set a node's parent pointer. Some nodes have multiple children
   virtual void setParent(node* p){parent = p;}
+  node* getParent(){return parent;}
+  // Set a node's previous pointer. The top level is a concat, and
+  // every node in the concat has a pointer to the previous and next
+  // nodes.
   virtual void setPrevious(node* p){previous = p;}
+  node* getPrevious(){return previous;}
   virtual void setNext(node* p){next = p;}
+  node* getNext(){return next;}
+  // Most nodes will have a left and right rail
   virtual void setLeftRail(railnode* p){leftrail = p;}
   virtual void setRightRail(railnode* p){rightrail = p;}
   railnode* getLeftRail(){return leftrail;}
   railnode* getRightRail(){return rightrail;}
+  // Functions to draw connections to the left and right rails.
   virtual void drawToLeftRail(ofstream &outs, railnode* p,
 			      vraildir join,int drawself);
   virtual void drawToRightRail(ofstream &outs, railnode* p,
 			       vraildir join, int drawself);
+  // If something is optimized out, it is marked as dead
   void makeDead(){dead = 1;}
   int isDead(){return dead;}
+  // set the beforeskip value in points  
   void setBeforeSkip(float s){beforeskip=s;}
-  void setDrawToPrev(int d){drawtoprev=d;}
   float getBeforeSkip(){return beforeskip;}
+  // Should this node draw a rail to the previous node?
+  void setDrawToPrev(int d){drawtoprev=d;}
   int getDrawToPrev(){return drawtoprev;}
-  node* getParent(){return parent;}
-  node* getNext(){return next;}
-  node* getPrevious(){return previous;}
-    // call this static member function to load the row and colum widths
+  // call this static member function to load the row and colum widths
   // and the node sizes before calling the place(...) function on the
   // top level (graph) node.
   static void loadData(string filename) {
@@ -129,7 +143,6 @@ public:
     delete sizes;
   }
   static float getColSep(){return sizes->colsep;}
-
   int is_choice(){return type==CHOICE;}
   int is_terminal(){return type==TERMINAL;}
   int is_nonterm(){return type==NONTERM;}
@@ -178,7 +191,7 @@ public:
 
 
 // ------------------------------------------------------------------------
-// nodes with a single child
+// Base class for nodes with a single child
 class singlenode:public node{
 protected:
   node* body;
@@ -214,11 +227,11 @@ public:
   virtual string texName() { return "singlenode";};
 };
 
-// ------------------------------------------------------------------------
-// vertical rail nodes
+// -------------------------------------------------------
+// Class for rail nodes
 // -------------------------------------------------------
 /* downgoing rails are drawn  ----
-                               \
+                               \ 
                                 |
  
    entries from left are drawn \  (except for bottom entry)
@@ -247,7 +260,7 @@ public:
 */
 class railnode:public node{     
 protected:
-  //  vrailside side;       // LEFT or RIGHT: Which side of choice/loop is it on?
+  //  vrailside side;    // LEFT or RIGHT: Which side of choice/loop is it on?
   vraildir direction;   // UP or DOWN: Direction of travel down this rail.
   vraildir bottomdir;   // LEFT or RIGHT: whether to turn left or right at bottom
                         
@@ -272,6 +285,101 @@ public:
   virtual void setRailDir(vraildir d){direction = d;}
   virtual string texName() { return "railnode";};
 };
+
+// ------------------------------------------------------------------------
+// Node to draw a nonterminal
+
+class nontermnode:public node{
+protected:
+  string style;
+  string format;
+  string str;
+public:
+  nontermnode(string s);
+  nontermnode(const nontermnode &original);
+  virtual nontermnode* clone() const;
+  virtual ~nontermnode(){}
+  virtual void forgetChild(int n){}
+  virtual void dump(int depth) const;
+  virtual string texName() {return latexwrite(format,str);}
+  virtual coordinate place(ofstream &outs, int draw, int drawrails,
+			   coordinate start,node *parent, int depth);
+  virtual int mergeConcats(int depth){return 0;}
+  virtual int mergeChoices(int depth){return 0;}
+  virtual int liftConcats(int depth){return 0;}
+  virtual node* getChild(int n){return NULL;}
+  virtual int analyzeOptLoops(int depth){return 0;}
+  virtual int analyzeNonOptLoops(int depth){return 0;}
+  virtual void drawToLeftRail(ofstream &outs, railnode* p,
+			      vraildir join, int drawself);
+  virtual void drawToRightRail(ofstream &outs, railnode* p,
+			       vraildir join, int drawself);
+  virtual int operator ==(node &r);
+  virtual int operator !=(node &r){return  !(*this == r);} 
+  virtual node* subsume(regex_t* name, node *replacement);
+};  
+
+// ------------------------------------------------------------------------
+// Node to draw a terminal
+class termnode:public nontermnode{
+public:
+  termnode(string s);
+  termnode(const termnode &original);
+  virtual termnode* clone() const;
+  virtual ~termnode(){}
+};
+
+// ------------------------------------------------------------------------
+// this node type provides a placeholder to indicate that I need to
+// draw a line, but there is nothing really on it.  It is a node with
+// zero width and height. When drawn, it just emits a coordinate.  Its
+// north(), south(), east() and west() just refer to that coordinate.
+// This simplifies the code in choicenode.place() and loopnode.place().
+class nullnode:public nontermnode{
+public:
+  nullnode(string s);
+  nullnode(const nullnode &original);
+  virtual nullnode* clone() const;
+  virtual coordinate place(ofstream &outs, int draw, int drawrails,
+			   coordinate start,node *parent, int depth);
+  virtual string texName() { return "nullnode";};
+};
+
+// ------------------------------------------------------------------------
+// Node for a newline rail
+class newlinenode:public railnode{
+  float lineheight;
+public:
+  newlinenode();
+  newlinenode(const newlinenode &original);
+  virtual newlinenode* clone() const;
+  virtual ~newlinenode(){}
+  virtual coordinate place(ofstream &outs, int draw, int drawrails,
+			   coordinate start,node *parent, int depth);
+  virtual int rail_left(){return 1;}
+  virtual int rail_right(){return 1;}
+  virtual void setLineHeight(float h){lineheight=h;}
+  virtual void dump(int depth) const;
+};
+
+// ------------------------------------------------------------------------
+// A rownode contains expressions that are drawn across the page.  The
+// child is usually a concatnode.
+class rownode:public singlenode{
+private:
+  string coordname;
+public:
+  rownode(node *p);
+  rownode(const rownode &original);
+  virtual rownode* clone() const;
+  virtual ~rownode(){}
+  virtual void dump(int depth) const;
+  virtual coordinate place(ofstream &outs, int draw, int drawrails,
+			   coordinate start,node *parent, int depth);
+  virtual string texName() { return "rownode";};
+};
+
+// ------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------
 // nodes with multiple children
@@ -308,97 +416,7 @@ public:
 };
 
 // ------------------------------------------------------------------------
-
-class nontermnode:public node{
-protected:
-  string style;
-  string format;
-  string str;
-public:
-  nontermnode(string s);
-  nontermnode(const nontermnode &original);
-  virtual nontermnode* clone() const;
-  virtual ~nontermnode(){}
-  virtual void forgetChild(int n){}
-  virtual void dump(int depth) const;
-  virtual string texName() {return latexwrite(format,str);}
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
-  virtual int mergeConcats(int depth){return 0;}
-  virtual int mergeChoices(int depth){return 0;}
-  virtual int liftConcats(int depth){return 0;}
-  virtual node* getChild(int n){return NULL;}
-  virtual int analyzeOptLoops(int depth){return 0;}
-  virtual int analyzeNonOptLoops(int depth){return 0;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,
-			      vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,
-			       vraildir join, int drawself);
-  virtual int operator ==(node &r);
-  virtual int operator !=(node &r){return  !(*this == r);} 
-  virtual node* subsume(regex_t* name, node *replacement);
-};  
-
-// ------------------------------------------------------------------------
-
-class termnode:public nontermnode{
-public:
-  termnode(string s);
-  termnode(const termnode &original);
-  virtual termnode* clone() const;
-  virtual ~termnode(){}
-};
-
-// ------------------------------------------------------------------------
-// this node type provides a placeholder to indicate that I need to
-// draw a line, but there is nothing really on it.  It is a node with
-// zero width and height. When drawn, in just emits a coordinate.  Its
-// north(), south(), east() and west() just refer to that coordinate.
-// This simplifies the code in choicenode.place() and loopnode.place().
-class nullnode:public nontermnode{
-public:
-  nullnode(string s);
-  nullnode(const nullnode &original);
-  virtual nullnode* clone() const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
-  virtual string texName() { return "nullnode";};
-};
-
-// ------------------------------------------------------------------------
-class newlinenode:public railnode{
-  float lineheight;
-public:
-  newlinenode();
-  newlinenode(const newlinenode &original);
-  virtual newlinenode* clone() const;
-  virtual ~newlinenode(){}
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
-  virtual int rail_left(){return 1;}
-  virtual int rail_right(){return 1;}
-  virtual void setLineHeight(float h){lineheight=h;}
-  virtual void dump(int depth) const;
-};
-
-// ------------------------------------------------------------------------
-// A rownode contains expressions that are drawn across the page.  The
-// child is usually a concatnode.
-class rownode:public singlenode{
-private:
-  string coordname;
-public:
-  rownode(node *p);
-  rownode(const rownode &original);
-  virtual rownode* clone() const;
-  virtual ~rownode(){}
-  virtual void dump(int depth) const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
-  virtual string texName() { return "rownode";};
-};
-
-// ------------------------------------------------------------------------
+// Node for a choice
 
 class choicenode:public multinode{
 public:
@@ -420,6 +438,7 @@ public:
 };
 
 // ------------------------------------------------------------------------
+// Node for a loop
 
 class loopnode:public multinode{
 public:
@@ -439,7 +458,8 @@ public:
 };
 
 // ------------------------------------------------------------------------
-  
+// Node for a concat
+
 class concatnode:public multinode{
 private:
   int findAndDeleteMatches(vector<node*> &parentnodes,
@@ -470,7 +490,7 @@ public:
 };
 
 // ------------------------------------------------------------------------
-// A productionnode contains lines, rails, and nelines
+// A productionnode contains lines, rails, and nemlines
 class productionnode:public singlenode{
 private:
   string name;

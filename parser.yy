@@ -20,6 +20,10 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/*  This file contains the main parser.  There is another parser that
+    handles annotations.
+*/
+						
 %require "3.7"
 %language "c++"
 %define api.token.raw
@@ -131,13 +135,16 @@ node* wrapChoice(node *n) {
 grammar : productions {
      grammar *g = $1;
 
+      g->dump();
+
+	g->setParent();
+	g->setPrevious();
+    	g->setNext();
+cout << "-----------------------------------------------\n";
 g->dump();
 
-	// g->setParent();
-	// g->setPrevious();
-     	// g->setNext();
      
-//      g->optimize();
+       g->optimize();
 
 //      g->setParent();
 //      g->setPrevious();
@@ -163,7 +170,7 @@ g->dump();
 //      g->setPrevious();
 //      g->setNext();
 // g->dump();
-//      g->createRows();
+//        g->createRows();
 
 //      g->setParent();
 //      g->setPrevious();
@@ -171,10 +178,10 @@ g->dump();
 //      g->fixSkips();
 
 
-     // g->setParent();
-     // g->setPrevious();
-     // g->setNext();
-//     g->place(drv.outs());
+     g->setParent();
+     g->setPrevious();
+     g->setNext();
+     g->place(drv.outs());
 
      delete g;
   } ;

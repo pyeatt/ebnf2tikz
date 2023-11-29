@@ -1,7 +1,6 @@
 simple_expression =
 	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
 
-
 newlines =
  a \\ b \\ c;
 
@@ -20,6 +19,7 @@ character_literal =
 
  optionchoice =
   b,  [ a | b ], c;
+
 
 <<-- caption "Syntax for the case statement."
 -->>
@@ -43,6 +43,7 @@ choice =
 <<-- subsume as "choices" -->>
 choices =
     choice, { '|', choice } ;
+
 
 
 toollist =

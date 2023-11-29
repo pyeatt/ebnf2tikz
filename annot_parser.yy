@@ -20,6 +20,8 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+/*  This file contains the parser that handles annotations */
+
 %require "3.7"
 %language "c++"
 %define api.prefix {annot}
@@ -76,13 +78,14 @@ annot::location loc;
 
 %printer { yyo << $$; } <*>;
 
-// Bison fundamentally works by asking flex to get the next token, which it
-// returns as an object of type "yystype".  Initially (by default), yystype
-// is merely a typedef of "int", but for non-trivial projects, tokens could
-// be of any arbitrary data type.  So, to deal with that, the idea is to
-// override yystype's default typedef to be a C union instead.  Unions can
-// hold all of the types of tokens that Flex could return, and this this means
-// we can return ints or floats or strings cleanly.  
+// Bison works by asking flex to get the next token, which it returns
+// as an object of type "yystype".  Initially (by default), yystype is
+// merely a typedef of "int", but for non-trivial projects, tokens
+// could be of any arbitrary data type.  So, to deal with that, the
+// idea is to override yystype's default typedef to be a C union
+// instead.  Unions can hold all of the types of tokens that Flex
+// could return, and this this means we can return ints or floats or
+// strings cleanly.
 
 // Define the "terminal symbol" token types (in CAPS by convention),
 // and associate each with a field of the %union:
