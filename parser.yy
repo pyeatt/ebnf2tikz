@@ -144,7 +144,10 @@ cout << "-----------------------------------------------\n";
 g->dump();
 
      
-       g->optimize();
+     /* g->setParent(); */
+     /* g->setPrevious(); */
+     /* g->setNext(); */
+     /*   g->optimize(); */
 
 //      g->setParent();
 //      g->setPrevious();
@@ -156,21 +159,21 @@ g->dump();
 //      g->setNext();
 //      g->optimize();
 
-//      g->setParent();
-//      g->setPrevious();
-//      g->setNext();
-//      g->mergeRails();
+     /* g->setParent(); */
+     /* g->setPrevious(); */
+     /* g->setNext(); */
+     /* g->mergeRails(); */
 
 //      // g->setParent();
 //      // g->setPrevious();
 //      // g->setNext();
 //      // g->optimize();
 
-//      g->setParent();
-//      g->setPrevious();
-//      g->setNext();
-// g->dump();
-//        g->createRows();
+/*      g->setParent(); */
+/*      g->setPrevious(); */
+/*      g->setNext(); */
+/* g->dump(); */
+/*        g->createRows(); */
 
 //      g->setParent();
 //      g->setPrevious();
@@ -178,10 +181,10 @@ g->dump();
 //      g->fixSkips();
 
 
-     g->setParent();
-     g->setPrevious();
-     g->setNext();
-     g->place(drv.outs());
+     /* g->setParent(); */
+     /* g->setPrevious(); */
+     /* g->setNext(); */
+     /* g->place(drv.outs()); */
 
      delete g;
   } ;
@@ -339,16 +342,39 @@ expression:
     $$ = $2;
   } |
   LBRACK expression RBRACK {
-//    $2 = wrapChoice($2);
-//    choicenode *c = new choicenode(new nullnode("ebnf2tikz NULL node"));
+		//    $2 = wrapChoice($2);
+		choicenode *c; 
+		// If $2 is a choice node or a loop node, then insert a 
+		// nullnode as its first child.
+		if($2->is_choice() || $2->is_loop())
+		{
+ 		/* cout << "-----------------------------\n"; */
+		/* cout << "Building optional node from choice node\n"; */
+		/* ((concatnode*)$2)->dump(0); */
+		/* cout << "-----------------------------\n"; */
+		c = (choicenode*)$2;
+                c->insertFirst(new nullnode("NULL node"));
+	        /* c->dump(0); */
+		/* cout << "-----------------------------\n"; */
+		}
+		// otherwise create a choice node with the first
+		// child being a null node and the second child $2
+		else  
+		{
+		/* cout << "-----------------------------\n"; */
+		/* cout << "Building optional node from other node\n"; */
+		/* ((concatnode*)$2)->dump(0); */
+		/* cout << "-----------------------------\n"; */
+		c = new choicenode(new nullnode("ebnf2tikz NULL node"));
+		c->insert($2);
+		}
+    // add the rail nodes
     railnode *r,*l;
     l = new railnode(LEFT,DOWN);
     r = new railnode(RIGHT,UP);
-//    c->setLeftRail(l);
-//    c->setRightRail(r);
-    $2->setLeftRail(l);
-    $2->setRightRail(r);
-    $$ = $2;
+    c->setLeftRail(l);
+    c->setRightRail(r);
+    $$ = c;
 //    c->insert($2);
 //    $$ = c;
 //    $$ = new concatnode(l);

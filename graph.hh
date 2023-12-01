@@ -343,6 +343,7 @@ public:
   virtual coordinate place(ofstream &outs, int draw, int drawrails,
 			   coordinate start,node *parent, int depth);
   virtual string texName() { return "nullnode";};
+  virtual void dump(int depth) const;
 };
 
 // ------------------------------------------------------------------------
@@ -433,6 +434,7 @@ public:
 			       vraildir join, int drawself);
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
+  virtual void insertFirst(node *node);
   virtual void fixSkips();
   virtual string texName() { return "choicenode";};
 };

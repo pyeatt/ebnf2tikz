@@ -387,7 +387,8 @@ loopnode::loopnode(node *node):multinode(node)
 {
   type=LOOP;
   // initialize repeat part to nullnode
-  nodes.push_back(new nullnode(nextNode()));
+  //nodes.push_back(new nullnode(nextNode()));
+  //  nodes.push_back(node);
 }
 
 // should make deep copy of body
@@ -561,6 +562,15 @@ nullnode* nullnode::clone() const
   return new nullnode(*this);
 }
 
+void nullnode::dump(int depth) const
+{ int i;
+  for(i=0;i<depth;i++)
+    cout<<"  ";
+  cout<<latexwrite("nullnode",str)<<" -> ";
+  node::dump(depth);
+}  
+
+
 // ------------------------------------------------------------------------
 
 choicenode::choicenode(node *p):multinode(p)
@@ -580,6 +590,12 @@ choicenode* choicenode::clone() const
 void choicenode::insert(node *node)
 {
   nodes.push_back(node);
+  node->setDrawToPrev(0);
+}
+
+void choicenode::insertFirst(node *node)
+{
+  nodes.insert(nodes.begin(),node);
   node->setDrawToPrev(0);
 }
 

@@ -1,6 +1,9 @@
 simple_expression =
 	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
 
+ optionchoice =
+  b,  [ a | b ], c;
+
 newlines =
  a \\ b \\ c;
 
@@ -11,14 +14,12 @@ newlines =
 simplea =
          [ a  | b | c | d ] ;
 
+
 simpleb =
   b, { a , b } ;
 
 character_literal =
     "'", graphic_character, "'" ;
-
- optionchoice =
-  b,  [ a | b ], c;
 
 
 <<-- caption "Syntax for the case statement."
