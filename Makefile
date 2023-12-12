@@ -5,6 +5,8 @@ DEPENDFLAGS=-M
 CFLAGS=-I. -c -Wall -g  
 CC=g++
 
+Debug: ebnf2tikz
+
 ebnf2tikz: $(OBJS)
 	$(CC) -g -I. -o ebnf2tikz $(OBJS)
 
@@ -34,6 +36,17 @@ annot_lexer.hh: annot_lexer.ll
 
 .cc.o:
 	$(CC) $(DEFINES) $(CFLAGS) $(INCLUDES) $<
+
+
+test: ebnf2tikz
+	./ebnf2tikz test.ebnf test.tex
+	pdflatex testdriver
+	./ebnf2tikz test.ebnf test.tex
+	pdflatex testdriver
+	./ebnf2tikz test.ebnf test.tex
+	pdflatex testdriver
+
+
 
 clean:
 	rm -f lexer.cc lexer.hh parser.hh parser.cc annot_lexer.hh annot_lexer.cc annot_parser.hh annot_parser.cc ebnf2tikz location.hh annot_location.hh $(OBJS) *~ bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex

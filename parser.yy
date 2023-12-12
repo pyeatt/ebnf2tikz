@@ -53,21 +53,21 @@ using namespace std;
 
 extern yy::location loc;
 
-node* wrapChoice(node *n) {
-  if(n->is_choice()) {
-    railnode *r,*l;
-    concatnode *c;
-    l = new railnode(LEFT,DOWN);
-    r = new railnode(RIGHT,UP);
-    n->setLeftRail(l);
-    n->setRightRail(r);
-    c = new concatnode(l);
-    c->insert(n); 
-    c->insert(r);
-    n=c;
-  }
-  return n;
-}
+/* node* addRails(node *n) { */
+/*   if(n->is_choice()) { */
+/*     railnode *r,*l; */
+/*     concatnode *c; */
+/*     l = new railnode(LEFT,DOWN); */
+/*     r = new railnode(RIGHT,UP); */
+/*     n->setLeftRail(l); */
+/*     n->setRightRail(r); */
+/*     c = new concatnode(l); */
+/*     c->insert(n);  */
+/*     c->insert(r); */
+/*     n=c; */
+/*   } */
+/*   return n; */
+/* } */
 
 }
 
@@ -135,19 +135,20 @@ node* wrapChoice(node *n) {
 grammar : productions {
      grammar *g = $1;
 
-      g->dump();
+        // g->dump();
 
-	g->setParent();
-	g->setPrevious();
-    	g->setNext();
-cout << "-----------------------------------------------\n";
-g->dump();
+	/* g->setParent(); */
+	/* g->setPrevious();  */
+    	/* g->setNext(); */
+
+//        g->optimize();
+
+        g->dump();
 
      
      /* g->setParent(); */
      /* g->setPrevious(); */
      /* g->setNext(); */
-     /*   g->optimize(); */
 
 //      g->setParent();
 //      g->setPrevious();
@@ -182,9 +183,9 @@ g->dump();
 
 
      /* g->setParent(); */
-     /* g->setPrevious(); */
-     /* g->setNext(); */
-     /* g->place(drv.outs()); */
+     g->setPrevious();
+     g->setNext();
+     g->place(drv.outs());
 
      delete g;
   } ;
@@ -212,12 +213,23 @@ production: annotations STRING EQUAL rows SEMICOLON
     c->getChild(0)->setDrawToPrev(0);
     c->insert(new nullnode("start2"));
     coordinate start;
-//    if(!$4->is_concat())
-//      $4=new concatnode($4);
-    $4->setDrawToPrev(0);
-    $4->getChild(0)->setDrawToPrev(1);
-//    $4=wrapChoice($4);
-    c->insert($4);
+    if(!$4->is_concat())
+       {
+         $4->setBeforeSkip(node::getColSep());
+         $4->setDrawToPrev(1);
+         c->insert($4);
+       }
+    else
+      {
+        // move all children to new concat
+	while($4->numChildren())
+         {
+           c->insert($4->getChild(0));
+           $4->forgetChild(0);
+         }
+        delete $4;
+      }
+    
     c->insert(new nullnode("end1"));
     c->insert(new nullnode("end2"));
     
@@ -240,7 +252,7 @@ rows :
   // in the first case, we have a concat containing at least one row,
   // and need to add a newline node and an expression (row) to it.
   rows NEWLINE expression {
- //     $3 = wrapChoice($3);
+ //     $3 = addRails($3);
       newlinenode *n = new newlinenode();
       //rownode *row = new rownode($3);
       concatnode *row = new concatnode($3);
@@ -288,7 +300,18 @@ rows :
     // in this case, we need to create the initial concat, and add the
     // row (expression) to it
     expression {
-      //$1 = wrapChoice($1);
+      if($1->is_choice())
+	{
+	    $1->setLeftRail(new railnode(LEFT,UP));
+	    $1->setRightRail(new railnode(RIGHT,UP));
+	}
+      /* else */
+      /*   if($1->is_loop()) */
+      /* 	  { */
+      /* 	    $1->setLeftRail(new railnode(LEFT,UP)); */
+      /* 	    $1->setRightRail(new railnode(RIGHT,DOWN)); */
+      /* 	  } */
+      //$1 = addRails($1);
       //$$ = new rownode($1);
       //$$ = new concatnode($1);
       $$ = $1;
@@ -312,41 +335,76 @@ expression:
   //     $$->insert(n);
   //     $$->insert(r);
   //   } |
-  expression PIPE expression
+  expression PIPE expression // CHOICE node
     {
-      // PIPE is left associative, so only need to check $1      
-      if(!$1->is_choice())
+      // PIPE is left associative, so only need to check $1
+      $1->setBeforeSkip(0);
+      $3->setBeforeSkip(0);
+      if($3->is_concat())
+	($3->getChild(0))->setBeforeSkip(0);
+      if($1->is_concat())
+	($1->getChild(0))->setBeforeSkip(0);
+      if($1->is_choice())
+	{
+          $$ = $1;
+	}
+      else
         {
           $$ = new choicenode($1);
 	  $1->setDrawToPrev(0);
 	}
-      else
-        $$ = $1;    
       $$->insert($3);
     } |
-  expression COMMA expression
+  expression COMMA expression // CONCAT node
     {
-//      $1=wrapChoice($1);
-//    $3=wrapChoice($3);
+      //      $1=addRails($1);
+      //    $3=addRails($3);
       // COMMA is left associative, so only need to check $1
-      if(!$1->is_concat()) {
-        $$ = new concatnode($1);
-        $$->insert($3);
-      } else {
+      if(!$1->is_concat())
+        {
+          $$ = new concatnode($1);
+        }
+      else 
  	$$ = $1;
-	$$->insert($3);
-      }
+
+      /* if($3->is_concat()) */
+      /* 	{ */
+      /*     // move children from second concat to first concat */
+      /*     while($3->numChildren()) */
+      /* 	    { */
+      /*         ($3->getChild(0))->setBeforeSkip(node::getColSep()); */
+      /*         $$->insert($3->getChild(0)); */
+      /*         $3->forgetChild(0); */
+      /*       } */
+      /*     delete $3; */
+      /*   } */
+      /* else */
+        $$->insert($3);
+
+
     } |
   LPAREN expression RPAREN {
-//  $2 = wrapChoice($2);
+      // if it is a choice, then we need to add rails
+      if($2->is_choice())
+	{
+          railnode *l = new railnode(LEFT,UP);
+          railnode *r = new railnode(RIGHT,UP);
+          $2->setLeftRail(l);
+          $2->setRightRail(r);
+	}
+
+//    $2 = addRails($2);
     $$ = $2;
   } |
-  LBRACK expression RBRACK {
-		//    $2 = wrapChoice($2);
+  LBRACK expression RBRACK {  // OPTIONAL node (choice with first child NULL) 
+//		$2 = addRails($2);
 		choicenode *c; 
-		// If $2 is a choice node or a loop node, then insert a 
+      $2->setBeforeSkip(0);
+      if($2->is_concat())
+	($2->getChild(0))->setBeforeSkip(0);
+		// If $2 is a choice node, then insert a 
 		// nullnode as its first child.
-		if($2->is_choice() || $2->is_loop())
+		if($2->is_choice())
 		{
  		/* cout << "-----------------------------\n"; */
 		/* cout << "Building optional node from choice node\n"; */
@@ -365,12 +423,12 @@ expression:
 		/* cout << "Building optional node from other node\n"; */
 		/* ((concatnode*)$2)->dump(0); */
 		/* cout << "-----------------------------\n"; */
-		c = new choicenode(new nullnode("ebnf2tikz NULL node"));
+		c = new choicenode(new nullnode("NULL node"));
 		c->insert($2);
 		}
     // add the rail nodes
     railnode *r,*l;
-    l = new railnode(LEFT,DOWN);
+    l = new railnode(LEFT,UP);
     r = new railnode(RIGHT,UP);
     c->setLeftRail(l);
     c->setRightRail(r);
@@ -381,20 +439,55 @@ expression:
 //    $$->insert(c);
 //    $$->insert(r);
   } |
-  LBRACE expression RBRACE {
-//    $2=wrapChoice($2);
-    loopnode *n = new loopnode($2); 
+  LBRACE expression RBRACE {  // LOOP node
+    // cout << "creating loop around ";$2->dump(1);
+    loopnode *n;
     railnode *r,*l;
+    // reverse all of the concats contained in $2
+    $2->reverse();
+    n = new loopnode(new nullnode("NULL node"));
     l = new railnode(LEFT,UP);
-    r = new railnode(RIGHT,DOWN);
+    r = new railnode(RIGHT,UP);
     n->setLeftRail(l);
     n->setRightRail(r);
+    // if $2 is a choice node, then delete its rails, move all
+    // of its children to the new loop node, and set their rails.
+    if($2->is_choice())
+      {
+cout << "converting choice to loop\n";
+        while($2->numChildren())
+	 {
+cout << "moving child \n";
+($2->getChild(0))->dump(0);
+	   ($2->getChild(0))->setLeftRail(l);
+	   ($2->getChild(0))->setLeftRail(r);
+	   ($2->getChild(0))->setParent(n);
+	   ($2->getChild(0))->setBeforeSkip(0);
+($2->getChild(0))->dump(0);
+l->dump(0);
+	   n->insert($2->getChild(0));
+           $2->forgetChild(0);
+         }
+        delete $2->getLeftRail();          
+        delete $2->getRightRail();          
+        delete $2;          
+      }
+    else
+      {
+cout << "creating new loop\n";
+    //    n = new loopnode(new nullnode("NULL node"));
+        if($2->is_concat())
+          ($2->getChild(0))->setBeforeSkip(0);
+        n->insert($2);
+      }
     $$ = n;
 //    $$ = new concatnode(l);
 //    $$->insert(n);
 //    $$->insert(r);
   } |
   primary {
+//    cout << "creating primary \n";
+//    $1->dump(0);
     $$ = $1;
   } ;
 

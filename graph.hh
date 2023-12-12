@@ -27,6 +27,7 @@ ebnf2tikz
 #include <vector>
 #include <regex.h>
 #include <nodesize.hh>
+#include <algorithm>
 
 using namespace std;
 
@@ -169,6 +170,7 @@ public:
   virtual void insert(node*){}
   virtual void mergeRails(){}
   virtual void dump(int depth) const;
+  virtual void reverse(){};
   virtual string texName() { return "";};
   virtual string rawName() { return nodename;};
   float width(){return myWidth;}
@@ -437,7 +439,9 @@ public:
   virtual void insertFirst(node *node);
   virtual void fixSkips();
   virtual string texName() { return "choicenode";};
+  virtual void reverse();
 };
+
 
 // ------------------------------------------------------------------------
 // Node for a loop
@@ -451,6 +455,7 @@ public:
   virtual void dump(int depth) const;
   virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
+  void insert(node *node);
   node* getRepeat();
   void setRepeat(node *r);
   node* getBody();
@@ -489,7 +494,14 @@ public:
   virtual void setNext(node* p);
   virtual void fixSkips();
   virtual node* createRows();
+  virtual void reverse();
+  node* previous;
+  node* next;
+  float beforeskip;
+  int drawtoprev;
+
 };
+
 
 // ------------------------------------------------------------------------
 // A productionnode contains lines, rails, and nemlines
