@@ -5,9 +5,11 @@ DEPENDFLAGS=-M
 CFLAGS=-I. -c -Wall -g  
 CC=g++
 
+PL_HEADERS=parser.hh annot_parser.hh lexer.hh annot_lexer.hh 
+
 Debug: ebnf2tikz
 
-ebnf2tikz: $(OBJS)
+ebnf2tikz: $(PL_HEADERS) $(OBJS)
 	$(CC) -g -I. -o ebnf2tikz $(OBJS)
 
 parser.cc: parser.yy 
@@ -16,7 +18,7 @@ parser.cc: parser.yy
 parser.hh: parser.yy
 	bison -d --locations -o parser.cc parser.yy
 
-lexer.cc: lexer.ll
+lexer.cc: lexer.ll 
 	flex --header-file=lexer.hh -o lexer.cc lexer.ll
 
 lexer.hh: lexer.ll 
@@ -34,7 +36,7 @@ annot_lexer.cc: annot_lexer.ll
 annot_lexer.hh: annot_lexer.ll 
 	flex --header-file=annot_lexer.hh -P annot -o annot_lexer.cc annot_lexer.ll
 
-.cc.o:
+.cc.o: 
 	$(CC) $(DEFINES) $(CFLAGS) $(INCLUDES) $<
 
 
