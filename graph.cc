@@ -233,6 +233,7 @@ multinode::multinode(node *p):node(){
 void multinode::insert(node *node)
 {
   nodes.push_back(node);
+  node->setParent(this);
   ea = node->east();
 }
 
@@ -428,7 +429,16 @@ void loopnode::dump(int depth) const
     (*j)->dump(depth+1);
 }
 
-  void loopnode::setBody(node *r)
+void loopnode::insert(node *node)
+{
+  nodes.push_back(node);
+  node->setParent(this);
+  node->setDrawToPrev(0);
+}
+
+
+
+void loopnode::setBody(node *r)
 {
   if(nodes[0] != NULL)
     delete nodes[0];
@@ -485,14 +495,14 @@ railnode::railnode():node()
   type=RAIL;
 }
 
-railnode::railnode(vrailside s,vraildir d):node()
+railnode::railnode(vrailside s,vraildir d):railnode()
 {
   type=RAIL;
   //  side = s;
   direction = d;
 }
 
-railnode::railnode(const railnode &original):node(original)
+railnode::railnode(const railnode &original):railnode()
 {
   //  side=original.side;
   direction=original.direction;
@@ -590,14 +600,38 @@ choicenode* choicenode::clone() const
 void choicenode::insert(node *node)
 {
   nodes.push_back(node);
+  node->setParent(this);
   node->setDrawToPrev(0);
 }
 
 void choicenode::insertFirst(node *node)
 {
   nodes.insert(nodes.begin(),node);
+  node->setParent(this);
   node->setDrawToPrev(0);
 }
+
+void choicenode::reverse()
+{
+  cout<<"Reversing choices\n";
+  this->dump(1);
+  railnode *tmp = leftrail;
+  leftrail = rightrail;
+  rightrail = tmp;
+  nodes.front()->setRightRail(leftrail);
+  nodes.back()->setLeftRail(rightrail);
+  nodes.front()->setLeftRail(NULL);
+  nodes.back()->setRightRail(NULL);
+  for(auto i = nodes.begin(); i != nodes.end(); i++)
+    (*i)->reverse();
+  beforeskip = sizes->colsep;
+
+  // This is probably not necessary
+  for(auto i = nodes.begin(); i != nodes.end(); i++)
+    (*i)->setBeforeSkip(sizes->colsep);
+    
+  this->dump(1);
+};
 
 void choicenode::dump(int depth) const
 { int i;
@@ -687,7 +721,30 @@ void concatnode::setNext(node* p)
 
 void concatnode::insert(node* p)
 {
-  multinode::insert(p);
+  // if inserting a choicenode or loopnode, then insert the rails
+  if(p->is_choice() || p->is_loop())
+    {
+      multinode::insert(p->getLeftRail());
+      multinode::insert(p);
+      multinode::insert(p->getRightRail());
+    }
+  else
+    // if inserting a concat, move its childern and delete it
+    if(p->is_concat())
+      {
+	// move children from second concat to first concat */
+	while(p->numChildren())
+	  {
+	    (p->getChild(0))->setBeforeSkip(node::getColSep());
+	    multinode::insert(p->getChild(0));
+	    p->forgetChild(0);
+	  }
+	delete p;
+      }
+    else
+      multinode::insert(p);
+
+  
   if(p->is_null() || p->is_nonterm() || p->is_terminal())
     p->setDrawToPrev(1);
   else
@@ -725,6 +782,49 @@ node* concatnode::createRows()
   rep->nodes.erase(rep->nodes.begin());
   return rep;
 }
+
+
+void concatnode::reverse()
+{
+  cout << "Reversing concat\n";
+  this->dump(1);
+  railnode *tmp = leftrail;
+  leftrail = rightrail;
+  rightrail = tmp;
+  nodes.front()->setRightRail(leftrail);
+  nodes.back()->setLeftRail(rightrail);
+  nodes.front()->setLeftRail(NULL);
+  nodes.back()->setRightRail(NULL);
+
+  int fbfs,lbfs;
+  //railnode *frn,*lrn;
+  //node *fprv,*lprv;
+  //node *fnxt,*lnxt;
+  // int fdtp,ldtp;
+  //    frn =  nodes.front()->getLeftRail();
+  fbfs = nodes.front()->getBeforeSkip();
+  //fprv = nodes.front()->getPrevious();
+  //fnxt = nodes.front()->getNext();
+
+  //lrn  = nodes.back()->getRightRail();
+  lbfs = nodes.back()->getBeforeSkip();
+  //lprv = nodes.back()->getPrevious();
+  //lnxt = nodes.back()->getNext();
+
+  std::reverse(nodes.begin(),nodes.end());
+
+  nodes.front()->setBeforeSkip(fbfs);
+  nodes.back()->setBeforeSkip(lbfs);
+  //nodes.front()->setLeftRail(frn);
+  //nodes.front()->setRightRail(NULL);
+  //nodes.back()->setLeftRail(NULL);
+  //nodes.back()->setRightRail(lrn);
+  for(auto i = nodes.begin(); i != nodes.end(); i++)
+    (*i)->reverse();
+  this->dump(1);
+    
+};
+
 
 // ------------------------------------------------------------------------
 

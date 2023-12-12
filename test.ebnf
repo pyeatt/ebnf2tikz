@@ -1,135 +1,181 @@
-simple_expression =
-	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
 
- optionchoice =
-  b,  [ a | b ], c;
+cat = 'cat' ;
 
-newlines =
- a \\ b \\ c;
+hat = hat ;
 
- otherb =
-   (a, b) \\ (c, d, e), (f) \\ {g,  h, i, j}  \\ [k, l, m] \\ (n, o  );
+concat = 'a' , (cat , 'c') ;
 
+optional = [ sign ] ;
 
-simplea =
-         [ a  | b | c | d ] ;
+concatoptional = [ 'a' , cat , 'c'  ] ;
 
+choicetwo =
+          a  | 'b' ;
 
-simpleb =
-  b, { a , b } ;
-
-character_literal =
-    "'", graphic_character, "'" ;
-
-
-<<-- caption "Syntax for the case statement."
--->>
-case_statement =
-    [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
-    { ',' , case_statement_alternative } \\
-    'end', 'case', [ label ] ,';' ;
-
-<<-- 
-caption "Syntax for the case statement alternawive" -->>
-case_statement_alternative =
-    'when' , choices , '=>', sequence_of_statements;
-    
-<<-- subsume as "choice" -->>
 choice =
-    simple_expression |
-    discrete_range |
-    simple_name |
-    'others' ;
+          a  | 'b' | c | 'd'  ;
 
-<<-- subsume as "choices" -->>
-choices =
-    choice, { '|', choice } ;
+optionalchoice = 
+          [ a  | 'b' | c | 'd' ] ;
 
+optionalconcatchoice = 
+          [ a  | 'b',e,'f' | c | 'd' ] ;
 
+loop =
+      { a } ;
 
-toollist =
- '(' , tool , { ',' , tool } , ')' ;
+concatloop =
+     { 'a' , cat , 'c' } ;
 
-<<-- subsume as "tool" -->>
-tool =
-  'hammer' | 'screwdriver' | saw;
-
-<<-- subsume as "saw" -->>
-saw =
-   ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
-
-nolist=
-  a , b , [c , "d" ] , e , f ;
-
-lista =
-  a, 'b', c \\  this | that_one | 'and' ,  the, other;
-
-listb =
-  a, 'b', (c , this | that_one,  'and',   the ),other;
+choiceloop =
+     { a  | 'b' | c | 'd' } ;
 
 
-
-listx =
-  a , ( 'b' | c , ( this | { that_one | 'and' }  |   the )),other;
-
-listj =
-  a , (  'b' | c | (this , that_one ) | 'and'|   the ),  other;
-
-listk =
-  a  ,(  'b'  | c | "none" ,{  (this , that_one) | other_one | "none"  } | 'and'|
-  the ), other ;
-
-hmm =
-    a, (that_one | other_one | "none") ,other ;
-
-aawesome_list =
-  a , ( 'b' | c | (( this , [that_one | 'this one' ]) | ( other_one |
-  ('and'|   the |"bout"))  | "neither") ),
-  other;
-
-grammar = { rule } ;
-
-other =
-  (((a, b), [ c, d, e, f, g , h, i, j ] ), (k, l, m), (n, o ) );
+choiceconcatloop =
+     { a  | 'b', '35', t | c | 'd' } ;
 
 
-easyone =
-[ a | b];
+//choiceconcatchoiceloop =
+//     { a  | ( 'b' , ('35' | q) , t) | 'd' } ;
 
- a_better_loop =
-  a, [{a}];
+// reversing a choice must swap left and right rails
+choiceconcatchoiceloop =
+     { a  | d | (c, ( z  | '35' | 'b' | q) , t) | supercalifragilisticexpialidocious | (l,m,n) | (a, [(l|c)])} ;
+
+
+// // simple_expression =
+// // 	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
+
+//  optionchoice =
+//   b,  [ a | b ], c;
+
+// newlines =
+//  a \\ b \\ c;
+
+//  otherb =
+//    (a, b) \\ (c, d, e), (f) \\ {g,  h, i, j}  \\ [k, l, m] \\ (n, o  );
+
+
+// simplea =
+//          [ a  | b | c | d ] ;
+
+
+// simpleb =
+//   b, { a , b } ;
+
+// character_literal =
+//     "'", graphic_character, "'" ;
+
+
+// <<-- caption "Syntax for the case statement."
+// -->>
+// case_statement =
+//     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
+//     { ',' , case_statement_alternative } \\
+//     'end', 'case', [ label ] ,';' ;
+
+// <<-- 
+// caption "Syntax for the case statement alternawive" -->>
+// case_statement_alternative =
+//     'when' , choices , '=>', sequence_of_statements;
+    
+// <<-- subsume as "choice" -->>
+// choice =
+//     simple_expression |
+//     discrete_range |
+//     simple_name |
+//     'others' ;
+
+// <<-- subsume as "choices" -->>
+// choices =
+//     choice, { '|', choice } ;
+
+
+
+// toollist =
+//  '(' , tool , { ',' , tool } , ')' ;
+
+// // <<-- subsume as "tool" -->>
+
+// tool =
+//   'hammer' | 'screwdriver' | saw;
+
+// <<-- subsume as "saw" -->>
+// saw =
+//    ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
+
+// nolist=
+//   a , b , [c , "d" ] , e , f ;
+
+// lista =
+//   a, 'b', c \\  this | that_one | 'and' ,  the, other;
+
+// listb =
+//   a, 'b', (c , this | that_one,  'and',   the ),other;
+
+
+
+// listx =
+//   a , ( 'b' | c , ( this | { that_one | 'and' }  |   the )),other;
+
+// listj =
+//   a , (  'b' | c | (this , that_one ) | 'and'|   the ),  other;
+
+// listk =
+//   a  ,(  'b'  | c | "none" ,{  (this , that_one) | other_one | "none"  } | 'and'|
+//   the ), other ;
+
+// hmm =
+//     a, (that_one | other_one | "none") ,other ;
+
+// aawesome_list =
+//   a , ( 'b' | c | (( this , [that_one | 'this one' ]) | ( other_one |
+//   ('and'|   the |"bout"))  | "neither") ),
+//   other;
+
+// grammar = { rule } ;
+
+// other =
+//   (((a, b), [ c, d, e, f, g , h, i, j ] ), (k, l, m), (n, o ) );
+
+
+// easyone =
+// [ a | b];
+
+//  a_better_loop =
+//   a, [{a}];
  
- a_better_loopb =
-  a, [{b}];
+//  a_better_loopb =
+//   a, [{b}];
 
-a_much_better_loop =
- a, [{  ',', a}];
-
-
-a_much_better_loopb =
- 	x ,   a, b, {  ',',  a, b};
+// a_much_better_loop =
+//  a, [{  ',', a}];
 
 
-wowzer =
- 	x  ,  a, b, [{  blue, ',',  'part', a,  b, g}];
-
-gleep =
- 	x  ,  a, b, [{  ',',  a, b}], right;
+// a_much_better_loopb =
+//  	x ,   a, b, {  ',',  a, b};
 
 
-muckrake =
- 	x  ,  a, b, [{  blue, ',',  a, b}], 'toodles';
+// wowzer =
+//  	x  ,  a, b, [{  blue, ',',  'part', a,  b, g}];
 
-broken =
- 	x  ,  a, b, [{x}];
+// gleep =
+//  	x  ,  a, b, [{  ',',  a, b}], right;
+
+
+// muckrake =
+//  	x  ,  a, b, [{  blue, ',',  a, b}], 'toodles';
+
+// broken =
+//  	x  ,  a, b, [{x}];
+
+// // scooby =
+// //   	[{  blue, ',',  'part', a, (b | g)}];
 
 // scooby =
-//   	[{  blue, ',',  'part', a, (b | g)}];
+//    	x,    a, b,[{  blue, ',' , 'part', a, (b | g)}];
 
-scooby =
-   	x,    a, b,[{  blue, ',' , 'part', a, (b | g)}];
-
-muckrakeb =
- 	x ,  ( a|b), [{  blue, ',',  (a| b)}], 'toodles';
+// muckrakeb =
+//  	x ,  ( a|b), [{  blue, ',',  (a| b)}], 'toodles';
 
 

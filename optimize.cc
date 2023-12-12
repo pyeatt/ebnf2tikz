@@ -614,12 +614,30 @@ int concatnode::analyzeNonOptLoops(int depth)
   concatnode *child;
   loopnode *loop;
   int numnodes;
+
   // do analyzeLoops on everything beneath this concat
   for(i = nodes.begin();i!=nodes.end();i++)
     sum += (*i)->analyzeNonOptLoops(depth+1);
   
   // find loops and try to make them better
-  for(i = nodes.begin()+1;i!=nodes.end();i++) {
+  for(i = nodes.begin()+1;i!=nodes.end();i++)
+    {
+      if((*i)->is_loop())
+	{
+	  cout << "found a loop to optimize\n";
+	  (*i)->dump(1);
+	  cout << "preceeded by\n";
+	  (*i)->getPrevious()->dump(1);
+	  // If loop body is a concat
+	  //   If the previous thing matches the last thing in the
+	  //   concat, then we can move the last item in the loop to
+	  //   the first item in the loop and delete the previous thing
+	  // ELSE
+	  //   If the previous thing matches the loop body
+	  //   then we can delete the loop body.
+
+	}
+      
     // looking for concat containing a loop
     if((*i)->is_concat() &&
        (*i)->numChildren() == 3 &&
