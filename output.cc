@@ -306,7 +306,7 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
 coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
 			      coordinate start,node *parent, int depth)
 {
-  myWidth = -previous->width(); // + sizes->colsep;
+  myWidth = -previous->width() + sizes->colsep;
   myHeight = previous->height();
   // for newline nodes, top is actually the right-hand side, and
   // bottom is the left-hand side.  The previous and next will always
@@ -344,7 +344,16 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
   float linewidth = 0, rowheight = 0;;
   coordinate current = start;
   myWidth = 0;
-  myHeight = 0;  
+  myHeight = 0;
+
+
+  if(nodes.front()->is_rail())//&&(nodes.front()+1)->is_choice())
+    {
+      linewidth = 0.5*sizes->colsep;
+      nodes.front()->setBeforeSkip(0.5*sizes->colsep);
+    }
+
+  
   for(auto j=nodes.begin();j!=nodes.end();j++) {      
 
     // place the node and update the current coordinate
@@ -383,6 +392,7 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
   }    
   if(linewidth > myWidth)
     myWidth = linewidth;
+  
   myHeight += rowheight;
   auto i = nodes.begin();
   while(i != nodes.end()-1 && (*i)->is_rail())
@@ -616,7 +626,8 @@ void concatnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
 	s<<"+down:"<<sizes->colsep<<"pt";
       line(outs,wa,wa+"-|"+p->rawName(),s.str());
     }
-  for(auto i = nodes.begin()+1;i != nodes.end();i++)
+
+  for(auto i = nodes.begin();i != nodes.end();i++)
     (*i)->drawToLeftRail(outs,NULL,join,1);
   
   // if(drawself && p != NULL) {
@@ -841,7 +852,8 @@ void concatnode::drawToRightRail(ofstream &outs, railnode* p, vraildir join,
 	s<<"+down:"<<sizes->colsep<<"pt";
       line(outs,ea,ea+"-|"+p->rawName(),s.str());
     }
-  for(auto i = nodes.begin()+1;i != nodes.end();i++)
+
+  for(auto i = nodes.begin();i != nodes.end()-1;i++)
     (*i)->drawToRightRail(outs,NULL,join,1);
   
   // if(drawself && p != NULL) {

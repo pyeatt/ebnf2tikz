@@ -224,6 +224,7 @@ production: annotations STRING EQUAL rows SEMICOLON
         // move all children to new concat
 	while($4->numChildren())
          {
+// SECOND PLACE WHERE THE INSERT IS DONE
            c->insert($4->getChild(0));
            $4->forgetChild(0);
          }
@@ -379,6 +380,7 @@ expression:
       /*     delete $3; */
       /*   } */
       /* else */
+// FIRST PLACE WHERE THE INSERT IS DONE
         $$->insert($3);
 
 
