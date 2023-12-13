@@ -205,7 +205,8 @@ multinode::multinode(const multinode &original):node(original)
 multinode::~multinode()
 {
   for(auto i = nodes.begin();i!=nodes.end();i++)
-    delete (*i);
+    if((*i) != NULL)
+      delete (*i);
 }
 
 multinode* multinode::clone() const
@@ -586,6 +587,7 @@ void nullnode::dump(int depth) const
 choicenode::choicenode(node *p):multinode(p)
 {
   type = CHOICE;
+  rails_added = 0;
 }
 
 choicenode::choicenode(const choicenode &original):multinode(original)
@@ -682,6 +684,16 @@ concatnode::concatnode(node *p):multinode(p)
 {
   type=CONCAT;
   drawtoprev=0;
+  if(p->is_choice() || p->is_loop())
+    {
+      nodes.pop_back();
+      if(!p->getRailsAdded())
+	nodes.push_back(p->getLeftRail());
+      nodes.push_back(p);
+      if(!p->getRailsAdded())
+	nodes.push_back(p->getRightRail());
+      p->setRailsAdded(1);
+    }
 }
 
 concatnode::concatnode(const concatnode &original):multinode(original)
@@ -721,29 +733,37 @@ void concatnode::setNext(node* p)
 
 void concatnode::insert(node* p)
 {
-  // if inserting a choicenode or loopnode, then insert the rails
-  if(p->is_choice() || p->is_loop())
+  // if inserting a concat, move its childern and delete it
+  if(p->is_concat())
     {
-      multinode::insert(p->getLeftRail());
-      multinode::insert(p);
-      multinode::insert(p->getRightRail());
+	cout << "MERGING CONCAT\n";
+	this->dump(0);
+	p->dump(0);
+      // move children from second concat to first concat */
+      while(p->numChildren())
+	{
+	  (p->getChild(0))->setBeforeSkip(node::getColSep());
+	  multinode::insert(p->getChild(0));
+	  p->forgetChild(0);
+	}
+      delete p;
     }
   else
-    // if inserting a concat, move its childern and delete it
-    if(p->is_concat())
+    // if inserting a choicenode or loopnode, then insert the rails
+    if(p->is_choice() || p->is_loop())
       {
-	// move children from second concat to first concat */
-	while(p->numChildren())
-	  {
-	    (p->getChild(0))->setBeforeSkip(node::getColSep());
-	    multinode::insert(p->getChild(0));
-	    p->forgetChild(0);
-	  }
-	delete p;
+	cout << "INSERTING CHOICE\n";
+	this->dump(0);
+	p->dump(0);
+	if(!p->getRailsAdded())
+	  multinode::insert(p->getLeftRail());
+	multinode::insert(p);
+	if(!p->getRailsAdded())
+	  multinode::insert(p->getRightRail());
+	p->setRailsAdded(1);
       }
     else
       multinode::insert(p);
-
   
   if(p->is_null() || p->is_nonterm() || p->is_terminal())
     p->setDrawToPrev(1);
@@ -821,8 +841,15 @@ void concatnode::reverse()
   //nodes.back()->setRightRail(lrn);
   for(auto i = nodes.begin(); i != nodes.end(); i++)
     (*i)->reverse();
+
+  setPrevious(this);
+
+  for(auto i = nodes.begin()+1; i != nodes.end(); i++)
+    (*i)->setDrawToPrev(1);
+  nodes.front()->setDrawToPrev(0);
+
   this->dump(1);
-    
+
 };
 
 

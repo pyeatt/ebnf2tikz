@@ -15,6 +15,9 @@ choicetwo =
 choice =
           a  | 'b' | c | 'd'  ;
 
+concatchoice =
+          (a  | 'b'),( c | 'd')  ;
+
 optionalchoice = 
           [ a  | 'b' | c | 'd' ] ;
 
@@ -34,13 +37,8 @@ choiceloop =
 choiceconcatloop =
      { a  | 'b', '35', t | c | 'd' } ;
 
-
-//choiceconcatchoiceloop =
-//     { a  | ( 'b' , ('35' | q) , t) | 'd' } ;
-
-// reversing a choice must swap left and right rails
 choiceconcatchoiceloop =
-     { a  | d | (c, ( z  | '35' | 'b' | q) , t) | supercalifragilisticexpialidocious | (l,m,n) | (a, [(l|c)])} ;
+     { a  | d | (c, ( z  | '35' | 'b' | q) , t)  | (l,m,n) | ((g|h),a, [(l|c)])} ;
 
 
 // // simple_expression =

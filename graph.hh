@@ -189,6 +189,8 @@ public:
   virtual node* subsume(regex_t* name, node *replacement){return this;}
   virtual void forgetChild(int n){};
   virtual node* createRows(){return NULL;}
+  virtual int getRailsAdded(){return 1;};
+  virtual void setRailsAdded(int a){};
 };
 
 
@@ -390,6 +392,7 @@ class multinode:public node{
   friend class concatnode; // allow concatnode to access nodes
 protected:
   vector<node*> nodes;
+  int rails_added;
 public:
   multinode(node *p);
   multinode(const multinode &original);
@@ -416,6 +419,8 @@ public:
   virtual int analyzeNonOptLoops(int depth);
   virtual void fixSkips();
   virtual string texName() { return "multinode";};
+  virtual int getRailsAdded(){return rails_added;};
+  virtual void setRailsAdded(int a){rails_added = a;};
 };
 
 // ------------------------------------------------------------------------
