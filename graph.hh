@@ -445,6 +445,8 @@ public:
   virtual void fixSkips();
   virtual string texName() { return "choicenode";};
   virtual void reverse();
+  virtual coordinate place(ofstream &outs,int draw, int drawrails,
+			   coordinate start, node *parent, int depth);
 };
 
 

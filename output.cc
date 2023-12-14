@@ -260,7 +260,9 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
   float curwidth,maxwidth=0,height,totalheight=0;
   coordinate lastpoint,c,current=start;
   node *widest;
-  
+
+  cout << "calculating with of multinode\n";
+
   // make all chilren calculate their width and height
   for(auto i=nodes.begin();i!=nodes.end();i++)
       (*i)->place(outs, 0, 0, current, this, depth+1);
@@ -269,7 +271,7 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
   for(auto i=nodes.begin();i!=nodes.end();i++)
     {
       // make them all calculate width and height
-      // (*i)->place(outs, 0, 0, current, this, depth+1);
+      (*i)->place(outs, 0, 0, current, this, depth+1);
       curwidth = (*i)->width();
       // keep the maximum width
       if(curwidth > maxwidth)
@@ -281,8 +283,6 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
       totalheight += height;
     }
 
-  //  maxwidth += 2*sizes->colsep;
-  
   setheight(totalheight - sizes->rowsep);
   setwidth(maxwidth);
   current = start;
@@ -301,7 +301,64 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
 }
 
 // ------------------------------------------------------------------------
- 
+coordinate choicenode::place(ofstream &outs,int draw, int drawrails,
+			     coordinate start, node *parent, int depth)
+{
+  float curwidth,maxwidth=0,height,totalheight=0;
+  coordinate lastpoint,c,current=start;
+  node *widest;
+
+  cout << "calculating with of choicenode\n";
+  
+  // make all chilren calculate their width and height
+  for(auto i=nodes.begin();i!=nodes.end();i++)
+      (*i)->place(outs, 0, 0, current, this, depth+1);
+
+  // find the widest object
+  for(auto i=nodes.begin();i!=nodes.end();i++)
+    {
+      // make them all calculate width and height
+      (*i)->place(outs, 0, 0, current, this, depth+1);
+      curwidth = (*i)->width();
+      // keep the maximum width
+      if(curwidth > maxwidth)
+	{
+	  maxwidth = curwidth;
+	  widest = (*i);
+	}
+      height = (*i)->height() + sizes->rowsep;
+      totalheight += height;
+    }
+
+  setheight(totalheight - sizes->rowsep);
+
+  if(!beforeskip)
+    {
+      setwidth(maxwidth + sizes->colsep);
+      current = start + coordinate(sizes->colsep,0);
+    }
+  else
+    {
+      setwidth(maxwidth);
+      current = start;
+    }
+
+  for(auto i=nodes.begin();i!=nodes.end();i++)
+    {
+      c = current + coordinate((maxwidth-(*i)->width())/2,0);
+      (*i)->place(outs, draw, drawrails, c, this, depth+1);
+      current = current - coordinate(0,sizes->rowsep+(*i)->height());
+    }
+
+  lastpoint=start + coordinate(widest->width(),0);
+
+  ea = nodes[0]->east();
+  wa = nodes[0]->west();
+  return lastpoint;
+}
+
+// ------------------------------------------------------------------------
+
 
 coordinate newlinenode::place(ofstream &outs,int draw, int drawrails,
 			      coordinate start,node *parent, int depth)
@@ -347,11 +404,22 @@ coordinate concatnode::place(ofstream &outs,int draw, int drawrails,
   myHeight = 0;
 
 
-  if(nodes.front()->is_rail())//&&(nodes.front()+1)->is_choice())
+  if(nodes.front()->is_rail()||nodes.back()->is_rail())
     {
       linewidth = 0.5*sizes->colsep;
       nodes.front()->setBeforeSkip(0.5*sizes->colsep);
     }
+
+  // if(nodes.front()->is_rail())//&&(nodes.front()+1)->is_choice())
+  //   {
+  //     linewidth = 0.5*sizes->colsep;
+  //     nodes.front()->setBeforeSkip(0.5*sizes->colsep);
+  //   }
+  // if(nodes.back()->is_rail())//&&(nodes.back()-1)->is_choice())
+  //   {
+  //     linewidth += 0.5*sizes->colsep;
+  //     nodes.front()->setBeforeSkip(0.5*sizes->colsep);
+  //   }
 
   
   for(auto j=nodes.begin();j!=nodes.end();j++) {      
@@ -453,7 +521,19 @@ void choicenode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
        );
 
   // Connect first child to incoming rail
-  line(outs,nodes.front()->west(),p->rawName());
+  //  if(parent->is_concat()&&(parent->getChild(2)==this))
+  //    {
+      s2<<"+left:"<<(sizes->colsep)<<"pt";
+      //  line(outs,nodes.front()->west(),s2.str());
+      //    }
+    // else
+      line(outs,nodes.front()->west(),p->rawName(),s2.str());
+ 
+  //  line(outs,nodes.front()->west(),previous->east()+"+left:"+sizes->colsep+"pt");
+    //else    
+    // line(outs,nodes.front()->west(),p->rawName());
+  
+  // 
 
 
   //     else
@@ -536,14 +616,25 @@ void loopnode::drawToLeftRail(ofstream &outs, railnode* p, vraildir join,
   // Connect first child to incoming rail
   line(outs,nodes.front()->west(),p->rawName());
 
+
   if(nodes.size() > 2)
     for(auto i = nodes.begin()+1;i!=nodes.end()-1;i++)
       (*i)->drawToLeftRail(outs,p,join,1);
 
   (nodes.front())->drawToLeftRail(outs,p,join,0);
+  
   (nodes.back())->drawToLeftRail(outs,p,join,0);
 
 
+  // Connect first child to incoming rail
+  //  if(parent->is_concat()&&(parent->getChild(2)==this))
+  //    {
+      s2<<"+left:"<<(sizes->colsep)<<"pt";
+      //  line(outs,nodes.front()->west(),s2.str());
+      //    }
+    // else
+      line(outs,nodes.front()->west(),p->rawName(),s2.str());
+ 
 
 
   // if(p==NULL)

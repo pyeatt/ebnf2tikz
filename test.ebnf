@@ -41,66 +41,69 @@ choiceconcatchoiceloop =
      { a  | d | (c, ( z  | '35' | 'b' | q) , t)  | (l,m,n) | ((g|h),a, [(l|c)])} ;
 
 
-// // simple_expression =
-// // 	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
+ simple_expression =
+ 	[ sign ], factor, { ( '+' | '-' | '&' | '*' | '/' | 'mod' | 'rem' ) , factor } ;
 
-//  optionchoice =
-//   b,  [ a | b ], c;
-
-// newlines =
-//  a \\ b \\ c;
-
-//  otherb =
-//    (a, b) \\ (c, d, e), (f) \\ {g,  h, i, j}  \\ [k, l, m] \\ (n, o  );
+ optionchoice =
+  b,  [ a | b ], c;
 
 
-// simplea =
-//          [ a  | b | c | d ] ;
+simplea =
+         [ a  | b | c | d ] ;
 
 
-// simpleb =
-//   b, { a , b } ;
+simpleb =
+  b, { a , b } ;
 
-// character_literal =
-//     "'", graphic_character, "'" ;
+character_literal =
+    "'", graphic_character, "'" ;
 
 
-// <<-- caption "Syntax for the case statement."
-// -->>
-// case_statement =
-//     [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
-//     { ',' , case_statement_alternative } \\
-//     'end', 'case', [ label ] ,';' ;
-
-// <<-- 
-// caption "Syntax for the case statement alternawive" -->>
-// case_statement_alternative =
-//     'when' , choices , '=>', sequence_of_statements;
+<<-- 
+caption "Syntax for the case statement alternawive" -->>
+case_statement_alternative =
+    'when' , choices , '=>', sequence_of_statements;
     
-// <<-- subsume as "choice" -->>
-// choice =
-//     simple_expression |
-//     discrete_range |
-//     simple_name |
-//     'others' ;
+<<-- subsume as "choice" -->>
+choice =
+    simple_expression |
+    discrete_range |
+    simple_name |
+    'others' ;
 
-// <<-- subsume as "choices" -->>
-// choices =
-//     choice, { '|', choice } ;
+<<-- subsume as "choices" -->>
+choices =
+    choice, { '|', choice } ;
 
 
 
-// toollist =
-//  '(' , tool , { ',' , tool } , ')' ;
+toollist =
+  '(' , tool , { ',' , tool } , ')' ;
 
 // // <<-- subsume as "tool" -->>
 
-// tool =
-//   'hammer' | 'screwdriver' | saw;
+ tool =
+   'hammer' | 'screwdriver' | saw;
 
 // <<-- subsume as "saw" -->>
-// saw =
-//    ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
+ saw =
+    ('hand'  | ( [ 'cordless'] , ('reciprocating' | 'circular' ) , 'power' ) ),'saw';
+
+
+newlines =
+ a \\ b \\ c;
+
+ otherb =
+   (a, b) \\ (c, d, e), (f) \\ {g,  h, i, j}  \\ [k, l, m] \\ (n, o  );
+
+<<-- caption "Syntax for the case statement."
+-->>
+case_statement =
+    [ label, ':' ], 'case', expression, 'is' \\  case_statement_alternative,
+    { ',' , case_statement_alternative } \\
+    'end', 'case', [ label ] ,';' ;
+
+
 
 // nolist=
 //   a , b , [c , "d" ] , e , f ;

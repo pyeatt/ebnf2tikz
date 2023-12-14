@@ -143,7 +143,7 @@ grammar : productions {
 
 //        g->optimize();
 
-        g->dump();
+//        g->dump();
 
      
      /* g->setParent(); */
@@ -186,6 +186,9 @@ grammar : productions {
      g->setPrevious();
      g->setNext();
      g->place(drv.outs());
+
+        g->dump();
+
 
      delete g;
   } ;
@@ -296,7 +299,7 @@ rows :
 
       $$->insert(n);
       $$->insert(row);
-      $$->setDrawToPrev(0);
+      $$->setDrawToPrev(1);
      } |
     // in this case, we need to create the initial concat, and add the
     // row (expression) to it
@@ -305,6 +308,11 @@ rows :
 	{
 	    $1->setLeftRail(new railnode(LEFT,UP));
 	    $1->setRightRail(new railnode(RIGHT,UP));
+            /* if($1->is_choice()) */
+	    /* 	{ */
+	    /* 	  $1->setDrawToPrev(1); */
+            /*       $1->getChild(0)->setDrawToPrev(1); */
+            /*     } */
 	}
       /* else */
       /*   if($1->is_loop()) */
@@ -315,11 +323,11 @@ rows :
       //$1 = addRails($1);
       //$$ = new rownode($1);
       //$$ = new concatnode($1);
-      $$ = $1;
-      $$->setBeforeSkip(0);
       $1->setBeforeSkip(0);
       $1->setDrawToPrev(1);
-      $$->setDrawToPrev(1);
+      $$ = $1;
+      /* $$->setBeforeSkip(0); */
+      /* $$->setDrawToPrev(1); */
      } ;
   
 expression:
@@ -352,7 +360,8 @@ expression:
       else
         {
           $$ = new choicenode($1);
-	  $1->setDrawToPrev(0);
+	  $1->setDrawToPrev(1);
+	  $$->setDrawToPrev(1);
 	}
       $$->insert($3);
     } |
@@ -364,6 +373,12 @@ expression:
       if(!$1->is_concat())
         {
           $$ = new concatnode($1);
+            /* if($1->is_choice()) */
+	    /* 	{ */
+	    /* 	  $1->setDrawToPrev(1); */
+            /*       $1->getChild(0)->setDrawToPrev(1); */
+            /*     } */
+
         }
       else 
  	$$ = $1;
@@ -382,6 +397,11 @@ expression:
       /* else */
 // FIRST PLACE WHERE THE INSERT IS DONE
         $$->insert($3);
+            if($3->is_choice())
+		{
+		  $3->setDrawToPrev(1);
+                  $3->getChild(0)->setDrawToPrev(1);
+                }
 
 
     } |
