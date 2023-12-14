@@ -41,6 +41,7 @@ annot_lexer.hh: annot_lexer.ll
 
 
 test: ebnf2tikz
+	./createtestdriver.sh 
 	./ebnf2tikz test.ebnf test.tex
 	pdflatex testdriver
 	./ebnf2tikz test.ebnf test.tex
