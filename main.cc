@@ -29,6 +29,7 @@ ebnf2tikz
    getopt.h You can use "man getopt" ath the command line to learn
    more about this. */
 struct option options[] = {
+  {"optimize", no_argument,  NULL, 'O'},
   {"nooptimize", no_argument,  NULL, 'n'},
   {"makefigures", no_argument,  NULL, 'f'},
   {"dumponly", no_argument,  NULL, 'd'},
@@ -36,14 +37,15 @@ struct option options[] = {
   {0, 0, 0, 0}
 };
 
-char *optstring = (char*)"nfhd";
+char *optstring = (char*)"Onfhd";
 
 /* description is an array of strings, each of which describes one of
    the command line options.  They are given in the same order as the
    options table, so that usage() can use them.
 */
 char *description[] = {
-  (char*)"    Do not do any graph transformations.",
+  (char*)"    Enable graph transformations (optimize, subsume).",
+  (char*)"    Do not do any graph transformations (default).",
   (char*)"    Wrap all tikzpictures in figures and create commands"
          "to place them.",
   (char*)"    Parse and dump the AST only; do not generate TikZ output.",
@@ -79,7 +81,7 @@ int main(int argc, char** argv) {
   char *infilename,*outfilename;
   int option_index = 0;
   int c;
-  int noopt=0,figures=0,dumponly=0;
+  int noopt=1,figures=0,dumponly=0;
   
   /* process the command line options */
 
@@ -88,8 +90,10 @@ int main(int argc, char** argv) {
     {
       switch(c)
         {
+        case 'O':
+	  noopt = 0;
+          break;
         case 'n':
-	  noopt = 1;
           break;
         case 'f':
 	  figures = 1;
