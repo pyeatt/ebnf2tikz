@@ -274,6 +274,7 @@ protected:
   string style;
   string format;
   string str;
+  int wrapped;
 public:
   nontermnode(string s);
   nontermnode(const nontermnode &original);
@@ -283,6 +284,8 @@ public:
   virtual void dump(int depth) const;
   virtual string texName();
   string getStyle(){return style;}
+  void setWrapped(int w){wrapped = w;}
+  int getWrapped(){return wrapped;}
   virtual int mergeConcats(int depth){return 0;}
   virtual int mergeChoices(int depth){return 0;}
   virtual int liftConcats(int depth){return 0;}
