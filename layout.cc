@@ -53,8 +53,6 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 			  vector<Polyline> &lines, nodesizes *sizes);
 static void connectLoop(node *n, map<node*, NodeGeom> &geom,
 			vector<Polyline> &lines, nodesizes *sizes);
-static void connectNewline(node *n, map<node*, NodeGeom> &geom,
-			   vector<Polyline> &lines, nodesizes *sizes);
 
 /* ----------------------------------------------------------------
    addPolyline - add a polyline to the list, skipping zero-length lines
@@ -633,10 +631,11 @@ void computeConnections(node *n, map<node*, NodeGeom> &geom,
 static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 			  vector<Polyline> &lines, nodesizes *sizes)
 {
-  int i, nc;
-  node *child, *prevContent;
-  NodeGeom prevGeom, curGeom;
+  int i, j, nc;
+  node *child, *prevContent, *nextContent, *nextChild;
+  NodeGeom prevGeom, curGeom, nextGeom, concatGeom;
   Polyline pl;
+  float rightEdge, leftEdge, midY;
 
   nc = n->numChildren();
   prevContent = NULL;
@@ -650,10 +649,47 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 
       if(child->is_newline())
 	{
-	  /* newline: route from previous content exit down and around */
-	  if(prevContent != NULL && geom.find(prevContent) != geom.end())
+	  /* newline: route wrap-around from previous row to next row */
+	  if(prevContent != NULL &&
+	     geom.find(prevContent) != geom.end() &&
+	     geom.find(n) != geom.end())
 	    {
-	      connectNewline(child, geom, lines, sizes);
+	      /* find next content node after the newline */
+	      nextContent = NULL;
+	      for(j = i + 1; j < nc; j++)
+		{
+		  nextChild = n->getChild(j);
+		  if(!nextChild->is_rail() && !nextChild->is_newline())
+		    {
+		      if(geom.find(nextChild) != geom.end())
+			nextContent = nextChild;
+		      j = nc; /* exit loop */
+		    }
+		}
+
+	      if(nextContent != NULL)
+		{
+		  concatGeom = geom[n];
+		  prevGeom = geom[prevContent];
+		  nextGeom = geom[nextContent];
+		  rightEdge = concatGeom.origin.x + concatGeom.width;
+		  leftEdge = concatGeom.origin.x;
+
+		  /* 6-point wrap-around: right, down, left, down, right.
+		     Extend past content edges by colsep so the path
+		     routes outside the content area. */
+		  rightEdge += sizes->colsep;
+		  leftEdge -= sizes->colsep;
+		  midY = (prevGeom.exit.y + nextGeom.entry.y) / 2.0f;
+		  pl.points.clear();
+		  pl.points.push_back(prevGeom.exit);
+		  pl.points.push_back(coordinate(rightEdge, prevGeom.exit.y));
+		  pl.points.push_back(coordinate(rightEdge, midY));
+		  pl.points.push_back(coordinate(leftEdge, midY));
+		  pl.points.push_back(coordinate(leftEdge, nextGeom.entry.y));
+		  pl.points.push_back(nextGeom.entry);
+		  addPolyline(lines, pl);
+		}
 	    }
 	  prevContent = NULL;
 	}
@@ -854,30 +890,6 @@ static void connectLoop(node *n, map<node*, NodeGeom> &geom,
    next row's first content entry.
    ---------------------------------------------------------------- */
 
-static void connectNewline(node *n, map<node*, NodeGeom> &geom,
-			   vector<Polyline> &lines, nodesizes *sizes)
-{
-  /* The newline connection is handled as part of the concat layout.
-     We find the exit of the previous row and the entry of the next row
-     by looking at the parent concat's children.
-
-     For now, the newline node's geom stores its position. The actual
-     routing (exit -> down -> across -> up -> entry) requires knowing
-     the full production width, which we do at a higher level.
-
-     We store a placeholder: a vertical drop from the newline origin. */
-  NodeGeom nlGeom;
-  Polyline pl;
-
-  if(geom.find(n) == geom.end())
-    return;
-
-  nlGeom = geom[n];
-
-  /* The actual newline routing will be done by the TikzWriter,
-     which has access to the full production layout and can draw
-     the appropriate wrap-around path. */
-}
 
 /* ----------------------------------------------------------------
    layoutProduction - lay out an entire production
