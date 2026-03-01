@@ -16,7 +16,7 @@ rm -f subsume_driver.aux subsume_driver.log subsume_driver.pdf
 
 # Concatenate only the subsume .ebnf files into a single input
 EBNF_COUNT=0
-for f in 1[0-1][0-9]_subsume*.ebnf; do
+for f in *_subsume*.ebnf; do
     if [ -f "$f" ]; then
         cat "$f" >> all_input.ebnf
         echo "" >> all_input.ebnf

@@ -1,0 +1,7 @@
+<<-- subsume -->>
+partat = 'x' ;
+
+<<-- subsume -->>
+partbt = 'y' ;
+
+wholet = partat , partbt , 'z' ;
