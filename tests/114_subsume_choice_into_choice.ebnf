@@ -1,0 +1,4 @@
+<<-- subsume -->>
+basicf = 'a' | 'b' ;
+
+extendedf = basicf | 'c' ;

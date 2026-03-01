@@ -1,0 +1,4 @@
+<<-- subsume -->>
+atomg = 'x' ;
+
+seqg = atomg , atomg , atomg ;
