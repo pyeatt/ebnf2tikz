@@ -1,0 +1,4 @@
+<<-- subsume -->>
+prefixe = 'a' , 'b' ;
+
+fulle = prefixe , 'c' , 'd' ;

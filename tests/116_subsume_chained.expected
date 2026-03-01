@@ -1,0 +1,19 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: pairh
+production: optsh
+production: fullh
+  concat node26 : drawtoprev=0 beforeskip=0 width=0 height=0 coord12 coord9
+    \nullnode{start1\strut} ->  coord9 : drawtoprev=0 beforeskip=0 width=0 height=9 coord9 coord9
+    \nullnode{start2\strut} ->  coord10 : drawtoprev=1 beforeskip=8 width=0 height=9 coord10 coord10
+    \railnonterm{d\strut} ->  node21 : drawtoprev=1 beforeskip=8 width=8 height=6 node21.east node21.west
+    concat node72 : drawtoprev=1 beforeskip=0 width=0 height=0 node79.east node73.west
+      rail  UP node73 : drawtoprev=1 beforeskip=8 width=0 height=0 node73.east node73.west
+      choices node74 : leftrail=node73 rightrail=node79 drawtoprev=0 beforeskip=8 width=0 height=0 node77.east node76.west
+        concat node75 : drawtoprev=0 beforeskip=0 width=0 height=0 node77.east node76.west
+          \railnonterm{a\strut} ->  node76 : drawtoprev=1 beforeskip=8 width=8 height=6 node76.east node76.west
+          \railnonterm{b\strut} ->  node77 : drawtoprev=1 beforeskip=8 width=8 height=6 node77.east node77.west
+        \railnonterm{c\strut} ->  node78 : drawtoprev=0 beforeskip=0 width=8 height=6 node78.east node78.west
+      rail  UP node79 : drawtoprev=1 beforeskip=8 width=0 height=0 node79.east node79.west
+    \railnonterm{e\strut} ->  node24 : drawtoprev=1 beforeskip=8 width=8 height=6 node24.east node24.west
+    \nullnode{end1\strut} ->  coord11 : drawtoprev=1 beforeskip=8 width=0 height=9 coord11 coord11
+    \nullnode{end2\strut} ->  coord12 : drawtoprev=1 beforeskip=8 width=0 height=9 coord12 coord12
