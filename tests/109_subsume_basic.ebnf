@@ -1,0 +1,4 @@
+<<-- subsume -->>
+innera = 'x' ;
+
+outera = 'a' , innera , 'b' ;

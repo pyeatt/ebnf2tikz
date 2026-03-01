@@ -137,6 +137,7 @@ grammar : productions {
 
      if(!drv.get_noopt())
        {
+         g->subsume();
          g->optimize();
          g->mergeRails();
        }
