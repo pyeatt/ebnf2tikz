@@ -430,11 +430,6 @@ public:
 // Node for a concat
 
 class concatnode:public multinode{
-private:
-  int findAndDeleteMatches(vector<node*> &parentnodes,
-			   vector<node*>::iterator &wherep,
-			   vector<node*> &childnodes,
-			   vector<node*>::iterator &wherec);
 public:
   concatnode(node *p);
   concatnode(const concatnode &original);
