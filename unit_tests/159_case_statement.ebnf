@@ -1,0 +1,5 @@
+<<-- caption "Syntax for the case statement." -->>
+case_statement =
+    [ label, ':' ], 'case', expression, 'is' \\ case_statement_alternative,
+    { ',' , case_statement_alternative } \\
+    'end', 'case', [ label ] ,';' ;

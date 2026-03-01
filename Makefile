@@ -40,26 +40,18 @@ annot_lexer.hh: annot_lexer.ll
 	$(CC) $(DEFINES) $(CFLAGS) $(INCLUDES) $<
 
 
-test: ebnf2tikz
-	./ebnf2tikz -O test.ebnf test.tex
-	./createtestdriver.sh
-	pdflatex testdriver
-	./ebnf2tikz -O test.ebnf test.tex
-	./createtestdriver.sh
-	pdflatex testdriver
-	./ebnf2tikz -O test.ebnf test.tex
-	./createtestdriver.sh
-	pdflatex testdriver
+test: check
 
 check: ebnf2tikz
-	cd tests && bash run_tests.sh
+	cd unit_tests && bash run_tests.sh
 
 check-tikz: ebnf2tikz
-	cd tests && bash build_tikz_tests.sh
-
+	cd unit_tests && bash build_tikz_tests.sh
 
 clean:
-	rm -f lexer.cc lexer.hh parser.hh parser.cc annot_lexer.hh annot_lexer.cc annot_parser.hh annot_parser.cc ebnf2tikz location.hh annot_location.hh $(OBJS) *~ bnfnodes.dat testdriver.aux testdriver.log testdriver.pdf test.tex
+	rm -f lexer.cc lexer.hh parser.hh parser.cc annot_lexer.hh annot_lexer.cc \
+	  annot_parser.hh annot_parser.cc ebnf2tikz location.hh annot_location.hh \
+	  $(OBJS) *~ bnfnodes.dat
 
 realclean: clean
 	rm -f .depend

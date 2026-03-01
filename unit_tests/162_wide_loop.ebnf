@@ -1,0 +1,2 @@
+wide_loop =
+    'START' , { variable_declaration , ';' , type_declaration , ';' , constant_declaration } , 'STOP' ;
