@@ -42,7 +42,7 @@ for iter in 1 2 3; do
     echo "=== Iteration $iter ==="
 
     # Run ebnf2tikz once on the concatenated input
-    if ! "$EBNF2TIKZ" all_input.ebnf all_tests.tex 2>/dev/null; then
+    if ! "$EBNF2TIKZ" -O all_input.ebnf all_tests.tex 2>/dev/null; then
         echo "  WARN: ebnf2tikz failed"
     fi
 
