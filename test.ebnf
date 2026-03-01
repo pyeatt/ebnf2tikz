@@ -180,3 +180,44 @@ case_statement =
 //  	x ,  ( a|b), [{  blue, ',',  (a| b)}], 'toodles';
 
 
+// --- Wide productions to test multi-line node wrapping ---
+
+// Choice with multiple wrapped alternatives (all choices should wrap)
+wide_choice =
+    'BEGIN' , ( variable_reference | function_identifier | procedure_identifier | constant_expression ) , ':=' , expression , 'END' ,
+    actual_parameter_list , compound_statement , ';' ;
+
+// Choice within choice, all alternatives should wrap
+wide_nested_choice =
+    'DEFINE' , ( ordinal_constant | real_constant | string_constant | character_string ) ,
+    ( relational_operator | additive_operator | multiplicative_operator ) ,
+    ( simple_expression | constant_expression | ordinal_constant ) , declaration_part , ';' ;
+
+// Loop with multi-word body that wraps
+wide_loop =
+    'START' , { variable_declaration , ';' , type_declaration , ';' , constant_declaration } , 'STOP' ;
+
+// Loop with multi-word body and repeat separator
+wide_sep_loop =
+    'LIST' , actual_parameter , { ',' , actual_parameter } ,
+    'IN' , statement_list , { ';' , statement_list } ,
+    compound_statement , declaration_part , 'END' ;
+
+// Choice inside loop, all with multi-word names that should wrap
+wide_choice_in_loop =
+    'PROCESS' , identifier , { ( variable_declaration | type_declaration | constant_declaration ) , ';' } ,
+    compound_statement , declaration_part , 'DONE' ;
+
+// Optional with multi-word alternatives that should wrap
+wide_optional_choice =
+    'CALL' , identifier , [ '(' , ( formal_parameter_list | actual_parameter_list | variable_reference ) , ')' ] ,
+    compound_statement , declaration_part , ';' ;
+
+// Loop where the body (first child) is a multi-word name that wraps
+wide_loop_body =
+    'DO' , { compound_statement } , declaration_part , actual_parameter_list , variable_reference , 'END' ;
+
+// Loop body is multi-word, repeat separator is also multi-word
+wide_loop_both =
+    'EACH' , { variable_declaration , constant_declaration } , declaration_part , compound_statement , 'DONE' ;
+
