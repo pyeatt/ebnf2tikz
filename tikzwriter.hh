@@ -20,26 +20,34 @@ ebnf2tikz
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <graph.hh>
+#ifndef TIKZWRITER_HH
+#define TIKZWRITER_HH
+
+#include <fstream>
+#include <map>
+#include <vector>
+#include <string>
 #include <layout.hh>
-#include <tikzwriter.hh>
 
-void grammar::place(ofstream &outs)
-{
+using namespace std;
+
+class node;
+class productionnode;
+class nodesizes;
+
+class TikzWriter {
+private:
+  ofstream &outs;
   nodesizes *sizes;
-  TikzWriter writer(outs, node::getSizes());
-  ProductionLayout layout;
-  int i, n;
 
-  sizes = node::getSizes();
-  n = productions.size();
+  string nameFor(node *n);
+  void emitNode(node *n, const map<node*, NodeGeom> &geom);
+  void emitPolyline(const Polyline &pl);
+  void emitNodes(node *n, const map<node*, NodeGeom> &geom);
 
-  for(i = 0; i < n; i++)
-    {
-      if(productions[i]->getSubsume() == NULL)
-	{
-	  layout = layoutProduction(productions[i], sizes);
-	  writer.writeProduction(productions[i], layout);
-	}
-    }
-}
+public:
+  TikzWriter(ofstream &out, nodesizes *sz);
+  void writeProduction(productionnode *prod, const ProductionLayout &layout);
+};
+
+#endif
