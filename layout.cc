@@ -857,19 +857,18 @@ static void connectLoop(node *n, map<node*, NodeGeom> &geom,
   railX = loopGeom.origin.x;
   exitRailX = loopGeom.origin.x + loopGeom.width;
 
-  /* Straight horizontal lines for body entry and exit, extending
-     past the rail positions so they merge with the inward rail
-     curves and overlap with the parent's connections. */
+  /* Straight horizontal lines for body entry and exit, connecting
+     the rail positions to the body endpoints.  The parent node
+     (concat or choice) is responsible for drawing lines up to
+     the loop boundary. */
   pl.points.clear();
-  pl.points.push_back(coordinate(railX - sizes->colsep,
-				 bodyGeom.entry.y));
+  pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
   pl.points.push_back(bodyGeom.entry);
   addPolyline(lines, pl);
 
   pl.points.clear();
   pl.points.push_back(bodyGeom.exit);
-  pl.points.push_back(coordinate(exitRailX + sizes->colsep,
-				 bodyGeom.exit.y));
+  pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
   addPolyline(lines, pl);
 
   /* The repeat (feedback) path flows right-to-left, but layoutConcat
