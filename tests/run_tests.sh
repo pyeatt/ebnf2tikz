@@ -16,7 +16,13 @@ for ebnf in *.ebnf; do
         FAIL=$((FAIL + 1))
         ERRORS="$ERRORS  $testname: missing .expected file\n"
     else
-        actual=$("$EBNF2TIKZ" -d "$ebnf" /dev/null 2>/dev/null)
+        flagsfile="${ebnf%.ebnf}.flags"
+        if [ -f "$flagsfile" ]; then
+            FLAGS=$(cat "$flagsfile")
+        else
+            FLAGS="-d"
+        fi
+        actual=$("$EBNF2TIKZ" $FLAGS "$ebnf" /dev/null 2>/dev/null)
         if echo "$actual" | diff -u "$expected" - > /dev/null 2>&1; then
             echo "PASS $testname"
             PASS=$((PASS + 1))

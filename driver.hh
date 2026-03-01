@@ -64,6 +64,7 @@ public:
   
   int parse (const char *f,int opt, int fig, int dump);
   int get_dumponly(){return dumponly;}
+  int get_noopt(){return noopt;}
   void scan_begin ();
   void scan_begin (stringstream &s);
   void scan_end ();
