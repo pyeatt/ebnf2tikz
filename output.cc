@@ -84,16 +84,22 @@ static void collectWrappableNodes(node *n,
 }
 
 /* ----------------------------------------------------------------
-   hasPreviouslyWrappedNodes - check if any multi-word nonterminal
-   in the tree has a height from bnfnodes.dat that exceeds the
-   default single-line minimum, indicating it was wrapped on a
-   previous pass.  If so, we must keep wrapping to avoid
-   oscillation between wrapped and unwrapped output.
+   estimateUnwrappedExtra - estimate how much wider the production
+   would be if previously-wrapped nodes were displayed as single
+   lines.  A wrapped node with N text lines has bnfnodes.dat width
+   W (the widest line).  Unwrapped, the width would be roughly
+   N*W, so the extra is (N-1)*W.  We estimate N from the height:
+   N = round(height / minsize).
+
+   This lets us detect whether the production would still be
+   overwide without wrapping, so we can stop wrapping when the
+   user increases \textwidth enough to fit.
    ---------------------------------------------------------------- */
 
-static int hasPreviouslyWrappedNodes(node *n, nodesizes *sizes)
+static float estimateUnwrappedExtra(node *n, nodesizes *sizes)
 {
-  int i, nc;
+  int i, nc, numLines;
+  float extra;
 
   if(n == NULL)
     return 0;
@@ -105,18 +111,23 @@ static int hasPreviouslyWrappedNodes(node *n, nodesizes *sizes)
 	 Use 1.5*minsize as the threshold between them. */
       if(n->height() > 1.5f * sizes->minsize &&
 	 hasWrappableSpaces((nontermnode*)n))
-	return 1;
+	{
+	  numLines = (int)(n->height() / sizes->minsize + 0.5f);
+	  if(numLines < 2)
+	    numLines = 2;
+	  return (float)(numLines - 1) * n->width();
+	}
       return 0;
     }
 
+  extra = 0;
   nc = n->numChildren();
   for(i = 0; i < nc; i++)
     {
-      if(n->getChild(i) != NULL &&
-	 hasPreviouslyWrappedNodes(n->getChild(i), sizes))
-	return 1;
+      if(n->getChild(i) != NULL)
+	extra += estimateUnwrappedExtra(n->getChild(i), sizes);
     }
-  return 0;
+  return extra;
 }
 
 void grammar::place(ofstream &outs)
@@ -130,6 +141,7 @@ void grammar::place(ofstream &outs)
   vector<nontermnode*> wrappable;
   int needsWrap;
   pair<float,float> bodySize;
+  float extraWidth;
 
   sizes = node::getSizes();
   n = productions.size();
@@ -144,18 +156,24 @@ void grammar::place(ofstream &outs)
 	  needsWrap = 0;
 	  if(sizes->textwidth > 0 && body != NULL)
 	    {
-	      /* Check if production exceeds \textwidth */
 	      bodySize = computeSize(body, sizes);
+
+	      /* Check if production exceeds \textwidth */
 	      if(bodySize.first > sizes->textwidth)
 		needsWrap = 1;
 
-	      /* Check if nodes were wrapped on a previous pass.
-		 If so, keep them wrapped to avoid oscillation:
-		 without this, pass N wraps (narrow output), pass N+1
-		 sees narrow dims and skips wrapping (wide output),
-		 pass N+2 wraps again, etc. */
+	      /* If nodes were wrapped on a previous pass, the
+		 bnfnodes.dat dimensions reflect wrapped (narrow)
+		 sizes.  Estimate the unwrapped width to decide
+		 whether wrapping is still needed.  This allows
+		 wrapping to turn off if \textwidth increases. */
 	      if(!needsWrap)
-		needsWrap = hasPreviouslyWrappedNodes(body, sizes);
+		{
+		  extraWidth = estimateUnwrappedExtra(body, sizes);
+		  if(extraWidth > 0 &&
+		     bodySize.first + extraWidth > sizes->textwidth)
+		    needsWrap = 1;
+		}
 
 	      if(needsWrap)
 		{
