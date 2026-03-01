@@ -23,6 +23,7 @@ ebnf2tikz
 #include <graph.hh>
 #include <layout.hh>
 #include <tikzwriter.hh>
+#include <iostream>
 
 void grammar::place(ofstream &outs)
 {
@@ -30,6 +31,8 @@ void grammar::place(ofstream &outs)
   TikzWriter writer(outs, node::getSizes());
   ProductionLayout layout;
   int i, n;
+  node *body;
+  float bodyWidth;
 
   sizes = node::getSizes();
   n = productions.size();
@@ -39,6 +42,25 @@ void grammar::place(ofstream &outs)
       if(productions[i]->getSubsume() == NULL)
 	{
 	  layout = layoutProduction(productions[i], sizes);
+
+	  /* Check if production exceeds \textwidth */
+	  if(sizes->textwidth > 0)
+	    {
+	      body = productions[i]->getChild(0);
+	      bodyWidth = 0;
+	      if(body != NULL &&
+		 layout.geom.find(body) != layout.geom.end())
+		bodyWidth = layout.geom[body].width;
+	      if(bodyWidth > sizes->textwidth)
+		cerr << "Warning: production '"
+		     << productions[i]->getName()
+		     << "' width (" << bodyWidth
+		     << "pt) exceeds \\textwidth ("
+		     << sizes->textwidth << "pt) by "
+		     << bodyWidth - sizes->textwidth << "pt"
+		     << endl;
+	    }
+
 	  writer.writeProduction(productions[i], layout);
 	}
     }
