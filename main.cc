@@ -31,11 +31,12 @@ ebnf2tikz
 struct option options[] = {
   {"nooptimize", no_argument,  NULL, 'n'},
   {"makefigures", no_argument,  NULL, 'f'},
+  {"dumponly", no_argument,  NULL, 'd'},
   {"help", no_argument,  NULL, 'h'},
   {0, 0, 0, 0}
 };
 
-char *optstring = (char*)"nfh";
+char *optstring = (char*)"nfhd";
 
 /* description is an array of strings, each of which describes one of
    the command line options.  They are given in the same order as the
@@ -45,6 +46,7 @@ char *description[] = {
   (char*)"    Do not do any graph transformations.",
   (char*)"    Wrap all tikzpictures in figures and create commands"
          "to place them.",
+  (char*)"    Parse and dump the AST only; do not generate TikZ output.",
   (char*)"",
   (char*)""
 };
@@ -77,14 +79,13 @@ int main(int argc, char** argv) {
   char *infilename,*outfilename;
   int option_index = 0;
   int c;
-  int noopt=0,figures=0;
+  int noopt=0,figures=0,dumponly=0;
   
   /* process the command line options */
 
   while((c = getopt_long (argc, argv, optstring, options,
                           &option_index)) >= 0)
     {
-      cout << "got option "<<c<<endl;
       switch(c)
         {
         case 'n':
@@ -92,6 +93,9 @@ int main(int argc, char** argv) {
           break;
         case 'f':
 	  figures = 1;
+          break;
+        case 'd':
+	  dumponly = 1;
           break;
         case 'h':
           usage(argv[0]);
@@ -114,7 +118,7 @@ int main(int argc, char** argv) {
 
   node::loadData("bnfnodes.dat");
   
-  if (drv.parse (infilename,noopt,figures))
+  if (drv.parse (infilename,noopt,figures,dumponly))
     std::cout << "Parser returned " << drv.get_result() << endl;
 
   outfile.close();

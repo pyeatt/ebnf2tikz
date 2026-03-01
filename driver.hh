@@ -42,7 +42,7 @@ class driver
   set<string> nonterminals;
   set<string> terminals;
   ofstream *outFile;
-  int noopt,figures;
+  int noopt,figures,dumponly;
   bool trace_parsing;
   bool trace_scanning;
   yy::location location;
@@ -62,7 +62,8 @@ public:
     return new nontermnode(s);
   };
   
-  int parse (const char *f,int opt, int fig);
+  int parse (const char *f,int opt, int fig, int dump);
+  int get_dumponly(){return dumponly;}
   void scan_begin ();
   void scan_begin (stringstream &s);
   void scan_end ();

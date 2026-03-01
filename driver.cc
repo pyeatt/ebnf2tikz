@@ -31,11 +31,12 @@ driver::driver (ofstream *out)
   outFile=out;
 }
 
-int driver::parse (const char *f,int opt, int fig)
+int driver::parse (const char *f,int opt, int fig, int dump)
 {
   file = f;
   noopt=opt;
   figures=fig;
+  dumponly=dump;
   location.initialize (&file);
   scan_begin ();
   yy::parser parse (*this);

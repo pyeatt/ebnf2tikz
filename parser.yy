@@ -135,60 +135,16 @@ extern yy::location loc;
 grammar : productions {
      grammar *g = $1;
 
-        // g->dump();
-
-	/* g->setParent(); */
-	/* g->setPrevious();  */
-    	/* g->setNext(); */
-
-//        g->optimize();
-
-//        g->dump();
-
-     
-     /* g->setParent(); */
-     /* g->setPrevious(); */
-     /* g->setNext(); */
-
-//      g->setParent();
-//      g->setPrevious();
-//      g->setNext();
-//      g->subsume();
-
-//      g->setParent();
-//      g->setPrevious();
-//      g->setNext();
-//      g->optimize();
-
-     /* g->setParent(); */
-     /* g->setPrevious(); */
-     /* g->setNext(); */
-     /* g->mergeRails(); */
-
-//      // g->setParent();
-//      // g->setPrevious();
-//      // g->setNext();
-//      // g->optimize();
-
-/*      g->setParent(); */
-/*      g->setPrevious(); */
-/*      g->setNext(); */
-/* g->dump(); */
-/*        g->createRows(); */
-
-//      g->setParent();
-//      g->setPrevious();
-//      g->setNext();
-//      g->fixSkips();
-
-
-     /* g->setParent(); */
-     g->setPrevious();
-     g->setNext();
-     g->place(drv.outs());
-
-        g->dump();
-
+     if(drv.get_dumponly())
+       {
+         g->dump();
+       }
+     else
+       {
+         g->setPrevious();
+         g->setNext();
+         g->place(drv.outs());
+       }
 
      delete g;
   } ;
@@ -476,17 +432,12 @@ expression:
     // of its children to the new loop node, and set their rails.
     if($2->is_choice())
       {
-cout << "converting choice to loop\n";
         while($2->numChildren())
 	 {
-cout << "moving child \n";
-($2->getChild(0))->dump(0);
 	   ($2->getChild(0))->setLeftRail(l);
 	   ($2->getChild(0))->setLeftRail(r);
 	   ($2->getChild(0))->setParent(n);
 	   ($2->getChild(0))->setBeforeSkip(0);
-($2->getChild(0))->dump(0);
-l->dump(0);
 	   n->insert($2->getChild(0));
            $2->forgetChild(0);
          }
@@ -496,7 +447,6 @@ l->dump(0);
       }
     else
       {
-cout << "creating new loop\n";
     //    n = new loopnode(new nullnode("NULL node"));
         if($2->is_concat())
           ($2->getChild(0))->setBeforeSkip(0);
