@@ -6,12 +6,10 @@ production: outerr
     \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
     rail  UP node17 : drawtoprev=1 beforeskip=8 width=0 height=0 node17.east node17.west
     choices node16 : leftrail=node17 rightrail=node18 drawtoprev=0 beforeskip=8 width=0 height=0 node14.east node14.west
-      concat node37 : drawtoprev=1 beforeskip=0 width=0 height=0 node44.east node38.west
-        choices node39 : leftrail=node17 rightrail=node18 drawtoprev=0 beforeskip=8 width=0 height=0 node42.east node41.west
-          concat node40 : drawtoprev=0 beforeskip=0 width=0 height=0 node42.east node41.west
-            \railnonterm{a\strut} ->  node41 : drawtoprev=1 beforeskip=0 width=8 height=6 node41.east node41.west
-            \railnonterm{b\strut} ->  node42 : drawtoprev=1 beforeskip=8 width=8 height=6 node42.east node42.west
-          \railnonterm{c\strut} ->  node43 : drawtoprev=0 beforeskip=0 width=8 height=6 node43.east node43.west
+      concat node40 : drawtoprev=0 beforeskip=0 width=0 height=0 node42.east node41.west
+        \railnonterm{a\strut} ->  node41 : drawtoprev=1 beforeskip=0 width=8 height=6 node41.east node41.west
+        \railnonterm{b\strut} ->  node42 : drawtoprev=1 beforeskip=8 width=8 height=6 node42.east node42.west
+      \railnonterm{c\strut} ->  node43 : drawtoprev=0 beforeskip=0 width=8 height=6 node43.east node43.west
       \railnonterm{d\strut} ->  node15 : drawtoprev=0 beforeskip=0 width=8 height=6 node15.east node15.west
     rail  UP node18 : drawtoprev=1 beforeskip=8 width=0 height=0 node18.east node18.west
     \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7

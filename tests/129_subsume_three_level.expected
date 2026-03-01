@@ -6,8 +6,7 @@ production: rootu
     \nullnode{start1\strut} ->  coord9 : drawtoprev=0 beforeskip=0 width=0 height=9 coord9 coord9
     \nullnode{start2\strut} ->  coord10 : drawtoprev=1 beforeskip=8 width=0 height=9 coord10 coord10
     \railnonterm{z\strut} ->  node17 : drawtoprev=1 beforeskip=8 width=8 height=6 node17.east node17.west
-    concat node56 : drawtoprev=1 beforeskip=0 width=0 height=0 node59.east node58.west
-      \railnonterm{x\strut} ->  node58 : drawtoprev=1 beforeskip=8 width=8 height=6 node58.east node58.west
-      \railnonterm{y\strut} ->  node59 : drawtoprev=1 beforeskip=8 width=8 height=6 node59.east node59.west
+    \railnonterm{x\strut} ->  node58 : drawtoprev=1 beforeskip=8 width=8 height=6 node58.east node58.west
+    \railnonterm{y\strut} ->  node59 : drawtoprev=1 beforeskip=8 width=8 height=6 node59.east node59.west
     \nullnode{end1\strut} ->  coord11 : drawtoprev=1 beforeskip=8 width=0 height=9 coord11 coord11
     \nullnode{end2\strut} ->  coord12 : drawtoprev=1 beforeskip=8 width=0 height=9 coord12 coord12
