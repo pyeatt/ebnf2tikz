@@ -1,0 +1,13 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: ch
+  concat node8 : drawtoprev=0 beforeskip=0 width=0 height=0 coord4 coord1
+    \nullnode{start1\strut} ->  coord1 : drawtoprev=0 beforeskip=0 width=0 height=9 coord1 coord1
+    \nullnode{start2\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
+    rail  UP node5 : drawtoprev=1 beforeskip=8 width=0 height=0 node5.east node5.west
+    choices node3 : leftrail=node5 rightrail=node6 drawtoprev=0 beforeskip=8 width=0 height=0 node1.east node1.west
+      \railnonterm{a\strut} ->  node1 : drawtoprev=1 beforeskip=0 width=8 height=6 node1.east node1.west
+      \railnonterm{b\strut} ->  node2 : drawtoprev=0 beforeskip=0 width=8 height=6 node2.east node2.west
+      \railnonterm{c\strut} ->  node4 : drawtoprev=0 beforeskip=0 width=8 height=6 node4.east node4.west
+    rail  UP node6 : drawtoprev=1 beforeskip=8 width=0 height=0 node6.east node6.west
+    \nullnode{end1\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
+    \nullnode{end2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4

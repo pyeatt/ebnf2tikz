@@ -1,0 +1,7 @@
+first = 'a', b;
+
+second = c | d;
+
+third = {e};
+
+fourth = [f, g];

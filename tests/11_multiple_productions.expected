@@ -1,0 +1,44 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: first
+  concat node5 : drawtoprev=0 beforeskip=0 width=0 height=0 coord4 coord1
+    \nullnode{start1\strut} ->  coord1 : drawtoprev=0 beforeskip=0 width=0 height=9 coord1 coord1
+    \nullnode{start2\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
+    \railnonterm{a\strut} ->  node1 : drawtoprev=1 beforeskip=8 width=8 height=6 node1.east node1.west
+    \railnonterm{b\strut} ->  node2 : drawtoprev=1 beforeskip=8 width=8 height=6 node2.east node2.west
+    \nullnode{end1\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
+    \nullnode{end2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
+production: second
+  concat node16 : drawtoprev=0 beforeskip=0 width=0 height=0 coord8 coord5
+    \nullnode{start1\strut} ->  coord5 : drawtoprev=0 beforeskip=0 width=0 height=9 coord5 coord5
+    \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
+    rail  UP node13 : drawtoprev=1 beforeskip=8 width=0 height=0 node13.east node13.west
+    choices node12 : leftrail=node13 rightrail=node14 drawtoprev=0 beforeskip=8 width=0 height=0 node10.east node10.west
+      \railnonterm{c\strut} ->  node10 : drawtoprev=1 beforeskip=0 width=8 height=6 node10.east node10.west
+      \railnonterm{d\strut} ->  node11 : drawtoprev=0 beforeskip=0 width=8 height=6 node11.east node11.west
+    rail  UP node14 : drawtoprev=1 beforeskip=8 width=0 height=0 node14.east node14.west
+    \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
+    \nullnode{end2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+production: third
+  concat node27 : drawtoprev=0 beforeskip=0 width=0 height=0 coord13 coord10
+    \nullnode{start1\strut} ->  coord10 : drawtoprev=0 beforeskip=0 width=0 height=9 coord10 coord10
+    \nullnode{start2\strut} ->  coord11 : drawtoprev=1 beforeskip=8 width=0 height=9 coord11 coord11
+    rail  UP node24 : drawtoprev=1 beforeskip=8 width=0 height=0 node24.east node24.west
+    loop node23 : leftrail=node24 rightrail=node25 drawtoprev=0 beforeskip=8 width=0 height=0 coord9 coord9
+      \nullnode{NULL node\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
+      \railnonterm{e\strut} ->  node21 : drawtoprev=0 beforeskip=8 width=8 height=6 node21.east node21.west
+    rail  UP node25 : drawtoprev=1 beforeskip=8 width=0 height=0 node25.east node25.west
+    \nullnode{end1\strut} ->  coord12 : drawtoprev=1 beforeskip=8 width=0 height=9 coord12 coord12
+    \nullnode{end2\strut} ->  coord13 : drawtoprev=1 beforeskip=8 width=0 height=9 coord13 coord13
+production: fourth
+  concat node42 : drawtoprev=0 beforeskip=0 width=0 height=0 coord18 coord15
+    \nullnode{start1\strut} ->  coord15 : drawtoprev=0 beforeskip=0 width=0 height=9 coord15 coord15
+    \nullnode{start2\strut} ->  coord16 : drawtoprev=1 beforeskip=8 width=0 height=9 coord16 coord16
+    rail  UP node39 : drawtoprev=1 beforeskip=8 width=0 height=0 node39.east node39.west
+    choices node36 : leftrail=node39 rightrail=node40 drawtoprev=0 beforeskip=8 width=0 height=0 coord14 coord14
+      \nullnode{NULL node\strut} ->  coord14 : drawtoprev=1 beforeskip=8 width=0 height=9 coord14 coord14
+      concat node34 : drawtoprev=0 beforeskip=0 width=0 height=0 node33.east node32.west
+        \railnonterm{f\strut} ->  node32 : drawtoprev=1 beforeskip=0 width=8 height=6 node32.east node32.west
+        \railnonterm{g\strut} ->  node33 : drawtoprev=1 beforeskip=8 width=8 height=6 node33.east node33.west
+    rail  UP node40 : drawtoprev=1 beforeskip=8 width=0 height=0 node40.east node40.west
+    \nullnode{end1\strut} ->  coord17 : drawtoprev=1 beforeskip=8 width=0 height=9 coord17 coord17
+    \nullnode{end2\strut} ->  coord18 : drawtoprev=1 beforeskip=8 width=0 height=9 coord18 coord18
