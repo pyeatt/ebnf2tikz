@@ -10,8 +10,10 @@ ebnf2tikz is an optimizing compiler that converts annotated Extended Backus-Naur
 
 ```bash
 make                # Build the ebnf2tikz binary (default "Debug" target)
-make test           # Build, then run 3 iterations of ebnf2tikz + pdflatex on test.ebnf
-make clean          # Remove generated .cc/.hh (from flex/bison), .o files, and test outputs
+make test           # Alias for make check
+make check          # Run all 167 AST-dump unit tests
+make check-tikz     # Build PDF with all railroad diagrams (requires pdflatex)
+make clean          # Remove generated .cc/.hh (from flex/bison), .o files
 make realclean      # clean + remove .depend
 make depend         # Regenerate .depend dependency file
 ```
@@ -69,10 +71,16 @@ Parses command-line options with `getopt_long`, loads node sizes, calls `driver:
 
 ## Test Infrastructure
 
-- `test.ebnf` — comprehensive test input with ~27 productions
-- `testdriver.tex` — LaTeX document defining TikZ styles and including generated output
-- `createtestdriver.sh` — generates `testlist.tex` from `test.tex` `\newsavebox` entries
-- `make test` runs the full build-and-render pipeline
+All tests live in `unit_tests/`. Each test is a single `.ebnf` file with a matching `expected/<name>.expected` file containing the expected AST dump output. Tests requiring specific flags (e.g., `-O -d` for optimization) have a `flags/<name>.flags` file; otherwise the default flag is `-d` (dump AST).
+
+- `unit_tests/*.ebnf` — 167 individual test grammars (01-167)
+- `unit_tests/expected/*.expected` — expected AST dump output for each test
+- `unit_tests/flags/*.flags` — per-test command-line flags (when not just `-d`)
+- `unit_tests/run_tests.sh` — AST-dump regression runner (used by `make check`)
+- `unit_tests/build_tikz_tests.sh` — concatenates all .ebnf files into one input, runs ebnf2tikz + pdflatex in a multi-pass loop to produce `testdriver.pdf` (used by `make check-tikz`)
+- `unit_tests/testdriver.tex` — LaTeX document defining TikZ styles for PDF generation
+
+To add a new test, create `unit_tests/<N>_<name>.ebnf`, optionally `unit_tests/flags/<N>_<name>.flags`, then run `./ebnf2tikz [flags] <file>.ebnf /dev/null` and save stdout to `unit_tests/expected/<N>_<name>.expected`. Production names must be globally unique across all .ebnf files (required for `build_tikz_tests.sh` which concatenates them all).
 
 ## Known Issues (from README)
 
