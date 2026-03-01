@@ -1,1 +1,1 @@
-test4 = letter , { letter | digit | "_" } ;
+nonopt_multi_alt = letter , { letter | digit | "_" } ;

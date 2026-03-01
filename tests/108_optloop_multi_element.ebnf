@@ -1,1 +1,1 @@
-test5 = A , B , [ { sep , A , B } ] ;
+optloop_multi_elem = A , B , [ { sep , A , B } ] ;

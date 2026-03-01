@@ -1,1 +1,1 @@
-simple_expression = [sign], term, {adding_operator, term};
+complex_expr = [sign], term, {adding_operator, term};

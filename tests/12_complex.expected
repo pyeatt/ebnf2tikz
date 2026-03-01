@@ -1,5 +1,5 @@
 Unable to open input file bnfnodes.dat. Continuing
-production: simple_expression
+production: complex_expr
   concat node16 : drawtoprev=0 beforeskip=0 width=0 height=0 coord6 coord3
     \nullnode{start1\strut} ->  coord3 : drawtoprev=0 beforeskip=0 width=0 height=9 coord3 coord3
     \nullnode{start2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
