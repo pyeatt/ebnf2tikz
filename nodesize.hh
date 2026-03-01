@@ -65,7 +65,7 @@ class nodesizes{
 private:
   map <string,coordinate> sizemap;
 public:
-  float rowsep,colsep,minsize;
+  float rowsep,colsep,minsize,textwidth;
   nodesizes(){};
   ~nodesizes() {
     sizemap.clear();
@@ -78,6 +78,7 @@ public:
     rowsep = 6;
     colsep = 8;
     minsize=14;
+    textwidth = 0;
     inf.open(filename);
     if(!inf.is_open())
       cout << "Unable to open input file "<<filename<<". Continuing\n";
@@ -85,13 +86,20 @@ public:
       {
 	do{
 	  inf>>nodename;
-	  inf >> size.x;
-	  do
-	    inf >> ch;
-	  while(ch != ',' && !inf.eof());
-	  inf >> size.y;
-	  if(inf)
-	    sizemap.insert ( pair<string,coordinate>(nodename,size) );
+	  if(nodename == "textwidth")
+	    {
+	      inf >> textwidth;
+	    }
+	  else
+	    {
+	      inf >> size.x;
+	      do
+		inf >> ch;
+	      while(ch != ',' && !inf.eof());
+	      inf >> size.y;
+	      if(inf)
+		sizemap.insert ( pair<string,coordinate>(nodename,size) );
+	    }
 	}while(inf);
 	inf.close();
       }
