@@ -415,8 +415,13 @@ static NodeGeom layoutConcat(node *n, coordinate origin,
 	}
       else if(child->is_null())
 	{
-	  /* null nodes are zero-width markers; place at cursor
-	     without adding inter-node spacing */
+	  /* null nodes are zero-width markers; advance by half their
+	     beforeskip to create short leading/trailing lines */
+	  if(child->getBeforeSkip() > 0)
+	    {
+	      cursorX += child->getBeforeSkip() / 2.0f;
+	      lineWidth += child->getBeforeSkip() / 2.0f;
+	    }
 	  childOrigin = coordinate(cursorX, cursorY);
 	  layoutNull(child, childOrigin, geom, sizes);
 	  if(firstContent)
@@ -654,7 +659,19 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 	}
       else if(child->is_rail())
 	{
-	  /* rails don't participate in horizontal connections */
+	  /* rails: draw a short line from/to adjacent content */
+	  if(prevContent != NULL &&
+	     geom.find(prevContent) != geom.end() &&
+	     geom.find(child) != geom.end())
+	    {
+	      prevGeom = geom[prevContent];
+	      curGeom = geom[child];
+	      pl.points.clear();
+	      pl.points.push_back(prevGeom.exit);
+	      pl.points.push_back(curGeom.entry);
+	      addPolyline(lines, pl);
+	    }
+	  prevContent = child;
 	}
       else
 	{
@@ -719,7 +736,11 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
   pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
   addPolyline(lines, pl);
 
-  /* remaining children: route through left and right rails */
+  /* remaining children: 4-point polylines through the rails to
+     each alternative.  The polylines extend past the rail so the
+     approach is RIGHT→DOWN (clockwise = inward curve at top),
+     matching the loop curve style.  The extension overlaps with
+     the parent concat's horizontal connection and is invisible. */
   for(i = 1; i < nc; i++)
     {
       child = n->getChild(i);
@@ -727,18 +748,26 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 	return;
       childGeom = geom[child];
 
-      /* left rail: from top of rail down to this alternative's entry */
+      /* left rail: approach from left of rail going RIGHT,
+	 turn DOWN to alternative's Y, then RIGHT to entry.
+	 RIGHT→DOWN at (railX, firstY) = clockwise = inward. */
       pl.points.clear();
+      pl.points.push_back(coordinate(railX - sizes->colsep,
+				     firstGeom.entry.y));
       pl.points.push_back(coordinate(railX, firstGeom.entry.y));
       pl.points.push_back(coordinate(railX, childGeom.entry.y));
       pl.points.push_back(childGeom.entry);
       addPolyline(lines, pl);
 
-      /* right rail: from this alternative's exit up to top of rail */
+      /* right rail: from alternative's exit, RIGHT to rail,
+	 UP to first child's Y, then RIGHT past rail.
+	 UP→RIGHT at (exitRailX, firstY) = clockwise = inward. */
       pl.points.clear();
       pl.points.push_back(childGeom.exit);
       pl.points.push_back(coordinate(exitRailX, childGeom.exit.y));
       pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
+      pl.points.push_back(coordinate(exitRailX + sizes->colsep,
+				     firstGeom.exit.y));
       addPolyline(lines, pl);
     }
 }
@@ -779,29 +808,42 @@ static void connectLoop(node *n, map<node*, NodeGeom> &geom,
   railX = loopGeom.origin.x;
   exitRailX = loopGeom.origin.x + loopGeom.width;
 
-  /* body: straight entry and exit */
+  /* Straight horizontal lines for body entry and exit, extending
+     past the rail positions so they merge with the inward rail
+     curves and overlap with the parent's connections. */
   pl.points.clear();
-  pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
+  pl.points.push_back(coordinate(railX - sizes->colsep,
+				 bodyGeom.entry.y));
   pl.points.push_back(bodyGeom.entry);
   addPolyline(lines, pl);
 
   pl.points.clear();
   pl.points.push_back(bodyGeom.exit);
-  pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
+  pl.points.push_back(coordinate(exitRailX + sizes->colsep,
+				 bodyGeom.exit.y));
   addPolyline(lines, pl);
 
-  /* repeat path: from exit rail down to repeat entry,
-     repeat exit back up to entry rail (feedback loop) */
-  pl.points.clear();
-  pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
-  pl.points.push_back(coordinate(exitRailX, repeatGeom.entry.y));
-  pl.points.push_back(repeatGeom.entry);
-  addPolyline(lines, pl);
+  /* The repeat (feedback) path flows right-to-left, but layoutConcat
+     always sets entry=left, exit=right.  So for the feedback connections
+     we swap: use repeatGeom.exit (right side) for the right rail, and
+     repeatGeom.entry (left side) for the left rail. */
 
+  /* Right feedback: body exit → right rail → down → repeat right side.
+     The corner at (exitRailX, bodyY) curves inward. */
   pl.points.clear();
+  pl.points.push_back(bodyGeom.exit);
+  pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
+  pl.points.push_back(coordinate(exitRailX, repeatGeom.exit.y));
   pl.points.push_back(repeatGeom.exit);
-  pl.points.push_back(coordinate(railX, repeatGeom.exit.y));
+  addPolyline(lines, pl);
+
+  /* Left feedback: repeat left side → left rail → up → body entry.
+     The corner at (railX, bodyY) curves inward. */
+  pl.points.clear();
+  pl.points.push_back(repeatGeom.entry);
+  pl.points.push_back(coordinate(railX, repeatGeom.entry.y));
   pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
+  pl.points.push_back(bodyGeom.entry);
   addPolyline(lines, pl);
 }
 
