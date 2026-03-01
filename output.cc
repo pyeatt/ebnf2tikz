@@ -261,8 +261,6 @@ coordinate multinode::place(ofstream &outs,int draw, int drawrails,
   coordinate lastpoint,c,current=start;
   node *widest;
 
-  cout << "calculating with of multinode\n";
-
   // make all chilren calculate their width and height
   for(auto i=nodes.begin();i!=nodes.end();i++)
       (*i)->place(outs, 0, 0, current, this, depth+1);
@@ -308,8 +306,6 @@ coordinate choicenode::place(ofstream &outs,int draw, int drawrails,
   coordinate lastpoint,c,current=start;
   node *widest;
 
-  cout << "calculating with of choicenode\n";
-  
   // make all chilren calculate their width and height
   for(auto i=nodes.begin();i!=nodes.end();i++)
       (*i)->place(outs, 0, 0, current, this, depth+1);
