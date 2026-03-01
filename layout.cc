@@ -773,12 +773,14 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 {
   int i, j, nc;
   node *child, *prevContent, *nextContent, *nextChild;
-  NodeGeom prevGeom, curGeom, nextGeom, concatGeom;
+  NodeGeom prevGeom, curGeom, nextGeom, concatGeom, childGeom;
   Polyline pl;
-  float rightEdge, leftEdge, midY;
+  float rightEdge, leftEdge, midY, rowMaxBelow, belowExtent;
+  float rowBottom, nextTop;
 
   nc = n->numChildren();
   prevContent = NULL;
+  rowMaxBelow = 0;
 
   for(i = 0; i < nc; i++)
     {
@@ -786,6 +788,41 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 
       /* recurse into children first */
       computeConnections(child, geom, lines, sizes);
+
+      /* track the maximum below-rail extent in the current row.
+	 Choice/loop nodes extend mostly below the rail (full
+	 height minus half a node box at the bottom).  Concats
+	 containing a choice/loop behave similarly.  Centered
+	 nodes (terminals, nonterminals) extend half above and
+	 half below. */
+      if(!child->is_newline() && !child->is_rail() &&
+	 geom.find(child) != geom.end())
+	{
+	  int k, hasRailed;
+	  childGeom = geom[child];
+	  if(child->is_choice() || child->is_loop())
+	    belowExtent = childGeom.height - sizes->minsize / 2.0f;
+	  else
+	    {
+	      belowExtent = childGeom.height / 2.0f;
+	      if(child->is_concat())
+		{
+		  hasRailed = 0;
+		  for(k = 0; k < child->numChildren(); k++)
+		    if(child->getChild(k)->is_choice() ||
+		       child->getChild(k)->is_loop())
+		      {
+			hasRailed = 1;
+			k = child->numChildren(); /* exit loop */
+		      }
+		  if(hasRailed)
+		    belowExtent = childGeom.height -
+		      sizes->minsize / 2.0f;
+		}
+	    }
+	  if(belowExtent > rowMaxBelow)
+	    rowMaxBelow = belowExtent;
+	}
 
       if(child->is_newline())
 	{
@@ -817,10 +854,43 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 
 		  /* 6-point wrap-around: right, down, left, down, right.
 		     Extend past content edges by colsep so the path
-		     routes outside the content area. */
+		     routes outside the content area.  Place the
+		     horizontal crossover midway between the visual
+		     bottom of the departing row and the visual top
+		     of the arriving row.  For terminals/nonterminals,
+		     content extends minsize/2 above the rail line.
+		     For choice/loop nodes (and concats containing
+		     them), the entry is at the top rail and nothing
+		     extends above, so nextTop = entry.y. */
 		  rightEdge += sizes->colsep;
 		  leftEdge -= sizes->colsep;
-		  midY = (prevGeom.exit.y + nextGeom.entry.y) / 2.0f;
+		  rowBottom = prevGeom.exit.y - rowMaxBelow;
+		  if(nextContent->is_choice() || nextContent->is_loop())
+		    nextTop = nextGeom.entry.y;
+		  else if(nextContent->is_concat())
+		    {
+		      int k2, nextHasRailed;
+		      nextHasRailed = 0;
+		      for(k2 = 0; k2 < nextContent->numChildren(); k2++)
+			if(nextContent->getChild(k2)->is_choice() ||
+			   nextContent->getChild(k2)->is_loop())
+			  {
+			    nextHasRailed = 1;
+			    k2 = nextContent->numChildren();
+			  }
+		      if(nextHasRailed)
+			nextTop = nextGeom.entry.y;
+		      else
+			nextTop = nextGeom.entry.y +
+			  sizes->minsize / 2.0f;
+		    }
+		  else
+		    nextTop = nextGeom.entry.y + sizes->minsize / 2.0f;
+		  /* Bias the crossover slightly above center (55%)
+		     because visual weight is concentrated in the
+		     upper portion of each row (node boxes) while
+		     the lower portion is sparser (rail arcs). */
+		  midY = nextTop + 0.55f * (rowBottom - nextTop);
 		  pl.points.clear();
 		  pl.points.push_back(prevGeom.exit);
 		  pl.points.push_back(coordinate(rightEdge, prevGeom.exit.y));
@@ -832,6 +902,7 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 		}
 	    }
 	  prevContent = NULL;
+	  rowMaxBelow = 0;
 	}
       else if(child->is_rail())
 	{
