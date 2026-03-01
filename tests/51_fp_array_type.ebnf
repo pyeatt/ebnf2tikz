@@ -1,0 +1,2 @@
+array_type              =   'ARRAY' , '[' , [ index_list ] , ']' , 'OF' , type
+                        ;

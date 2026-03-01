@@ -1,0 +1,4 @@
+procedure_declaration   =   'PROCEDURE' , identifier , [ '(' , [ formal_parameter_list ] , ')' ] , ';' ,
+                            [ declaration_part ] ,
+                            [ compound_statement , ';' ]
+                        ;

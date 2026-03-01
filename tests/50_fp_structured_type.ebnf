@@ -1,0 +1,2 @@
+structured_type         =   array_type | record_type | set_type | file_type | pointer_type
+                        ;

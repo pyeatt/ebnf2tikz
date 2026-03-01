@@ -1,0 +1,1 @@
+unsigned_number     =   unsigned_real | unsigned_integer ;

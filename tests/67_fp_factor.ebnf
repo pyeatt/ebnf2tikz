@@ -1,0 +1,10 @@
+factor                  =   '(' , expression , ')'
+                        |   variable_reference
+                        |   function_call
+                        |   unsigned_constant
+                        |   'NOT' , factor
+                        |   sign , factor
+                        |   set_constructor
+                        |   value_typecast
+                        |   address_factor
+                        ;

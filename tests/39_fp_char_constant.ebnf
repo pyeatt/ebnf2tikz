@@ -1,0 +1,3 @@
+char_constant           =   control_string
+                        |   "'" , ( string_character ) , "'"
+                        ;

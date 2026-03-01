@@ -1,0 +1,2 @@
+assignment_statement    =   ( variable_reference | function_identifier | 'RESULT' ) , ':=' , expression
+                        ;

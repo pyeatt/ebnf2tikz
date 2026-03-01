@@ -1,0 +1,5 @@
+unsigned_constant       =   unsigned_number
+                        |   character_string
+                        |   constant_identifier
+                        |   'NIL'
+                        ;

@@ -1,0 +1,2 @@
+constant_declaration    =   identifier , '=' , constant_expression
+                        ;

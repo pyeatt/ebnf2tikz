@@ -1,0 +1,2 @@
+index_list              =   subrange_type , { ',' , subrange_type }
+                        ;

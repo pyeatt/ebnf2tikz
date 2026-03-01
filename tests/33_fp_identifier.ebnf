@@ -1,0 +1,1 @@
+identifier          =   letter | '_' , { letter | dec_digit | '_' } ;

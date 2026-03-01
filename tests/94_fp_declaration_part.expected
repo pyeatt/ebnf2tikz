@@ -1,0 +1,58 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: declaration_part
+  concat node54 : drawtoprev=0 beforeskip=0 width=0 height=0 coord10 coord7
+    \nullnode{start1\strut} ->  coord7 : drawtoprev=0 beforeskip=0 width=0 height=9 coord7 coord7
+    \nullnode{start2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+    rail  UP node51 : drawtoprev=1 beforeskip=8 width=0 height=0 node51.east node51.west
+    loop node50 : leftrail=node51 rightrail=node52 drawtoprev=0 beforeskip=8 width=0 height=0 coord6 coord6
+      \nullnode{NULL node\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
+      concat node3 : drawtoprev=0 beforeskip=8 width=0 height=0 node48.east node1.west
+        rail  UP node48 : drawtoprev=0 beforeskip=0 width=0 height=0 node48.east node48.west
+        loop node46 : leftrail=node47 rightrail=node48 drawtoprev=1 beforeskip=8 width=0 height=0 coord5 coord5
+          \nullnode{NULL node\strut} ->  coord5 : drawtoprev=0 beforeskip=8 width=0 height=9 coord5 coord5
+          \railnonterm{procedure\_declaration\strut} ->  node42 : leftrail=node48 drawtoprev=0 beforeskip=0 width=8 height=6 node42.east node42.west
+          \railnonterm{function\_declaration\strut} ->  node43 : leftrail=node48 drawtoprev=0 beforeskip=0 width=8 height=6 node43.east node43.west
+        rail  UP node47 : drawtoprev=1 beforeskip=8 width=0 height=0 node47.east node47.west
+        rail  UP node41 : drawtoprev=1 beforeskip=8 width=0 height=0 node41.east node41.west
+        loop node39 : leftrail=node40 rightrail=node41 drawtoprev=1 beforeskip=8 width=0 height=0 coord4 coord4
+          \nullnode{NULL node\strut} ->  coord4 : drawtoprev=0 beforeskip=8 width=0 height=9 coord4 coord4
+          concat node37 : drawtoprev=0 beforeskip=8 width=0 height=0 node36.east node35.west
+            \railnonterm{;\strut} ->  node36 : drawtoprev=0 beforeskip=0 width=8 height=6 node36.east node36.west
+            \railnonterm{variable\_declaration\strut} ->  node35 : drawtoprev=1 beforeskip=8 width=8 height=6 node35.east node35.west
+        rail  UP node40 : drawtoprev=1 beforeskip=8 width=0 height=0 node40.east node40.west
+        \railnonterm{;\strut} ->  node34 : drawtoprev=1 beforeskip=8 width=8 height=6 node34.east node34.west
+        \railnonterm{variable\_declaration\strut} ->  node33 : drawtoprev=1 beforeskip=8 width=8 height=6 node33.east node33.west
+        \railnonterm{VAR\strut} ->  node32 : drawtoprev=1 beforeskip=8 width=8 height=6 node32.east node32.west
+        rail  UP node31 : drawtoprev=1 beforeskip=8 width=0 height=0 node31.east node31.west
+        loop node29 : leftrail=node30 rightrail=node31 drawtoprev=1 beforeskip=8 width=0 height=0 coord3 coord3
+          \nullnode{NULL node\strut} ->  coord3 : drawtoprev=0 beforeskip=8 width=0 height=9 coord3 coord3
+          concat node27 : drawtoprev=0 beforeskip=8 width=0 height=0 node26.east node25.west
+            \railnonterm{;\strut} ->  node26 : drawtoprev=0 beforeskip=0 width=8 height=6 node26.east node26.west
+            \railnonterm{type\_declaration\strut} ->  node25 : drawtoprev=1 beforeskip=8 width=8 height=6 node25.east node25.west
+        rail  UP node30 : drawtoprev=1 beforeskip=8 width=0 height=0 node30.east node30.west
+        \railnonterm{;\strut} ->  node24 : drawtoprev=1 beforeskip=8 width=8 height=6 node24.east node24.west
+        \railnonterm{type\_declaration\strut} ->  node23 : drawtoprev=1 beforeskip=8 width=8 height=6 node23.east node23.west
+        \railnonterm{TYPE\strut} ->  node22 : drawtoprev=1 beforeskip=8 width=8 height=6 node22.east node22.west
+        rail  UP node21 : drawtoprev=1 beforeskip=8 width=0 height=0 node21.east node21.west
+        loop node19 : leftrail=node20 rightrail=node21 drawtoprev=1 beforeskip=8 width=0 height=0 coord2 coord2
+          \nullnode{NULL node\strut} ->  coord2 : drawtoprev=0 beforeskip=8 width=0 height=9 coord2 coord2
+          concat node17 : drawtoprev=0 beforeskip=8 width=0 height=0 node16.east node15.west
+            \railnonterm{;\strut} ->  node16 : drawtoprev=0 beforeskip=0 width=8 height=6 node16.east node16.west
+            \railnonterm{constant\_declaration\strut} ->  node15 : drawtoprev=1 beforeskip=8 width=8 height=6 node15.east node15.west
+        rail  UP node20 : drawtoprev=1 beforeskip=8 width=0 height=0 node20.east node20.west
+        \railnonterm{;\strut} ->  node14 : drawtoprev=1 beforeskip=8 width=8 height=6 node14.east node14.west
+        \railnonterm{constant\_declaration\strut} ->  node13 : drawtoprev=1 beforeskip=8 width=8 height=6 node13.east node13.west
+        \railnonterm{CONST\strut} ->  node12 : drawtoprev=1 beforeskip=8 width=8 height=6 node12.east node12.west
+        \railnonterm{;\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
+        rail  UP node10 : drawtoprev=1 beforeskip=8 width=0 height=0 node10.east node10.west
+        loop node8 : leftrail=node9 rightrail=node10 drawtoprev=1 beforeskip=8 width=0 height=0 coord1 coord1
+          \nullnode{NULL node\strut} ->  coord1 : drawtoprev=0 beforeskip=8 width=0 height=9 coord1 coord1
+          concat node6 : drawtoprev=0 beforeskip=8 width=0 height=0 node5.east node4.west
+            \railnonterm{label\strut} ->  node5 : drawtoprev=0 beforeskip=0 width=8 height=6 node5.east node5.west
+            \railnonterm{,\strut} ->  node4 : drawtoprev=1 beforeskip=8 width=8 height=6 node4.east node4.west
+        rail  UP node9 : drawtoprev=1 beforeskip=8 width=0 height=0 node9.east node9.west
+        \railnonterm{label\strut} ->  node2 : drawtoprev=1 beforeskip=8 width=8 height=6 node2.east node2.west
+        \railnonterm{LABEL\strut} ->  node1 : drawtoprev=1 beforeskip=8 width=8 height=6 node1.east node1.west
+    rail  UP node52 : drawtoprev=1 beforeskip=8 width=0 height=0 node52.east node52.west
+    \nullnode{end1\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
+    \nullnode{end2\strut} ->  coord10 : drawtoprev=1 beforeskip=8 width=0 height=9 coord10 coord10

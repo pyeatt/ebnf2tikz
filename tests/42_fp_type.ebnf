@@ -1,0 +1,6 @@
+type                    =   simple_type
+                        |   string_type
+                        |   structured_type
+                        |   pointer_type
+                        |   procedural_type
+                        ;

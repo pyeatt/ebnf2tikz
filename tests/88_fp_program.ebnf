@@ -1,0 +1,5 @@
+program                 =   'PROGRAM' , program_header , [ '(' , identifier_list , ')' ] , ';' ,
+                            [ uses_clause ] ,
+                            block ,
+                            '.'
+                        ;

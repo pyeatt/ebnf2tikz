@@ -1,0 +1,2 @@
+label                   =   'LABEL' , dec_digit_sequence | identifier
+                        ;

@@ -1,0 +1,1 @@
+bin_digit_sequence  =   bin_digit , { bin_digit } ;
