@@ -23,6 +23,7 @@ ebnf2tikz
 // Larry Pyeatt
 #include <graph.hh>
 #include <sstream>
+#include <algorithm>
 #include <nodesize.hh>
 #include <cstring>
 using namespace std;
@@ -466,6 +467,16 @@ nontermnode::nontermnode(const nontermnode &original):node(original)
   format = original.format;
   str = original.str;
   sizes->getSize(nodename,myWidth,myHeight);
+}
+
+string nontermnode::texName()
+{
+  string display;
+
+  display = str;
+  if(type == NONTERM)
+    replace(display.begin(), display.end(), '_', ' ');
+  return latexwrite(format, display);
 }
 
 nontermnode* nontermnode::clone() const

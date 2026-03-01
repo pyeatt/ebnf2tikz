@@ -281,7 +281,7 @@ public:
   virtual ~nontermnode(){}
   virtual void forgetChild(int n){}
   virtual void dump(int depth) const;
-  virtual string texName() {return latexwrite(format,str);}
+  virtual string texName();
   string getStyle(){return style;}
   virtual int mergeConcats(int depth){return 0;}
   virtual int mergeChoices(int depth){return 0;}
