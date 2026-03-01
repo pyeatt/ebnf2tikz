@@ -1,0 +1,7 @@
+<<-- subsume -->>
+pairh = 'a' , 'b' ;
+
+<<-- subsume -->>
+optsh = pairh | 'c' ;
+
+fullh = 'd' , optsh , 'e' ;
