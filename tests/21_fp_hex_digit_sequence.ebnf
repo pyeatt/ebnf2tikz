@@ -1,0 +1,1 @@
+hex_digit_sequence  =   hex_digit , { hex_digit } ;

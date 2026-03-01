@@ -1,0 +1,1 @@
+string_type             =   'STRING' , [ '[' , unsigned_integer | constant_expression , ']' ] ;

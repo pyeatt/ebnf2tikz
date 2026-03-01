@@ -1,0 +1,1 @@
+control_string_caret =   '^' , uppercase_letter | lowercase_letter ;

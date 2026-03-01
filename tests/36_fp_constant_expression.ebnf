@@ -1,0 +1,2 @@
+constant_expression     =   constant | constant_identifier | ordinal_constant | real_constant | string_constant
+                        ;

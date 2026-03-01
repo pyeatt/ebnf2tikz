@@ -1,0 +1,2 @@
+constant                =   ordinal_constant | real_constant | string_constant | character_string | 'NIL'
+                        ;

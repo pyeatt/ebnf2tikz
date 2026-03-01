@@ -1,0 +1,3 @@
+block                   =   declaration_part ,
+                            compound_statement
+                        ;

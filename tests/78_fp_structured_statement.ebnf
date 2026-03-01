@@ -1,0 +1,4 @@
+structured_statement    =   compound_statement
+                        |   conditional_statement
+                        |   repetitive_statement
+                        ;

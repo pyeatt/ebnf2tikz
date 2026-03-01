@@ -1,0 +1,1 @@
+hex_digit   =   dec_digit | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' ;

@@ -1,0 +1,2 @@
+enumerated_type         =   '(' , identifier_list , ')'
+                        ;

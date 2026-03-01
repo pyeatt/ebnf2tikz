@@ -1,0 +1,15 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: structured_type
+  concat node10 : drawtoprev=0 beforeskip=0 width=0 height=0 coord4 coord1
+    \nullnode{start1\strut} ->  coord1 : drawtoprev=0 beforeskip=0 width=0 height=9 coord1 coord1
+    \nullnode{start2\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
+    rail  UP node7 : drawtoprev=1 beforeskip=8 width=0 height=0 node7.east node7.west
+    choices node3 : leftrail=node7 rightrail=node8 drawtoprev=0 beforeskip=8 width=0 height=0 node1.east node1.west
+      \railnonterm{array\_type\strut} ->  node1 : drawtoprev=1 beforeskip=0 width=8 height=6 node1.east node1.west
+      \railnonterm{record\_type\strut} ->  node2 : drawtoprev=0 beforeskip=0 width=8 height=6 node2.east node2.west
+      \railnonterm{set\_type\strut} ->  node4 : drawtoprev=0 beforeskip=0 width=8 height=6 node4.east node4.west
+      \railnonterm{file\_type\strut} ->  node5 : drawtoprev=0 beforeskip=0 width=8 height=6 node5.east node5.west
+      \railnonterm{pointer\_type\strut} ->  node6 : drawtoprev=0 beforeskip=0 width=8 height=6 node6.east node6.west
+    rail  UP node8 : drawtoprev=1 beforeskip=8 width=0 height=0 node8.east node8.west
+    \nullnode{end1\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
+    \nullnode{end2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4

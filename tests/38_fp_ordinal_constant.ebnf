@@ -1,0 +1,3 @@
+ordinal_constant        =   [ sign ] , unsigned_integer
+                        |   char_constant
+                        ;

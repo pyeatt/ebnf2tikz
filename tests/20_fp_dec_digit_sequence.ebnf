@@ -1,0 +1,1 @@
+dec_digit_sequence  =   dec_digit , { dec_digit } ;

@@ -1,0 +1,4 @@
+interface_part          =   'INTERFACE' ,
+                            [ uses_clause ] ,
+                            declaration_part
+                        ;
