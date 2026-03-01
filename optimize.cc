@@ -457,6 +457,25 @@ int concatnode::analyzeOptLoops(int depth)
 			  loop->nodes[ai+1]->setParent(loop);
 			  delete alt;
 			}
+		      else if(alt->numChildren() == 3 &&
+			      alt->getChild(0)->is_rail() &&
+			      (alt->getChild(1)->is_choice() ||
+			       alt->getChild(1)->is_loop()) &&
+			      alt->getChild(2)->is_rail())
+			{
+			  node *inner = alt->getChild(1);
+			  clearRailsRecursive(inner,
+					      alt->getChild(0),
+					      alt->getChild(2));
+			  alt->forgetChild(1);
+			  delete alt->getChild(0);
+			  alt->forgetChild(0);
+			  delete alt->getChild(0);
+			  alt->forgetChild(0);
+			  delete alt;
+			  loop->nodes[ai+1] = inner;
+			  inner->setParent(loop);
+			}
 		    }
 		  else
 		    {
@@ -543,7 +562,8 @@ int concatnode::analyzeOptLoops(int depth)
 // preceding position 'before' in the parent concat, walking backward.
 // For a single node, compare directly (match count 0 or 1).
 // For a concat, compare leading children of the repeat against parent
-// elements walking backward.
+// elements walking backward.  Stop at rail nodes — they are structural
+// markers for choice/loop parents and should not be matched.
 static int countMatches(node *alt, vector<node*> &parentNodes, int before)
 {
   int matchCount = 0;
@@ -555,6 +575,8 @@ static int countMatches(node *alt, vector<node*> &parentNodes, int before)
       pi = before;
       for(ci = 0; ci < alt->numChildren() && pi >= 0; ci++)
 	{
+	  if(alt->getChild(ci)->is_rail())
+	    return matchCount;
 	  if(*(alt->getChild(ci)) == *(parentNodes[pi]))
 	    {
 	      matchCount++;
@@ -566,7 +588,8 @@ static int countMatches(node *alt, vector<node*> &parentNodes, int before)
     }
   else
     {
-      if(before >= 0 && *alt == *(parentNodes[before]))
+      if(before >= 0 && !alt->is_rail() &&
+	 *alt == *(parentNodes[before]))
 	matchCount = 1;
     }
   return matchCount;
@@ -678,6 +701,27 @@ int concatnode::analyzeNonOptLoops(int depth)
 			  loop->nodes[ai+1] = new nullnode("NULL node");
 			  loop->nodes[ai+1]->setParent(loop);
 			  delete alt;
+			}
+		      else if(alt->numChildren() == 3 &&
+			      alt->getChild(0)->is_rail() &&
+			      (alt->getChild(1)->is_choice() ||
+			       alt->getChild(1)->is_loop()) &&
+			      alt->getChild(2)->is_rail())
+			{
+			  // Strip redundant rail, choice/loop, rail
+			  // wrapper — the loop provides its own rails.
+			  node *inner = alt->getChild(1);
+			  clearRailsRecursive(inner,
+					      alt->getChild(0),
+					      alt->getChild(2));
+			  alt->forgetChild(1);
+			  delete alt->getChild(0);
+			  alt->forgetChild(0);
+			  delete alt->getChild(0);
+			  alt->forgetChild(0);
+			  delete alt;
+			  loop->nodes[ai+1] = inner;
+			  inner->setParent(loop);
 			}
 		    }
 		  else

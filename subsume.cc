@@ -25,6 +25,20 @@ ebnf2tikz
 #include <nodesize.hh>
 using namespace std;
 
+// Clear all leftrail/rightrail pointers matching lr or rr in a subtree.
+// When lr and rr are both NULL, clears all rail pointers unconditionally.
+static void clearRails(node *n, node *lr, node *rr)
+{
+  int ci;
+
+  if(lr == NULL || n->getLeftRail() == lr || n->getLeftRail() == rr)
+    n->setLeftRail(NULL);
+  if(rr == NULL || n->getRightRail() == rr || n->getRightRail() == lr)
+    n->setRightRail(NULL);
+  for(ci = 0; ci < n->numChildren(); ci++)
+    clearRails(n->getChild(ci), lr, rr);
+}
+
 // ------------------------------------------------------------------------
 
 void grammar::subsume()
@@ -83,6 +97,8 @@ node* multinode::subsume(regex_t* name, node *replacement){
 
 node* productionnode::subsume(regex_t* name, node *replacement) {
   node *tmp;
+  int nc;
+  node *inner;
   // Production nodes always contain a concat with two leading
   // nullnodes, and two trailing nullnodes. We only want to take the
   // actual production, which is everything in between.
@@ -95,6 +111,30 @@ node* productionnode::subsume(regex_t* name, node *replacement) {
   replacement->forgetChild(0);
   delete replacement->getChild(0);
   replacement->forgetChild(0);
+  // After stripping the bookend nulls, the replacement may be a
+  // concat of the form: rail, choice/loop, rail.  Strip the rails
+  // so that the inlined body is a bare choice/loop.  The calling
+  // context will provide its own rail spacing via the per-side
+  // compensation in computeSizeConcat/layoutConcat.
+  nc = replacement->numChildren();
+  if(nc == 3 &&
+     replacement->getChild(0)->is_rail() &&
+     (replacement->getChild(1)->is_choice() ||
+      replacement->getChild(1)->is_loop()) &&
+     replacement->getChild(2)->is_rail())
+    {
+      node *lr = replacement->getChild(0);
+      node *rr = replacement->getChild(2);
+      inner = replacement->getChild(1);
+      clearRails(inner, lr, rr);
+      replacement->forgetChild(1);
+      delete lr;
+      replacement->forgetChild(0);
+      delete rr;
+      replacement->forgetChild(0);
+      delete replacement;
+      replacement = inner;
+    }
   tmp = body->subsume(name,replacement);
   delete replacement;
   if(tmp != body)

@@ -9,12 +9,9 @@ production: optz
       \nullnode{NULL node\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
       concat node18 : drawtoprev=0 beforeskip=0 width=0 height=0 node17.east node12.west
         loop node15 : drawtoprev=0 beforeskip=8 width=0 height=0 coord5 coord5
-          concat node57 : drawtoprev=0 beforeskip=8 width=0 height=0 node61.east node56.west
-            rail  UP node56 : drawtoprev=1 beforeskip=8 width=0 height=0 node56.east node56.west
-            choices node58 : drawtoprev=0 beforeskip=8 width=0 height=0 node59.east node59.west
-              \railnonterm{a\strut} ->  node59 : drawtoprev=0 beforeskip=0 width=8 height=6 node59.east node59.west
-              \railnonterm{b\strut} ->  node60 : drawtoprev=0 beforeskip=0 width=8 height=6 node60.east node60.west
-            rail  UP node61 : drawtoprev=0 beforeskip=8 width=0 height=0 node61.east node61.west
+          choices node50 : drawtoprev=1 beforeskip=0 width=0 height=0 node51.east node51.west
+            \railnonterm{a\strut} ->  node51 : drawtoprev=0 beforeskip=0 width=8 height=6 node51.east node51.west
+            \railnonterm{b\strut} ->  node52 : drawtoprev=0 beforeskip=0 width=8 height=6 node52.east node52.west
           \nullnode{NULL node\strut} ->  coord11 : drawtoprev=1 beforeskip=8 width=0 height=9 coord11 coord11
     rail  UP node24 : drawtoprev=1 beforeskip=8 width=0 height=0 node24.east node24.west
     \nullnode{end1\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
