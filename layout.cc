@@ -130,16 +130,44 @@ static pair<float,float> computeSizeConcat(node *n, nodesizes *sizes)
 {
   float totalWidth, maxHeight, rowWidth, rowHeight;
   int i, nc;
-  int firstContent;
+  int firstContent, contentCount, soloChoiceLoop;
   node *child;
   pair<float,float> csz;
+
+  nc = n->numChildren();
+
+  /* Count content children (not null, rail, or newline).  When
+     the concat is a single-child wrapper around a loop/choice,
+     skip rail padding — the child already has its own railPad
+     and the parent will add another. */
+  contentCount = 0;
+  soloChoiceLoop = 0;
+  for(i = 0; i < nc; i++)
+    {
+      child = n->getChild(i);
+      if(!child->is_null() && !child->is_rail() && !child->is_newline())
+	contentCount++;
+    }
+  if(contentCount == 1)
+    {
+      for(i = 0; i < nc; i++)
+	{
+	  child = n->getChild(i);
+	  if(!child->is_null() && !child->is_rail() &&
+	     !child->is_newline())
+	    {
+	      if(child->is_choice() || child->is_loop())
+		soloChoiceLoop = 1;
+	      i = nc; /* done */
+	    }
+	}
+    }
 
   totalWidth = 0;
   maxHeight = 0;
   rowWidth = 0;
   rowHeight = 0;
   firstContent = 1;
-  nc = n->numChildren();
 
   for(i = 0; i < nc; i++)
     {
@@ -173,14 +201,19 @@ static pair<float,float> computeSizeConcat(node *n, nodesizes *sizes)
 		firstContent = 0;
 	      rowWidth += csz.first;
 	      /* A choice or loop child normally has rail siblings that
-		 add 0.5*colsep each side.  When those rails are absent
-		 (e.g. after subsume merges the rails away), add colsep
-		 to compensate so the parent loop/choice gets the right
-		 width for its vertical rail columns. */
-	      if((child->is_choice() || child->is_loop()) &&
-		 (i == 0 || !n->getChild(i-1)->is_rail()) &&
-		 (i+1 >= nc || !n->getChild(i+1)->is_rail()))
-		rowWidth += sizes->colsep;
+		 add 0.5*colsep each side.  When a rail is absent on
+		 one or both sides (e.g. at the edge of a concat after
+		 subsume merges rails away), add 0.5*colsep per missing
+		 side to compensate.  Skip this when the concat is a
+		 single-child wrapper: the child already has railPad. */
+	      if(!soloChoiceLoop &&
+		 (child->is_choice() || child->is_loop()))
+		{
+		  if(i == 0 || !n->getChild(i-1)->is_rail())
+		    rowWidth += 0.5f * sizes->colsep;
+		  if(i+1 >= nc || !n->getChild(i+1)->is_rail())
+		    rowWidth += 0.5f * sizes->colsep;
+		}
 	    }
 	  if(csz.second > rowHeight)
 	    rowHeight = csz.second;
@@ -199,17 +232,24 @@ static pair<float,float> computeSizeChoice(node *n, nodesizes *sizes)
 {
   float maxWidth, totalHeight;
   int i, nc;
+  int widestIsRailed;
+  node *child;
   pair<float,float> csz;
 
   maxWidth = 0;
   totalHeight = 0;
+  widestIsRailed = 0;
   nc = n->numChildren();
 
   for(i = 0; i < nc; i++)
     {
-      csz = computeSize(n->getChild(i), sizes);
+      child = n->getChild(i);
+      csz = computeSize(child, sizes);
       if(csz.first > maxWidth)
-	maxWidth = csz.first;
+	{
+	  maxWidth = csz.first;
+	  widestIsRailed = (child->is_choice() || child->is_loop());
+	}
       if(i > 0)
 	totalHeight += sizes->rowsep;
       totalHeight += csz.second;
@@ -218,8 +258,12 @@ static pair<float,float> computeSizeChoice(node *n, nodesizes *sizes)
 	totalHeight += sizes->rowsep - csz.second;
     }
 
-  /* add left and right padding for the rail columns */
-  maxWidth += 2.0f * sizes->colsep;
+  /* add left and right padding for the rail columns.
+     When the widest child is itself a choice/loop, its width
+     already includes railPad; skip ours so there is only one
+     set of rails. */
+  if(!widestIsRailed)
+    maxWidth += 2.0f * sizes->colsep;
 
   return make_pair(maxWidth, totalHeight);
 }
@@ -403,9 +447,35 @@ static NodeGeom layoutConcat(node *n, coordinate origin,
   int i, nc;
   node *child;
   coordinate childOrigin;
-  int firstContent;
+  int firstContent, contentCount, soloChoiceLoop;
 
   nc = n->numChildren();
+
+  /* Detect single-child wrapper around a loop/choice (same logic
+     as computeSizeConcat) to skip redundant rail padding. */
+  contentCount = 0;
+  soloChoiceLoop = 0;
+  for(i = 0; i < nc; i++)
+    {
+      child = n->getChild(i);
+      if(!child->is_null() && !child->is_rail() && !child->is_newline())
+	contentCount++;
+    }
+  if(contentCount == 1)
+    {
+      for(i = 0; i < nc; i++)
+	{
+	  child = n->getChild(i);
+	  if(!child->is_null() && !child->is_rail() &&
+	     !child->is_newline())
+	    {
+	      if(child->is_choice() || child->is_loop())
+		soloChoiceLoop = 1;
+	      i = nc; /* done */
+	    }
+	}
+    }
+
   cursorX = origin.x;
   cursorY = origin.y;
   rowStartX = origin.x;
@@ -472,12 +542,13 @@ static NodeGeom layoutConcat(node *n, coordinate origin,
 	      firstContent = 0;
 	    }
 
-	  /* A choice or loop without adjacent rail siblings needs
-	     extra spacing to compensate for the missing rails. Split
-	     the padding evenly: half before, half after. */
-	  if((child->is_choice() || child->is_loop()) &&
-	     (i == 0 || !n->getChild(i-1)->is_rail()) &&
-	     (i+1 >= nc || !n->getChild(i+1)->is_rail()))
+	  /* A choice or loop without an adjacent rail on a given side
+	     needs 0.5*colsep of spacing on that side to compensate
+	     for the missing rail.  Skip when this is a single-child
+	     wrapper: the child already has railPad. */
+	  if(!soloChoiceLoop &&
+	     (child->is_choice() || child->is_loop()) &&
+	     (i == 0 || !n->getChild(i-1)->is_rail()))
 	    {
 	      cursorX += 0.5f * sizes->colsep;
 	      lineWidth += 0.5f * sizes->colsep;
@@ -490,8 +561,8 @@ static NodeGeom layoutConcat(node *n, coordinate origin,
 	  if(childg.height > rowHeight)
 	    rowHeight = childg.height;
 
-	  if((child->is_choice() || child->is_loop()) &&
-	     (i == 0 || !n->getChild(i-1)->is_rail()) &&
+	  if(!soloChoiceLoop &&
+	     (child->is_choice() || child->is_loop()) &&
 	     (i+1 >= nc || !n->getChild(i+1)->is_rail()))
 	    {
 	      cursorX += 0.5f * sizes->colsep;
@@ -556,6 +627,7 @@ static NodeGeom layoutChoice(node *n, coordinate origin,
   float maxWidth, totalHeight, cursorY, childWidth, childHeight;
   float railPad;
   int i, nc;
+  int widestIsRailed;
   node *child;
   pair<float,float> csz;
   coordinate childOrigin;
@@ -564,15 +636,30 @@ static NodeGeom layoutChoice(node *n, coordinate origin,
 
   /* first pass: measure all children to find max width */
   maxWidth = 0;
+  widestIsRailed = 0;
   for(i = 0; i < nc; i++)
     {
-      csz = computeSize(n->getChild(i), sizes);
+      child = n->getChild(i);
+      csz = computeSize(child, sizes);
       if(csz.first > maxWidth)
-	maxWidth = csz.first;
+	{
+	  maxWidth = csz.first;
+	  widestIsRailed = (child->is_choice() || child->is_loop());
+	  if(!widestIsRailed && child->is_concat() &&
+	     child->numChildren() == 1 &&
+	     (child->getChild(0)->is_choice() ||
+	      child->getChild(0)->is_loop()))
+	    widestIsRailed = 1;
+	}
     }
 
-  /* rail padding on left and right sides */
-  railPad = sizes->colsep;
+  /* When the widest child is itself a choice/loop, its width
+     already includes rail columns.  Skip our own railPad so there
+     is only one set of rails. */
+  if(widestIsRailed)
+    railPad = 0;
+  else
+    railPad = sizes->colsep;
 
   /* second pass: place children vertically, centered within maxWidth */
   cursorY = origin.y;
@@ -789,6 +876,7 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 			  vector<Polyline> &lines, nodesizes *sizes)
 {
   int i, nc;
+  int parentIsRailed;
   node *child;
   NodeGeom choiceGeom, firstGeom, childGeom;
   Polyline pl;
@@ -801,6 +889,12 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
     return;
 
   choiceGeom = geom[n];
+
+  /* When this choice shares rail columns with a parent loop/choice,
+     the extensions beyond the rail are handled by the parent. */
+  parentIsRailed = (n->getParent() != NULL &&
+		    (n->getParent()->is_choice() ||
+		     n->getParent()->is_loop()));
 
   /* recurse into all children first */
   for(i = 0; i < nc; i++)
@@ -825,11 +919,11 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
   pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
   addPolyline(lines, pl);
 
-  /* remaining children: 4-point polylines through the rails to
-     each alternative.  The polylines extend past the rail so the
-     approach is RIGHT→DOWN (clockwise = inward curve at top),
-     matching the loop curve style.  The extension overlaps with
-     the parent concat's horizontal connection and is invisible. */
+  /* remaining children: polylines through the rails to each
+     alternative.  When the parent is a loop or choice with shared
+     rail columns, draw 3-point lines (no extension past the rail).
+     Otherwise draw 4-point lines that extend past the rail so the
+     approach is RIGHT->DOWN (clockwise = inward curve at top). */
   for(i = 1; i < nc; i++)
     {
       child = n->getChild(i);
@@ -837,27 +931,40 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 	return;
       childGeom = geom[child];
 
-      /* left rail: approach from left of rail going RIGHT,
-	 turn DOWN to alternative's Y, then RIGHT to entry.
-	 RIGHT→DOWN at (railX, firstY) = clockwise = inward. */
-      pl.points.clear();
-      pl.points.push_back(coordinate(railX - sizes->colsep,
-				     firstGeom.entry.y));
-      pl.points.push_back(coordinate(railX, firstGeom.entry.y));
-      pl.points.push_back(coordinate(railX, childGeom.entry.y));
-      pl.points.push_back(childGeom.entry);
-      addPolyline(lines, pl);
+      if(parentIsRailed)
+	{
+	  /* 3-point: rail down to entry, no extension beyond rail */
+	  pl.points.clear();
+	  pl.points.push_back(coordinate(railX, firstGeom.entry.y));
+	  pl.points.push_back(coordinate(railX, childGeom.entry.y));
+	  pl.points.push_back(childGeom.entry);
+	  addPolyline(lines, pl);
 
-      /* right rail: from alternative's exit, RIGHT to rail,
-	 UP to first child's Y, then RIGHT past rail.
-	 UP→RIGHT at (exitRailX, firstY) = clockwise = inward. */
-      pl.points.clear();
-      pl.points.push_back(childGeom.exit);
-      pl.points.push_back(coordinate(exitRailX, childGeom.exit.y));
-      pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
-      pl.points.push_back(coordinate(exitRailX + sizes->colsep,
-				     firstGeom.exit.y));
-      addPolyline(lines, pl);
+	  pl.points.clear();
+	  pl.points.push_back(childGeom.exit);
+	  pl.points.push_back(coordinate(exitRailX, childGeom.exit.y));
+	  pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
+	  addPolyline(lines, pl);
+	}
+      else
+	{
+	  /* 4-point: extend past rail for inward curve */
+	  pl.points.clear();
+	  pl.points.push_back(coordinate(railX - sizes->colsep,
+					 firstGeom.entry.y));
+	  pl.points.push_back(coordinate(railX, firstGeom.entry.y));
+	  pl.points.push_back(coordinate(railX, childGeom.entry.y));
+	  pl.points.push_back(childGeom.entry);
+	  addPolyline(lines, pl);
+
+	  pl.points.clear();
+	  pl.points.push_back(childGeom.exit);
+	  pl.points.push_back(coordinate(exitRailX, childGeom.exit.y));
+	  pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
+	  pl.points.push_back(coordinate(exitRailX + sizes->colsep,
+					 firstGeom.exit.y));
+	  addPolyline(lines, pl);
+	}
     }
 }
 
