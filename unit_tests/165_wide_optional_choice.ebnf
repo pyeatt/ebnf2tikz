@@ -1,0 +1,3 @@
+wide_optional_choice =
+    'CALL' , identifier , [ '(' , ( formal_parameter_list | actual_parameter_list | variable_reference ) , ')' ] ,
+    compound_statement , declaration_part , ';' ;

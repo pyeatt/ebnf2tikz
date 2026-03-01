@@ -1,0 +1,2 @@
+wide_loop_body =
+    'DO' , { compound_statement } , declaration_part , actual_parameter_list , variable_reference , 'END' ;

@@ -1,0 +1,2 @@
+wide_loop_both =
+    'EACH' , { variable_declaration , constant_declaration } , declaration_part , compound_statement , 'DONE' ;
