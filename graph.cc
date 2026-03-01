@@ -119,7 +119,7 @@ node::node(const node &original){
   beforeskip = original.beforeskip;
   drawtoprev = original.drawtoprev;
   leftrail = original.leftrail;
-  rightrail = original.leftrail;
+  rightrail = original.rightrail;
   dead = 0;
 }
 
@@ -165,7 +165,7 @@ void singlenode::forgetChild(int n)
   if(n==0)
     body=NULL;
   else
-    cout<<"singlenode forgetChild bad index\n";
+    cerr<<"singlenode forgetChild bad index\n";
 }
 
 int singlenode::operator ==(node &r)
@@ -340,7 +340,6 @@ productionnode::productionnode(annotmap *a,string s,node *p):
 	{	  
 	  if(reg == "emusbussubsume")
 	    reg = '^' + name + '$';
-	  cout<<"creating regex: "<<reg<<" for "<<name<<endl;
 	  subsume_spec = new regex_t;
 	  if(regcomp(subsume_spec,reg.c_str(),REG_EXTENDED))
 	    {
@@ -405,7 +404,7 @@ loopnode* loopnode::clone() const
 
 node* loopnode::getRepeat()
 {
-  return nodes[0];
+  return nodes[1];
 }
 
 void loopnode::setRepeat(node *r)
@@ -615,8 +614,6 @@ void choicenode::insertFirst(node *node)
 
 void choicenode::reverse()
 {
-  cout<<"Reversing choices\n";
-  this->dump(1);
   railnode *tmp = leftrail;
   leftrail = rightrail;
   rightrail = tmp;
@@ -631,8 +628,6 @@ void choicenode::reverse()
   // This is probably not necessary
   for(auto i = nodes.begin(); i != nodes.end(); i++)
     (*i)->setBeforeSkip(sizes->colsep);
-    
-  this->dump(1);
 };
 
 void choicenode::dump(int depth) const
@@ -736,9 +731,6 @@ void concatnode::insert(node* p)
   // if inserting a concat, move its childern and delete it
   if(p->is_concat())
     {
-	cout << "MERGING CONCAT\n";
-	this->dump(0);
-	p->dump(0);
       // move children from second concat to first concat */
       while(p->numChildren())
 	{
@@ -752,9 +744,6 @@ void concatnode::insert(node* p)
     // if inserting a choicenode or loopnode, then insert the rails
     if(p->is_choice() || p->is_loop())
       {
-	cout << "INSERTING CHOICE\n";
-	this->dump(0);
-	p->dump(0);
 	if(!p->getRailsAdded())
 	  multinode::insert(p->getLeftRail());
 	multinode::insert(p);
@@ -806,8 +795,6 @@ node* concatnode::createRows()
 
 void concatnode::reverse()
 {
-  cout << "Reversing concat\n";
-  this->dump(1);
   railnode *tmp = leftrail;
   leftrail = rightrail;
   rightrail = tmp;
@@ -847,9 +834,6 @@ void concatnode::reverse()
   for(auto i = nodes.begin()+1; i != nodes.end(); i++)
     (*i)->setDrawToPrev(1);
   nodes.front()->setDrawToPrev(0);
-
-  this->dump(1);
-
 };
 
 
