@@ -290,7 +290,7 @@ static NodeGeom layoutLeaf(node *n, coordinate origin,
 			   map<node*, NodeGeom> &geom, nodesizes *sizes)
 {
   NodeGeom g;
-  float w, h;
+  float w, h, singleH, yShift;
 
   w = n->width();
   h = n->height();
@@ -299,7 +299,16 @@ static NodeGeom layoutLeaf(node *n, coordinate origin,
   if(h < sizes->rowsep)
     h = sizes->rowsep;
 
-  g.origin = origin;
+  /* For multi-line wrapped nodes, TikZ anchor=west places the
+     geometric center at origin.y.  Shift the node down so that
+     the center of the top line aligns with origin.y (the rail).
+     Single-line height is minsize + 2 (inner sep top+bottom). */
+  yShift = 0;
+  singleH = sizes->minsize + 2.0f;
+  if(h > 1.5f * singleH)
+    yShift = -(h - singleH) / 2.0f;
+
+  g.origin = coordinate(origin.x, origin.y + yShift);
   g.width = w;
   g.height = h;
   g.entry = origin;
