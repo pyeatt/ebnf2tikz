@@ -41,12 +41,14 @@ annot_lexer.hh: annot_lexer.ll
 
 
 test: ebnf2tikz
+	./ebnf2tikz -O test.ebnf test.tex
 	./createtestdriver.sh
-	./ebnf2tikz test.ebnf test.tex
 	pdflatex testdriver
-	./ebnf2tikz test.ebnf test.tex
+	./ebnf2tikz -O test.ebnf test.tex
+	./createtestdriver.sh
 	pdflatex testdriver
-	./ebnf2tikz test.ebnf test.tex
+	./ebnf2tikz -O test.ebnf test.tex
+	./createtestdriver.sh
 	pdflatex testdriver
 
 check: ebnf2tikz
