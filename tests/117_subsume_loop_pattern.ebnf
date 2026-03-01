@@ -1,0 +1,4 @@
+<<-- subsume -->>
+elemi = 'x' ;
+
+listi = elemi , { elemi } ;

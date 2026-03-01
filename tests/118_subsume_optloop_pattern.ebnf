@@ -1,0 +1,4 @@
+<<-- subsume -->>
+elemj = 'x' ;
+
+optlistj = [ elemj , { elemj } ] ;

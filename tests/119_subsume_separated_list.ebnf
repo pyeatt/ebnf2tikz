@@ -1,0 +1,4 @@
+<<-- subsume -->>
+elemk = 'x' ;
+
+listk = elemk , { ',' , elemk } ;

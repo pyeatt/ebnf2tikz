@@ -1,0 +1,4 @@
+<<-- subsume -->>
+innerr = 'a' , 'b' | 'c' ;
+
+outerr = innerr | 'd' ;

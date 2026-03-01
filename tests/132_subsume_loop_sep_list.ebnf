@@ -1,0 +1,4 @@
+<<-- subsume -->>
+sepx = ',' | ';' ;
+
+listx = itemx , { sepx , itemx } ;

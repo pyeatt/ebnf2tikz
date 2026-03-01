@@ -1,0 +1,4 @@
+<<-- subsume -->>
+innerm = [ 'a' ] ;
+
+outerm = [ innerm ] ;

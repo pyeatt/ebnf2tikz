@@ -1,0 +1,12 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: elemk
+production: listk
+  concat node18 : drawtoprev=0 beforeskip=0 width=0 height=0 coord9 coord6
+    \nullnode{start1\strut} ->  coord6 : drawtoprev=0 beforeskip=0 width=0 height=9 coord6 coord6
+    \nullnode{start2\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
+    loop node13 : drawtoprev=0 beforeskip=8 width=0 height=0 coord5 coord5
+      concat node35 : drawtoprev=1 beforeskip=0 width=0 height=0 node36.east node36.west
+        \railnonterm{x\strut} ->  node36 : drawtoprev=1 beforeskip=8 width=8 height=6 node36.east node36.west
+      \railnonterm{,\strut} ->  node9 : drawtoprev=1 beforeskip=8 width=8 height=6 node9.east node9.west
+    \nullnode{end1\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+    \nullnode{end2\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9

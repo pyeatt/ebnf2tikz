@@ -1,0 +1,4 @@
+<<-- subsume -->>
+partp = 'x' , 'y' ;
+
+fullp = partp , 'z' , partp ;

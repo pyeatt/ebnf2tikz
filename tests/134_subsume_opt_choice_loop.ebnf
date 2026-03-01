@@ -1,0 +1,4 @@
+<<-- subsume -->>
+elemz = 'a' | 'b' ;
+
+optz = [ elemz , { elemz } ] ;
