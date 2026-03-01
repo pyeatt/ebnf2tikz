@@ -810,7 +810,7 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 
 /* ----------------------------------------------------------------
    Loop connections: body path forward, repeat path backward
-   Child 0 = body (forward), Child 1 = repeat (backward/feedback)
+   Child 0 = body (forward), Children 1..N-1 = repeat (backward/feedback)
    ---------------------------------------------------------------- */
 
 static void connectLoop(node *n, map<node*, NodeGeom> &geom,
@@ -835,11 +835,8 @@ static void connectLoop(node *n, map<node*, NodeGeom> &geom,
 
   if(geom.find(n->getChild(0)) == geom.end())
     return;
-  if(geom.find(n->getChild(1)) == geom.end())
-    return;
 
   bodyGeom = geom[n->getChild(0)];
-  repeatGeom = geom[n->getChild(1)];
 
   railX = loopGeom.origin.x;
   exitRailX = loopGeom.origin.x + loopGeom.width;
@@ -862,25 +859,33 @@ static void connectLoop(node *n, map<node*, NodeGeom> &geom,
   /* The repeat (feedback) path flows right-to-left, but layoutConcat
      always sets entry=left, exit=right.  So for the feedback connections
      we swap: use repeatGeom.exit (right side) for the right rail, and
-     repeatGeom.entry (left side) for the left rail. */
+     repeatGeom.entry (left side) for the left rail.
+     Loop over all repeat children (1..nc-1) to handle loops with
+     multiple repeat alternatives (e.g. { A | B | C }). */
+  for(i = 1; i < nc; i++)
+  {
+    if(geom.find(n->getChild(i)) == geom.end())
+      return;
+    repeatGeom = geom[n->getChild(i)];
 
-  /* Right feedback: body exit → right rail → down → repeat right side.
-     The corner at (exitRailX, bodyY) curves inward. */
-  pl.points.clear();
-  pl.points.push_back(bodyGeom.exit);
-  pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
-  pl.points.push_back(coordinate(exitRailX, repeatGeom.exit.y));
-  pl.points.push_back(repeatGeom.exit);
-  addPolyline(lines, pl);
+    /* Right feedback: body exit → right rail → down → repeat right side.
+       The corner at (exitRailX, bodyY) curves inward. */
+    pl.points.clear();
+    pl.points.push_back(bodyGeom.exit);
+    pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
+    pl.points.push_back(coordinate(exitRailX, repeatGeom.exit.y));
+    pl.points.push_back(repeatGeom.exit);
+    addPolyline(lines, pl);
 
-  /* Left feedback: repeat left side → left rail → up → body entry.
-     The corner at (railX, bodyY) curves inward. */
-  pl.points.clear();
-  pl.points.push_back(repeatGeom.entry);
-  pl.points.push_back(coordinate(railX, repeatGeom.entry.y));
-  pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
-  pl.points.push_back(bodyGeom.entry);
-  addPolyline(lines, pl);
+    /* Left feedback: repeat left side → left rail → up → body entry.
+       The corner at (railX, bodyY) curves inward. */
+    pl.points.clear();
+    pl.points.push_back(repeatGeom.entry);
+    pl.points.push_back(coordinate(railX, repeatGeom.entry.y));
+    pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
+    pl.points.push_back(bodyGeom.entry);
+    addPolyline(lines, pl);
+  }
 }
 
 /* ----------------------------------------------------------------
