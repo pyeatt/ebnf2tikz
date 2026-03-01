@@ -1,0 +1,8 @@
+declaration_part        =   {
+                                'LABEL' , label                 , { ',' , label } , ';' ,
+                                'CONST' , constant_declaration  , ';' , { constant_declaration , ';' } ,
+                                'TYPE'  , type_declaration      , ';' , { type_declaration , ';' } ,
+                                'VAR'   , variable_declaration  , ';' , { variable_declaration , ';' } ,
+                                { procedure_declaration | function_declaration }
+                            }
+                        ;

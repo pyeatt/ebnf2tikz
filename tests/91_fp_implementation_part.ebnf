@@ -1,0 +1,4 @@
+implementation_part     =   'IMPLEMENTATION' , ';' ,
+                            [ uses_clause ] ,
+                            { implementation_declaration }
+                            ;

@@ -1,0 +1,1 @@
+control_string      =  control_string_sharp | control_string_caret ;

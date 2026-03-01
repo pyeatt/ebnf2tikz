@@ -1,0 +1,4 @@
+simple_statement        =   assignment_statement
+                        |   procedure_statement
+                        |   'GOTO' , label
+                        ;

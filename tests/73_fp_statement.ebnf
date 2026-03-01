@@ -1,0 +1,2 @@
+statement               =   [ label , ':' ] , simple_statement | structured_statement
+                        ;

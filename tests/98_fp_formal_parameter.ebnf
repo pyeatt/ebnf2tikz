@@ -1,0 +1,2 @@
+formal_parameter        =   [ 'VAR' | 'OUT' ] , identifier_list , ':' , type
+                        ;

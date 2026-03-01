@@ -1,0 +1,1 @@
+character_string    =   quoted_string | control_string ;

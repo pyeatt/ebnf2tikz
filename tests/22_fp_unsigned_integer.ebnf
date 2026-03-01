@@ -1,0 +1,5 @@
+unsigned_integer    =   dec_digit_sequence
+                    |   '%' , bin_digit_sequence
+                    |   '&' , oct_digit_sequence
+                    |   '$' , hex_digit_sequence
+                    ;

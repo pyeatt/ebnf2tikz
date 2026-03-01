@@ -1,0 +1,4 @@
+function_declaration    =   'FUNCTION' , identifier , [ '(' , [ formal_parameter_list ] , ')' ] , ':' , type , ';' ,
+                            [ declaration_part ] ,
+                            [ compound_statement , ';' ]
+                        ;
