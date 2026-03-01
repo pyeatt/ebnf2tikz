@@ -41,7 +41,7 @@ annot_lexer.hh: annot_lexer.ll
 
 
 test: ebnf2tikz
-	./createtestdriver.sh 
+	./createtestdriver.sh
 	./ebnf2tikz test.ebnf test.tex
 	pdflatex testdriver
 	./ebnf2tikz test.ebnf test.tex
@@ -49,6 +49,8 @@ test: ebnf2tikz
 	./ebnf2tikz test.ebnf test.tex
 	pdflatex testdriver
 
+check: ebnf2tikz
+	cd tests && bash run_tests.sh
 
 
 clean:
