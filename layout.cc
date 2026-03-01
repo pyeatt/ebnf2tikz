@@ -130,6 +130,7 @@ static pair<float,float> computeSizeConcat(node *n, nodesizes *sizes)
 {
   float totalWidth, maxHeight, rowWidth, rowHeight;
   int i, nc;
+  int firstContent;
   node *child;
   pair<float,float> csz;
 
@@ -137,6 +138,7 @@ static pair<float,float> computeSizeConcat(node *n, nodesizes *sizes)
   maxHeight = 0;
   rowWidth = 0;
   rowHeight = 0;
+  firstContent = 1;
   nc = n->numChildren();
 
   for(i = 0; i < nc; i++)
@@ -149,14 +151,28 @@ static pair<float,float> computeSizeConcat(node *n, nodesizes *sizes)
 	  maxHeight += rowHeight + 3 * sizes->rowsep;
 	  rowWidth = 0;
 	  rowHeight = 0;
+	  firstContent = 1;
 	}
       else
 	{
 	  csz = computeSize(child, sizes);
-	  if(!child->is_rail())
-	    rowWidth += sizes->colsep + csz.first;
-	  else
+	  if(child->is_rail())
 	    rowWidth += 0.5f * sizes->colsep;
+	  else if(child->is_null())
+	    {
+	      if(child->getBeforeSkip() > 0)
+		rowWidth += child->getBeforeSkip() / 2.0f;
+	      if(firstContent)
+		firstContent = 0;
+	    }
+	  else
+	    {
+	      if(!firstContent)
+		rowWidth += sizes->colsep;
+	      else
+		firstContent = 0;
+	      rowWidth += csz.first;
+	    }
 	  if(csz.second > rowHeight)
 	    rowHeight = csz.second;
 	}

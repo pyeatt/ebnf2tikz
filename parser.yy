@@ -135,6 +135,12 @@ extern yy::location loc;
 grammar : productions {
      grammar *g = $1;
 
+     if(!drv.get_noopt())
+       {
+         g->optimize();
+         g->mergeRails();
+       }
+
      if(drv.get_dumponly())
        {
          g->dump();
