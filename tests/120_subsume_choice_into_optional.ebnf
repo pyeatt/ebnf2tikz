@@ -1,0 +1,4 @@
+<<-- subsume -->>
+optsl = 'a' | 'b' ;
+
+wrapperl = [ optsl ] ;

@@ -1,0 +1,7 @@
+<<-- subsume as "^tw" -->>
+twa = 'x' ;
+
+<<-- subsume as "^tw" -->>
+twb = 'y' ;
+
+usew = twa , twb , 'z' ;

@@ -1,0 +1,4 @@
+<<-- subsume -->>
+pairv = 'a' , 'b' ;
+
+altv = pairv , 'c' | pairv , 'd' ;

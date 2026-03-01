@@ -1,0 +1,4 @@
+<<-- subsume -->>
+repn = { 'a' } ;
+
+fulln = 'b' , repn , 'c' ;

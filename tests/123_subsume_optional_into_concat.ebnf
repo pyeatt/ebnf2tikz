@@ -1,0 +1,4 @@
+<<-- subsume -->>
+opto = [ 'a' ] ;
+
+fullo = 'b' , opto , 'c' ;

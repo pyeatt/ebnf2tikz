@@ -1,0 +1,7 @@
+<<-- subsume -->>
+leafu = 'x' ;
+
+<<-- subsume -->>
+midu = leafu , 'y' ;
+
+rootu = 'z' , midu ;

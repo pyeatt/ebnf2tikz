@@ -1,0 +1,16 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: elemi
+production: listi
+  concat node16 : drawtoprev=0 beforeskip=0 width=0 height=0 coord9 coord6
+    \nullnode{start1\strut} ->  coord6 : drawtoprev=0 beforeskip=0 width=0 height=9 coord6 coord6
+    \nullnode{start2\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
+    concat node27 : drawtoprev=1 beforeskip=0 width=0 height=0 node28.east node28.west
+      \railnonterm{x\strut} ->  node28 : drawtoprev=1 beforeskip=8 width=8 height=6 node28.east node28.west
+    rail  UP node12 : drawtoprev=0 beforeskip=8 width=0 height=0 node12.east node12.west
+    loop node11 : leftrail=node12 rightrail=node13 drawtoprev=0 beforeskip=8 width=0 height=0 coord5 coord5
+      \nullnode{NULL node\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
+      concat node29 : drawtoprev=0 beforeskip=0 width=0 height=0 node30.east node30.west
+        \railnonterm{x\strut} ->  node30 : drawtoprev=1 beforeskip=8 width=8 height=6 node30.east node30.west
+    rail  UP node13 : drawtoprev=0 beforeskip=8 width=0 height=0 node13.east node13.west
+    \nullnode{end1\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+    \nullnode{end2\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9

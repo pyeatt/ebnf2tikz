@@ -1,0 +1,4 @@
+<<-- subsume -->>
+seps = ',' ;
+
+lists = items , { seps , items } ;

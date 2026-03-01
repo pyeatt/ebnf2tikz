@@ -1,0 +1,4 @@
+<<-- subsume -->>
+pairq = 'a' , 'b' ;
+
+repq = { pairq } ;

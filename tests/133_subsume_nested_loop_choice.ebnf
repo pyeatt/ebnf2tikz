@@ -1,0 +1,4 @@
+<<-- subsume -->>
+choicey = 'a' | 'b' ;
+
+loopy = { choicey } ;
