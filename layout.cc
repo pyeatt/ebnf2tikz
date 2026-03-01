@@ -210,12 +210,12 @@ static pair<float,float> computeSizeChoice(node *n, nodesizes *sizes)
       csz = computeSize(n->getChild(i), sizes);
       if(csz.first > maxWidth)
 	maxWidth = csz.first;
-      /* ensure minimum height per alternative */
-      if(csz.second < sizes->rowsep)
-	csz.second = sizes->rowsep;
       if(i > 0)
 	totalHeight += sizes->rowsep;
       totalHeight += csz.second;
+      /* ensure minimum height per alternative */
+      if(csz.second < sizes->rowsep)
+	totalHeight += sizes->rowsep - csz.second;
     }
 
   /* add left and right padding for the rail columns */
@@ -565,10 +565,7 @@ static NodeGeom layoutChoice(node *n, coordinate origin,
   /* rail padding on left and right sides */
   railPad = sizes->colsep;
 
-  /* second pass: place children vertically, centered within maxWidth.
-     cursorY tracks the top edge of the current child's slot.
-     Each child's center is placed at cursorY - childHeight/2.
-     This ensures proper spacing regardless of differing heights. */
+  /* second pass: place children vertically, centered within maxWidth */
   cursorY = origin.y;
   totalHeight = 0;
 
@@ -590,7 +587,7 @@ static NodeGeom layoutChoice(node *n, coordinate origin,
       /* center horizontally within maxWidth, offset by left railPad */
       childOrigin = coordinate(origin.x + railPad +
 			       (maxWidth - childWidth) / 2.0f,
-			       cursorY - childHeight / 2.0f);
+			       cursorY);
       childg = layoutNode(child, childOrigin, geom, sizes);
 
       cursorY -= childHeight;
