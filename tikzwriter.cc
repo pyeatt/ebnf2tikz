@@ -25,6 +25,7 @@ ebnf2tikz
 #include <nodesize.hh>
 #include <util.hh>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -146,9 +147,13 @@ void TikzWriter::writeProduction(productionnode *prod,
   outs << "\\savebox{\\" << boxname << "Box}{";
   outs << "\\begin{tikzpicture}\n";
 
-  /* production name label */
-  outs << "\\node at (0pt,0pt)[anchor=west](name){"
-       << latexwrite("railname", prod->getName()) << "};\n";
+  /* production name label — replace underscores with spaces */
+  {
+    string prodDisplayName = prod->getName();
+    replace(prodDisplayName.begin(), prodDisplayName.end(), '_', ' ');
+    outs << "\\node at (0pt,0pt)[anchor=west](name){"
+	 << latexwrite("railname", prodDisplayName) << "};\n";
+  }
 
   /* emit all TikZ nodes */
   body = prod->getChild(0);
