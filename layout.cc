@@ -172,6 +172,15 @@ static pair<float,float> computeSizeConcat(node *n, nodesizes *sizes)
 	      else
 		firstContent = 0;
 	      rowWidth += csz.first;
+	      /* A choice or loop child normally has rail siblings that
+		 add 0.5*colsep each side.  When those rails are absent
+		 (e.g. after subsume merges the rails away), add colsep
+		 to compensate so the parent loop/choice gets the right
+		 width for its vertical rail columns. */
+	      if((child->is_choice() || child->is_loop()) &&
+		 (i == 0 || !n->getChild(i-1)->is_rail()) &&
+		 (i+1 >= nc || !n->getChild(i+1)->is_rail()))
+		rowWidth += sizes->colsep;
 	    }
 	  if(csz.second > rowHeight)
 	    rowHeight = csz.second;
@@ -454,12 +463,31 @@ static NodeGeom layoutConcat(node *n, coordinate origin,
 	      firstContent = 0;
 	    }
 
+	  /* A choice or loop without adjacent rail siblings needs
+	     extra spacing to compensate for the missing rails. Split
+	     the padding evenly: half before, half after. */
+	  if((child->is_choice() || child->is_loop()) &&
+	     (i == 0 || !n->getChild(i-1)->is_rail()) &&
+	     (i+1 >= nc || !n->getChild(i+1)->is_rail()))
+	    {
+	      cursorX += 0.5f * sizes->colsep;
+	      lineWidth += 0.5f * sizes->colsep;
+	    }
+
 	  childOrigin = coordinate(cursorX, cursorY);
 	  childg = layoutNode(child, childOrigin, geom, sizes);
 	  cursorX += childg.width;
 	  lineWidth += childg.width;
 	  if(childg.height > rowHeight)
 	    rowHeight = childg.height;
+
+	  if((child->is_choice() || child->is_loop()) &&
+	     (i == 0 || !n->getChild(i-1)->is_rail()) &&
+	     (i+1 >= nc || !n->getChild(i+1)->is_rail()))
+	    {
+	      cursorX += 0.5f * sizes->colsep;
+	      lineWidth += 0.5f * sizes->colsep;
+	    }
 	}
     }
 
