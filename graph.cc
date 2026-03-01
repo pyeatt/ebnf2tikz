@@ -455,6 +455,7 @@ nontermnode::nontermnode(string s):node()
   str = s;
   style="nonterminal";
   format="railname";
+  wrapped = 0;
   sizes->getSize(nodename,myWidth,myHeight);
   ea = nodename+".east";
   wa = nodename+".west";
@@ -466,16 +467,38 @@ nontermnode::nontermnode(const nontermnode &original):node(original)
   style = original.style;
   format = original.format;
   str = original.str;
+  wrapped = original.wrapped;
   sizes->getSize(nodename,myWidth,myHeight);
 }
 
 string nontermnode::texName()
 {
   string display;
+  stringstream outs;
+  string::size_type pos, last;
 
   display = str;
   if(type == NONTERM)
     replace(display.begin(), display.end(), '_', ' ');
+
+  if(wrapped && type == NONTERM && display.find(' ') != string::npos)
+    {
+      outs << "\\shortstack[l]{";
+      last = 0;
+      pos = display.find(' ');
+      while(pos != string::npos)
+	{
+	  outs << "\\" << format << "{" << display.substr(last, pos - last)
+	       << "\\strut}";
+	  outs << "\\\\";
+	  last = pos + 1;
+	  pos = display.find(' ', last);
+	}
+      outs << "\\" << format << "{" << display.substr(last) << "\\strut}";
+      outs << "}";
+      return outs.str();
+    }
+
   return latexwrite(format, display);
 }
 

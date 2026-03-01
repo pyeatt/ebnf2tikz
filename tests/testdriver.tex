@@ -152,6 +152,11 @@ getdistc/.code 2 args={
 
 
 \begin{document}
+\makeatletter
+\pgf@x=\textwidth%
+\FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
+\immediate\write\tempfile{textwidth \@temp@tw}
+\makeatother
 \newlength{\tmplength}
 \newlength{\tmplengthb}
 \newlength{\tmplengthc}
