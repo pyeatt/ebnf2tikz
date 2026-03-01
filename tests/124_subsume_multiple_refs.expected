@@ -4,12 +4,10 @@ production: fullp
   concat node15 : drawtoprev=0 beforeskip=0 width=0 height=0 coord8 coord5
     \nullnode{start1\strut} ->  coord5 : drawtoprev=0 beforeskip=0 width=0 height=9 coord5 coord5
     \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
-    concat node27 : drawtoprev=1 beforeskip=0 width=0 height=0 node29.east node28.west
-      \railnonterm{x\strut} ->  node28 : drawtoprev=1 beforeskip=8 width=8 height=6 node28.east node28.west
-      \railnonterm{y\strut} ->  node29 : drawtoprev=1 beforeskip=8 width=8 height=6 node29.east node29.west
+    \railnonterm{x\strut} ->  node28 : drawtoprev=1 beforeskip=8 width=8 height=6 node28.east node28.west
+    \railnonterm{y\strut} ->  node29 : drawtoprev=1 beforeskip=8 width=8 height=6 node29.east node29.west
     \railnonterm{z\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
-    concat node30 : drawtoprev=1 beforeskip=0 width=0 height=0 node32.east node31.west
-      \railnonterm{x\strut} ->  node31 : drawtoprev=1 beforeskip=8 width=8 height=6 node31.east node31.west
-      \railnonterm{y\strut} ->  node32 : drawtoprev=1 beforeskip=8 width=8 height=6 node32.east node32.west
+    \railnonterm{x\strut} ->  node31 : drawtoprev=1 beforeskip=8 width=8 height=6 node31.east node31.west
+    \railnonterm{y\strut} ->  node32 : drawtoprev=1 beforeskip=8 width=8 height=6 node32.east node32.west
     \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
     \nullnode{end2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8

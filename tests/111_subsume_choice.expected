@@ -5,12 +5,11 @@ production: listc
     \nullnode{start1\strut} ->  coord5 : drawtoprev=0 beforeskip=0 width=0 height=9 coord5 coord5
     \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
     \railnonterm{itemc\strut} ->  node12 : drawtoprev=1 beforeskip=8 width=8 height=6 node12.east node12.west
-    concat node32 : drawtoprev=1 beforeskip=0 width=0 height=0 node37.east node33.west
-      rail  UP node33 : drawtoprev=1 beforeskip=8 width=0 height=0 node33.east node33.west
-      choices node34 : leftrail=node33 rightrail=node37 drawtoprev=0 beforeskip=8 width=0 height=0 node35.east node35.west
-        \railnonterm{,\strut} ->  node35 : drawtoprev=0 beforeskip=0 width=8 height=6 node35.east node35.west
-        \railnonterm{;\strut} ->  node36 : drawtoprev=0 beforeskip=0 width=8 height=6 node36.east node36.west
-      rail  UP node37 : drawtoprev=1 beforeskip=8 width=0 height=0 node37.east node37.west
+    rail  UP node33 : drawtoprev=1 beforeskip=8 width=0 height=0 node33.east node33.west
+    choices node34 : leftrail=node33 rightrail=node37 drawtoprev=0 beforeskip=8 width=0 height=0 node35.east node35.west
+      \railnonterm{,\strut} ->  node35 : drawtoprev=0 beforeskip=0 width=8 height=6 node35.east node35.west
+      \railnonterm{;\strut} ->  node36 : drawtoprev=0 beforeskip=0 width=8 height=6 node36.east node36.west
+    rail  UP node37 : drawtoprev=1 beforeskip=8 width=0 height=0 node37.east node37.west
     \railnonterm{itemc\strut} ->  node15 : drawtoprev=1 beforeskip=8 width=8 height=6 node15.east node15.west
     \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
     \nullnode{end2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8

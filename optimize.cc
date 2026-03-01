@@ -156,21 +156,21 @@ void productionnode::optimize()
   int tmp;
 
   do{
+    tmp = body->mergeChoices(0);
+  }while(tmp > 0);
+
+  do{
+    tmp = body->mergeConcats(0);
+    tmp += body->liftConcats(0);
+  }while(tmp > 0);
+
+  do{
     tmp = body->analyzeNonOptLoops(0);
   }while(tmp > 0);
 
   do{
     tmp = body->analyzeOptLoops(0);
   }while(tmp > 0);
-
-  // do{
-  //   tmp = body->mergeChoices(0);
-  // }while(tmp > 0);
-
-  // do{
-  //   tmp = body->mergeConcats(0);
-  //   tmp += body->liftConcats(0);
-  // }while(tmp > 0);
 }
 
 // ------------------------------------------------------------------------
@@ -219,9 +219,33 @@ int choicenode::mergeChoices(int depth)
 	      if((*j)->getLeftRail() != NULL)
 		(*j)->setLeftRail(leftrail);
 	      if((*j)->getRightRail() != NULL)
-		(*j)->setRightRail(leftrail);
-	    }	  
+		(*j)->setRightRail(rightrail);
+	    }
 	  
+	  sum++;
+	}
+      else if((*i)->is_choice())
+	{
+	  ip = dynamic_cast<choicenode*>(*i);
+	  vector<node*>* inodes = &(ip->nodes);
+	  i = nodes.erase(i);
+	  if(inodes->front()->is_null())
+	    {
+	      i = nodes.insert(i, inodes->begin()+1, inodes->end());
+	      delete inodes->front();
+	      inodes->erase(inodes->begin());
+	    }
+	  else
+	    i = nodes.insert(i, inodes->begin(), inodes->end());
+	  inodes->clear();
+	  delete ip;
+	  for(auto j = nodes.begin(); j != nodes.end(); j++)
+	    {
+	      if((*j)->getLeftRail() != NULL)
+		(*j)->setLeftRail(leftrail);
+	      if((*j)->getRightRail() != NULL)
+		(*j)->setRightRail(rightrail);
+	    }
 	  sum++;
 	}
       else
@@ -310,6 +334,18 @@ int concatnode::mergeConcats(int depth){
 }
 
 
+static void clearRailsRecursive(node *n, node *lr, node *rr)
+{
+  int ci;
+
+  if(lr == NULL || n->getLeftRail() == lr || n->getLeftRail() == rr)
+    n->setLeftRail(NULL);
+  if(rr == NULL || n->getRightRail() == rr || n->getRightRail() == lr)
+    n->setRightRail(NULL);
+  for(ci = 0; ci < n->numChildren(); ci++)
+    clearRailsRecursive(n->getChild(ci), lr, rr);
+}
+
 static int countMatches(node *alt, vector<node*> &parentNodes, int before);
 
 // Analyze optional loops.
@@ -388,6 +424,9 @@ int concatnode::analyzeOptLoops(int depth)
 		    bodyConcat->insert(nodes[ri-minMatch+bi]->clone());
 		  newBody = bodyConcat;
 		}
+	      // Cloned nodes may have stale rail pointers from the
+	      // originals; clear them all.
+	      clearRailsRecursive(newBody, NULL, NULL);
 
 	      // Strip minMatch leading elements from each matching
 	      // repeat alternative.
@@ -449,6 +488,17 @@ int concatnode::analyzeOptLoops(int depth)
 
 	  delete[] altMatches;
 
+	  // Capture all rail pointers that will be deleted, then
+	  // recursively clear any references to them in the loop subtree.
+	  {
+	    node *loopLR = loop->getLeftRail();
+	    node *loopRR = loop->getRightRail();
+	    node *outerLR = nodes[ri];
+	    node *outerRR = nodes[ri+2];
+	    clearRailsRecursive(loop, loopLR, loopRR);
+	    clearRailsRecursive(loop, outerLR, outerRR);
+	  }
+
 	  // Delete the loop's internal leftrail/rightrail (orphaned
 	  // rail nodes from the parser, not in any concat).
 	  if(loop->getLeftRail() != NULL)
@@ -460,12 +510,6 @@ int concatnode::analyzeOptLoops(int depth)
 	    {
 	      delete loop->getRightRail();
 	      loop->setRightRail(NULL);
-	    }
-	  // Clear rail pointers on loop alternatives too
-	  for(ai = 0; ai < loop->numChildren(); ai++)
-	    {
-	      loop->getChild(ai)->setLeftRail(NULL);
-	      loop->getChild(ai)->setRightRail(NULL);
 	    }
 
 	  // Delete the choice node (now has only the null child)
@@ -602,6 +646,9 @@ int concatnode::analyzeNonOptLoops(int depth)
 		    bodyConcat->insert(nodes[ri-minMatch+bi]->clone());
 		  newBody = bodyConcat;
 		}
+	      // Cloned nodes may have stale rail pointers from the
+	      // originals; clear them all.
+	      clearRailsRecursive(newBody, NULL, NULL);
 
 	      // Strip minMatch leading elements from each repeat alternative.
 	      // Only strip from alternatives that actually matched.
@@ -664,15 +711,9 @@ int concatnode::analyzeNonOptLoops(int depth)
 	      // ri now points minMatch positions too far; adjust
 	      ri -= minMatch;
 
-	      // Clear rail pointers on the loop and its alternatives
-	      // before deleting the rail nodes
-	      loop->setLeftRail(NULL);
-	      loop->setRightRail(NULL);
-	      for(ai = 0; ai < loop->numChildren(); ai++)
-		{
-		  loop->getChild(ai)->setLeftRail(NULL);
-		  loop->getChild(ai)->setRightRail(NULL);
-		}
+	      // Recursively clear rail pointers matching the rails
+	      // that are about to be deleted
+	      clearRailsRecursive(loop, nodes[ri], nodes[ri+2]);
 
 	      // Remove the two rail nodes
 	      delete nodes[ri];       // left rail
