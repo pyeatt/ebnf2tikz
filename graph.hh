@@ -88,12 +88,6 @@ protected:
   railnode *leftrail,*rightrail;
   int dead;
   coordinate location; // where to draw the east point of the thing
-  // use a variadic function to draw lines.  first argument is the
-  // number of points in the line, The remaining arguments are the
-  // tikz coordinates of things you want connected (eg "node1.east",
-  // "coord3", "10,10", etc
-  template <class ... Args>
-  void line(ofstream &outs, Args ... args);
   // Returns 0 if two nodes do not have the same type.
   int same_type(node &r){return type == r.type;}
 public:
@@ -119,11 +113,6 @@ public:
   virtual void setRightRail(railnode* p){rightrail = p;}
   railnode* getLeftRail(){return leftrail;}
   railnode* getRightRail(){return rightrail;}
-  // Functions to draw connections to the left and right rails.
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,
-			      vraildir join,int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,
-			       vraildir join, int drawself);
   // If something is optimized out, it is marked as dead
   void makeDead(){dead = 1;}
   int isDead(){return dead;}
@@ -143,6 +132,7 @@ public:
   static void deleteData() {
     delete sizes;
   }
+  static nodesizes* getSizes(){return sizes;}
   static float getColSep(){return sizes->colsep;}
   int is_choice(){return type==CHOICE;}
   int is_terminal(){return type==TERMINAL;}
@@ -156,14 +146,6 @@ public:
   int is_rail(){return type==RAIL;}
   string east(){return ea;}
   string west(){return wa;}
-  // start at start, lay yourself out, and return the coordinate that
-  // you end at.  The "draw" argument tells whether or not to actually
-  // emit tikz code.  The compiler will call this method twice for
-  // every object.  The first time is just to calculate the size of
-  // the object.  The second time will be to actually emit code.
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth){
-    return start;}
 
   virtual void fixSkips(){}
   
@@ -204,10 +186,6 @@ public:
   singlenode(const singlenode &original);
   virtual singlenode* clone() const;
   virtual void forgetChild(int n);
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,
-			      vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,
-			       vraildir join, int drawself);
   virtual void mergeRails(){body->mergeRails();}
   virtual ~singlenode(){if(body != NULL) delete body;}
   virtual int mergeConcats(int depth){
@@ -281,8 +259,6 @@ public:
   virtual void setBottom(coordinate b){bottom = b;}
   virtual coordinate getBottom(){return bottom;}
   virtual void dump(int depth) const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return !(*this == r);}
   virtual vraildir getRailDir(){return direction;}
@@ -306,18 +282,13 @@ public:
   virtual void forgetChild(int n){}
   virtual void dump(int depth) const;
   virtual string texName() {return latexwrite(format,str);}
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
+  string getStyle(){return style;}
   virtual int mergeConcats(int depth){return 0;}
   virtual int mergeChoices(int depth){return 0;}
   virtual int liftConcats(int depth){return 0;}
   virtual node* getChild(int n){return NULL;}
   virtual int analyzeOptLoops(int depth){return 0;}
   virtual int analyzeNonOptLoops(int depth){return 0;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,
-			      vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,
-			       vraildir join, int drawself);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} 
   virtual node* subsume(regex_t* name, node *replacement);
@@ -344,8 +315,6 @@ public:
   nullnode(string s);
   nullnode(const nullnode &original);
   virtual nullnode* clone() const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual string texName() { return "nullnode";};
   virtual void dump(int depth) const;
 };
@@ -359,8 +328,6 @@ public:
   newlinenode(const newlinenode &original);
   virtual newlinenode* clone() const;
   virtual ~newlinenode(){}
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
   virtual void setLineHeight(float h){lineheight=h;}
@@ -379,8 +346,6 @@ public:
   virtual rownode* clone() const;
   virtual ~rownode(){}
   virtual void dump(int depth) const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual string texName() { return "rownode";};
 };
 
@@ -404,8 +369,6 @@ public:
   virtual void insertFirst(node *node);
   virtual int numChildren(){return nodes.size();}
   virtual node* getChild(int n){return nodes[n];}
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual int operator ==(node &r);
   virtual int operator !=(node &r){return  !(*this == r);} 
   virtual node* subsume(regex_t* name, node *replacement);
@@ -435,18 +398,12 @@ public:
   virtual ~choicenode(){}
   virtual int rail_left(){return 1;}
   virtual int rail_right(){return 1;}
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,
-			      vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,
-			       vraildir join, int drawself);
   virtual void dump(int depth) const;
   virtual int mergeChoices(int depth);
   virtual void insertFirst(node *node);
   virtual void fixSkips();
   virtual string texName() { return "choicenode";};
   virtual void reverse();
-  virtual coordinate place(ofstream &outs,int draw, int drawrails,
-			   coordinate start, node *parent, int depth);
 };
 
 
@@ -460,8 +417,6 @@ public:
   loopnode* clone() const;
   virtual ~loopnode(){}
   virtual void dump(int depth) const;
-  virtual void drawToLeftRail(ofstream &outs, railnode* p, vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p, vraildir join, int drawself);
   void insert(node *node);
   node* getRepeat();
   void setRepeat(node *r);
@@ -487,15 +442,9 @@ public:
   virtual ~concatnode(){}
   virtual void dump(int depth) const;
   virtual void insert(node* p);
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual int mergeConcats(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
-  virtual void drawToLeftRail(ofstream &outs, railnode* p,
-			      vraildir join, int drawself);
-  virtual void drawToRightRail(ofstream &outs, railnode* p,
-			       vraildir join, int drawself);
   virtual void mergeRails();
   virtual void setPrevious(node* p);
   virtual void setNext(node* p);
@@ -532,11 +481,10 @@ public:
   }
   virtual regex_t* getSubsume(){return subsume_spec;}
   virtual string getName(){return name;}
+  annotmap* getAnnotations(){return annotations;}
   void optimize();
   virtual node* subsume(regex_t* name, node *replacement);
   virtual void dump(int depth) const;
-  virtual coordinate place(ofstream &outs, int draw, int drawrails,
-			   coordinate start,node *parent, int depth);
   virtual void fixSkips(){body->fixSkips();}
   virtual node* createRows();
   virtual string texName() {return "production node '"+name+"'";};
