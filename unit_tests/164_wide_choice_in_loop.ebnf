@@ -1,0 +1,3 @@
+wide_choice_in_loop =
+    'PROCESS' , identifier , { ( variable_declaration | type_declaration | constant_declaration ) , ';' } ,
+    compound_statement , declaration_part , 'DONE' ;

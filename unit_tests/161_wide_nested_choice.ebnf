@@ -1,0 +1,4 @@
+wide_nested_choice =
+    'DEFINE' , ( ordinal_constant | real_constant | string_constant | character_string ) ,
+    ( relational_operator | additive_operator | multiplicative_operator ) ,
+    ( simple_expression | constant_expression | ordinal_constant ) , declaration_part , ';' ;

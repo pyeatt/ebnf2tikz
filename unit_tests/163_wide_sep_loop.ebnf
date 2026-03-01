@@ -1,0 +1,4 @@
+wide_sep_loop =
+    'LIST' , actual_parameter , { ',' , actual_parameter } ,
+    'IN' , statement_list , { ';' , statement_list } ,
+    compound_statement , declaration_part , 'END' ;

@@ -1,0 +1,8 @@
+toollist =
+  '(' , tool , { ',' , tool } , ')' ;
+
+tool =
+  'hammer' | 'screwdriver' | saw;
+
+saw =
+   ('hand' | ( [ 'cordless'] , ('reciprocating' | 'circular') , 'power' ) ),'saw';

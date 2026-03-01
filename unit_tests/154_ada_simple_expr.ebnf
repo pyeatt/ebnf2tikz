@@ -1,0 +1,1 @@
+ada_simple_expression = [sign], factor, {('+' | '-' | '&' | '*' | '/' | 'mod' | 'rem'), factor} ;

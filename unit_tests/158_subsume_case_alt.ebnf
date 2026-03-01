@@ -1,0 +1,14 @@
+<<-- caption "Syntax for the case statement alternative" -->>
+case_statement_alternative =
+    'when' , choices , '=>', sequence_of_statements;
+
+<<-- subsume as "ada_choice" -->>
+ada_choice =
+    simple_expression |
+    discrete_range |
+    simple_name |
+    'others' ;
+
+<<-- subsume as "ada_choices" -->>
+ada_choices =
+    ada_choice, { '|', ada_choice } ;
