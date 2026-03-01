@@ -1,5 +1,5 @@
 Unable to open input file bnfnodes.dat. Continuing
-production: test2
+production: nonopt_sep
   concat node11 : drawtoprev=0 beforeskip=0 width=0 height=0 coord5 coord2
     \nullnode{start1\strut} ->  coord2 : drawtoprev=0 beforeskip=0 width=0 height=9 coord2 coord2
     \nullnode{start2\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3

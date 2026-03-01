@@ -1,1 +1,1 @@
-test2 = A , { sep , A } ;
+nonopt_sep = A , { sep , A } ;
