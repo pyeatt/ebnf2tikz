@@ -185,6 +185,7 @@ void singlenode::setParent(node* p)
 
 multinode::multinode(const multinode &original):node(original)
   { // clone all of the child nodes;
+    rails_added = original.rails_added;
     for(auto i=original.nodes.begin();i!=original.nodes.end();i++)
       {
 	nodes.push_back((*i)->clone());
@@ -222,10 +223,11 @@ void multinode::forgetChild(int n)
 }
 
 multinode::multinode(node *p):node(){
+  rails_added = 0;
   nodes.push_back(p);
   if(p!=NULL)
     {
-      ea=p->east(); 
+      ea=p->east();
       wa=p->west();
     }
   drawtoprev=0;
