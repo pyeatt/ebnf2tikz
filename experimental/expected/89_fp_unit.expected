@@ -1,0 +1,9 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: unit
+  sequence
+    terminal 'UNIT'
+    nonterminal identifier
+    terminal ';'
+    nonterminal interface_part
+    nonterminal implementation_part
+    terminal '.'

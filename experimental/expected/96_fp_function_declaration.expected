@@ -1,0 +1,20 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: function_declaration
+  sequence
+    terminal 'FUNCTION'
+    nonterminal identifier
+    optional
+      sequence
+        terminal '('
+        optional
+          nonterminal formal_parameter_list
+        terminal ')'
+    terminal ':'
+    nonterminal type
+    terminal ';'
+    optional
+      nonterminal declaration_part
+    optional
+      sequence
+        nonterminal compound_statement
+        terminal ';'

@@ -1,0 +1,18 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: procedure_declaration
+  sequence
+    terminal 'PROCEDURE'
+    nonterminal identifier
+    optional
+      sequence
+        terminal '('
+        optional
+          nonterminal formal_parameter_list
+        terminal ')'
+    terminal ';'
+    optional
+      nonterminal declaration_part
+    optional
+      sequence
+        nonterminal compound_statement
+        terminal ';'

@@ -1,0 +1,3 @@
+/home/pyeatt/ebnf2tikz/free-pascal/build/CMakeFiles/pdf.dir
+/home/pyeatt/ebnf2tikz/free-pascal/build/CMakeFiles/edit_cache.dir
+/home/pyeatt/ebnf2tikz/free-pascal/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,9 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: elemk
+  terminal 'x'
+production: listk
+  loop
+    body:
+      terminal 'x'
+    repeat:
+      terminal ','

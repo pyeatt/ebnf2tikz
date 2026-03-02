@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/pyeatt/ebnf2tikz/free-pascal/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

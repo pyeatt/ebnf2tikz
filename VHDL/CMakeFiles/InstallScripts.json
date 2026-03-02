@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/pyeatt/ebnf2tikz/VHDL/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,31 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: choiceconcatchoiceloop
+  loop
+    repeat:
+      nonterminal a
+    repeat:
+      nonterminal d
+    repeat:
+      sequence
+        nonterminal c
+        choice
+          nonterminal z
+          terminal '35'
+          terminal 'b'
+          nonterminal q
+        nonterminal t
+    repeat:
+      sequence
+        nonterminal l
+        nonterminal m
+        nonterminal n
+    repeat:
+      sequence
+        choice
+          nonterminal g
+          nonterminal h
+        nonterminal a
+        optional
+          choice
+            nonterminal l
+            nonterminal c

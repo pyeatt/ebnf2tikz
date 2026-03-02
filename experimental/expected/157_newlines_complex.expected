@@ -1,0 +1,27 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: otherb
+  sequence
+    nonterminal a
+    nonterminal b
+    newline
+    nonterminal c
+    nonterminal d
+    nonterminal e
+    nonterminal f
+    newline
+    loop
+      repeat:
+        sequence
+          nonterminal g
+          nonterminal h
+          nonterminal i
+          nonterminal j
+    newline
+    optional
+      sequence
+        nonterminal k
+        nonterminal l
+        nonterminal m
+    newline
+    nonterminal n
+    nonterminal o

@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: atomg
+  terminal 'x'
+production: seqg
+  sequence
+    terminal 'x'
+    terminal 'x'
+    terminal 'x'

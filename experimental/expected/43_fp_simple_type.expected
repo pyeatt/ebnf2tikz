@@ -1,0 +1,6 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: simple_type
+  choice
+    nonterminal ordinal_type
+    nonterminal real_type
+    nonterminal boolean_type

@@ -1,0 +1,5 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: loop_basic
+  loop
+    repeat:
+      nonterminal a

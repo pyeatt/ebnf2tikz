@@ -1,0 +1,13 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: wide_loop
+  sequence
+    terminal 'START'
+    loop
+      repeat:
+        sequence
+          nonterminal variable_declaration
+          terminal ';'
+          nonterminal type_declaration
+          terminal ';'
+          nonterminal constant_declaration
+    terminal 'STOP'
