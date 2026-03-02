@@ -11,3 +11,5 @@ annot_parser.cc
 annot_parser.hh
 annot_location.hh
 bnfnodes.dat
+TODO.txt
+CLAUDE.md
