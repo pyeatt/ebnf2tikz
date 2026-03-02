@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: simple_expression
-  sequence
-    nonterminal term
-    loop
-      repeat:
-        sequence
-          nonterminal additive_operator
-          nonterminal term

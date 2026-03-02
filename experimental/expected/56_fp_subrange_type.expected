@@ -1,6 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: subrange_type
-  sequence
-    nonterminal constant
-    terminal '..'
-    nonterminal constant

@@ -32,7 +32,7 @@ ebnf2tikz
 # include <cstdlib>
 # include <cstring>
 # include <string>
-# include "graph.hh"
+# include "ast.hh"
 
 # include "annot_parser.hh"
 

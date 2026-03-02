@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: and_expression
-  sequence
-    nonterminal relational_expression
-    loop
-      repeat:
-        sequence
-          terminal 'AND'
-          nonterminal relational_expression

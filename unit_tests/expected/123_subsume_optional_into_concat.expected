@@ -1,13 +1,10 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: opto
+  optional
+    terminal 'a'
 production: fullo
-  concat node19 : drawtoprev=0 beforeskip=0 width=0 height=0 coord9 coord6
-    \nullnode{start1\strut} ->  coord6 : drawtoprev=0 beforeskip=0 width=0 height=9 coord6 coord6
-    \nullnode{start2\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    \railnonterm{b\strut} ->  node14 : drawtoprev=1 beforeskip=8 width=8 height=6 node14.east node14.west
-    choices node34 : drawtoprev=1 beforeskip=0 width=0 height=0 node35.east node35.west
-      \nullnode{NULL node\strut} ->  node35 : drawtoprev=0 beforeskip=8 width=8 height=6 node35.east node35.west
-      \railnonterm{a\strut} ->  node36 : drawtoprev=0 beforeskip=0 width=8 height=6 node36.east node36.west
-    \railnonterm{c\strut} ->  node17 : drawtoprev=1 beforeskip=8 width=8 height=6 node17.east node17.west
-    \nullnode{end1\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
-    \nullnode{end2\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
+  sequence
+    terminal 'b'
+    optional
+      terminal 'a'
+    terminal 'c'

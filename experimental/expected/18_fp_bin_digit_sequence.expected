@@ -1,7 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: bin_digit_sequence
-  sequence
-    nonterminal bin_digit
-    loop
-      repeat:
-        nonterminal bin_digit

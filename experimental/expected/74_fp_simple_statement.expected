@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: simple_statement
-  choice
-    nonterminal assignment_statement
-    nonterminal procedure_statement
-    sequence
-      terminal 'GOTO'
-      nonterminal label

@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: repeat_statement
-  sequence
-    terminal 'REPEAT'
-    nonterminal statement_list
-    optional
-      terminal ';'
-    terminal 'UNTIL'
-    nonterminal expression
