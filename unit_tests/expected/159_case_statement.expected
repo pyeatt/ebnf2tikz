@@ -14,9 +14,11 @@ production: case_statement
     \railnonterm{expression\strut} ->  node10 : drawtoprev=1 beforeskip=8 width=8 height=6 node10.east node10.west
     \railnonterm{is\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
     newline coord3 : drawtoprev=0 beforeskip=8 width=0 height=0 coord3 coord3
-    loop node17 : drawtoprev=0 beforeskip=8 width=0 height=0 coord2 coord2
+    rail  UP node18 : drawtoprev=1 beforeskip=8 width=0 height=0 node18.east node18.west
+    loop node17 : leftrail=node18 rightrail=node19 drawtoprev=0 beforeskip=8 width=0 height=0 coord2 coord2
       \railnonterm{case\_statement\_alternative\strut} ->  node40 : drawtoprev=1 beforeskip=8 width=8 height=6 node40.east node40.west
       \railnonterm{,\strut} ->  node13 : drawtoprev=1 beforeskip=8 width=8 height=6 node13.east node13.west
+    rail  UP node19 : drawtoprev=1 beforeskip=8 width=0 height=0 node19.east node19.west
     newline coord5 : drawtoprev=0 beforeskip=8 width=0 height=0 coord5 coord5
     \railnonterm{end\strut} ->  node23 : drawtoprev=1 beforeskip=8 width=8 height=6 node23.east node23.west
     \railnonterm{case\strut} ->  node24 : drawtoprev=1 beforeskip=8 width=8 height=6 node24.east node24.west

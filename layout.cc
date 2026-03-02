@@ -259,10 +259,9 @@ static pair<float,float> computeSizeChoice(node *n, nodesizes *sizes)
     }
 
   /* add left and right padding for the rail columns.
-     When the widest child is itself a choice/loop, its width
-     already includes railPad; skip ours so there is only one
-     set of rails. */
-  if(!widestIsRailed)
+     Loops always own their own rails.  For standalone choices,
+     skip railPad when the widest child already includes rails. */
+  if(n->is_loop() || !widestIsRailed)
     maxWidth += 2.0f * sizes->colsep;
 
   return make_pair(maxWidth, totalHeight);
@@ -653,13 +652,12 @@ static NodeGeom layoutChoice(node *n, coordinate origin,
 	}
     }
 
-  /* When the widest child is itself a choice/loop, its width
-     already includes rail columns.  Skip our own railPad so there
-     is only one set of rails. */
-  if(widestIsRailed)
-    railPad = 0;
-  else
+  /* Loops always own their own rails.  For standalone choices,
+     skip railPad when the widest child already includes rails. */
+  if(n->is_loop() || !widestIsRailed)
     railPad = sizes->colsep;
+  else
+    railPad = 0;
 
   /* second pass: place children vertically, centered within maxWidth */
   cursorY = origin.y;
@@ -922,8 +920,13 @@ static void connectConcat(node *n, map<node*, NodeGeom> &geom,
 	}
       else
 	{
-	  /* content node (including null nodes): connect to previous */
+	  /* content node (including null nodes): connect to previous.
+	     Skip the entry stub between start1 and start2 (the first
+	     two null nodes) — it is redundant with the line from
+	     start2 to the first real content node. */
 	  if(prevContent != NULL &&
+	     !(prevContent->is_null() && child->is_null() &&
+	       prevContent->getBeforeSkip() == 0) &&
 	     geom.find(prevContent) != geom.end() &&
 	     geom.find(child) != geom.end())
 	    {
@@ -961,11 +964,12 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 
   choiceGeom = geom[n];
 
-  /* When this choice shares rail columns with a parent loop/choice,
-     the extensions beyond the rail are handled by the parent. */
+  /* When this choice shares rail columns with a parent choice,
+     the extensions beyond the rail are handled by the parent.
+     A parent loop always owns its own wider rails, so the choice
+     should extend outward to reach the loop's rail positions. */
   parentIsRailed = (n->getParent() != NULL &&
-		    (n->getParent()->is_choice() ||
-		     n->getParent()->is_loop()));
+		    n->getParent()->is_choice());
 
   /* recurse into all children first */
   for(i = 0; i < nc; i++)
@@ -1002,7 +1006,35 @@ static void connectChoice(node *n, map<node*, NodeGeom> &geom,
 	return;
       childGeom = geom[child];
 
-      if(parentIsRailed)
+      /* Use 3-point lines when the parent already provides rails.
+	 Use 4-point lines with a half-colsep inward offset when
+	 the child's entry aligns with the rail (e.g. a loop
+	 sharing the choice's rail columns).  Otherwise use
+	 4-point lines that extend past the rail. */
+      if(childGeom.entry.x == railX)
+	{
+	  /* 4-point: down then inward with half-colsep offset */
+	  float halfCol = 0.5f * sizes->colsep;
+
+	  pl.points.clear();
+	  pl.points.push_back(coordinate(railX - halfCol,
+					 firstGeom.entry.y));
+	  pl.points.push_back(coordinate(railX, firstGeom.entry.y));
+	  pl.points.push_back(coordinate(railX, childGeom.entry.y));
+	  pl.points.push_back(coordinate(railX + halfCol,
+					 childGeom.entry.y));
+	  addPolyline(lines, pl);
+
+	  pl.points.clear();
+	  pl.points.push_back(coordinate(exitRailX - halfCol,
+					 childGeom.exit.y));
+	  pl.points.push_back(coordinate(exitRailX, childGeom.exit.y));
+	  pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
+	  pl.points.push_back(coordinate(exitRailX + halfCol,
+					 firstGeom.exit.y));
+	  addPolyline(lines, pl);
+	}
+      else if(parentIsRailed)
 	{
 	  /* 3-point: rail down to entry, no extension beyond rail */
 	  pl.points.clear();
@@ -1073,18 +1105,39 @@ static void connectLoop(node *n, map<node*, NodeGeom> &geom,
   exitRailX = loopGeom.origin.x + loopGeom.width;
 
   /* Straight horizontal lines for body entry and exit, connecting
-     the rail positions to the body endpoints.  The parent node
-     (concat or choice) is responsible for drawing lines up to
-     the loop boundary. */
-  pl.points.clear();
-  pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
-  pl.points.push_back(bodyGeom.entry);
-  addPolyline(lines, pl);
+     the rail positions to the body endpoints.  Only needed when the
+     loop has its own rails.  When the loop shares its rails with
+     an ancestor choice (after mergeRails), the choice handles the
+     connections and stubs are redundant. */
+  {
+    int needStubs;
+    node *p;
+    needStubs = 1;
+    p = n->getParent();
+    while(p != NULL)
+      {
+	if(p->is_choice() &&
+	   p->getLeftRail() == n->getLeftRail() &&
+	   p->getRightRail() == n->getRightRail())
+	  { needStubs = 0; p = NULL; }
+	else if(p->is_production())
+	  { p = NULL; }
+	else
+	  { p = p->getParent(); }
+      }
+    if(needStubs)
+    {
+      pl.points.clear();
+      pl.points.push_back(coordinate(railX, bodyGeom.entry.y));
+      pl.points.push_back(bodyGeom.entry);
+      addPolyline(lines, pl);
 
-  pl.points.clear();
-  pl.points.push_back(bodyGeom.exit);
-  pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
-  addPolyline(lines, pl);
+      pl.points.clear();
+      pl.points.push_back(bodyGeom.exit);
+      pl.points.push_back(coordinate(exitRailX, bodyGeom.exit.y));
+      addPolyline(lines, pl);
+    }
+  }
 
   /* The repeat (feedback) path flows right-to-left, but layoutConcat
      always sets entry=left, exit=right.  So for the feedback connections

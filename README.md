@@ -2,7 +2,7 @@
 
 Author: Larry D. Pyeatt
 
-February, 2021
+February, 2021 (updated March, 2026)
 
 ## What Does It Do?
 It is an optimizing compiler that converts (possibly annotated) <a href=https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>Extended Backus–Naur  Form</a> (EBNF) to railroad diagrams expressed as LaTeX <a href=https://en.wikipedia.org/wiki/PGF/TikZ> TikZ</a> commands.
@@ -96,20 +96,17 @@ Then you can just include the TikZ code in your LaTeX document, and it will draw
 
 ## About the Code
 
-This is a work in progress.  There are still a couple of bugs that I am aware of, but
-nothing major.  Some of the line drawing is not quite right, especially involving choice
-or loop nodes before and after newlines, and choices inside loops.  I should have that
-fixed in a few days.
+As of March, 2026, ebnf2tikz has been thoroughly debugged and there are no known issues. It would be nice to add an auto-wrap feature that automatically breaks long productions across multiple lines.
 
 Originally, I planned to have TikZ do most of the work.  However,
 while I could get it to do small diagrams, it failed miserably when
 the level of nesting went beyond three.  TikZ really does not have the
 concept of "sub-images" that have user-defined anchor points. I think
-it is possible because, ... look at CircuiTikZ. 
+it is possible because, ... look at CircuiTikZ.
 
 Trying to get TikZ to do all of the work to lay out complex diagrams was a nightmare.  It
 does not do recursive structures well. I put in some effort, then gave
-up and decided to go another direction.  I now have ebnf2tikz do all of the layout, and just use TikZ to do the drawing. 
+up and decided to go another direction.  I now have ebnf2tikz do all of the layout, and just use TikZ to do the drawing.
 This does mean that ebnf2tikz needs some information from LaTeX about how big the basic nodes are.  Therefore, you have to run ebnf2tikz, then LaTeX, then ebnf2tikz again, then LaTeX again.
 
 I have written it so that
@@ -134,13 +131,13 @@ railcolsep or any other layout settings.
 
 The good news is that this approach makes the diagrams as concise as
 they can possibly be. All of the layout is handled by ebnf2tikz, so
-LaTeX does not spend a lot of time on them. Also, I may be able to do
-some sort of "auto-newline" thing.
+LaTeX does not spend a lot of time on them.
 
 All nodes are placed using exact coordinates```\node (nodename) at (exact
 coordinate)``` but all lines are drawn using the node names.
 
 ## To Do
 
-I have not written the ```ebnf2tikz``` style file, so the ```\usepackage{ebnf2tiks|``` will not work.
+- Auto-wrap: automatically break productions that exceed ```\textwidth``` across multiple lines.
+- I have not written the ```ebnf2tikz``` style file, so the ```\usepackage{ebnf2tikz}``` will not work.
 For now, you just have to look at ```testdriver.tex``` and do the best you can.

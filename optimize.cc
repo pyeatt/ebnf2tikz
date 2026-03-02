@@ -72,6 +72,11 @@ int node::analyzeNonOptLoops(int depth)
   return 0;
 }
 
+int node::flattenLoopChoices()
+{
+  return 0;
+}
+
 // ------------------------------------------------------------------------
 
 int singlenode::liftConcats(int depth)
@@ -149,6 +154,76 @@ int multinode::analyzeNonOptLoops(int depth)
   return sum;
 }
 
+int multinode::flattenLoopChoices()
+{
+  int sum = 0;
+  int ni;
+
+  // Recurse into all children first
+  for(auto i = nodes.begin(); i != nodes.end(); i++)
+    sum += (*i)->flattenLoopChoices();
+
+  // For loops: flatten choice repeat children into direct alternatives
+  if(is_loop())
+    {
+      ni = 1;
+      while(ni < numChildren())
+	{
+	  if(getChild(ni)->is_choice())
+	    {
+	      node *ch = getChild(ni);
+	      int nch = ch->numChildren();
+	      int ci;
+	      forgetChild(ni);
+	      for(ci = nch - 1; ci >= 0; ci--)
+		{
+		  node *alt = ch->getChild(ci);
+		  ch->forgetChild(ci);
+		  alt->setParent(this);
+		  nodes.insert(nodes.begin() + ni, alt);
+		}
+	      delete ch;
+	      ni += nch;
+	      sum++;
+	    }
+	  else
+	    {
+	      ni++;
+	    }
+	}
+
+      // Remove null repeat alternatives only when at least
+      // one non-null repeat exists.
+      {
+	int hasNonNull = 0;
+	for(ni = 1; ni < numChildren(); ni++)
+	  {
+	    if(!getChild(ni)->is_null())
+	      hasNonNull = 1;
+	  }
+	if(hasNonNull)
+	  {
+	    ni = 1;
+	    while(ni < numChildren())
+	      {
+		if(getChild(ni)->is_null())
+		  {
+		    delete getChild(ni);
+		    forgetChild(ni);
+		    sum++;
+		  }
+		else
+		  {
+		    ni++;
+		  }
+	      }
+	  }
+      }
+    }
+
+  return sum;
+}
+
 // ------------------------------------------------------------------------
 
 void productionnode::optimize()
@@ -166,10 +241,10 @@ void productionnode::optimize()
 
   do{
     tmp = body->analyzeNonOptLoops(0);
-  }while(tmp > 0);
-
-  do{
-    tmp = body->analyzeOptLoops(0);
+    tmp += body->mergeConcats(0);
+    tmp += body->liftConcats(0);
+    tmp += body->analyzeOptLoops(0);
+    tmp += body->flattenLoopChoices();
   }while(tmp > 0);
 }
 
@@ -346,6 +421,21 @@ static void clearRailsRecursive(node *n, node *lr, node *rr)
     clearRailsRecursive(n->getChild(ci), lr, rr);
 }
 
+// Replace all references to oldrail with newrail throughout a subtree.
+// Handles the parser.yy bug where leftrail may actually point to the
+// right rail, so we check both leftrail and rightrail against oldrail.
+static void replaceRailRecursive(node *n, railnode *oldrail, railnode *newrail)
+{
+  int ci;
+
+  if(n->getLeftRail() == oldrail)
+    n->setLeftRail(newrail);
+  if(n->getRightRail() == oldrail)
+    n->setRightRail(newrail);
+  for(ci = 0; ci < n->numChildren(); ci++)
+    replaceRailRecursive(n->getChild(ci), oldrail, newrail);
+}
+
 static int countMatches(node *alt, vector<node*> &parentNodes, int before);
 
 // Analyze optional loops.
@@ -507,19 +597,14 @@ int concatnode::analyzeOptLoops(int depth)
 
 	  delete[] altMatches;
 
-	  // Capture all rail pointers that will be deleted, then
-	  // recursively clear any references to them in the loop subtree.
+	  // Clear the loop's internal rail pointers (orphaned from
+	  // the parser) and delete the corresponding rail nodes.
 	  {
 	    node *loopLR = loop->getLeftRail();
 	    node *loopRR = loop->getRightRail();
-	    node *outerLR = nodes[ri];
-	    node *outerRR = nodes[ri+2];
 	    clearRailsRecursive(loop, loopLR, loopRR);
-	    clearRailsRecursive(loop, outerLR, outerRR);
 	  }
 
-	  // Delete the loop's internal leftrail/rightrail (orphaned
-	  // rail nodes from the parser, not in any concat).
 	  if(loop->getLeftRail() != NULL)
 	    {
 	      delete loop->getLeftRail();
@@ -538,12 +623,106 @@ int concatnode::analyzeOptLoops(int depth)
 	  nodes[ri+1] = loop;
 	  loop->setParent(this);
 
-	  // Delete the two choice rail nodes from parent concat
-	  delete nodes[ri];            // left rail
-	  nodes.erase(nodes.begin() + ri);
-	  // now nodes[ri] is the loop, nodes[ri+1] is right rail
-	  delete nodes[ri+1];          // right rail
-	  nodes.erase(nodes.begin() + ri + 1);
+	  // Keep the outer rail nodes and wire them to the loop
+	  loop->setLeftRail((railnode*)nodes[ri]);
+	  loop->setRightRail((railnode*)nodes[ri+2]);
+
+	  // Flatten bare choice nodes among repeat children into
+	  // direct loop alternatives (choiceloop form).
+	  {
+	    int ni = 1;
+	    while(ni < loop->numChildren())
+	      {
+		if(loop->getChild(ni)->is_choice())
+		  {
+		    node *ch = loop->getChild(ni);
+		    int nch = ch->numChildren();
+		    int ci;
+		    // Detach all children from the choice
+		    loop->forgetChild(ni);
+		    for(ci = nch - 1; ci >= 0; ci--)
+		      {
+			node *alt = ch->getChild(ci);
+			ch->forgetChild(ci);
+			alt->setParent(loop);
+			loop->nodes.insert(loop->nodes.begin() + ni, alt);
+		      }
+		    delete ch;
+		    ni += nch;
+		  }
+		else
+		  {
+		    ni++;
+		  }
+	      }
+
+	    // Remove null repeat alternatives only when at least
+	    // one non-null repeat exists — the non-null alternatives
+	    // already provide feedback paths, so the null is redundant.
+	    // A loop whose only repeat is null needs it for feedback.
+	    {
+	      int hasNonNull = 0;
+	      ni = 1;
+	      while(ni < loop->numChildren())
+		{
+		  if(!loop->getChild(ni)->is_null())
+		    hasNonNull = 1;
+		  ni++;
+		}
+	      if(hasNonNull)
+		{
+		  ni = 1;
+		  while(ni < loop->numChildren())
+		    {
+		      if(loop->getChild(ni)->is_null())
+			{
+			  delete loop->getChild(ni);
+			  loop->forgetChild(ni);
+			}
+		      else
+			{
+			  ni++;
+			}
+		    }
+		}
+	    }
+	  }
+
+	  // When the loop body is a bare choice and the only repeat
+	  // is null, convert to choiceloop form: body becomes null,
+	  // choice children become repeat alternatives.  This is safe
+	  // inside analyzeOptLoops because the outer optional already
+	  // provides the zero-repetitions bypass.
+	  if(loop->getChild(0)->is_choice() &&
+	     loop->numChildren() == 2 &&
+	     loop->getChild(1)->is_null())
+	    {
+	      node *bodyChoice = loop->getChild(0);
+	      node *nullRepeat = loop->getChild(1);
+	      int nch = bodyChoice->numChildren();
+	      int ci;
+
+	      // Remove old body and null repeat
+	      loop->forgetChild(1);
+	      loop->forgetChild(0);
+
+	      // New null body
+	      node *newBody = new nullnode("NULL node");
+	      newBody->setParent(loop);
+	      loop->nodes.insert(loop->nodes.begin(), newBody);
+
+	      // Add choice children as repeat alternatives
+	      for(ci = 0; ci < nch; ci++)
+		{
+		  node *alt = bodyChoice->getChild(0);
+		  bodyChoice->forgetChild(0);
+		  alt->setParent(loop);
+		  loop->nodes.push_back(alt);
+		}
+
+	      delete bodyChoice;
+	      delete nullRepeat;
+	    }
 
 	  sum++;
 	  // don't advance ri — re-check in case of cascaded patterns
@@ -629,10 +808,13 @@ int concatnode::analyzeNonOptLoops(int depth)
 	  loop = (loopnode*)nodes[ri+1];
 	  numAlts = loop->numChildren() - 1;
 
-	  // Compute match count for each repeat alternative
+	  // Compute match count for each repeat alternative.
+	  // All alternatives must match for the transformation
+	  // to be semantics-preserving.
 	  int *altMatches = new int[numAlts];
 	  minMatch = -1;
 	  allZero = 1;
+	  int anyZero = 0;
 	  for(ai = 0; ai < numAlts; ai++)
 	    {
 	      altMatches[ai] = countMatches(loop->getChild(ai+1),
@@ -643,9 +825,13 @@ int concatnode::analyzeNonOptLoops(int depth)
 		  if(minMatch < 0 || altMatches[ai] < minMatch)
 		    minMatch = altMatches[ai];
 		}
+	      else
+		{
+		  anyZero = 1;
+		}
 	    }
 
-	  if(allZero || minMatch <= 0)
+	  if(allZero || anyZero || minMatch <= 0)
 	    {
 	      delete[] altMatches;
 	      ri++;
@@ -755,16 +941,140 @@ int concatnode::analyzeNonOptLoops(int depth)
 	      // ri now points minMatch positions too far; adjust
 	      ri -= minMatch;
 
-	      // Recursively clear rail pointers matching the rails
-	      // that are about to be deleted
+	      // Clear stale rail pointers in the loop subtree, then
+	      // re-wire the outer rails to the loop.
 	      clearRailsRecursive(loop, nodes[ri], nodes[ri+2]);
+	      loop->setLeftRail((railnode*)nodes[ri]);
+	      loop->setRightRail((railnode*)nodes[ri+2]);
 
-	      // Remove the two rail nodes
-	      delete nodes[ri];       // left rail
-	      nodes.erase(nodes.begin() + ri);
-	      // now nodes[ri] is the loop, nodes[ri+1] is right rail
-	      delete nodes[ri+1];     // right rail
-	      nodes.erase(nodes.begin() + ri + 1);
+	      // Flatten bare choice nodes among repeat children into
+	      // direct loop alternatives (choiceloop form).
+	      {
+		int ni = 1;
+		while(ni < loop->numChildren())
+		  {
+		    if(loop->getChild(ni)->is_choice())
+		      {
+			node *ch = loop->getChild(ni);
+			int nch = ch->numChildren();
+			int ci;
+			loop->forgetChild(ni);
+			for(ci = nch - 1; ci >= 0; ci--)
+			  {
+			    node *alt = ch->getChild(ci);
+			    ch->forgetChild(ci);
+			    alt->setParent(loop);
+			    loop->nodes.insert(loop->nodes.begin() + ni, alt);
+			  }
+			delete ch;
+			ni += nch;
+		      }
+		    else
+		      {
+			ni++;
+		      }
+		  }
+
+	      }
+
+	      // When the only repeat is null, convert to choiceloop
+	      // form if the loop is inside an optional wrapper
+	      // (choice with null bypass).  Move the body to become
+	      // a repeat alternative (or flatten it if it is a
+	      // choice) and set body to null.
+	      if(loop->numChildren() == 2 &&
+		 loop->getChild(1)->is_null())
+		{
+		  // Check whether this concat is inside an optional
+		  int isOptional = 0;
+		  node *par = parent;
+		  if(par != NULL && par->is_choice())
+		    {
+		      int pi;
+		      for(pi = 0; pi < par->numChildren(); pi++)
+			{
+			  if(par->getChild(pi)->is_null())
+			    {
+			      isOptional = 1;
+			      pi = par->numChildren();
+			    }
+			}
+		    }
+		  if(isOptional)
+		    {
+		      node *oldBody = loop->getChild(0);
+		      node *nullRepeat = loop->getChild(1);
+
+		      loop->forgetChild(1);
+		      loop->forgetChild(0);
+
+		      node *newNullBody = new nullnode("NULL node");
+		      newNullBody->setParent(loop);
+		      loop->nodes.insert(loop->nodes.begin(), newNullBody);
+
+		      if(oldBody->is_choice())
+			{
+			  int nch = oldBody->numChildren();
+			  int ci;
+			  for(ci = 0; ci < nch; ci++)
+			    {
+			      node *alt = oldBody->getChild(0);
+			      oldBody->forgetChild(0);
+			      alt->setParent(loop);
+			      loop->nodes.push_back(alt);
+			    }
+			  delete oldBody;
+			}
+		      else
+			{
+			  oldBody->setParent(loop);
+			  loop->nodes.push_back(oldBody);
+			}
+
+		      delete nullRepeat;
+
+		      // The loop's rails were the inner concat's
+		      // flanking rails.  Delete them so the concat
+		      // collapses to a single child, then liftConcats
+		      // and analyzeOptLoops can finish the job.
+		      clearRailsRecursive(loop, nodes[ri], nodes[ri+2]);
+		      loop->setLeftRail(NULL);
+		      loop->setRightRail(NULL);
+		      delete nodes[ri+2];
+		      nodes.erase(nodes.begin() + ri + 2);
+		      delete nodes[ri];
+		      nodes.erase(nodes.begin() + ri);
+		    }
+		}
+
+	      // Remove null repeat alternatives only when at least
+	      // one non-null repeat exists.
+	      {
+		int ni = 1;
+		int hasNonNull = 0;
+		while(ni < loop->numChildren())
+		  {
+		    if(!loop->getChild(ni)->is_null())
+		      hasNonNull = 1;
+		    ni++;
+		  }
+		if(hasNonNull)
+		  {
+		    ni = 1;
+		    while(ni < loop->numChildren())
+		      {
+			if(loop->getChild(ni)->is_null())
+			  {
+			    delete loop->getChild(ni);
+			    loop->forgetChild(ni);
+			  }
+			else
+			  {
+			    ni++;
+			  }
+		      }
+		  }
+	      }
 
 	      sum++;
 	      // don't advance ri — re-check in case of cascaded patterns
@@ -792,6 +1102,7 @@ void concatnode::mergeRails(){
       newrail = parent->getLeftRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
+	  replaceRailRecursive(*(nodes.begin()+1), oldrail, newrail);
 	  delete nodes.front();
 	  nodes.erase(nodes.begin());
 	  (*(nodes.begin()))->setLeftRail(newrail);
@@ -807,6 +1118,7 @@ void concatnode::mergeRails(){
       newrail = parent->getRightRail();
       if(newrail != NULL && newrail->getRailDir() == oldrail->getRailDir())
 	{
+	  replaceRailRecursive(*(nodes.end()-2), oldrail, newrail);
 	  delete nodes.back();
 	  nodes.erase(nodes.end()-1);
 	  (*(nodes.end()-1))->setRightRail(newrail);

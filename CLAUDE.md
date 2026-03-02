@@ -82,8 +82,7 @@ All tests live in `unit_tests/`. Each test is a single `.ebnf` file with a match
 
 To add a new test, create `unit_tests/<N>_<name>.ebnf`, optionally `unit_tests/flags/<N>_<name>.flags`, then run `./ebnf2tikz [flags] <file>.ebnf /dev/null` and save stdout to `unit_tests/expected/<N>_<name>.expected`. Production names must be globally unique across all .ebnf files (required for `build_tikz_tests.sh` which concatenates them all).
 
-## Known Issues (from README)
+## Known Issues
 
-- Line drawing not quite right around choice/loop nodes near newlines
-- Choices inside loops have rendering issues
 - The `ebnf2tikz.sty` LaTeX style file has not been written yet; use `testdriver.tex` as reference for required TikZ setup
+- Auto-wrap (automatically breaking long productions across multiple lines) is not yet implemented
