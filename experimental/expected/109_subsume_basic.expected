@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: innera
-  terminal 'x'
-production: outera
-  sequence
-    terminal 'a'
-    terminal 'x'
-    terminal 'b'

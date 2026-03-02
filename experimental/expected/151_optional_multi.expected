@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: simplea
-  optional
-    choice
-      nonterminal a
-      nonterminal b
-      nonterminal c
-      nonterminal d

@@ -88,15 +88,15 @@ target_compile_options(ebnf2tikz PRIVATE -Wall -g)
 add_custom_target(check
   COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.sh
     ${CMAKE_CURRENT_BINARY_DIR}/ebnf2tikz
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../unit_tests
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/unit_tests
   DEPENDS ebnf2tikz
   COMMENT "Running AST-dump regression tests"
 )
 
 add_custom_target(check-tikz
-  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/../unit_tests/build_tikz_tests.sh
+  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/unit_tests/build_tikz_tests.sh
     ${CMAKE_CURRENT_BINARY_DIR}/ebnf2tikz
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../unit_tests
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/unit_tests
   DEPENDS ebnf2tikz
   COMMENT "Building TikZ PDF regression test"
 )
