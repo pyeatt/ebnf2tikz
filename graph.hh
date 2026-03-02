@@ -163,6 +163,7 @@ public:
   virtual int liftConcats(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
+  virtual int flattenLoopChoices();
   virtual int mergeChoices(int depth);
   virtual int numChildren(){return 0;}
   virtual node* getChild(int n){return NULL;}
@@ -197,6 +198,8 @@ public:
     return body->analyzeOptLoops(depth+1);}
   virtual int analyzeNonOptLoops(int depth){
     return body->analyzeNonOptLoops(depth+1);}
+  virtual int flattenLoopChoices(){
+    return body->flattenLoopChoices();}
   virtual int numChildren(){return 1;}
   virtual node* getChild(int n){return body;}
   virtual int operator ==(node &r);
@@ -292,8 +295,9 @@ public:
   virtual node* getChild(int n){return NULL;}
   virtual int analyzeOptLoops(int depth){return 0;}
   virtual int analyzeNonOptLoops(int depth){return 0;}
+  virtual int flattenLoopChoices(){return 0;}
   virtual int operator ==(node &r);
-  virtual int operator !=(node &r){return  !(*this == r);} 
+  virtual int operator !=(node &r){return  !(*this == r);}
   virtual node* subsume(regex_t* name, node *replacement);
 };  
 
@@ -383,6 +387,7 @@ public:
   virtual int mergeChoices(int depth);
   virtual int analyzeOptLoops(int depth);
   virtual int analyzeNonOptLoops(int depth);
+  virtual int flattenLoopChoices();
   virtual void fixSkips();
   virtual string texName() { return "multinode";};
   virtual int getRailsAdded(){return rails_added;};
