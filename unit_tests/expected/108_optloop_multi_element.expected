@@ -3,10 +3,12 @@ production: optloop_multi_elem
   concat node17 : drawtoprev=0 beforeskip=0 width=0 height=0 coord6 coord3
     \nullnode{start1\strut} ->  coord3 : drawtoprev=0 beforeskip=0 width=0 height=9 coord3 coord3
     \nullnode{start2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
-    loop node9 : drawtoprev=0 beforeskip=0 width=0 height=0 coord1 coord1
+    rail  UP node14 : drawtoprev=0 beforeskip=8 width=0 height=0 node14.east node14.west
+    loop node9 : leftrail=node14 rightrail=node15 drawtoprev=0 beforeskip=0 width=0 height=0 coord1 coord1
       concat node23 : drawtoprev=0 beforeskip=8 width=0 height=0 node24.east node22.west
         \railnonterm{A\strut} ->  node22 : drawtoprev=1 beforeskip=8 width=8 height=6 node22.east node22.west
         \railnonterm{B\strut} ->  node24 : drawtoprev=1 beforeskip=8 width=8 height=6 node24.east node24.west
       \railnonterm{sep\strut} ->  node4 : drawtoprev=1 beforeskip=8 width=8 height=6 node4.east node4.west
+    rail  UP node15 : drawtoprev=0 beforeskip=8 width=0 height=0 node15.east node15.west
     \nullnode{end1\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
     \nullnode{end2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
