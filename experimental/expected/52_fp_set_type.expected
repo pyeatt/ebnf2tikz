@@ -1,0 +1,6 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: set_type
+  sequence
+    terminal 'SET'
+    terminal 'OF'
+    nonterminal type

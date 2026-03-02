@@ -1,0 +1,5 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: unusedd
+  terminal 'x'
+production: standaloned
+  terminal 'y'

@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: innerm
+  optional
+    terminal 'a'
+production: outerm
+  optional
+    optional
+      terminal 'a'

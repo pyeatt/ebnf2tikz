@@ -1,0 +1,3 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: control_variable
+  nonterminal variable_reference

@@ -1,0 +1,11 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: nonopt_multi_alt
+  sequence
+    nonterminal letter
+    loop
+      repeat:
+        nonterminal letter
+      repeat:
+        nonterminal digit
+      repeat:
+        terminal "_"

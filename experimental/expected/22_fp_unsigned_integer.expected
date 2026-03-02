@@ -1,0 +1,13 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: unsigned_integer
+  choice
+    nonterminal dec_digit_sequence
+    sequence
+      terminal '%'
+      nonterminal bin_digit_sequence
+    sequence
+      terminal '&'
+      nonterminal oct_digit_sequence
+    sequence
+      terminal '$'
+      nonterminal hex_digit_sequence

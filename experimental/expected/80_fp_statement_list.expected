@@ -1,0 +1,9 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: statement_list
+  sequence
+    nonterminal statement
+    loop
+      repeat:
+        sequence
+          terminal ';'
+          nonterminal statement

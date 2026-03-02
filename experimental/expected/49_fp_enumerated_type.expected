@@ -1,0 +1,6 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: enumerated_type
+  sequence
+    terminal '('
+    nonterminal identifier_list
+    terminal ')'

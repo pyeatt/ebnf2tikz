@@ -1,0 +1,11 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: relational_operator
+  choice
+    terminal '='
+    terminal '<>'
+    terminal '<'
+    terminal '>'
+    terminal '<='
+    terminal '>='
+    terminal 'IN'
+    terminal 'IS'

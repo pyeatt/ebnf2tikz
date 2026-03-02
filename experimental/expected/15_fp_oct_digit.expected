@@ -1,0 +1,10 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: oct_digit
+  choice
+    nonterminal bin_digit
+    terminal '2'
+    terminal '3'
+    terminal '4'
+    terminal '5'
+    terminal '6'
+    terminal '7'

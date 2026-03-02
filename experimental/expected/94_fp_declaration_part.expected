@@ -1,0 +1,42 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: declaration_part
+  loop
+    repeat:
+      sequence
+        terminal 'LABEL'
+        nonterminal label
+        loop
+          repeat:
+            sequence
+              terminal ','
+              nonterminal label
+        terminal ';'
+        terminal 'CONST'
+        nonterminal constant_declaration
+        terminal ';'
+        loop
+          repeat:
+            sequence
+              nonterminal constant_declaration
+              terminal ';'
+        terminal 'TYPE'
+        nonterminal type_declaration
+        terminal ';'
+        loop
+          repeat:
+            sequence
+              nonterminal type_declaration
+              terminal ';'
+        terminal 'VAR'
+        nonterminal variable_declaration
+        terminal ';'
+        loop
+          repeat:
+            sequence
+              nonterminal variable_declaration
+              terminal ';'
+        loop
+          repeat:
+            nonterminal procedure_declaration
+          repeat:
+            nonterminal function_declaration

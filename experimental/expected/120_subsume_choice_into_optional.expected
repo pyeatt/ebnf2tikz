@@ -1,0 +1,10 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: optsl
+  choice
+    terminal 'a'
+    terminal 'b'
+production: wrapperl
+  optional
+    choice
+      terminal 'a'
+      terminal 'b'

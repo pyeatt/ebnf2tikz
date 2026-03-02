@@ -1,0 +1,13 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: actual_parameter_list
+  sequence
+    terminal '('
+    optional
+      sequence
+        nonterminal expression
+        loop
+          repeat:
+            sequence
+              terminal ','
+              nonterminal expression
+    terminal ')'

@@ -1,0 +1,15 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: program
+  sequence
+    terminal 'PROGRAM'
+    nonterminal program_header
+    optional
+      sequence
+        terminal '('
+        nonterminal identifier_list
+        terminal ')'
+    terminal ';'
+    optional
+      nonterminal uses_clause
+    nonterminal block
+    terminal '.'

@@ -1,0 +1,11 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: choicey
+  choice
+    terminal 'a'
+    terminal 'b'
+production: loopy
+  loop
+    repeat:
+      terminal 'a'
+    repeat:
+      terminal 'b'

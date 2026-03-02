@@ -160,7 +160,7 @@ conditional_statement   =   if_statement
 if_statement            =   'IF' , expression , 'THEN' , statement , [ 'ELSE' , statement ]
                         ;
 case_statement          =   'CASE' , expression , 'OF' ,
-                        |       constant , [ '..' , constant ] , { ',' , constant , [ '..' , constant ] } , ':' , statement , 
+                                constant , [ '..' , constant ] , { ',' , constant , [ '..' , constant ] } , ':' , statement ,
                                 [ ( 'ELSE' | 'OTHERWISE' ) , statement_list , [ ';' ] ] ,
                             'END'
                         ;

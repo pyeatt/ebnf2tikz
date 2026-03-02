@@ -1,0 +1,7 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: optloop_sep
+  loop
+    body:
+      nonterminal A
+    repeat:
+      nonterminal sep

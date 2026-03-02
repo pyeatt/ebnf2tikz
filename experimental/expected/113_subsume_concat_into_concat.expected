@@ -1,0 +1,11 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: prefixe
+  sequence
+    terminal 'a'
+    terminal 'b'
+production: fulle
+  sequence
+    terminal 'a'
+    terminal 'b'
+    terminal 'c'
+    terminal 'd'

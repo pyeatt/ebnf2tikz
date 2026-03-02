@@ -1,0 +1,15 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: wide_choice
+  sequence
+    terminal 'BEGIN'
+    choice
+      nonterminal variable_reference
+      nonterminal function_identifier
+      nonterminal procedure_identifier
+      nonterminal constant_expression
+    terminal ':='
+    nonterminal expression
+    terminal 'END'
+    nonterminal actual_parameter_list
+    nonterminal compound_statement
+    terminal ';'
