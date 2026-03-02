@@ -8,7 +8,7 @@ FAIL=0
 ERRORS=""
 
 for ebnf in *.ebnf; do
-    expected="${ebnf%.ebnf}.expected"
+    expected="expected/${ebnf%.ebnf}.expected"
     testname="${ebnf%.ebnf}"
 
     if [ ! -f "$expected" ]; then
@@ -16,7 +16,7 @@ for ebnf in *.ebnf; do
         FAIL=$((FAIL + 1))
         ERRORS="$ERRORS  $testname: missing .expected file\n"
     else
-        flagsfile="${ebnf%.ebnf}.flags"
+        flagsfile="flags/${ebnf%.ebnf}.flags"
         if [ -f "$flagsfile" ]; then
             FLAGS=$(cat "$flagsfile")
         else
