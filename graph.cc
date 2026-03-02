@@ -483,7 +483,7 @@ string nontermnode::texName()
 
   if(wrapped && type == NONTERM && display.find(' ') != string::npos)
     {
-      outs << "\\shortstack[l]{";
+      outs << "\\shortstack{";
       last = 0;
       pos = display.find(' ');
       while(pos != string::npos)
