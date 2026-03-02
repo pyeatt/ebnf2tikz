@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/faculty/lpyeatt/ebnf2tikz/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
