@@ -1,4 +1,8 @@
 *.o
+*.jou
+*.log
+*.out
+*.ind
 ebnf2tikz
 lexer.cc
 lexer.hh
