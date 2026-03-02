@@ -1,6 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: real_constant
-  sequence
-    optional
-      nonterminal sign
-    nonterminal unsigned_real

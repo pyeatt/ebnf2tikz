@@ -1,6 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: repetitive_statement
-  choice
-    nonterminal repeat_statement
-    nonterminal while_statement
-    nonterminal for_statement

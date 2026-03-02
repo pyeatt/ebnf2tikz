@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: char_constant
-  choice
-    nonterminal control_string
-    sequence
-      terminal "'"
-      nonterminal string_character
-      terminal "'"

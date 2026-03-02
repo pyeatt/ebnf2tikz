@@ -4,8 +4,8 @@
 
 EBNF2TIKZ="${1:-../build/ebnf2tikz}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-EXPECTED_DIR="$SCRIPT_DIR/../experimental/expected"
-TEST_DIR="$SCRIPT_DIR/../unit_tests"
+EXPECTED_DIR="$SCRIPT_DIR/unit_tests/expected"
+TEST_DIR="$SCRIPT_DIR/unit_tests"
 PASS=0
 FAIL=0
 ERRORS=""

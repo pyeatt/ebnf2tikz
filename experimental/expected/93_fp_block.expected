@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: block
-  sequence
-    nonterminal declaration_part
-    nonterminal compound_statement

@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: control_string_sharp
-  sequence
-    terminal '#'
-    nonterminal unsigned_integer

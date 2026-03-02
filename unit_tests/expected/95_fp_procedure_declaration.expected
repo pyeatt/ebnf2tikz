@@ -1,34 +1,18 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: procedure_declaration
-  concat node30 : drawtoprev=0 beforeskip=0 width=0 height=0 coord8 coord5
-    \nullnode{start1\strut} ->  coord5 : drawtoprev=0 beforeskip=0 width=0 height=9 coord5 coord5
-    \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
-    \railnonterm{PROCEDURE\strut} ->  node1 : drawtoprev=1 beforeskip=8 width=8 height=6 node1.east node1.west
-    \railnonterm{identifier\strut} ->  node2 : drawtoprev=1 beforeskip=8 width=8 height=6 node2.east node2.west
-    rail  UP node14 : drawtoprev=0 beforeskip=8 width=0 height=0 node14.east node14.west
-    choices node13 : leftrail=node14 rightrail=node15 drawtoprev=0 beforeskip=8 width=0 height=0 coord2 coord2
-      \nullnode{NULL node\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
-      concat node10 : drawtoprev=0 beforeskip=0 width=0 height=0 node11.east node4.west
-        \railnonterm{(\strut} ->  node4 : drawtoprev=1 beforeskip=0 width=8 height=6 node4.east node4.west
-        rail  UP node8 : drawtoprev=1 beforeskip=8 width=0 height=0 node8.east node8.west
-        choices node7 : leftrail=node8 rightrail=node9 drawtoprev=1 beforeskip=8 width=0 height=0 coord1 coord1
-          \nullnode{NULL node\strut} ->  coord1 : drawtoprev=1 beforeskip=8 width=0 height=9 coord1 coord1
-          \railnonterm{formal\_parameter\_list\strut} ->  node5 : drawtoprev=0 beforeskip=0 width=8 height=6 node5.east node5.west
-        rail  UP node9 : drawtoprev=1 beforeskip=8 width=0 height=0 node9.east node9.west
-        \railnonterm{)\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
-    rail  UP node15 : drawtoprev=0 beforeskip=8 width=0 height=0 node15.east node15.west
-    \railnonterm{;\strut} ->  node16 : drawtoprev=1 beforeskip=8 width=8 height=6 node16.east node16.west
-    rail  UP node20 : drawtoprev=0 beforeskip=8 width=0 height=0 node20.east node20.west
-    choices node19 : leftrail=node20 rightrail=node21 drawtoprev=0 beforeskip=8 width=0 height=0 coord3 coord3
-      \nullnode{NULL node\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
-      \railnonterm{declaration\_part\strut} ->  node17 : drawtoprev=0 beforeskip=0 width=8 height=6 node17.east node17.west
-    rail  UP node21 : drawtoprev=0 beforeskip=8 width=0 height=0 node21.east node21.west
-    rail  UP node27 : drawtoprev=0 beforeskip=8 width=0 height=0 node27.east node27.west
-    choices node26 : leftrail=node27 rightrail=node28 drawtoprev=0 beforeskip=8 width=0 height=0 coord4 coord4
-      \nullnode{NULL node\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
-      concat node24 : drawtoprev=0 beforeskip=0 width=0 height=0 node23.east node22.west
-        \railnonterm{compound\_statement\strut} ->  node22 : drawtoprev=1 beforeskip=0 width=8 height=6 node22.east node22.west
-        \railnonterm{;\strut} ->  node23 : drawtoprev=1 beforeskip=8 width=8 height=6 node23.east node23.west
-    rail  UP node28 : drawtoprev=0 beforeskip=8 width=0 height=0 node28.east node28.west
-    \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    \nullnode{end2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+  sequence
+    terminal 'PROCEDURE'
+    nonterminal identifier
+    optional
+      sequence
+        terminal '('
+        optional
+          nonterminal formal_parameter_list
+        terminal ')'
+    terminal ';'
+    optional
+      nonterminal declaration_part
+    optional
+      sequence
+        nonterminal compound_statement
+        terminal ';'

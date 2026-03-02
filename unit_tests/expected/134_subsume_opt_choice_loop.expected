@@ -1,14 +1,11 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: elemz
+  choice
+    terminal 'a'
+    terminal 'b'
 production: optz
-  concat node26 : drawtoprev=0 beforeskip=0 width=0 height=0 coord10 coord7
-    \nullnode{start1\strut} ->  coord7 : drawtoprev=0 beforeskip=0 width=0 height=9 coord7 coord7
-    \nullnode{start2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
-    rail  UP node23 : drawtoprev=1 beforeskip=8 width=0 height=0 node23.east node23.west
-    loop node15 : leftrail=node23 rightrail=node24 drawtoprev=0 beforeskip=8 width=0 height=0 coord5 coord5
-      \nullnode{NULL node\strut} ->  coord12 : drawtoprev=1 beforeskip=8 width=0 height=9 coord12 coord12
-      \railnonterm{a\strut} ->  node51 : drawtoprev=0 beforeskip=0 width=8 height=6 node51.east node51.west
-      \railnonterm{b\strut} ->  node52 : drawtoprev=0 beforeskip=0 width=8 height=6 node52.east node52.west
-    rail  UP node24 : drawtoprev=1 beforeskip=8 width=0 height=0 node24.east node24.west
-    \nullnode{end1\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
-    \nullnode{end2\strut} ->  coord10 : drawtoprev=1 beforeskip=8 width=0 height=9 coord10 coord10
+  loop
+    repeat:
+      terminal 'a'
+    repeat:
+      terminal 'b'

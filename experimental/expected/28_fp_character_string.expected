@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: character_string
-  choice
-    nonterminal quoted_string
-    nonterminal control_string
