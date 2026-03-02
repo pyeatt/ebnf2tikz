@@ -1,0 +1,7 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: choice_four
+  choice
+    nonterminal a
+    terminal 'b'
+    nonterminal c
+    terminal 'd'

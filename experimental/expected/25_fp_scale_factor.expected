@@ -1,0 +1,9 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: scale_factor
+  choice
+    terminal 'E'
+    sequence
+      terminal 'e'
+      optional
+        nonterminal sign
+      nonterminal dec_digit_sequence

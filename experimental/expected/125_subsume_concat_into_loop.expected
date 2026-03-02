@@ -1,0 +1,11 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: pairq
+  sequence
+    terminal 'a'
+    terminal 'b'
+production: repq
+  loop
+    repeat:
+      sequence
+        terminal 'a'
+        terminal 'b'

@@ -1,0 +1,7 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: unsigned_constant
+  choice
+    nonterminal unsigned_number
+    nonterminal character_string
+    nonterminal constant_identifier
+    terminal 'NIL'

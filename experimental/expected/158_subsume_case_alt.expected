@@ -1,0 +1,23 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: case_statement_alternative
+  sequence
+    terminal 'when'
+    nonterminal choices
+    terminal '=>'
+    nonterminal sequence_of_statements
+production: ada_choice
+  choice
+    nonterminal simple_expression
+    nonterminal discrete_range
+    nonterminal simple_name
+    terminal 'others'
+production: ada_choices
+  loop
+    body:
+      choice
+        nonterminal simple_expression
+        nonterminal discrete_range
+        nonterminal simple_name
+        terminal 'others'
+    repeat:
+      terminal '|'

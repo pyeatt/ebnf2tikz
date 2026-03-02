@@ -1,0 +1,13 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: identifier
+  choice
+    nonterminal letter
+    sequence
+      terminal '_'
+      loop
+        repeat:
+          nonterminal letter
+        repeat:
+          nonterminal dec_digit
+        repeat:
+          terminal '_'

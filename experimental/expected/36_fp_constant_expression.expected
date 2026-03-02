@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: constant_expression
+  choice
+    nonterminal constant
+    nonterminal constant_identifier
+    nonterminal ordinal_constant
+    nonterminal real_constant
+    nonterminal string_constant

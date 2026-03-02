@@ -1,0 +1,6 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: type_declaration
+  sequence
+    nonterminal identifier
+    terminal '='
+    nonterminal type

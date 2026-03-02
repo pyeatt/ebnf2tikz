@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: procedure_statement
+  sequence
+    choice
+      nonterminal procedure_identifier
+      nonterminal variable_reference
+    optional
+      nonterminal actual_parameter_list

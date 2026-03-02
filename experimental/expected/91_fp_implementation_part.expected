@@ -1,0 +1,10 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: implementation_part
+  sequence
+    terminal 'IMPLEMENTATION'
+    terminal ';'
+    optional
+      nonterminal uses_clause
+    loop
+      repeat:
+        nonterminal implementation_declaration

@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: optionalchoice
+  optional
+    choice
+      nonterminal a
+      terminal 'b'
+      nonterminal c
+      terminal 'd'

@@ -1,0 +1,12 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: sepc
+  choice
+    terminal ','
+    terminal ';'
+production: listc
+  sequence
+    nonterminal itemc
+    choice
+      terminal ','
+      terminal ';'
+    nonterminal itemc

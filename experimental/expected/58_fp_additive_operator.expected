@@ -1,0 +1,5 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: additive_operator
+  choice
+    terminal '+'
+    terminal '-'
