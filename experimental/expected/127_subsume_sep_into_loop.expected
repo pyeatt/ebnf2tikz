@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: seps
-  terminal ','
-production: lists
-  loop
-    body:
-      nonterminal items
-    repeat:
-      terminal ','

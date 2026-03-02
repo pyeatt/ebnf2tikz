@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: type
-  choice
-    nonterminal simple_type
-    nonterminal string_type
-    nonterminal structured_type
-    nonterminal pointer_type
-    nonterminal procedural_type

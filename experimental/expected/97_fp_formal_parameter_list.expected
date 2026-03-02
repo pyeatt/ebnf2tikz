@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: formal_parameter_list
-  sequence
-    nonterminal formal_parameter
-    loop
-      repeat:
-        sequence
-          terminal ','
-          nonterminal formal_parameter

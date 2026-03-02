@@ -1,6 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: ordinal_type
-  choice
-    terminal 'INTEGER'
-    terminal 'UNSIGNED'
-    terminal 'CHAR'

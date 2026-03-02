@@ -1,5 +1,5 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef UTIL_HH
+#define UTIL_HH
 
 #include <string>
 using namespace std;

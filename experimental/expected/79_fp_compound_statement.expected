@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: compound_statement
-  sequence
-    terminal 'BEGIN'
-    optional
-      nonterminal statement_list
-    optional
-      terminal ';'
-    terminal 'END'
