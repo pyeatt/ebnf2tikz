@@ -1,0 +1,12 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: or_expression
+  sequence
+    nonterminal and_expression
+    loop
+      repeat:
+        sequence
+          optional
+            choice
+              terminal 'OR'
+              terminal 'XOR'
+          nonterminal and_expression

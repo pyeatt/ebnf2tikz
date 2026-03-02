@@ -1,0 +1,15 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: pairv
+  sequence
+    terminal 'a'
+    terminal 'b'
+production: altv
+  choice
+    sequence
+      terminal 'a'
+      terminal 'b'
+      terminal 'c'
+    sequence
+      terminal 'a'
+      terminal 'b'
+      terminal 'd'

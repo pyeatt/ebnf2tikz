@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: newlines
+  sequence
+    nonterminal a
+    newline
+    nonterminal b
+    newline
+    nonterminal c

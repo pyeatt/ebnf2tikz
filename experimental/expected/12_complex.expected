@@ -1,0 +1,11 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: complex_expr
+  sequence
+    optional
+      nonterminal sign
+    nonterminal term
+    loop
+      repeat:
+        sequence
+          nonterminal adding_operator
+          nonterminal term

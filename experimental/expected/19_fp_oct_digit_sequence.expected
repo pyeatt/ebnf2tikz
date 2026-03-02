@@ -1,0 +1,7 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: oct_digit_sequence
+  sequence
+    nonterminal oct_digit
+    loop
+      repeat:
+        nonterminal oct_digit

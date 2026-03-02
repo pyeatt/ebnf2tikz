@@ -1,0 +1,5 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: control_string
+  choice
+    nonterminal control_string_sharp
+    nonterminal control_string_caret

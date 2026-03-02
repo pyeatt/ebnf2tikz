@@ -1,0 +1,10 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: partat
+  terminal 'x'
+production: partbt
+  terminal 'y'
+production: wholet
+  sequence
+    terminal 'x'
+    terminal 'y'
+    terminal 'z'

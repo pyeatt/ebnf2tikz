@@ -1,0 +1,9 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: term
+  sequence
+    nonterminal factor
+    loop
+      repeat:
+        sequence
+          nonterminal multiplicative_operator
+          nonterminal factor

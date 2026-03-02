@@ -1,0 +1,6 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: constant_declaration
+  sequence
+    nonterminal identifier
+    terminal '='
+    nonterminal constant_expression

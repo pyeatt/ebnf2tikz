@@ -1,0 +1,5 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: uses_clause
+  sequence
+    terminal 'USES'
+    nonterminal identifier_list

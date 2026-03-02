@@ -1,0 +1,13 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: for_statement
+  sequence
+    terminal 'FOR'
+    nonterminal control_variable
+    terminal ':='
+    nonterminal expression
+    choice
+      terminal 'TO'
+      terminal 'DOWNTO'
+    nonterminal expression
+    terminal 'DO'
+    nonterminal statement

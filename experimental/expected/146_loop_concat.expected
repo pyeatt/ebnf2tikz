@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: concatloop
+  loop
+    repeat:
+      sequence
+        terminal 'a'
+        nonterminal cat
+        terminal 'c'

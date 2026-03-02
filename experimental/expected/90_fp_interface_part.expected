@@ -1,0 +1,7 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: interface_part
+  sequence
+    terminal 'INTERFACE'
+    optional
+      nonterminal uses_clause
+    nonterminal declaration_part

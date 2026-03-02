@@ -1,0 +1,10 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: multiplicative_operator
+  choice
+    terminal '*'
+    terminal '/'
+    terminal 'DIV'
+    terminal 'MOD'
+    terminal 'AND'
+    terminal 'SHL'
+    terminal 'SHR'

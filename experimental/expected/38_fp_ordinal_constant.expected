@@ -1,0 +1,8 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: ordinal_constant
+  choice
+    sequence
+      optional
+        nonterminal sign
+      nonterminal unsigned_integer
+    nonterminal char_constant

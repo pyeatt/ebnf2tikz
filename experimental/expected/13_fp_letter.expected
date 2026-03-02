@@ -1,0 +1,5 @@
+Unable to open input file bnfnodes.dat. Continuing
+production: letter
+  choice
+    nonterminal uppercase_letter
+    nonterminal lowercase_letter
