@@ -1,7 +1,6 @@
 CMakeFiles/ebnf2tikz.dir/annot_parser.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/annot_parser.cc \
- /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/annot_parser.hh \
+ /home/pyeatt/ebnf2tikz/annot_parser.cc /usr/include/stdc-predef.h \
+ /home/pyeatt/ebnf2tikz/annot_parser.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/string \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -121,7 +120,7 @@ CMakeFiles/ebnf2tikz.dir/annot_parser.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_map.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_multimap.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/erase_if.h \
- /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/vector \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_uninitialized.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_vector.h \
@@ -174,12 +173,12 @@ CMakeFiles/ebnf2tikz.dir/annot_parser.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/ostream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/istream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/istream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/annot_location.hh \
- /home/faculty/lpyeatt/ebnf2tikz/annot_lexer.hh /usr/include/string.h \
+ /home/pyeatt/ebnf2tikz/annot_location.hh \
+ /home/pyeatt/ebnf2tikz/annot_lexer.hh /usr/include/string.h \
  /usr/include/strings.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/stdlib.h \
  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/bits/getopt_posix.h /usr/include/bits/getopt_core.h \
  /usr/include/bits/unistd_ext.h /usr/include/linux/close_range.h \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.hh
+ /home/pyeatt/ebnf2tikz/nodesizes.hh

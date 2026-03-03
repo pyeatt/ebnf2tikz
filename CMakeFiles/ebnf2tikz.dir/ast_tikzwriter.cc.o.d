@@ -1,8 +1,6 @@
 CMakeFiles/ebnf2tikz.dir/ast_tikzwriter.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/ast_tikzwriter.cc \
- /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/ast_tikzwriter.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /home/pyeatt/ebnf2tikz/ast_tikzwriter.cc /usr/include/stdc-predef.h \
+ /home/pyeatt/ebnf2tikz/ast_tikzwriter.hh /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -126,8 +124,7 @@ CMakeFiles/ebnf2tikz.dir/ast_tikzwriter.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_vector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_bvector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/vector.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/ast_layout.hh \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.hh \
+ /home/pyeatt/ebnf2tikz/ast_layout.hh /home/pyeatt/ebnf2tikz/nodesizes.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/iostream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ostream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ios \
@@ -179,7 +176,7 @@ CMakeFiles/ebnf2tikz.dir/ast_tikzwriter.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/fstream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/util.hh \
+ /home/pyeatt/ebnf2tikz/util.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/sstream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/sstream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/algorithm \

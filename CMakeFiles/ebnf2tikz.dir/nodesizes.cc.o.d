@@ -1,6 +1,6 @@
 CMakeFiles/ebnf2tikz.dir/nodesizes.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.cc /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.hh \
+ /home/pyeatt/ebnf2tikz/nodesizes.cc /usr/include/stdc-predef.h \
+ /home/pyeatt/ebnf2tikz/nodesizes.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -165,7 +165,7 @@ CMakeFiles/ebnf2tikz.dir/nodesizes.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/ostream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/istream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/istream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/diagnostics.hh \
+ /home/pyeatt/ebnf2tikz/diagnostics.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/vector \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_uninitialized.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_vector.h \
