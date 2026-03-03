@@ -100,3 +100,23 @@ add_custom_target(check-tikz
   DEPENDS ebnf2tikz
   COMMENT "Building TikZ PDF regression test"
 )
+
+add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz)
+
+# --- Augment built-in 'clean' target ---
+# CMake's clean removes build products (binary, .o in CMakeFiles/, generated
+# flex/bison files).  Add stale top-level .o files from the old Makefile build.
+file(GLOB _stale_objects "${CMAKE_CURRENT_SOURCE_DIR}/*.o")
+set_directory_properties(PROPERTIES ADDITIONAL_CLEAN_FILES "${_stale_objects}")
+
+# --- realclean target ---
+add_custom_target(realclean
+  COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target clean
+  COMMAND bash -c "rm -f *.o"
+  COMMAND bash -c "rm -f unit_tests/*.pdf unit_tests/*.aux unit_tests/*.log unit_tests/*.out unit_tests/*.toc unit_tests/*.synctex.gz unit_tests/bnfnodes.dat unit_tests/all_tests.tex unit_tests/all_input.ebnf unit_tests/testlist.tex"
+  COMMAND ${CMAKE_COMMAND} -E rm -f
+    CMakeCache.txt cmake_install.cmake Makefile .depend
+  COMMAND ${CMAKE_COMMAND} -E rm -rf CMakeFiles
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMENT "Removing all build artifacts, PDFs, LaTeX intermediates, and CMake products"
+)
