@@ -1,7 +1,6 @@
 CMakeFiles/ebnf2tikz.dir/diagnostics.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/diagnostics.cc \
- /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/diagnostics.hh \
+ /home/pyeatt/ebnf2tikz/diagnostics.cc /usr/include/stdc-predef.h \
+ /home/pyeatt/ebnf2tikz/diagnostics.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/string \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \

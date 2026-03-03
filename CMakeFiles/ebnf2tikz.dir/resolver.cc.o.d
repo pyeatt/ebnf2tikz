@@ -1,7 +1,6 @@
 CMakeFiles/ebnf2tikz.dir/resolver.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/resolver.cc /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/resolver.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /home/pyeatt/ebnf2tikz/resolver.cc /usr/include/stdc-predef.h \
+ /home/pyeatt/ebnf2tikz/resolver.hh /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -125,7 +124,7 @@ CMakeFiles/ebnf2tikz.dir/resolver.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_vector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_bvector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/vector.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/diagnostics.hh \
+ /home/pyeatt/ebnf2tikz/diagnostics.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/iostream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ostream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ios \
