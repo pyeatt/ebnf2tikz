@@ -1,6 +1,5 @@
-CMakeFiles/ebnf2tikz.dir/parser.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/parser.cc /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/parser.hh \
+CMakeFiles/ebnf2tikz.dir/parser.cc.o: /home/pyeatt/ebnf2tikz/parser.cc \
+ /usr/include/stdc-predef.h /home/pyeatt/ebnf2tikz/parser.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/string \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -112,7 +111,7 @@ CMakeFiles/ebnf2tikz.dir/parser.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/uses_allocator.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/uses_allocator_args.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/tuple \
- /usr/include/assert.h /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /usr/include/assert.h /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_tree.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ext/aligned_buffer.h \
@@ -172,8 +171,7 @@ CMakeFiles/ebnf2tikz.dir/parser.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/ostream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/istream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/istream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/location.hh \
- /home/faculty/lpyeatt/ebnf2tikz/driver.hh \
+ /home/pyeatt/ebnf2tikz/location.hh /home/pyeatt/ebnf2tikz/driver.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/set \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_set.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_multiset.h \
@@ -182,19 +180,17 @@ CMakeFiles/ebnf2tikz.dir/parser.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/fstream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.hh \
- /home/faculty/lpyeatt/ebnf2tikz/annot_lexer.hh /usr/include/string.h \
+ /home/pyeatt/ebnf2tikz/nodesizes.hh \
+ /home/pyeatt/ebnf2tikz/annot_lexer.hh /usr/include/string.h \
  /usr/include/strings.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/stdlib.h \
  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/bits/getopt_posix.h /usr/include/bits/getopt_core.h \
  /usr/include/bits/unistd_ext.h /usr/include/linux/close_range.h \
- /home/faculty/lpyeatt/ebnf2tikz/lexer.hh \
- /home/faculty/lpyeatt/ebnf2tikz/resolver.hh \
- /home/faculty/lpyeatt/ebnf2tikz/diagnostics.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast_optimizer.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast_dump.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast_tikzwriter.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast_layout.hh \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.hh
+ /home/pyeatt/ebnf2tikz/lexer.hh /home/pyeatt/ebnf2tikz/resolver.hh \
+ /home/pyeatt/ebnf2tikz/diagnostics.hh \
+ /home/pyeatt/ebnf2tikz/ast_optimizer.hh \
+ /home/pyeatt/ebnf2tikz/ast_dump.hh \
+ /home/pyeatt/ebnf2tikz/ast_tikzwriter.hh \
+ /home/pyeatt/ebnf2tikz/ast_layout.hh /home/pyeatt/ebnf2tikz/nodesizes.hh

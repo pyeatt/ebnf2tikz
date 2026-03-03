@@ -1,6 +1,5 @@
-CMakeFiles/ebnf2tikz.dir/driver.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/driver.cc /usr/include/stdc-predef.h \
- /home/faculty/lpyeatt/ebnf2tikz/driver.hh \
+CMakeFiles/ebnf2tikz.dir/driver.cc.o: /home/pyeatt/ebnf2tikz/driver.cc \
+ /usr/include/stdc-predef.h /home/pyeatt/ebnf2tikz/driver.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/set \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -170,7 +169,7 @@ CMakeFiles/ebnf2tikz.dir/driver.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/fstream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_map.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_multimap.h \
@@ -179,8 +178,8 @@ CMakeFiles/ebnf2tikz.dir/driver.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_vector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_bvector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/vector.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/nodesizes.hh \
+ /home/pyeatt/ebnf2tikz/nodesizes.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/iostream \
- /home/faculty/lpyeatt/ebnf2tikz/parser.hh /usr/include/assert.h \
+ /home/pyeatt/ebnf2tikz/parser.hh /usr/include/assert.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/cassert \
- /home/faculty/lpyeatt/ebnf2tikz/location.hh
+ /home/pyeatt/ebnf2tikz/location.hh
