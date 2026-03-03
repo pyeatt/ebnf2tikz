@@ -1124,9 +1124,8 @@ static void connectSequence(SequenceNode *n,
                   seqGeom = geom[(ASTNode*)n];
                   prevGeom = geom[prevContent];
                   nextGeom = geom[nextContent];
-                  rightEdge = seqGeom.origin.x + seqGeom.width +
-                    sizes->colsep;
-                  leftEdge = seqGeom.origin.x - sizes->colsep;
+                  rightEdge = seqGeom.origin.x + seqGeom.width;
+                  leftEdge = seqGeom.origin.x;
 
                   rowBottom = prevGeom.exit.y - rowMaxBelow;
                   if(isRailed(nextContent))
@@ -1584,4 +1583,267 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
                         layout.connections, sizes);
 
   return layout;
+}
+
+/* ----------------------------------------------------------------
+   adjustWrappedWidths - estimate narrower widths for nonterminals
+   that will be shortstack-wrapped.
+
+   For nonterminals whose display text contains spaces (or
+   underscores), the TikZ writer renders them as \shortstack,
+   splitting at spaces.  This makes them narrower (and taller).
+
+   We estimate the wrapped width as originalWidth / numLines,
+   clamped to at least minsize.  This lets astAutoWrap make
+   break decisions using realistic node widths.
+
+   Only adjusts the temporary leafInfo used for auto-wrap; the
+   actual layout in astPlaceGrammar uses real bnfnodes.dat sizes.
+   ---------------------------------------------------------------- */
+
+static void adjustWrappedWidths(ASTNode *n,
+    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+{
+  SequenceNode *seq;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+  LoopNode *loop;
+  size_t i;
+  int numSpaces, numLines;
+  float estWidth;
+  string display;
+
+  switch(n->kind)
+    {
+    case ASTKind::Nonterminal:
+      {
+        auto it = info.find(n);
+        if(it == info.end())
+          return;
+        ASTLeafInfo &li = it->second;
+        if(li.isTerminal)
+          return;
+
+        /* If the node is already wrapped (multi-line in bnfnodes.dat),
+           its width is already the correct wrapped width */
+        if(li.height > 1.5f * sizes->minsize)
+          return;
+
+        display = li.rawText;
+        replace(display.begin(), display.end(), '_', ' ');
+
+        numSpaces = 0;
+        for(i = 0; i < display.size(); i++)
+          {
+            if(display[i] == ' ')
+              numSpaces++;
+          }
+        if(numSpaces == 0)
+          return;
+
+        numLines = numSpaces + 1;
+        /* Conservative estimate: the wrapped width is the widest
+           word, which is at least 55% of the total unwrapped width
+           (the longest word dominates for 2-3 word names). */
+        estWidth = li.width / (float)numLines;
+        if(estWidth < li.width * 0.55f)
+          estWidth = li.width * 0.55f;
+        if(estWidth < sizes->minsize)
+          estWidth = sizes->minsize;
+
+        li.width = estWidth;
+        return;
+      }
+
+    case ASTKind::Terminal:
+    case ASTKind::Epsilon:
+    case ASTKind::Newline:
+      return;
+
+    case ASTKind::Sequence:
+      seq = static_cast<SequenceNode*>(n);
+      for(i = 0; i < seq->children.size(); i++)
+        adjustWrappedWidths(seq->children[i], info, sizes);
+      return;
+
+    case ASTKind::Choice:
+      ch = static_cast<ChoiceNode*>(n);
+      for(i = 0; i < ch->alternatives.size(); i++)
+        adjustWrappedWidths(ch->alternatives[i], info, sizes);
+      return;
+
+    case ASTKind::Optional:
+      opt = static_cast<OptionalNode*>(n);
+      adjustWrappedWidths(opt->child, info, sizes);
+      return;
+
+    case ASTKind::Loop:
+      loop = static_cast<LoopNode*>(n);
+      if(loop->body != NULL)
+        adjustWrappedWidths(loop->body, info, sizes);
+      for(i = 0; i < loop->repeats.size(); i++)
+        adjustWrappedWidths(loop->repeats[i], info, sizes);
+      return;
+    }
+}
+
+/* ----------------------------------------------------------------
+   astAutoWrap - insert NewlineNodes into sequences whose row width
+   would exceed availableWidth.
+
+   Recurses into composite nodes (loop, choice, optional), reducing
+   availableWidth by the container's rail padding (2*colsep) at each
+   level.  For SequenceNodes, inserts NewlineNode break points.
+   ---------------------------------------------------------------- */
+
+static void astAutoWrap(ASTNode *body, float availableWidth,
+    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+{
+  SequenceNode *seq;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+  LoopNode *loop;
+  float rowWidth, childWidth, innerWidth;
+  size_t i;
+  pair<float,float> csz;
+  int firstOnRow;
+
+  if(availableWidth <= 0)
+    return;
+
+  switch(body->kind)
+    {
+    case ASTKind::Terminal:
+    case ASTKind::Nonterminal:
+    case ASTKind::Epsilon:
+    case ASTKind::Newline:
+      return;
+
+    case ASTKind::Choice:
+      ch = static_cast<ChoiceNode*>(body);
+      innerWidth = availableWidth - 2.0f * sizes->colsep;
+      for(i = 0; i < ch->alternatives.size(); i++)
+        astAutoWrap(ch->alternatives[i], innerWidth, info, sizes);
+      return;
+
+    case ASTKind::Optional:
+      opt = static_cast<OptionalNode*>(body);
+      innerWidth = availableWidth - 2.0f * sizes->colsep;
+      astAutoWrap(opt->child, innerWidth, info, sizes);
+      return;
+
+    case ASTKind::Loop:
+      loop = static_cast<LoopNode*>(body);
+      innerWidth = availableWidth - 2.0f * sizes->colsep;
+      if(loop->body != NULL)
+        astAutoWrap(loop->body, innerWidth, info, sizes);
+      for(i = 0; i < loop->repeats.size(); i++)
+        astAutoWrap(loop->repeats[i], innerWidth, info, sizes);
+      return;
+
+    case ASTKind::Sequence:
+      seq = static_cast<SequenceNode*>(body);
+      rowWidth = 0;
+      firstOnRow = 1;
+
+      for(i = 0; i < seq->children.size(); i++)
+        {
+          if(seq->children[i]->kind == ASTKind::Newline)
+            {
+              rowWidth = 0;
+              firstOnRow = 1;
+            }
+          else if(seq->children[i]->kind == ASTKind::Epsilon)
+            {
+              /* zero-width */
+            }
+          else
+            {
+              csz = astComputeSize(seq->children[i], info, sizes);
+              childWidth = csz.first;
+              if(!firstOnRow)
+                childWidth += sizes->colsep;
+
+              if(!firstOnRow && rowWidth + childWidth > availableWidth)
+                {
+                  seq->children.insert(seq->children.begin() + i,
+                                       new NewlineNode());
+                  i++;
+                  rowWidth = csz.first;
+                  firstOnRow = 0;
+                }
+              else
+                {
+                  rowWidth += childWidth;
+                  firstOnRow = 0;
+                }
+
+              /* Also recurse into this child in case it contains
+                 inner sequences that need wrapping */
+              astAutoWrap(seq->children[i], availableWidth, info, sizes);
+            }
+        }
+      return;
+    }
+}
+
+/* ----------------------------------------------------------------
+   astAutoWrapGrammar - auto-wrap all non-subsumed productions.
+
+   Creates a temporary ASTLayoutContext to assign names (needed for
+   astComputeSize to look up leaf dimensions from bnfnodes.dat).
+   The temporary context assigns names identically to the later
+   layout context because:
+     - Both start counters at 0
+     - Both traverse in the same order
+     - NewlineNodes don't consume names (astAssignNames skips them)
+   ---------------------------------------------------------------- */
+
+void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
+{
+  ASTLayoutContext ctx(sizes);
+  map<ASTNode*, ASTLeafInfo> info;
+  size_t i;
+  ASTProduction *prod;
+  pair<float,float> bodySize;
+  float availableWidth;
+
+  if(sizes == NULL || sizes->textwidth <= 0)
+    return;
+
+  for(i = 0; i < grammar->productions.size(); i++)
+    {
+      prod = grammar->productions[i];
+
+      /* Skip subsumed productions */
+      if(prod->annotations != NULL &&
+         (*prod->annotations)["subsume"] != "")
+        ;
+      else
+        {
+          info.clear();
+          astAssignNames(prod->body, ctx, info);
+
+          /* Compute body width.  If it exceeds the available row
+             width, mark the production for nonterminal wrapping
+             (shortstack) and estimate narrower widths before
+             deciding where to insert auto-wrap newlines. */
+          bodySize = astComputeSize(prod->body, info, sizes);
+          availableWidth = sizes->textwidth - 2.5f * sizes->colsep;
+          if(bodySize.first > availableWidth)
+            {
+              prod->needsWrap = 1;
+              adjustWrappedWidths(prod->body, info, sizes);
+            }
+
+          astAutoWrap(prod->body, availableWidth, info, sizes);
+
+          /* Consume coord names for stubs (4 per production)
+             to keep counters in sync with the later layout pass */
+          ctx.nextCoord();  /* start1 */
+          ctx.nextCoord();  /* start2 */
+          ctx.nextCoord();  /* end1 */
+          ctx.nextCoord();  /* end2 */
+        }
+    }
 }

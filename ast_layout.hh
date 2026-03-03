@@ -107,4 +107,9 @@ void astComputeConnections(ast::ASTNode *n,
 ASTProductionLayout astLayoutProduction(ASTProduction *prod,
                                         ASTLayoutContext &ctx);
 
+/* Auto-wrap: insert NewlineNodes into top-level sequences that exceed
+   textwidth.  Must be called before layout (and before dump if you want
+   auto-inserted newlines visible in the AST dump). */
+void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes);
+
 #endif
