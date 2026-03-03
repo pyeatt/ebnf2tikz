@@ -115,6 +115,24 @@ static int isRailed(ASTNode *n)
           n->kind == ASTKind::Loop);
 }
 
+/* Check whether a node is a sequence that contains a NewlineNode
+   (i.e. has been auto-wrapped across multiple rows).  Used by
+   choicelike/optional layout to add extra rail padding so the
+   choice branching rails don't overlap the row wrap-around. */
+static int containsNewline(ASTNode *n)
+{
+  SequenceNode *seq;
+  size_t i;
+
+  if(n->kind != ASTKind::Sequence)
+    return 0;
+  seq = static_cast<SequenceNode*>(n);
+  for(i = 0; i < seq->children.size(); i++)
+    if(seq->children[i]->kind == ASTKind::Newline)
+      return 1;
+  return 0;
+}
+
 /* ----------------------------------------------------------------
    ASTLayoutContext
    ---------------------------------------------------------------- */
@@ -355,7 +373,7 @@ static pair<float,float> computeSizeChoicelike(
       if(csz.first > maxWidth)
         {
           maxWidth = csz.first;
-          widestIsRailed = isRailed(child);
+          widestIsRailed = (child->kind != ASTKind::Loop && isRailed(child));
         }
       if(i > 0)
         totalHeight += sizes->rowsep;
@@ -365,9 +383,20 @@ static pair<float,float> computeSizeChoicelike(
     }
 
   /* Add rail padding.  Loops always add their own.  Choices skip
-     when the widest child already includes rails. */
+     when the widest child already includes rails (but not Loops,
+     whose feedback rails serve a different purpose). */
   if(alwaysRailPad || !widestIsRailed)
     maxWidth += 2.0f * sizes->colsep;
+
+  /* When any alternative has been auto-wrapped (contains newlines),
+     add extra rail padding so the choice branching rails don't
+     overlap the row wrap-around polylines. */
+  for(i = 0; i < alternatives.size(); i++)
+    if(containsNewline(alternatives[i]))
+      {
+        maxWidth += 2.0f * sizes->colsep;
+        i = alternatives.size() - 1;
+      }
 
   return make_pair(maxWidth, totalHeight);
 }
@@ -400,7 +429,7 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
   childH = csz.second;
 
   maxWidth = childW;
-  widestIsRailed = isRailed(n->child);
+  widestIsRailed = (n->child->kind != ASTKind::Loop && isRailed(n->child));
 
   /* epsilon row + separator + child row (same as choicelike) */
   totalHeight = sizes->rowsep;  /* minimum height for epsilon */
@@ -410,6 +439,11 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
     totalHeight += sizes->rowsep - childH;
 
   if(!widestIsRailed)
+    maxWidth += 2.0f * sizes->colsep;
+
+  /* Extra padding when child is auto-wrapped, so Optional rails
+     don't overlap the row wrap-around polylines. */
+  if(containsNewline(n->child))
     maxWidth += 2.0f * sizes->colsep;
 
   return make_pair(maxWidth, totalHeight);
@@ -459,6 +493,20 @@ static pair<float,float> computeSizeLoop(LoopNode *n,
 
   /* Loops always add their own rail padding */
   maxWidth += 2.0f * sizes->colsep;
+
+  /* Extra padding when body or any repeat is auto-wrapped, so the
+     Loop's feedback rails don't overlap wrap-around polylines. */
+  if(n->body != NULL && containsNewline(n->body))
+    maxWidth += 2.0f * sizes->colsep;
+  else
+    {
+      for(i = 0; i < n->repeats.size(); i++)
+        if(containsNewline(n->repeats[i]))
+          {
+            maxWidth += 2.0f * sizes->colsep;
+            i = n->repeats.size() - 1;
+          }
+    }
 
   return make_pair(maxWidth, totalHeight);
 }
@@ -749,7 +797,7 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
       if(csz.first > maxWidth)
         {
           maxWidth = csz.first;
-          widestIsRailed = isRailed(child);
+          widestIsRailed = (child->kind != ASTKind::Loop && isRailed(child));
         }
     }
 
@@ -757,6 +805,14 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
     railPad = sizes->colsep;
   else
     railPad = 0;
+
+  /* Extra padding when any alternative is auto-wrapped */
+  for(i = 0; i < alternatives.size(); i++)
+    if(containsNewline(alternatives[i]))
+      {
+        railPad += sizes->colsep;
+        i = alternatives.size() - 1;
+      }
 
   /* second pass: place children vertically */
   cursorY = origin.y;
@@ -831,12 +887,16 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
     childHeight = sizes->rowsep;
 
   maxWidth = childWidth;
-  widestIsRailed = isRailed(n->child);
+  widestIsRailed = (n->child->kind != ASTKind::Loop && isRailed(n->child));
 
   if(!widestIsRailed)
     railPad = sizes->colsep;
   else
     railPad = 0;
+
+  /* Extra padding when child is auto-wrapped */
+  if(containsNewline(n->child))
+    railPad += sizes->colsep;
 
   /* Place epsilon (first alternative) at the top.
      Matches layoutChoicelike for choice(epsilon, child). */
@@ -900,6 +960,19 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
 
   /* Loops always add their own rail padding */
   railPad = sizes->colsep;
+
+  /* Extra padding when body or any repeat is auto-wrapped */
+  if(n->body != NULL && containsNewline(n->body))
+    railPad += sizes->colsep;
+  else
+    {
+      for(i = 0; i < n->repeats.size(); i++)
+        if(containsNewline(n->repeats[i]))
+          {
+            railPad += sizes->colsep;
+            i = n->repeats.size() - 1;
+          }
+    }
 
   /* Place body at top */
   cursorY = origin.y;
@@ -1041,7 +1114,7 @@ static void connectSequence(SequenceNode *n,
   ASTNodeGeom prevGeom, curGeom, nextGeom, seqGeom, childGeom;
   ASTPolyline pl;
   float rightEdge, leftEdge, midY, rowMaxBelow, belowExtent;
-  float rowBottom, nextTop;
+  float rowBottom, nextTop, wrapRight, wrapLeft;
   int reversed;
 
   nc = n->children.size();
@@ -1127,6 +1200,11 @@ static void connectSequence(SequenceNode *n,
                   rightEdge = seqGeom.origin.x + seqGeom.width;
                   leftEdge = seqGeom.origin.x;
 
+                  /* Add colsep clearance so rounded corners have
+                     room to curve at wrap-around boundaries. */
+                  wrapRight = rightEdge + sizes->colsep;
+                  wrapLeft = leftEdge - sizes->colsep;
+
                   rowBottom = prevGeom.exit.y - rowMaxBelow;
                   if(isRailed(nextContent))
                     nextTop = nextGeom.entry.y;
@@ -1138,11 +1216,11 @@ static void connectSequence(SequenceNode *n,
                   pl.points.clear();
                   pl.points.push_back(prevGeom.exit);
                   pl.points.push_back(
-                      coordinate(rightEdge, prevGeom.exit.y));
-                  pl.points.push_back(coordinate(rightEdge, midY));
-                  pl.points.push_back(coordinate(leftEdge, midY));
+                      coordinate(wrapRight, prevGeom.exit.y));
+                  pl.points.push_back(coordinate(wrapRight, midY));
+                  pl.points.push_back(coordinate(wrapLeft, midY));
                   pl.points.push_back(
-                      coordinate(leftEdge, nextGeom.entry.y));
+                      coordinate(wrapLeft, nextGeom.entry.y));
                   pl.points.push_back(nextGeom.entry);
                   addPolyline(lines, pl);
                 }
@@ -1722,6 +1800,19 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
     case ASTKind::Choice:
       ch = static_cast<ChoiceNode*>(body);
       innerWidth = availableWidth - 2.0f * sizes->colsep;
+      /* If any alternative will need wrapping, use tighter width
+         to account for the extra rail padding added around
+         wrapped alternatives (see containsNewline checks in
+         computeSizeChoicelike / layoutChoicelike). */
+      for(i = 0; i < ch->alternatives.size(); i++)
+        {
+          csz = astComputeSize(ch->alternatives[i], info, sizes);
+          if(csz.first > innerWidth)
+            {
+              innerWidth = availableWidth - 4.0f * sizes->colsep;
+              i = ch->alternatives.size() - 1;
+            }
+        }
       for(i = 0; i < ch->alternatives.size(); i++)
         astAutoWrap(ch->alternatives[i], innerWidth, info, sizes);
       return;
@@ -1729,12 +1820,35 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
     case ASTKind::Optional:
       opt = static_cast<OptionalNode*>(body);
       innerWidth = availableWidth - 2.0f * sizes->colsep;
+      /* Same tighter width check as Choice above. */
+      csz = astComputeSize(opt->child, info, sizes);
+      if(csz.first > innerWidth)
+        innerWidth = availableWidth - 4.0f * sizes->colsep;
       astAutoWrap(opt->child, innerWidth, info, sizes);
       return;
 
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(body);
       innerWidth = availableWidth - 2.0f * sizes->colsep;
+      /* Same tighter width check as Choice above. */
+      if(loop->body != NULL)
+        {
+          csz = astComputeSize(loop->body, info, sizes);
+          if(csz.first > innerWidth)
+            innerWidth = availableWidth - 4.0f * sizes->colsep;
+        }
+      if(innerWidth == availableWidth - 2.0f * sizes->colsep)
+        {
+          for(i = 0; i < loop->repeats.size(); i++)
+            {
+              csz = astComputeSize(loop->repeats[i], info, sizes);
+              if(csz.first > innerWidth)
+                {
+                  innerWidth = availableWidth - 4.0f * sizes->colsep;
+                  i = loop->repeats.size() - 1;
+                }
+            }
+        }
       if(loop->body != NULL)
         astAutoWrap(loop->body, innerWidth, info, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
@@ -1788,6 +1902,138 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
 }
 
 /* ----------------------------------------------------------------
+   astSplitOverwideLoop - split overwide null-body loops into
+   body+repeat pairs wrapped in Optional.
+
+   When a Loop(body=null, repeat=Seq(A,B,C,...)) is too wide,
+   split the repeat sequence so the first half becomes the loop
+   body and the second half stays as the repeat.  Wrap the result
+   in Optional to preserve zero-or-more semantics.
+
+   This creates a boustrophedon layout: body flows forward on top,
+   repeat flows reversed on bottom, connected by loop rails.
+   ---------------------------------------------------------------- */
+
+static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
+    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+{
+  SequenceNode *seq;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+  LoopNode *loop;
+  SequenceNode *repeatSeq;
+  SequenceNode *bodySeq;
+  SequenceNode *newRepeatSeq;
+  pair<float,float> csz;
+  float innerWidth, rowWidth, childWidth;
+  size_t i, breakPoint;
+  int foundBreak;
+
+  switch(n->kind)
+    {
+    case ASTKind::Terminal:
+    case ASTKind::Nonterminal:
+    case ASTKind::Epsilon:
+    case ASTKind::Newline:
+      return n;
+
+    case ASTKind::Sequence:
+      seq = static_cast<SequenceNode*>(n);
+      for(i = 0; i < seq->children.size(); i++)
+        seq->children[i] = astSplitOverwideLoop(seq->children[i],
+                               availableWidth, info, sizes);
+      return n;
+
+    case ASTKind::Choice:
+      ch = static_cast<ChoiceNode*>(n);
+      for(i = 0; i < ch->alternatives.size(); i++)
+        ch->alternatives[i] = astSplitOverwideLoop(ch->alternatives[i],
+                                   availableWidth, info, sizes);
+      return n;
+
+    case ASTKind::Optional:
+      opt = static_cast<OptionalNode*>(n);
+      opt->child = astSplitOverwideLoop(opt->child, availableWidth,
+                       info, sizes);
+      return n;
+
+    case ASTKind::Loop:
+      loop = static_cast<LoopNode*>(n);
+      innerWidth = availableWidth - 2.0f * sizes->colsep;
+
+      /* Recurse into body and repeats first */
+      if(loop->body != NULL)
+        loop->body = astSplitOverwideLoop(loop->body, innerWidth,
+                         info, sizes);
+      for(i = 0; i < loop->repeats.size(); i++)
+        loop->repeats[i] = astSplitOverwideLoop(loop->repeats[i],
+                               innerWidth, info, sizes);
+
+      /* Check if this is a splittable null-body loop */
+      if(loop->body != NULL)
+        return n;
+      if(loop->repeats.size() != 1)
+        return n;
+      if(loop->repeats[0]->kind != ASTKind::Sequence)
+        return n;
+
+      repeatSeq = static_cast<SequenceNode*>(loop->repeats[0]);
+      csz = astComputeSize(repeatSeq, info, sizes);
+      if(csz.first <= innerWidth)
+        return n;
+
+      /* Find break point: iterate children, break when cumulative
+         width would exceed innerWidth */
+      rowWidth = 0;
+      foundBreak = 0;
+      breakPoint = 0;
+      for(i = 0; i < repeatSeq->children.size() && !foundBreak; i++)
+        {
+          csz = astComputeSize(repeatSeq->children[i], info, sizes);
+          childWidth = csz.first;
+          if(i > 0)
+            childWidth += sizes->colsep;
+
+          if(i > 0 && rowWidth + childWidth > innerWidth)
+            {
+              breakPoint = i;
+              foundBreak = 1;
+            }
+          else
+            {
+              rowWidth += childWidth;
+            }
+        }
+
+      /* If no valid break found, leave unchanged */
+      if(!foundBreak)
+        return n;
+
+      /* Create body sequence (first half) and new repeat sequence
+         (second half) */
+      bodySeq = new SequenceNode();
+      newRepeatSeq = new SequenceNode();
+      for(i = 0; i < breakPoint; i++)
+        bodySeq->append(repeatSeq->children[i]);
+      for(i = breakPoint; i < repeatSeq->children.size(); i++)
+        newRepeatSeq->append(repeatSeq->children[i]);
+
+      /* Detach children from original sequence and delete it */
+      repeatSeq->children.clear();
+      delete repeatSeq;
+
+      /* Assign body and repeat to the loop */
+      loop->body = bodySeq;
+      loop->repeats[0] = newRepeatSeq;
+
+      /* Wrap in Optional to preserve zero-or-more semantics */
+      return new OptionalNode(loop);
+    }
+
+  return n;
+}
+
+/* ----------------------------------------------------------------
    astAutoWrapGrammar - auto-wrap all non-subsumed productions.
 
    Creates a temporary ASTLayoutContext to assign names (needed for
@@ -1835,6 +2081,10 @@ void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
               prod->needsWrap = 1;
               adjustWrappedWidths(prod->body, info, sizes);
             }
+
+          /* Split overwide null-body loops into body+repeat */
+          prod->body = astSplitOverwideLoop(prod->body, availableWidth,
+                                             info, sizes);
 
           astAutoWrap(prod->body, availableWidth, info, sizes);
 
