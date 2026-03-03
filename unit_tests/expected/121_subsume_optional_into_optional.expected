@@ -4,5 +4,4 @@ production: innerm
     terminal 'a'
 production: outerm
   optional
-    optional
-      terminal 'a'
+    terminal 'a'
