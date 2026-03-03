@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: relational_expression
-  sequence
-    nonterminal simple_expression
-    optional
-      sequence
-        nonterminal relational_operator
-        nonterminal simple_expression

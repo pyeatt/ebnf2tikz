@@ -1,18 +1,11 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: relational_operator
-  concat node13 : drawtoprev=0 beforeskip=0 width=0 height=0 coord4 coord1
-    \nullnode{start1\strut} ->  coord1 : drawtoprev=0 beforeskip=0 width=0 height=9 coord1 coord1
-    \nullnode{start2\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
-    rail  UP node10 : drawtoprev=1 beforeskip=8 width=0 height=0 node10.east node10.west
-    choices node3 : leftrail=node10 rightrail=node11 drawtoprev=0 beforeskip=8 width=0 height=0 node1.east node1.west
-      \railnonterm{=\strut} ->  node1 : drawtoprev=1 beforeskip=0 width=8 height=6 node1.east node1.west
-      \railnonterm{<>\strut} ->  node2 : drawtoprev=0 beforeskip=0 width=8 height=6 node2.east node2.west
-      \railnonterm{<\strut} ->  node4 : drawtoprev=0 beforeskip=0 width=8 height=6 node4.east node4.west
-      \railnonterm{>\strut} ->  node5 : drawtoprev=0 beforeskip=0 width=8 height=6 node5.east node5.west
-      \railnonterm{<=\strut} ->  node6 : drawtoprev=0 beforeskip=0 width=8 height=6 node6.east node6.west
-      \railnonterm{>=\strut} ->  node7 : drawtoprev=0 beforeskip=0 width=8 height=6 node7.east node7.west
-      \railnonterm{IN\strut} ->  node8 : drawtoprev=0 beforeskip=0 width=8 height=6 node8.east node8.west
-      \railnonterm{IS\strut} ->  node9 : drawtoprev=0 beforeskip=0 width=8 height=6 node9.east node9.west
-    rail  UP node11 : drawtoprev=1 beforeskip=8 width=0 height=0 node11.east node11.west
-    \nullnode{end1\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
-    \nullnode{end2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
+  choice
+    terminal '='
+    terminal '<>'
+    terminal '<'
+    terminal '>'
+    terminal '<='
+    terminal '>='
+    terminal 'IN'
+    terminal 'IS'

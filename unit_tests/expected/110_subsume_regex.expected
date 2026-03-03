@@ -1,11 +1,8 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: innerb
+  terminal 'x'
 production: outerb
-  concat node13 : drawtoprev=0 beforeskip=0 width=0 height=0 coord8 coord5
-    \nullnode{start1\strut} ->  coord5 : drawtoprev=0 beforeskip=0 width=0 height=9 coord5 coord5
-    \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
-    \railnonterm{a\strut} ->  node8 : drawtoprev=1 beforeskip=8 width=8 height=6 node8.east node8.west
-    \railnonterm{x\strut} ->  node25 : drawtoprev=1 beforeskip=8 width=8 height=6 node25.east node25.west
-    \railnonterm{b\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
-    \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    \nullnode{end2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+  sequence
+    terminal 'a'
+    terminal 'x'
+    terminal 'b'

@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: unsigned_number
-  choice
-    nonterminal unsigned_real
-    nonterminal unsigned_integer
