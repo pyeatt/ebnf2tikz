@@ -32,7 +32,8 @@ ebnf2tikz
 # include <cstdlib>
 # include <cstring> // strerror
 # include <string>
-# include "graph.hh"
+# include "ast.hh"
+# include "diagnostics.hh"
 # include "driver.hh"
 # include "parser.hh"
 %}
@@ -60,7 +61,8 @@ ebnf2tikz
 %}
 
 
-%Start	A 
+%Start	A
+%x	C
 
 %%
 
@@ -81,10 +83,27 @@ ebnf2tikz
 \/\/.*\n                  {}
 ---.*\n                   {}
 
+"(*"                      {BEGIN(C);}
+<C>[^*\n]*                {}
+<C>"*"+[^*)\n]*           {}
+<C>\n                     {}
+<C>"*"+")"                {BEGIN(INITIAL);}
+
 "\\\\"                    {return yy::parser::make_NEWLINE(loc);}
 
 \'[^']*\'		  {return yy::parser::make_TERM (yytext,loc);}
 \"[^"]*\"		  {return yy::parser::make_TERM (yytext,loc);}
+
+"?"[^?\n]*"?"             {
+                            std::string raw(yytext+1, yyleng-2);
+                            size_t start = raw.find_first_not_of(" \t");
+                            size_t end = raw.find_last_not_of(" \t");
+                            std::string trimmed;
+                            if (start != std::string::npos)
+                              trimmed = raw.substr(start, end - start + 1);
+                            std::string quoted = "'" + trimmed + "'";
+                            return yy::parser::make_TERM(quoted.c_str(), loc);
+                          }
 
 
 "="                       {return yy::parser::make_EQUAL(loc);}
@@ -120,7 +139,9 @@ void driver::scan_begin ()
     yyin = stdin;
   else if (!(yyin = fopen (file.c_str (), "r")))
     {
-      std::cerr << "cannot open " << file << ": " << strerror (errno) << '\n';
+      diagnostics.report(Severity::Error,
+        string("cannot open ") + file + ": " + strerror(errno));
+      diagnostics.emit(std::cerr);
       exit (EXIT_FAILURE);
     }
 }

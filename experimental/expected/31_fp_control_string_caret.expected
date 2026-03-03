@@ -1,7 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: control_string_caret
-  choice
-    sequence
-      terminal '^'
-      nonterminal uppercase_letter
-    nonterminal lowercase_letter

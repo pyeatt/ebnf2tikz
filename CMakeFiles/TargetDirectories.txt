@@ -1,0 +1,5 @@
+/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/ebnf2tikz.dir
+/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/check.dir
+/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/check-tikz.dir
+/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/edit_cache.dir
+/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/rebuild_cache.dir

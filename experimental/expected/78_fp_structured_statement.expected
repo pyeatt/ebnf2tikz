@@ -1,6 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: structured_statement
-  choice
-    nonterminal compound_statement
-    nonterminal conditional_statement
-    nonterminal repetitive_statement

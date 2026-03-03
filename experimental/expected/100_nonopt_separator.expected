@@ -1,7 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: nonopt_sep
-  loop
-    body:
-      nonterminal A
-    repeat:
-      nonterminal sep

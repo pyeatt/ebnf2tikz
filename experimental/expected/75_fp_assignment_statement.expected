@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: assignment_statement
-  sequence
-    choice
-      nonterminal variable_reference
-      nonterminal function_identifier
-      terminal 'RESULT'
-    terminal ':='
-    nonterminal expression

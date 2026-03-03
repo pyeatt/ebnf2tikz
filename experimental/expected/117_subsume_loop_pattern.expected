@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: elemi
-  terminal 'x'
-production: listi
-  loop
-    body:
-      terminal 'x'
-    repeat:
-      epsilon

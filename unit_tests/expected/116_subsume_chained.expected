@@ -1,16 +1,20 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: pairh
+  sequence
+    terminal 'a'
+    terminal 'b'
 production: optsh
+  choice
+    sequence
+      terminal 'a'
+      terminal 'b'
+    terminal 'c'
 production: fullh
-  concat node26 : drawtoprev=0 beforeskip=0 width=0 height=0 coord12 coord9
-    \nullnode{start1\strut} ->  coord9 : drawtoprev=0 beforeskip=0 width=0 height=9 coord9 coord9
-    \nullnode{start2\strut} ->  coord10 : drawtoprev=1 beforeskip=8 width=0 height=9 coord10 coord10
-    \railnonterm{d\strut} ->  node21 : drawtoprev=1 beforeskip=8 width=8 height=6 node21.east node21.west
-    choices node72 : drawtoprev=1 beforeskip=0 width=0 height=0 node75.east node74.west
-      concat node73 : drawtoprev=0 beforeskip=0 width=0 height=0 node75.east node74.west
-        \railnonterm{a\strut} ->  node74 : drawtoprev=1 beforeskip=8 width=8 height=6 node74.east node74.west
-        \railnonterm{b\strut} ->  node75 : drawtoprev=1 beforeskip=8 width=8 height=6 node75.east node75.west
-      \railnonterm{c\strut} ->  node76 : drawtoprev=0 beforeskip=0 width=8 height=6 node76.east node76.west
-    \railnonterm{e\strut} ->  node24 : drawtoprev=1 beforeskip=8 width=8 height=6 node24.east node24.west
-    \nullnode{end1\strut} ->  coord11 : drawtoprev=1 beforeskip=8 width=0 height=9 coord11 coord11
-    \nullnode{end2\strut} ->  coord12 : drawtoprev=1 beforeskip=8 width=0 height=9 coord12 coord12
+  sequence
+    terminal 'd'
+    choice
+      sequence
+        terminal 'a'
+        terminal 'b'
+      terminal 'c'
+    terminal 'e'

@@ -24,7 +24,8 @@ ebnf2tikz
 #define DRIVER_HH
 #include <set>
 #include <fstream>
-#include "graph.hh"
+#include "ast.hh"
+#include "nodesizes.hh"
 #include "parser.hh"
 
 using namespace std;
@@ -34,7 +35,7 @@ using namespace std;
 // declare yylex here
 YY_DECL;
 
-// Conducting the whole scanning and parsing of Calc++.
+// Conducting the whole scanning and parsing.
 class driver
 {
   int result;
@@ -42,26 +43,28 @@ class driver
   set<string> nonterminals;
   set<string> terminals;
   ofstream *outFile;
+  nodesizes *sizes;
   int noopt,figures,dumponly;
   bool trace_parsing;
   bool trace_scanning;
   yy::location location;
 public:
-  driver(ofstream *out);
+  driver(ofstream *out, nodesizes *sz);
 
   ofstream &outs(){return *outFile;}
+  nodesizes *getSizes(){return sizes;}
 
-  node* addTerminal(string &s)
+  ast::ASTNode* addTerminal(string &s)
   {
     terminals.insert(s);
-    return new termnode(s);
+    return new ast::TerminalNode(s);
   };
-  node* addString(string &s)
+  ast::ASTNode* addString(string &s)
   {
     nonterminals.insert(s);
-    return new nontermnode(s);
+    return new ast::NonterminalNode(s);
   };
-  
+
   int parse (const char *f,int opt, int fig, int dump);
   int get_dumponly(){return dumponly;}
   int get_noopt(){return noopt;}
@@ -70,6 +73,6 @@ public:
   void scan_end ();
   int get_result(){return result;}
   yy::location &get_location(){return location;}
-  
+
 };
 #endif

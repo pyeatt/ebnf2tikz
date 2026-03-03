@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/pyeatt/ebnf2tikz/experimental/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

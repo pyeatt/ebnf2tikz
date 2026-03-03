@@ -1,7 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: label
-  choice
-    sequence
-      terminal 'LABEL'
-      nonterminal dec_digit_sequence
-    nonterminal identifier
