@@ -389,7 +389,8 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
   /* We don't have a real Epsilon node to put here; we'll use NULL
      as a sentinel and handle it specially. */
 
-  /* Use the child's size plus a null first alternative */
+  /* Use the child's size plus a null first alternative.
+     Matches computeSizeChoicelike for choice(epsilon, child). */
   float maxWidth, totalHeight, childW, childH;
   pair<float,float> csz;
   int widestIsRailed;
@@ -401,10 +402,9 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
   maxWidth = childW;
   widestIsRailed = isRailed(n->child);
 
-  /* First alternative: epsilon (0 width, 0 height) */
+  /* epsilon row + separator + child row (same as choicelike) */
   totalHeight = sizes->rowsep;  /* minimum height for epsilon */
   totalHeight += sizes->rowsep; /* separator */
-  totalHeight += childH / 2.0f; /* center child visually in its row */
   totalHeight += childH;
   if(childH < sizes->rowsep)
     totalHeight += sizes->rowsep - childH;
@@ -838,20 +838,22 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
   else
     railPad = 0;
 
-  /* Place epsilon (first alternative) at the top */
+  /* Place epsilon (first alternative) at the top.
+     Matches layoutChoicelike for choice(epsilon, child). */
   cursorY = origin.y;
   totalHeight = sizes->rowsep; /* minimum height for epsilon path */
 
-  /* Place child (second alternative) below */
+  /* Past epsilon row, then separator gap */
+  cursorY -= sizes->rowsep;
   cursorY -= sizes->rowsep;
   totalHeight += sizes->rowsep; /* separator */
 
   childOrigin = coordinate(origin.x + railPad +
                            (maxWidth - childWidth) / 2.0f,
-                           cursorY - childHeight / 2.0f);
+                           cursorY);
   childg = astLayoutNode(n->child, childOrigin, geom, info, sizes);
 
-  totalHeight += childHeight / 2.0f + childHeight;
+  totalHeight += childHeight;
 
   g.origin = origin;
   g.width = maxWidth + 2.0f * railPad;
@@ -959,18 +961,22 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
   g.width = maxWidth + 2.0f * railPad;
   g.height = totalHeight;
 
-  /* entry and exit at the body (top) level */
+  /* entry and exit at the body position, not the rail.
+     The feedback paths already draw body-to-rail segments with
+     rounded corners; setting entry/exit at the rail would create
+     gaps where the rounded corner bypasses the exact rail point. */
   if(n->body != NULL && geom.find(n->body) != geom.end())
     {
-      g.entry = coordinate(origin.x, geom[n->body].entry.y);
-      g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
-                           geom[n->body].exit.y);
+      g.entry = geom[n->body].entry;
+      g.exit = geom[n->body].exit;
     }
   else
     {
-      g.entry = coordinate(origin.x, origin.y);
-      g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
-                           origin.y);
+      /* null body: entry/exit at midpoint, matching the bodyEntry/
+         bodyExit used by connectLoop's feedback paths */
+      float midX = origin.x + (maxWidth + 2.0f * railPad) / 2.0f;
+      g.entry = coordinate(midX, origin.y);
+      g.exit = coordinate(midX, origin.y);
     }
 
   geom[n] = g;
@@ -1268,9 +1274,11 @@ static void connectChoicelike(ASTNode *self,
       else
         {
           /* 4-point: extend past rail for inward curve */
+          float halfCol = 0.5f * sizes->colsep;
+
           pl.points.clear();
           pl.points.push_back(
-              coordinate(railX - sizes->colsep,
+              coordinate(railX - halfCol,
                          firstGeom.entry.y));
           pl.points.push_back(
               coordinate(railX, firstGeom.entry.y));
@@ -1286,7 +1294,7 @@ static void connectChoicelike(ASTNode *self,
           pl.points.push_back(
               coordinate(exitRailX, firstGeom.exit.y));
           pl.points.push_back(
-              coordinate(exitRailX + sizes->colsep,
+              coordinate(exitRailX + halfCol,
                          firstGeom.exit.y));
           addPolyline(lines, pl);
         }
@@ -1375,9 +1383,12 @@ static void connectOptional(OptionalNode *n,
     }
   else
     {
+      /* 4-point: extend past rail for inward curve */
+      float halfCol = 0.5f * sizes->colsep;
+
       pl.points.clear();
       pl.points.push_back(
-          coordinate(railX - sizes->colsep, optGeom.entry.y));
+          coordinate(railX - halfCol, optGeom.entry.y));
       pl.points.push_back(
           coordinate(railX, optGeom.entry.y));
       pl.points.push_back(
@@ -1392,7 +1403,7 @@ static void connectOptional(OptionalNode *n,
       pl.points.push_back(
           coordinate(exitRailX, optGeom.exit.y));
       pl.points.push_back(
-          coordinate(exitRailX + sizes->colsep, optGeom.exit.y));
+          coordinate(exitRailX + halfCol, optGeom.exit.y));
       addPolyline(lines, pl);
     }
 }
