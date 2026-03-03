@@ -304,6 +304,16 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
     case ASTKind::Optional:
       opt = static_cast<OptionalNode*>(n);
       opt->child = liftWrappers(opt->child, count);
+      // Optional(Optional(X)) -> Optional(X)
+      if(opt->child->kind == ASTKind::Optional)
+        {
+          OptionalNode *inner = static_cast<OptionalNode*>(opt->child);
+          opt->child = inner->child;
+          inner->child = NULL;
+          delete inner;
+          (*count)++;
+          return (ASTNode*)opt;
+        }
       // Optional(Loop(body=null, ...)) == Loop(body=null, ...)
       // Both mean zero-or-more, so unwrap the Optional.
       if(opt->child->kind == ASTKind::Loop)
@@ -336,6 +346,110 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
       for(i = 0; i < loop->repeats.size(); i++)
         loop->repeats[i] = liftWrappers(loop->repeats[i], count);
       return n;
+    default:
+      return n;
+    }
+}
+
+// -----------------------------------------------------------------------
+// expandOptionalSequence: flatten nested optionals in sequences.
+//
+// Pattern: Optional(Sequence(A..., Optional(B), C...))
+//   -> Choice(Epsilon, Sequence(A..., B, C...), Sequence(A'..., C'...))
+//
+// This eliminates the inner Optional's rail padding, producing a
+// flat choice with three alternatives.  Only handles sequences with
+// exactly one inner Optional child.
+// -----------------------------------------------------------------------
+
+static ASTNode* expandOptionalSequence(ASTNode *n, int *count)
+{
+  SequenceNode *seq, *seqWith, *seqWithout;
+  ChoiceNode *ch;
+  OptionalNode *opt, *innerOpt;
+  LoopNode *loop;
+  ASTNode *optChild;
+  size_t i, optIdx;
+  int optCount;
+
+  switch(n->kind)
+    {
+    case ASTKind::Sequence:
+      seq = static_cast<SequenceNode*>(n);
+      for(i = 0; i < seq->children.size(); i++)
+        seq->children[i] = expandOptionalSequence(seq->children[i], count);
+      return n;
+
+    case ASTKind::Choice:
+      ch = static_cast<ChoiceNode*>(n);
+      for(i = 0; i < ch->alternatives.size(); i++)
+        ch->alternatives[i] =
+            expandOptionalSequence(ch->alternatives[i], count);
+      return n;
+
+    case ASTKind::Optional:
+      opt = static_cast<OptionalNode*>(n);
+      opt->child = expandOptionalSequence(opt->child, count);
+
+      if(opt->child->kind != ASTKind::Sequence)
+        return n;
+      seq = static_cast<SequenceNode*>(opt->child);
+
+      /* Count inner Optional children */
+      optCount = 0;
+      optIdx = 0;
+      for(i = 0; i < seq->children.size(); i++)
+        {
+          if(seq->children[i]->kind == ASTKind::Optional)
+            {
+              optCount++;
+              optIdx = i;
+            }
+        }
+
+      if(optCount != 1 || seq->children.size() < 2)
+        return n;
+
+      innerOpt = static_cast<OptionalNode*>(seq->children[optIdx]);
+      optChild = innerOpt->child;
+
+      /* Build seq_with: all children, Optional(B) replaced with B */
+      seqWith = new SequenceNode();
+      for(i = 0; i < seq->children.size(); i++)
+        {
+          if(i == optIdx)
+            seqWith->append(optChild->clone());
+          else
+            seqWith->append(seq->children[i]->clone());
+        }
+
+      /* Build seq_without: all children except the Optional */
+      seqWithout = new SequenceNode();
+      for(i = 0; i < seq->children.size(); i++)
+        {
+          if(i != optIdx)
+            seqWithout->append(seq->children[i]->clone());
+        }
+
+      /* Build Choice(Epsilon, seq_with, seq_without) */
+      ch = new ChoiceNode();
+      ch->addAlternative(new EpsilonNode());
+      ch->addAlternative(seqWith);
+      ch->addAlternative(seqWithout);
+
+      delete opt;
+      (*count)++;
+      return (ASTNode*)ch;
+
+    case ASTKind::Loop:
+      loop = static_cast<LoopNode*>(n);
+      if(loop->body != NULL)
+        loop->body = expandOptionalSequence(loop->body, count);
+      for(i = 0; i < loop->repeats.size(); i++)
+        loop->repeats[i] =
+            expandOptionalSequence(loop->repeats[i], count);
+      return n;
+
     default:
       return n;
     }
@@ -830,6 +944,9 @@ ASTNode* ast_optimizer::optimizeBody(ASTNode *body)
     tmp = mergeSequences(body);
     liftCount = 0;
     body = liftWrappers(body, &liftCount);
+    tmp += liftCount;
+    liftCount = 0;
+    body = expandOptionalSequence(body, &liftCount);
     tmp += liftCount;
   } while(tmp > 0);
 
