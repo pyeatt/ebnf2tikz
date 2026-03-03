@@ -1,5 +1,5 @@
-CMakeFiles/ebnf2tikz.dir/util.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/util.cc /usr/include/stdc-predef.h \
+CMakeFiles/ebnf2tikz.dir/util.cc.o: /home/pyeatt/ebnf2tikz/util.cc \
+ /usr/include/stdc-predef.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/string \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -111,4 +111,4 @@ CMakeFiles/ebnf2tikz.dir/util.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/uses_allocator.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/uses_allocator_args.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/tuple \
- /home/faculty/lpyeatt/ebnf2tikz/util.hh
+ /home/pyeatt/ebnf2tikz/util.hh

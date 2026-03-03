@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/faculty/lpyeatt/ebnf2tikz
+CMAKE_SOURCE_DIR = /home/pyeatt/ebnf2tikz
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/faculty/lpyeatt/ebnf2tikz
+CMAKE_BINARY_DIR = /home/pyeatt/ebnf2tikz
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/faculty/lpyeatt/ebnf2tikz/CMakeFiles /home/faculty/lpyeatt/ebnf2tikz//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pyeatt/ebnf2tikz/CMakeFiles /home/pyeatt/ebnf2tikz//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/faculty/lpyeatt/ebnf2tikz/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pyeatt/ebnf2tikz/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -154,6 +154,32 @@ check-tikz: cmake_check_build_system
 check-tikz/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/check-tikz.dir/build.make CMakeFiles/check-tikz.dir/build
 .PHONY : check-tikz/fast
+
+#=============================================================================
+# Target rules for targets named all_targets
+
+# Build rule for target.
+all_targets: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all_targets
+.PHONY : all_targets
+
+# fast build rule for target.
+all_targets/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/all_targets.dir/build.make CMakeFiles/all_targets.dir/build
+.PHONY : all_targets/fast
+
+#=============================================================================
+# Target rules for targets named realclean
+
+# Build rule for target.
+realclean: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 realclean
+.PHONY : realclean
+
+# fast build rule for target.
+realclean/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/realclean.dir/build.make CMakeFiles/realclean.dir/build
+.PHONY : realclean/fast
 
 annot_lexer.o: annot_lexer.cc.o
 .PHONY : annot_lexer.o
@@ -523,8 +549,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... all_targets"
 	@echo "... check"
 	@echo "... check-tikz"
+	@echo "... realclean"
 	@echo "... ebnf2tikz"
 	@echo "... annot_lexer.o"
 	@echo "... annot_lexer.i"
