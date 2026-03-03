@@ -1,21 +1,15 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: wide_choice
-  concat node17 : drawtoprev=0 beforeskip=0 width=0 height=0 coord4 coord1
-    \nullnode{start1\strut} ->  coord1 : drawtoprev=0 beforeskip=0 width=0 height=9 coord1 coord1
-    \nullnode{start2\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
-    \railnonterm{BEGIN\strut} ->  node1 : drawtoprev=1 beforeskip=8 width=8 height=6 node1.east node1.west
-    rail  UP node7 : drawtoprev=0 beforeskip=8 width=0 height=0 node7.east node7.west
-    choices node4 : leftrail=node7 rightrail=node8 drawtoprev=0 beforeskip=0 width=0 height=0 node2.east node2.west
-      \railnonterm{variable\_reference\strut} ->  node2 : drawtoprev=1 beforeskip=0 width=8 height=6 node2.east node2.west
-      \railnonterm{function\_identifier\strut} ->  node3 : drawtoprev=0 beforeskip=0 width=8 height=6 node3.east node3.west
-      \railnonterm{procedure\_identifier\strut} ->  node5 : drawtoprev=0 beforeskip=0 width=8 height=6 node5.east node5.west
-      \railnonterm{constant\_expression\strut} ->  node6 : drawtoprev=0 beforeskip=0 width=8 height=6 node6.east node6.west
-    rail  UP node8 : drawtoprev=0 beforeskip=8 width=0 height=0 node8.east node8.west
-    \railnonterm{:=\strut} ->  node10 : drawtoprev=1 beforeskip=8 width=8 height=6 node10.east node10.west
-    \railnonterm{expression\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
-    \railnonterm{END\strut} ->  node12 : drawtoprev=1 beforeskip=8 width=8 height=6 node12.east node12.west
-    \railnonterm{actual\_parameter\_list\strut} ->  node13 : drawtoprev=1 beforeskip=8 width=8 height=6 node13.east node13.west
-    \railnonterm{compound\_statement\strut} ->  node14 : drawtoprev=1 beforeskip=8 width=8 height=6 node14.east node14.west
-    \railnonterm{;\strut} ->  node15 : drawtoprev=1 beforeskip=8 width=8 height=6 node15.east node15.west
-    \nullnode{end1\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
-    \nullnode{end2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
+  sequence
+    terminal 'BEGIN'
+    choice
+      nonterminal variable_reference
+      nonterminal function_identifier
+      nonterminal procedure_identifier
+      nonterminal constant_expression
+    terminal ':='
+    nonterminal expression
+    terminal 'END'
+    nonterminal actual_parameter_list
+    nonterminal compound_statement
+    terminal ';'

@@ -1,6 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: character_literal
-  sequence
-    terminal "'"
-    nonterminal graphic_character
-    terminal "'"

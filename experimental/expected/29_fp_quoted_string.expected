@@ -1,8 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: quoted_string
-  sequence
-    terminal "'"
-    loop
-      repeat:
-        nonterminal string_character
-    terminal "'"

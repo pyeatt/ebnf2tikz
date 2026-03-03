@@ -17,9 +17,9 @@ string camelcase(string s)
 {
   const char *sp = s.c_str();
   string r;
-  if(sp == NULL || *sp == 0)
+  if(*sp == 0)
     return r;
-  for( ;*sp != '_' && *sp != 0; sp++)
+  for( ; *sp != '_' && *sp != 0; sp++)
     {
       if(*sp >= '0' && *sp <= '9')
 	r += digitWord(*sp);

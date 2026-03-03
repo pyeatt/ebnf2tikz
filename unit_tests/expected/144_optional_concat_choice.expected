@@ -1,18 +1,11 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: optconcatchoice
-  concat node15 : drawtoprev=0 beforeskip=0 width=0 height=0 coord5 coord2
-    \nullnode{start1\strut} ->  coord2 : drawtoprev=0 beforeskip=0 width=0 height=9 coord2 coord2
-    \nullnode{start2\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
-    rail  UP node12 : drawtoprev=1 beforeskip=8 width=0 height=0 node12.east node12.west
-    choices node6 : leftrail=node12 rightrail=node13 drawtoprev=0 beforeskip=8 width=0 height=0 node1.east node1.west
-      \nullnode{NULL node\strut} ->  coord1 : drawtoprev=0 beforeskip=8 width=0 height=9 coord1 coord1
-      \railnonterm{a\strut} ->  node1 : drawtoprev=1 beforeskip=0 width=8 height=6 node1.east node1.west
-      concat node4 : drawtoprev=0 beforeskip=0 width=0 height=0 node5.east node2.west
-        \railnonterm{b\strut} ->  node2 : drawtoprev=1 beforeskip=0 width=8 height=6 node2.east node2.west
-        \railnonterm{e\strut} ->  node3 : drawtoprev=1 beforeskip=8 width=8 height=6 node3.east node3.west
-        \railnonterm{f\strut} ->  node5 : drawtoprev=1 beforeskip=8 width=8 height=6 node5.east node5.west
-      \railnonterm{c\strut} ->  node7 : drawtoprev=0 beforeskip=0 width=8 height=6 node7.east node7.west
-      \railnonterm{d\strut} ->  node8 : drawtoprev=0 beforeskip=0 width=8 height=6 node8.east node8.west
-    rail  UP node13 : drawtoprev=1 beforeskip=8 width=0 height=0 node13.east node13.west
-    \nullnode{end1\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
-    \nullnode{end2\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
+  optional
+    choice
+      nonterminal a
+      sequence
+        terminal 'b'
+        nonterminal e
+        terminal 'f'
+      nonterminal c
+      terminal 'd'

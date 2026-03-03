@@ -1,14 +1,11 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: choicey
+  choice
+    terminal 'a'
+    terminal 'b'
 production: loopy
-  concat node18 : drawtoprev=0 beforeskip=0 width=0 height=0 coord9 coord6
-    \nullnode{start1\strut} ->  coord6 : drawtoprev=0 beforeskip=0 width=0 height=9 coord6 coord6
-    \nullnode{start2\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    rail  UP node15 : drawtoprev=1 beforeskip=8 width=0 height=0 node15.east node15.west
-    loop node14 : leftrail=node15 rightrail=node16 drawtoprev=0 beforeskip=8 width=0 height=0 coord5 coord5
-      \nullnode{NULL node\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
-      \railnonterm{a\strut} ->  node34 : drawtoprev=0 beforeskip=0 width=8 height=6 node34.east node34.west
-      \railnonterm{b\strut} ->  node35 : drawtoprev=0 beforeskip=0 width=8 height=6 node35.east node35.west
-    rail  UP node16 : drawtoprev=1 beforeskip=8 width=0 height=0 node16.east node16.west
-    \nullnode{end1\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
-    \nullnode{end2\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
+  loop
+    repeat:
+      terminal 'a'
+    repeat:
+      terminal 'b'
