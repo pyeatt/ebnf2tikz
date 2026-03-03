@@ -85,9 +85,14 @@ string ASTTikzWriter::texName(ASTLeafInfo &li)
       pos = display.find(' ');
       while(pos != string::npos)
         {
-          ss << "\\" << li.format << "{"
-             << display.substr(last, pos - last) << "\\strut}";
-          ss << "\\\\";
+          /* strut on first line for space above; omit on middle lines */
+          if(last == 0)
+            ss << "\\" << li.format << "{"
+               << display.substr(last, pos - last) << "\\strut}";
+          else
+            ss << "\\" << li.format << "{"
+               << display.substr(last, pos - last) << "}";
+          ss << "\\\\[-3pt]";
           last = pos + 1;
           pos = display.find(' ', last);
         }
