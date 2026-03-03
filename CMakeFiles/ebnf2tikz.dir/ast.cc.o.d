@@ -1,5 +1,5 @@
-CMakeFiles/ebnf2tikz.dir/ast.cc.o: /home/faculty/lpyeatt/ebnf2tikz/ast.cc \
- /usr/include/stdc-predef.h /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+CMakeFiles/ebnf2tikz.dir/ast.cc.o: /home/pyeatt/ebnf2tikz/ast.cc \
+ /usr/include/stdc-predef.h /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/requires_hosted.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/x86_64-pc-linux-gnu/bits/c++config.h \
