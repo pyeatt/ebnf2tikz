@@ -132,6 +132,7 @@ public:
   string name;
   annotmap *annotations;
   ast::ASTNode *body;
+  int needsWrap;    /* set by astAutoWrapGrammar when body exceeds row width */
   ASTProduction(annotmap *a, const string &n, ast::ASTNode *b);
   ~ASTProduction();
 };
