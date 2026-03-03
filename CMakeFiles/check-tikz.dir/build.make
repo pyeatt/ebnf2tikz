@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/faculty/lpyeatt/ebnf2tikz
+CMAKE_SOURCE_DIR = /home/pyeatt/ebnf2tikz
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/faculty/lpyeatt/ebnf2tikz
+CMAKE_BINARY_DIR = /home/pyeatt/ebnf2tikz
 
 # Utility rule file for check-tikz.
 
@@ -67,8 +67,8 @@ include CMakeFiles/check-tikz.dir/compiler_depend.make
 include CMakeFiles/check-tikz.dir/progress.make
 
 CMakeFiles/check-tikz: ebnf2tikz
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building TikZ PDF regression test"
-	cd /home/faculty/lpyeatt/ebnf2tikz/unit_tests && bash /home/faculty/lpyeatt/ebnf2tikz/unit_tests/build_tikz_tests.sh /home/faculty/lpyeatt/ebnf2tikz/ebnf2tikz
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/pyeatt/ebnf2tikz/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building TikZ PDF regression test"
+	cd /home/pyeatt/ebnf2tikz/unit_tests && bash /home/pyeatt/ebnf2tikz/unit_tests/build_tikz_tests.sh /home/pyeatt/ebnf2tikz/ebnf2tikz
 
 CMakeFiles/check-tikz.dir/codegen:
 .PHONY : CMakeFiles/check-tikz.dir/codegen
@@ -86,6 +86,6 @@ CMakeFiles/check-tikz.dir/clean:
 .PHONY : CMakeFiles/check-tikz.dir/clean
 
 CMakeFiles/check-tikz.dir/depend:
-	cd /home/faculty/lpyeatt/ebnf2tikz && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/faculty/lpyeatt/ebnf2tikz /home/faculty/lpyeatt/ebnf2tikz /home/faculty/lpyeatt/ebnf2tikz /home/faculty/lpyeatt/ebnf2tikz /home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/check-tikz.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/pyeatt/ebnf2tikz && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pyeatt/ebnf2tikz /home/pyeatt/ebnf2tikz /home/pyeatt/ebnf2tikz /home/pyeatt/ebnf2tikz /home/pyeatt/ebnf2tikz/CMakeFiles/check-tikz.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/check-tikz.dir/depend
 

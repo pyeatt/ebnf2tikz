@@ -1,7 +1,7 @@
 {
 	"InstallScripts" : 
 	[
-		"/home/faculty/lpyeatt/ebnf2tikz/cmake_install.cmake"
+		"/home/pyeatt/ebnf2tikz/cmake_install.cmake"
 	],
 	"Parallel" : false
 }
