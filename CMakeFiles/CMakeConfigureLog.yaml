@@ -20,43 +20,35 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
       - "/bin/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/uname"
+      - "/home/pyeatt/.local/bin/uname"
       - "/usr/local/sbin/uname"
       - "/usr/local/bin/uname"
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "message-v1"
     backtrace:
       - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      The system is: Linux - 6.12.63-gentoo-dist - x86_64
+      The system is: Linux - 6.12.54-gentoo-dist - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -78,35 +70,27 @@ events:
       - "make"
       - "smake"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gmake"
+      - "/home/pyeatt/.local/bin/gmake"
       - "/usr/local/sbin/gmake"
       - "/usr/local/bin/gmake"
     found: "/usr/bin/gmake"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -136,35 +120,27 @@ events:
       - "icx"
       - "clang++"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/c++"
+      - "/home/pyeatt/.local/bin/c++"
       - "/usr/local/sbin/c++"
       - "/usr/local/bin/c++"
     found: "/usr/bin/c++"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -192,17 +168,13 @@ events:
     found: "/usr/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "message-v1"
     backtrace:
@@ -223,7 +195,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/4.1.4/CompilerIdCXX/a.out
+        /home/pyeatt/ebnf2tikz/CMakeFiles/4.1.2/CompilerIdCXX/a.out
       
   -
     kind: "find-v1"
@@ -246,30 +218,22 @@ events:
       - "ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/ar"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -291,30 +255,22 @@ events:
       - "ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/ranlib"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -336,30 +292,22 @@ events:
       - "strip"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/strip"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -381,30 +329,22 @@ events:
       - "ld"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/ld"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -426,30 +366,22 @@ events:
       - "nm"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/nm"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -471,30 +403,22 @@ events:
       - "objdump"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/objdump"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -516,30 +440,22 @@ events:
       - "objcopy"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/objcopy"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -561,30 +477,22 @@ events:
       - "readelf"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/readelf"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -606,30 +514,28 @@ events:
       - "dlltool"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
-    found: "/usr/bin/dlltool"
+    searched_directories:
+      - "/usr/bin/dlltool"
+      - "/home/pyeatt/.local/bin/dlltool"
+      - "/usr/local/sbin/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/opt/bin/dlltool"
+    found: "/usr/lib/llvm/20/bin/dlltool"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -651,30 +557,22 @@ events:
       - "addr2line"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     found: "/usr/bin/addr2line"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -696,42 +594,30 @@ events:
       - "tapi"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
       - "/usr/bin/tapi"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/tapi"
+      - "/home/pyeatt/.local/bin/tapi"
       - "/usr/local/sbin/tapi"
       - "/usr/local/bin/tapi"
       - "/opt/bin/tapi"
-      - "/usr/lib/llvm/21/bin/tapi"
+      - "/usr/lib/llvm/20/bin/tapi"
       - "/usr/lib64/opencascade/bin/tapi"
-      - "/var/lib/snapd/snap/bin/tapi"
-      - "/home/faculty/lpyeatt/.local/bin/tapi"
-      - "/usr/local/cuda-8.0/tapi"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/tapi"
     found: false
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -756,64 +642,44 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
       - "/usr/bin/gcc-ar-14.3"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ar-14.3"
+      - "/home/pyeatt/.local/bin/gcc-ar-14.3"
       - "/usr/local/sbin/gcc-ar-14.3"
       - "/usr/local/bin/gcc-ar-14.3"
       - "/opt/bin/gcc-ar-14.3"
-      - "/usr/lib/llvm/21/bin/gcc-ar-14.3"
+      - "/usr/lib/llvm/20/bin/gcc-ar-14.3"
       - "/usr/lib64/opencascade/bin/gcc-ar-14.3"
-      - "/var/lib/snapd/snap/bin/gcc-ar-14.3"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ar-14.3"
-      - "/usr/local/cuda-8.0/gcc-ar-14.3"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ar-14.3"
       - "/usr/bin/gcc-ar-14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ar-14"
+      - "/home/pyeatt/.local/bin/gcc-ar-14"
       - "/usr/local/sbin/gcc-ar-14"
       - "/usr/local/bin/gcc-ar-14"
       - "/opt/bin/gcc-ar-14"
-      - "/usr/lib/llvm/21/bin/gcc-ar-14"
+      - "/usr/lib/llvm/20/bin/gcc-ar-14"
       - "/usr/lib64/opencascade/bin/gcc-ar-14"
-      - "/var/lib/snapd/snap/bin/gcc-ar-14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ar-14"
-      - "/usr/local/cuda-8.0/gcc-ar-14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ar-14"
       - "/usr/bin/gcc-ar14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ar14"
+      - "/home/pyeatt/.local/bin/gcc-ar14"
       - "/usr/local/sbin/gcc-ar14"
       - "/usr/local/bin/gcc-ar14"
       - "/opt/bin/gcc-ar14"
-      - "/usr/lib/llvm/21/bin/gcc-ar14"
+      - "/usr/lib/llvm/20/bin/gcc-ar14"
       - "/usr/lib64/opencascade/bin/gcc-ar14"
-      - "/var/lib/snapd/snap/bin/gcc-ar14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ar14"
-      - "/usr/local/cuda-8.0/gcc-ar14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ar14"
     found: "/usr/bin/gcc-ar"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -838,64 +704,44 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-14.3"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ranlib-14.3"
+      - "/home/pyeatt/.local/bin/gcc-ranlib-14.3"
       - "/usr/local/sbin/gcc-ranlib-14.3"
       - "/usr/local/bin/gcc-ranlib-14.3"
       - "/opt/bin/gcc-ranlib-14.3"
-      - "/usr/lib/llvm/21/bin/gcc-ranlib-14.3"
+      - "/usr/lib/llvm/20/bin/gcc-ranlib-14.3"
       - "/usr/lib64/opencascade/bin/gcc-ranlib-14.3"
-      - "/var/lib/snapd/snap/bin/gcc-ranlib-14.3"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ranlib-14.3"
-      - "/usr/local/cuda-8.0/gcc-ranlib-14.3"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ranlib-14.3"
       - "/usr/bin/gcc-ranlib-14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ranlib-14"
+      - "/home/pyeatt/.local/bin/gcc-ranlib-14"
       - "/usr/local/sbin/gcc-ranlib-14"
       - "/usr/local/bin/gcc-ranlib-14"
       - "/opt/bin/gcc-ranlib-14"
-      - "/usr/lib/llvm/21/bin/gcc-ranlib-14"
+      - "/usr/lib/llvm/20/bin/gcc-ranlib-14"
       - "/usr/lib64/opencascade/bin/gcc-ranlib-14"
-      - "/var/lib/snapd/snap/bin/gcc-ranlib-14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ranlib-14"
-      - "/usr/local/cuda-8.0/gcc-ranlib-14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ranlib-14"
       - "/usr/bin/gcc-ranlib14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ranlib14"
+      - "/home/pyeatt/.local/bin/gcc-ranlib14"
       - "/usr/local/sbin/gcc-ranlib14"
       - "/usr/local/bin/gcc-ranlib14"
       - "/opt/bin/gcc-ranlib14"
-      - "/usr/lib/llvm/21/bin/gcc-ranlib14"
+      - "/usr/lib/llvm/20/bin/gcc-ranlib14"
       - "/usr/lib64/opencascade/bin/gcc-ranlib14"
-      - "/var/lib/snapd/snap/bin/gcc-ranlib14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ranlib14"
-      - "/usr/local/cuda-8.0/gcc-ranlib14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ranlib14"
     found: "/usr/bin/gcc-ranlib"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -926,17 +772,13 @@ events:
     found: "/usr/bin/cc"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -964,17 +806,13 @@ events:
     found: "/usr/share/cmake/Modules/CMakeCCompilerId.c.in"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "message-v1"
     backtrace:
@@ -995,7 +833,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/4.1.4/CompilerIdC/a.out
+        /home/pyeatt/ebnf2tikz/CMakeFiles/4.1.2/CompilerIdC/a.out
       
   -
     kind: "find-v1"
@@ -1021,64 +859,44 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
       - "/usr/bin/gcc-ar-14.3"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ar-14.3"
+      - "/home/pyeatt/.local/bin/gcc-ar-14.3"
       - "/usr/local/sbin/gcc-ar-14.3"
       - "/usr/local/bin/gcc-ar-14.3"
       - "/opt/bin/gcc-ar-14.3"
-      - "/usr/lib/llvm/21/bin/gcc-ar-14.3"
+      - "/usr/lib/llvm/20/bin/gcc-ar-14.3"
       - "/usr/lib64/opencascade/bin/gcc-ar-14.3"
-      - "/var/lib/snapd/snap/bin/gcc-ar-14.3"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ar-14.3"
-      - "/usr/local/cuda-8.0/gcc-ar-14.3"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ar-14.3"
       - "/usr/bin/gcc-ar-14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ar-14"
+      - "/home/pyeatt/.local/bin/gcc-ar-14"
       - "/usr/local/sbin/gcc-ar-14"
       - "/usr/local/bin/gcc-ar-14"
       - "/opt/bin/gcc-ar-14"
-      - "/usr/lib/llvm/21/bin/gcc-ar-14"
+      - "/usr/lib/llvm/20/bin/gcc-ar-14"
       - "/usr/lib64/opencascade/bin/gcc-ar-14"
-      - "/var/lib/snapd/snap/bin/gcc-ar-14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ar-14"
-      - "/usr/local/cuda-8.0/gcc-ar-14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ar-14"
       - "/usr/bin/gcc-ar14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ar14"
+      - "/home/pyeatt/.local/bin/gcc-ar14"
       - "/usr/local/sbin/gcc-ar14"
       - "/usr/local/bin/gcc-ar14"
       - "/opt/bin/gcc-ar14"
-      - "/usr/lib/llvm/21/bin/gcc-ar14"
+      - "/usr/lib/llvm/20/bin/gcc-ar14"
       - "/usr/lib64/opencascade/bin/gcc-ar14"
-      - "/var/lib/snapd/snap/bin/gcc-ar14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ar14"
-      - "/usr/local/cuda-8.0/gcc-ar14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ar14"
     found: "/usr/bin/gcc-ar"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "find-v1"
     backtrace:
@@ -1103,64 +921,44 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-14.3"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ranlib-14.3"
+      - "/home/pyeatt/.local/bin/gcc-ranlib-14.3"
       - "/usr/local/sbin/gcc-ranlib-14.3"
       - "/usr/local/bin/gcc-ranlib-14.3"
       - "/opt/bin/gcc-ranlib-14.3"
-      - "/usr/lib/llvm/21/bin/gcc-ranlib-14.3"
+      - "/usr/lib/llvm/20/bin/gcc-ranlib-14.3"
       - "/usr/lib64/opencascade/bin/gcc-ranlib-14.3"
-      - "/var/lib/snapd/snap/bin/gcc-ranlib-14.3"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ranlib-14.3"
-      - "/usr/local/cuda-8.0/gcc-ranlib-14.3"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ranlib-14.3"
       - "/usr/bin/gcc-ranlib-14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ranlib-14"
+      - "/home/pyeatt/.local/bin/gcc-ranlib-14"
       - "/usr/local/sbin/gcc-ranlib-14"
       - "/usr/local/bin/gcc-ranlib-14"
       - "/opt/bin/gcc-ranlib-14"
-      - "/usr/lib/llvm/21/bin/gcc-ranlib-14"
+      - "/usr/lib/llvm/20/bin/gcc-ranlib-14"
       - "/usr/lib64/opencascade/bin/gcc-ranlib-14"
-      - "/var/lib/snapd/snap/bin/gcc-ranlib-14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ranlib-14"
-      - "/usr/local/cuda-8.0/gcc-ranlib-14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ranlib-14"
       - "/usr/bin/gcc-ranlib14"
-      - "/home/faculty/lpyeatt/anaconda3/condabin/gcc-ranlib14"
+      - "/home/pyeatt/.local/bin/gcc-ranlib14"
       - "/usr/local/sbin/gcc-ranlib14"
       - "/usr/local/bin/gcc-ranlib14"
       - "/opt/bin/gcc-ranlib14"
-      - "/usr/lib/llvm/21/bin/gcc-ranlib14"
+      - "/usr/lib/llvm/20/bin/gcc-ranlib14"
       - "/usr/lib64/opencascade/bin/gcc-ranlib14"
-      - "/var/lib/snapd/snap/bin/gcc-ranlib14"
-      - "/home/faculty/lpyeatt/.local/bin/gcc-ranlib14"
-      - "/usr/local/cuda-8.0/gcc-ranlib14"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/gcc-ranlib14"
     found: "/usr/bin/gcc-ranlib"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
   -
     kind: "try_compile-v1"
     backtrace:
@@ -1170,8 +968,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5"
-      binary: "/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5"
+      source: "/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6"
+      binary: "/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1181,24 +979,24 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5'
+        Change Dir: '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_75fbf/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_75fbf.dir/build.make CMakeFiles/cmTC_75fbf.dir/build
-        gmake[1]: Entering directory '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5'
-        Building CXX object CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4f8e4/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4f8e4.dir/build.make CMakeFiles/cmTC_4f8e4.dir/build
+        gmake[1]: Entering directory '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6'
+        Building CXX object CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none
         OFFLOAD_TARGET_DEFAULT=1
         Target: x86_64-pc-linux-gnu
-        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
+        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_75fbf.dir/'
-         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_75fbf.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/cc8NP4Zp.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4f8e4.dir/'
+         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_4f8e4.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/cc23Hc6F.s
         GNU C++17 (Gentoo 14.3.1_p20250801 p4) version 14.3.1 20250801 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 14.3.1 20250801, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version none
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
@@ -1213,35 +1011,35 @@ events:
          /usr/lib/gcc/x86_64-pc-linux-gnu/14/include
          /usr/include
         End of search list.
-        Compiler executable checksum: 5ffa22dcbd821891c7832be5054b5c20
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_75fbf.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc8NP4Zp.s
-        GNU assembler version 2.45.1 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45.1 p1) 2.45.1
+        Compiler executable checksum: 6e90356469fead3625b192379525fb21
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4f8e4.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc23Hc6F.s
+        GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45 p3) 2.45.0
         COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_75fbf
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75fbf.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_4f8e4
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4f8e4.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper
         OFFLOAD_TARGET_NAMES=nvptx-none
         OFFLOAD_TARGET_DEFAULT=1
         Target: x86_64-pc-linux-gnu
-        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
+        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_75fbf' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_75fbf.'
-         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFPfy8G.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_75fbf /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4f8e4' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4f8e4.'
+         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccujQWjS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_4f8e4 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
         collect2 version 14.3.1 20250801
-        /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFPfy8G.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_75fbf /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
-        GNU ld (Gentoo 2.45.1 p1) 2.45.1
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_75fbf' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_75fbf.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_75fbf
-        gmake[1]: Leaving directory '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5'
+        /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccujQWjS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_4f8e4 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
+        GNU ld (Gentoo 2.45 p3) 2.45.0
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4f8e4' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4f8e4.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_4f8e4
+        gmake[1]: Leaving directory '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6'
         
       exitCode: 0
   -
@@ -1278,24 +1076,24 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5']
+        ignore line: [Change Dir: '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_75fbf/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_75fbf.dir/build.make CMakeFiles/cmTC_75fbf.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-5423j5']
-        ignore line: [Building CXX object CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4f8e4/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4f8e4.dir/build.make CMakeFiles/cmTC_4f8e4.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-nVUsk6']
+        ignore line: [Building CXX object CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
         ignore line: [Target: x86_64-pc-linux-gnu]
-        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
+        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_75fbf.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_75fbf.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/cc8NP4Zp.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4f8e4.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_4f8e4.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/cc23Hc6F.s]
         ignore line: [GNU C++17 (Gentoo 14.3.1_p20250801 p4) version 14.3.1 20250801 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 14.3.1 20250801  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version none]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
@@ -1310,34 +1108,34 @@ events:
         ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14/include]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Compiler executable checksum: 5ffa22dcbd821891c7832be5054b5c20]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_75fbf.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc8NP4Zp.s]
-        ignore line: [GNU assembler version 2.45.1 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45.1 p1) 2.45.1]
+        ignore line: [Compiler executable checksum: 6e90356469fead3625b192379525fb21]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4f8e4.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc23Hc6F.s]
+        ignore line: [GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45 p3) 2.45.0]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_75fbf]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75fbf.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_4f8e4]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4f8e4.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
         ignore line: [Target: x86_64-pc-linux-gnu]
-        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
+        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_75fbf' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_75fbf.']
-        link line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFPfy8G.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_75fbf /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4f8e4' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4f8e4.']
+        link line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccujQWjS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_4f8e4 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
           arg [/usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccFPfy8G.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccujQWjS.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1351,7 +1149,7 @@ events:
           arg [-pie] ==> ignore
           arg [-znow] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_75fbf] ==> ignore
+          arg [cmTC_4f8e4] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o]
@@ -1362,7 +1160,7 @@ events:
           arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib]
           arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1373,7 +1171,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
         ignore line: [collect2 version 14.3.1 20250801]
-        ignore line: [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFPfy8G.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_75fbf /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_75fbf.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
+        ignore line: [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccujQWjS.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_4f8e4 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4f8e4.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
         linker tool for 'CXX': /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o] ==> [/usr/lib64/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
@@ -1399,7 +1197,7 @@ events:
       - "CMakeLists.txt:2 (project)"
     message: |
       Running the CXX compiler's linker: "/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld" "-v"
-      GNU ld (Gentoo 2.45.1 p1) 2.45.1
+      GNU ld (Gentoo 2.45 p3) 2.45.0
   -
     kind: "try_compile-v1"
     backtrace:
@@ -1409,8 +1207,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S"
-      binary: "/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S"
+      source: "/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI"
+      binary: "/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1419,24 +1217,24 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S'
+        Change Dir: '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e2f27/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_e2f27.dir/build.make CMakeFiles/cmTC_e2f27.dir/build
-        gmake[1]: Entering directory '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S'
-        Building C object CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_980ec/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_980ec.dir/build.make CMakeFiles/cmTC_980ec.dir/build
+        gmake[1]: Entering directory '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI'
+        Building C object CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none
         OFFLOAD_TARGET_DEFAULT=1
         Target: x86_64-pc-linux-gnu
-        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
+        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e2f27.dir/'
-         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_e2f27.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/cc2mBq56.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_980ec.dir/'
+         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_980ec.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/ccol64Vx.s
         GNU C17 (Gentoo 14.3.1_p20250801 p4) version 14.3.1 20250801 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 14.3.1 20250801, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version none
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
@@ -1448,35 +1246,35 @@ events:
          /usr/lib/gcc/x86_64-pc-linux-gnu/14/include
          /usr/include
         End of search list.
-        Compiler executable checksum: b5a9c78269fc347d6d96b1706164b115
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e2f27.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o /tmp/cc2mBq56.s
-        GNU assembler version 2.45.1 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45.1 p1) 2.45.1
+        Compiler executable checksum: 1829601e184b4fd61d0e2c55e3539781
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_980ec.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o /tmp/ccol64Vx.s
+        GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45 p3) 2.45.0
         COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_e2f27
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e2f27.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_980ec
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_980ec.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper
         OFFLOAD_TARGET_NAMES=nvptx-none
         OFFLOAD_TARGET_DEFAULT=1
         Target: x86_64-pc-linux-gnu
-        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
+        Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c,c++,fortran,ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32,m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e2f27' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_e2f27.'
-         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cctPZoAw.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_e2f27 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_980ec' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_980ec.'
+         /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgf7A9L.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_980ec /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
         collect2 version 14.3.1 20250801
-        /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cctPZoAw.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_e2f27 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
-        GNU ld (Gentoo 2.45.1 p1) 2.45.1
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e2f27' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_e2f27.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -o cmTC_e2f27
-        gmake[1]: Leaving directory '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S'
+        /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgf7A9L.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_980ec /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o
+        GNU ld (Gentoo 2.45 p3) 2.45.0
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_980ec' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_980ec.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -o cmTC_980ec
+        gmake[1]: Leaving directory '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI'
         
       exitCode: 0
   -
@@ -1507,24 +1305,24 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S']
+        ignore line: [Change Dir: '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e2f27/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_e2f27.dir/build.make CMakeFiles/cmTC_e2f27.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/faculty/lpyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-8LFv5S']
-        ignore line: [Building C object CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_980ec/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_980ec.dir/build.make CMakeFiles/cmTC_980ec.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/pyeatt/ebnf2tikz/CMakeFiles/CMakeScratch/TryCompile-ioKpGI']
+        ignore line: [Building C object CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
         ignore line: [Target: x86_64-pc-linux-gnu]
-        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
+        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e2f27.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_e2f27.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/cc2mBq56.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_980ec.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_980ec.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -foffload-options=-fno-stack-protector -fcf-protection -foffload-options=-fcf-protection=none -o /tmp/ccol64Vx.s]
         ignore line: [GNU C17 (Gentoo 14.3.1_p20250801 p4) version 14.3.1 20250801 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 14.3.1 20250801  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version none]
         ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
@@ -1536,34 +1334,34 @@ events:
         ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14/include]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Compiler executable checksum: b5a9c78269fc347d6d96b1706164b115]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e2f27.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o /tmp/cc2mBq56.s]
-        ignore line: [GNU assembler version 2.45.1 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45.1 p1) 2.45.1]
+        ignore line: [Compiler executable checksum: 1829601e184b4fd61d0e2c55e3539781]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_980ec.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o /tmp/ccol64Vx.s]
+        ignore line: [GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (Gentoo 2.45 p3) 2.45.0]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_e2f27]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e2f27.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_980ec]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_980ec.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none]
         ignore line: [OFFLOAD_TARGET_DEFAULT=1]
         ignore line: [Target: x86_64-pc-linux-gnu]
-        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-libada --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
+        ignore line: [Configured with: /dev/shm/portage/sys-devel/gcc-14.3.1_p20250801/work/gcc-14-20250801/configure --host=x86_64-pc-linux-gnu --build=x86_64-pc-linux-gnu --prefix=/usr --bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/14 --includedir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include --datadir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14 --mandir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/man --infodir=/usr/share/gcc-data/x86_64-pc-linux-gnu/14/info --with-gxx-include-dir=/usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14 --disable-silent-rules --disable-dependency-tracking --with-python-dir=/share/gcc-data/x86_64-pc-linux-gnu/14/python --enable-languages=c c++ fortran ada --enable-obsolete --enable-secureplt --disable-werror --with-system-zlib --enable-nls --without-included-gettext --disable-libunwind-exceptions --enable-checking=release --with-bugurl=https://bugs.gentoo.org/ --with-pkgversion='Gentoo 14.3.1_p20250801 p4' --with-gcc-major-version-only --enable-libstdcxx-time --enable-lto --disable-libstdcxx-pch --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-multilib --with-multilib-list=m32 m64 --disable-fixed-point --enable-targets=all --enable-offload-defaulted --enable-offload-targets=nvptx-none --enable-libgomp --disable-libssp --enable-cet --disable-systemtap --disable-valgrind-annotations --disable-vtable-verify --disable-libvtv --with-zstd --without-isl --enable-default-pie --enable-host-pie --enable-host-bind-now --enable-default-ssp --disable-fixincludes --with-gxx-libcxx-include-dir=/usr/include/c++/v1 --with-build-config=bootstrap-cet]
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.3.1 20250801 (Gentoo 14.3.1_p20250801 p4) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/14/:/usr/libexec/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_e2f27' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_e2f27.']
-        link line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cctPZoAw.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_e2f27 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_980ec' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_980ec.']
+        link line: [ /usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgf7A9L.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_980ec /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
           arg [/usr/libexec/gcc/x86_64-pc-linux-gnu/14/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cctPZoAw.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccgf7A9L.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1577,7 +1375,7 @@ events:
           arg [-pie] ==> ignore
           arg [-znow] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_e2f27] ==> ignore
+          arg [cmTC_980ec] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o]
@@ -1588,7 +1386,7 @@ events:
           arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib]
           arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -1603,7 +1401,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
         ignore line: [collect2 version 14.3.1 20250801]
-        ignore line: [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cctPZoAw.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_e2f27 /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_e2f27.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
+        ignore line: [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld -plugin /usr/libexec/gcc/x86_64-pc-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-pc-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgf7A9L.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -o cmTC_980ec /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../.. -v CMakeFiles/cmTC_980ec.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crtn.o]
         linker tool for 'C': /usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/Scrt1.o] ==> [/usr/lib64/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../lib64/crti.o] ==> [/usr/lib64/crti.o]
@@ -1629,7 +1427,7 @@ events:
       - "CMakeLists.txt:2 (project)"
     message: |
       Running the C compiler's linker: "/usr/lib/gcc/x86_64-pc-linux-gnu/14/../../../../x86_64-pc-linux-gnu/bin/ld" "-v"
-      GNU ld (Gentoo 2.45.1 p1) 2.45.1
+      GNU ld (Gentoo 2.45 p3) 2.45.0
   -
     kind: "find-v1"
     backtrace:
@@ -1651,17 +1449,13 @@ events:
       - "win-bison"
       - "win_bison"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
       - "/usr/local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/"
@@ -1681,23 +1475,19 @@ events:
       - "/opt/"
       - "/bin/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/bison"
+      - "/home/pyeatt/.local/bin/bison"
       - "/usr/local/sbin/bison"
       - "/usr/local/bin/bison"
     found: "/usr/bin/bison"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1732,17 +1522,13 @@ events:
       - "win-flex"
       - "win_flex"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
       - "/usr/local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/"
@@ -1762,23 +1548,19 @@ events:
       - "/opt/"
       - "/bin/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/flex"
+      - "/home/pyeatt/.local/bin/flex"
       - "/usr/local/sbin/flex"
       - "/usr/local/bin/flex"
     found: "/usr/bin/flex"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1811,14 +1593,13 @@ events:
     names:
       - "fl"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
+      - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
       - "/usr/local/lib64/"
       - "/usr/local/lib/"
       - "/usr/local/"
@@ -1835,31 +1616,26 @@ events:
       - "/lib64/"
       - "/lib/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
+      - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
       - "/usr/local/lib64/"
       - "/usr/local/lib/"
       - "/usr/local/"
     found: "/usr/lib64/libfl.a"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
@@ -1897,17 +1673,13 @@ events:
     names:
       - "FlexLexer.h"
     candidate_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/"
+      - "/home/pyeatt/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/opt/bin/"
-      - "/usr/lib/llvm/21/bin/"
+      - "/usr/lib/llvm/20/bin/"
       - "/usr/lib64/opencascade/bin/"
-      - "/var/lib/snapd/snap/bin/"
-      - "/home/faculty/lpyeatt/.local/bin/"
-      - "/usr/local/cuda-8.0/"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/"
       - "/usr/local/include/"
       - "/usr/local/"
       - "/usr/include/"
@@ -1921,33 +1693,25 @@ events:
       - "/opt/"
       - "/usr/include/"
     searched_directories:
-      - "/home/faculty/lpyeatt/anaconda3/condabin/FlexLexer.h"
+      - "/home/pyeatt/.local/bin/FlexLexer.h"
       - "/usr/local/sbin/FlexLexer.h"
       - "/usr/local/bin/FlexLexer.h"
       - "/usr/bin/FlexLexer.h"
       - "/opt/bin/FlexLexer.h"
-      - "/usr/lib/llvm/21/bin/FlexLexer.h"
+      - "/usr/lib/llvm/20/bin/FlexLexer.h"
       - "/usr/lib64/opencascade/bin/FlexLexer.h"
-      - "/var/lib/snapd/snap/bin/FlexLexer.h"
-      - "/home/faculty/lpyeatt/.local/bin/FlexLexer.h"
-      - "/usr/local/cuda-8.0/FlexLexer.h"
-      - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf/FlexLexer.h"
       - "/usr/local/include/FlexLexer.h"
       - "/usr/local/FlexLexer.h"
     found: "/usr/include/"
     search_context:
       ENV{PATH}:
-        - "/home/faculty/lpyeatt/anaconda3/condabin"
+        - "/home/pyeatt/.local/bin"
         - "/usr/local/sbin"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/opt/bin"
-        - "/usr/lib/llvm/21/bin"
+        - "/usr/lib/llvm/20/bin"
         - "/usr/lib64/opencascade/bin"
-        - "/var/lib/snapd/snap/bin"
-        - "/home/faculty/lpyeatt/.local/bin"
-        - "/usr/local/cuda-8.0"
-        - "/opt/Xilinx/Vitis/2024.1/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/bin/riscv32-xilinx-elf"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/usr/local"
