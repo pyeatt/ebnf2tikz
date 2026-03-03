@@ -133,7 +133,7 @@ void LoopNode::addRepeat(ASTNode *r)
 // --- ASTProduction ---
 
 ASTProduction::ASTProduction(annotmap *a, const string &n, ast::ASTNode *b)
-  : name(n), annotations(a), body(b)
+  : name(n), annotations(a), body(b), needsWrap(0)
 {
 }
 

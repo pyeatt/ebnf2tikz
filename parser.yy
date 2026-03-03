@@ -53,6 +53,7 @@ using namespace std;
 #include "resolver.hh"
 #include "ast_optimizer.hh"
 #include "ast_dump.hh"
+#include "ast_layout.hh"
 #include "ast_tikzwriter.hh"
 
 extern yy::location loc;
@@ -116,6 +117,8 @@ grammar : productions {
          resolver::subsume(astg);
          ast_optimizer::optimize(astg);
        }
+
+     astAutoWrapGrammar(astg, drv.getSizes());
 
      if(drv.get_dumponly())
        {

@@ -417,7 +417,7 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
           /* Post-layout wrapping check: wrapping only affects texName
              output, not layout geometry (sizes come from bnfnodes.dat).
              So we can check and set wrapped flags after layout. */
-          needsWrap = 0;
+          needsWrap = prod->needsWrap;
           if(sizes->textwidth > 0)
             {
               auto git = layout.geom.find(prod->body);
