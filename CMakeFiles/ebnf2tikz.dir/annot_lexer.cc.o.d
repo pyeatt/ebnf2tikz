@@ -1,6 +1,6 @@
 CMakeFiles/ebnf2tikz.dir/annot_lexer.cc.o: \
- /home/faculty/lpyeatt/ebnf2tikz/annot_lexer.cc \
- /usr/include/stdc-predef.h /usr/include/assert.h /usr/include/features.h \
+ /home/pyeatt/ebnf2tikz/annot_lexer.cc /usr/include/stdc-predef.h \
+ /usr/include/assert.h /usr/include/features.h \
  /usr/include/features-time64.h /usr/include/bits/wordsize.h \
  /usr/include/bits/timesize.h /usr/include/sys/cdefs.h \
  /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
@@ -121,7 +121,7 @@ CMakeFiles/ebnf2tikz.dir/annot_lexer.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/uses_allocator.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/uses_allocator_args.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/tuple \
- /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_tree.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ext/aligned_buffer.h \
@@ -134,8 +134,7 @@ CMakeFiles/ebnf2tikz.dir/annot_lexer.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_vector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/stl_bvector.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/vector.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/annot_parser.hh \
- /home/faculty/lpyeatt/ebnf2tikz/ast.hh \
+ /home/pyeatt/ebnf2tikz/annot_parser.hh /home/pyeatt/ebnf2tikz/ast.hh \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/cassert \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/iostream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/ostream \
@@ -182,7 +181,7 @@ CMakeFiles/ebnf2tikz.dir/annot_lexer.cc.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/ostream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/istream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/14/include/g++-v14/bits/istream.tcc \
- /home/faculty/lpyeatt/ebnf2tikz/annot_location.hh /usr/include/unistd.h \
+ /home/pyeatt/ebnf2tikz/annot_location.hh /usr/include/unistd.h \
  /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
  /usr/include/bits/confname.h /usr/include/bits/getopt_posix.h \
  /usr/include/bits/getopt_core.h /usr/include/bits/unistd_ext.h \
