@@ -404,6 +404,7 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
   /* First alternative: epsilon (0 width, 0 height) */
   totalHeight = sizes->rowsep;  /* minimum height for epsilon */
   totalHeight += sizes->rowsep; /* separator */
+  totalHeight += childH / 2.0f; /* center child visually in its row */
   totalHeight += childH;
   if(childH < sizes->rowsep)
     totalHeight += sizes->rowsep - childH;
@@ -847,10 +848,10 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
 
   childOrigin = coordinate(origin.x + railPad +
                            (maxWidth - childWidth) / 2.0f,
-                           cursorY);
+                           cursorY - childHeight / 2.0f);
   childg = astLayoutNode(n->child, childOrigin, geom, info, sizes);
 
-  totalHeight += childHeight;
+  totalHeight += childHeight / 2.0f + childHeight;
 
   g.origin = origin;
   g.width = maxWidth + 2.0f * railPad;
@@ -914,11 +915,14 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
                                (maxWidth - childWidth) / 2.0f,
                                cursorY);
       childg = astLayoutNode(n->body, childOrigin, geom, info, sizes);
+      cursorY -= childHeight;
       totalHeight += childHeight;
     }
   else
     {
-      /* null body = epsilon path */
+      /* null body = epsilon path; treat as a child with height rowsep
+         so the separator before the first repeat gives a full gap */
+      cursorY -= sizes->rowsep;
       totalHeight += sizes->rowsep;
     }
 
@@ -1026,20 +1030,52 @@ static void connectSequence(SequenceNode *n,
     map<ASTNode*, ASTLeafInfo> &info,
     vector<ASTPolyline> &lines, nodesizes *sizes)
 {
-  size_t i, j, nc;
+  size_t i, j, nc, idx;
   ASTNode *child, *prevContent, *nextContent;
   ASTNodeGeom prevGeom, curGeom, nextGeom, seqGeom, childGeom;
   ASTPolyline pl;
   float rightEdge, leftEdge, midY, rowMaxBelow, belowExtent;
   float rowBottom, nextTop;
+  int reversed;
 
   nc = n->children.size();
   prevContent = NULL;
   rowMaxBelow = 0;
 
+  /* Detect if the sequence was laid out reversed (e.g. loop repeat)
+     by checking if the first content child is to the right of the second */
+  reversed = 0;
+  {
+    ASTNode *first, *second;
+    first = NULL;
+    second = NULL;
+    for(i = 0; i < nc; i++)
+      {
+        if(n->children[i]->kind != ASTKind::Newline &&
+           n->children[i]->kind != ASTKind::Epsilon)
+          {
+            if(first == NULL)
+              first = n->children[i];
+            else if(second == NULL)
+              {
+                second = n->children[i];
+                i = nc - 1;
+              }
+          }
+      }
+    if(first != NULL && second != NULL &&
+       geom.find(first) != geom.end() &&
+       geom.find(second) != geom.end())
+      {
+        if(geom[first].entry.x > geom[second].entry.x)
+          reversed = 1;
+      }
+  }
+
   for(i = 0; i < nc; i++)
     {
-      child = n->children[i];
+      idx = reversed ? (nc - 1 - i) : i;
+      child = n->children[idx];
 
       /* recurse into children first */
       astComputeConnections(child, geom, info, lines, sizes);
@@ -1067,11 +1103,13 @@ static void connectSequence(SequenceNode *n,
               nextContent = NULL;
               for(j = i + 1; j < nc; j++)
                 {
-                  if(n->children[j]->kind != ASTKind::Newline)
+                  size_t jdx;
+                  jdx = reversed ? (nc - 1 - j) : j;
+                  if(n->children[jdx]->kind != ASTKind::Newline)
                     {
-                      if(geom.find(n->children[j]) != geom.end())
-                        nextContent = n->children[j];
-                      j = nc;
+                      if(geom.find(n->children[jdx]) != geom.end())
+                        nextContent = n->children[jdx];
+                      j = nc - 1;
                     }
                 }
 
@@ -1371,7 +1409,9 @@ static void connectLoop(LoopNode *n,
   size_t i;
   ASTNodeGeom loopGeom, bodyGeom, repeatGeom;
   ASTPolyline pl;
-  float railX, exitRailX, bodyEntryY, bodyExitY;
+  float railX, exitRailX;
+  coordinate bodyEntry, bodyExit;
+  float midX;
 
   if(geom.find((ASTNode*)n) == geom.end())
     return;
@@ -1386,41 +1426,31 @@ static void connectLoop(LoopNode *n,
   railX = loopGeom.origin.x;
   exitRailX = loopGeom.origin.x + loopGeom.width;
 
-  /* Body entry/exit Y */
+  /* Body entry/exit coordinates */
   if(n->body != NULL && geom.find(n->body) != geom.end())
     {
       bodyGeom = geom[n->body];
-      bodyEntryY = bodyGeom.entry.y;
-      bodyExitY = bodyGeom.exit.y;
+      bodyEntry = bodyGeom.entry;
+      bodyExit = bodyGeom.exit;
     }
   else
     {
-      bodyEntryY = loopGeom.origin.y;
-      bodyExitY = loopGeom.origin.y;
+      /* null body: use midpoint of loop as the body position */
+      midX = (railX + exitRailX) / 2.0f;
+      bodyEntry = coordinate(midX, loopGeom.origin.y);
+      bodyExit = coordinate(midX, loopGeom.origin.y);
     }
 
   /* Body stubs: horizontal lines from rails to body */
-  if(n->body != NULL && geom.find(n->body) != geom.end())
-    {
-      bodyGeom = geom[n->body];
-      pl.points.clear();
-      pl.points.push_back(coordinate(railX, bodyEntryY));
-      pl.points.push_back(bodyGeom.entry);
-      addPolyline(lines, pl);
+  pl.points.clear();
+  pl.points.push_back(coordinate(railX, bodyEntry.y));
+  pl.points.push_back(bodyEntry);
+  addPolyline(lines, pl);
 
-      pl.points.clear();
-      pl.points.push_back(bodyGeom.exit);
-      pl.points.push_back(coordinate(exitRailX, bodyExitY));
-      addPolyline(lines, pl);
-    }
-  else
-    {
-      /* null body: straight through */
-      pl.points.clear();
-      pl.points.push_back(coordinate(railX, bodyEntryY));
-      pl.points.push_back(coordinate(exitRailX, bodyExitY));
-      addPolyline(lines, pl);
-    }
+  pl.points.clear();
+  pl.points.push_back(bodyExit);
+  pl.points.push_back(coordinate(exitRailX, bodyExit.y));
+  addPolyline(lines, pl);
 
   /* Repeat feedback paths */
   for(i = 0; i < n->repeats.size(); i++)
@@ -1432,8 +1462,9 @@ static void connectLoop(LoopNode *n,
       /* Right feedback: body exit → right rail → down → repeat
          right side (which is the exit for reversed layout) */
       pl.points.clear();
+      pl.points.push_back(bodyExit);
       pl.points.push_back(
-          coordinate(exitRailX, bodyExitY));
+          coordinate(exitRailX, bodyExit.y));
       pl.points.push_back(
           coordinate(exitRailX, repeatGeom.exit.y));
       pl.points.push_back(repeatGeom.exit);
@@ -1445,7 +1476,8 @@ static void connectLoop(LoopNode *n,
       pl.points.push_back(
           coordinate(railX, repeatGeom.entry.y));
       pl.points.push_back(
-          coordinate(railX, bodyEntryY));
+          coordinate(railX, bodyEntry.y));
+      pl.points.push_back(bodyEntry);
       addPolyline(lines, pl);
     }
 }
@@ -1496,17 +1528,18 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
 
   cursorX = bodyOrigin.x + bodyGeom.width;
 
-  /* End stubs */
+  /* End stubs — use the body exit Y so multi-line productions
+     terminate at the last row, not the first */
   cursorX += sizes->colsep / 2.0f;
 
   stub.name = ctx.nextCoord();
-  stub.pos = coordinate(cursorX, Y);
+  stub.pos = coordinate(cursorX, bodyGeom.exit.y);
   layout.stubs.push_back(stub);  /* end1 */
 
   cursorX += sizes->colsep / 2.0f;
 
   stub.name = ctx.nextCoord();
-  stub.pos = coordinate(cursorX, Y);
+  stub.pos = coordinate(cursorX, bodyGeom.exit.y);
   layout.stubs.push_back(stub);  /* end2 */
 
   /* Connect stubs to body */

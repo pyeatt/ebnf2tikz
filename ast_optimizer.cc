@@ -317,6 +317,17 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
               return (ASTNode*)loop;
             }
         }
+      // Optional(Choice(a, b, c)) -> Choice(Epsilon, a, b, c)
+      if(opt->child->kind == ASTKind::Choice)
+        {
+          ch = static_cast<ChoiceNode*>(opt->child);
+          ch->alternatives.insert(ch->alternatives.begin(),
+                                  new EpsilonNode());
+          opt->child = NULL;
+          delete opt;
+          (*count)++;
+          return (ASTNode*)ch;
+        }
       return n;
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);

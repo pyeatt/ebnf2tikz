@@ -4,7 +4,7 @@ production: optsl
     terminal 'a'
     terminal 'b'
 production: wrapperl
-  optional
-    choice
-      terminal 'a'
-      terminal 'b'
+  choice
+    epsilon
+    terminal 'a'
+    terminal 'b'
