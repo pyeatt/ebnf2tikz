@@ -25,10 +25,11 @@ ebnf2tikz
 #include "driver.hh"
 #include "parser.hh"
 
-driver::driver (ofstream *out)
+driver::driver (ofstream *out, nodesizes *sz)
   : trace_parsing (false), trace_scanning (false)
 {
   outFile=out;
+  sizes=sz;
 }
 
 int driver::parse (const char *f,int opt, int fig, int dump)

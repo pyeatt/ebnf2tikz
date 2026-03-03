@@ -1,5 +1,0 @@
-/home/pyeatt/ebnf2tikz/experimental/CMakeFiles/ebnf2tikz.dir
-/home/pyeatt/ebnf2tikz/experimental/CMakeFiles/check.dir
-/home/pyeatt/ebnf2tikz/experimental/CMakeFiles/check-tikz.dir
-/home/pyeatt/ebnf2tikz/experimental/CMakeFiles/edit_cache.dir
-/home/pyeatt/ebnf2tikz/experimental/CMakeFiles/rebuild_cache.dir

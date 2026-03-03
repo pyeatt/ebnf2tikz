@@ -1,7 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: while_statement
-  sequence
-    terminal 'WHILE'
-    nonterminal expression
-    terminal 'DO'
-    nonterminal statement

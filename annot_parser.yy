@@ -34,7 +34,7 @@ ebnf2tikz
   #include <string>
   #include <assert.h>
   #include <map>
-  #include <graph.hh>
+  #include <ast.hh>
   using namespace std;
   class annotdriver;
 }
@@ -47,7 +47,7 @@ ebnf2tikz
 #include <iostream>
 using namespace std;
 #include "annot_lexer.hh"
-#include "nodesize.hh"
+#include "nodesizes.hh"
 
 annot::location aloc;
 

@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: conditional_statement
-  choice
-    nonterminal if_statement
-    nonterminal case_statement

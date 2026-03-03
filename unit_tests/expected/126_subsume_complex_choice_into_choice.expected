@@ -1,16 +1,14 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: innerr
+  choice
+    sequence
+      terminal 'a'
+      terminal 'b'
+    terminal 'c'
 production: outerr
-  concat node20 : drawtoprev=0 beforeskip=0 width=0 height=0 coord8 coord5
-    \nullnode{start1\strut} ->  coord5 : drawtoprev=0 beforeskip=0 width=0 height=9 coord5 coord5
-    \nullnode{start2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
-    rail  UP node17 : drawtoprev=1 beforeskip=8 width=0 height=0 node17.east node17.west
-    choices node16 : leftrail=node17 rightrail=node18 drawtoprev=0 beforeskip=8 width=0 height=0 node14.east node14.west
-      concat node38 : drawtoprev=0 beforeskip=0 width=0 height=0 node40.east node39.west
-        \railnonterm{a\strut} ->  node39 : drawtoprev=1 beforeskip=0 width=8 height=6 node39.east node39.west
-        \railnonterm{b\strut} ->  node40 : drawtoprev=1 beforeskip=8 width=8 height=6 node40.east node40.west
-      \railnonterm{c\strut} ->  node41 : drawtoprev=0 beforeskip=0 width=8 height=6 node41.east node41.west
-      \railnonterm{d\strut} ->  node15 : drawtoprev=0 beforeskip=0 width=8 height=6 node15.east node15.west
-    rail  UP node18 : drawtoprev=1 beforeskip=8 width=0 height=0 node18.east node18.west
-    \nullnode{end1\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    \nullnode{end2\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
+  choice
+    sequence
+      terminal 'a'
+      terminal 'b'
+    terminal 'c'
+    terminal 'd'

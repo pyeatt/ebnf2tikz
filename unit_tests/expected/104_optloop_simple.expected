@@ -1,12 +1,7 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: optloop_simple
-  concat node13 : drawtoprev=0 beforeskip=0 width=0 height=0 coord6 coord3
-    \nullnode{start1\strut} ->  coord3 : drawtoprev=0 beforeskip=0 width=0 height=9 coord3 coord3
-    \nullnode{start2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
-    rail  UP node9 : drawtoprev=0 beforeskip=8 width=0 height=0 node9.east node9.west
-    loop node4 : leftrail=node9 rightrail=node10 drawtoprev=0 beforeskip=0 width=0 height=0 coord1 coord1
-      \railnonterm{A\strut} ->  node18 : drawtoprev=1 beforeskip=8 width=8 height=6 node18.east node18.west
-      \nullnode{NULL node\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    rail  UP node10 : drawtoprev=0 beforeskip=8 width=0 height=0 node10.east node10.west
-    \nullnode{end1\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
-    \nullnode{end2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
+  loop
+    body:
+      nonterminal A
+    repeat:
+      epsilon
