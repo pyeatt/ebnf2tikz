@@ -1,48 +1,27 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: toollist
-  concat node13 : drawtoprev=0 beforeskip=0 width=0 height=0 coord5 coord2
-    \nullnode{start1\strut} ->  coord2 : drawtoprev=0 beforeskip=0 width=0 height=9 coord2 coord2
-    \nullnode{start2\strut} ->  coord3 : drawtoprev=1 beforeskip=8 width=0 height=9 coord3 coord3
-    \railnonterm{(\strut} ->  node1 : drawtoprev=1 beforeskip=8 width=8 height=6 node1.east node1.west
-    rail  UP node9 : drawtoprev=0 beforeskip=8 width=0 height=0 node9.east node9.west
-    loop node8 : leftrail=node9 rightrail=node10 drawtoprev=0 beforeskip=8 width=0 height=0 coord1 coord1
-      \railnonterm{tool\strut} ->  node54 : drawtoprev=1 beforeskip=8 width=8 height=6 node54.east node54.west
-      \railnonterm{,\strut} ->  node4 : drawtoprev=1 beforeskip=8 width=8 height=6 node4.east node4.west
-    rail  UP node10 : drawtoprev=0 beforeskip=8 width=0 height=0 node10.east node10.west
-    \railnonterm{)\strut} ->  node11 : drawtoprev=1 beforeskip=8 width=8 height=6 node11.east node11.west
-    \nullnode{end1\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
-    \nullnode{end2\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
+  sequence
+    terminal '('
+    loop
+      body:
+        nonterminal tool
+      repeat:
+        terminal ','
+    terminal ')'
 production: tool
-  concat node25 : drawtoprev=0 beforeskip=0 width=0 height=0 coord9 coord6
-    \nullnode{start1\strut} ->  coord6 : drawtoprev=0 beforeskip=0 width=0 height=9 coord6 coord6
-    \nullnode{start2\strut} ->  coord7 : drawtoprev=1 beforeskip=8 width=0 height=9 coord7 coord7
-    rail  UP node22 : drawtoprev=1 beforeskip=8 width=0 height=0 node22.east node22.west
-    choices node20 : leftrail=node22 rightrail=node23 drawtoprev=0 beforeskip=8 width=0 height=0 node18.east node18.west
-      \railnonterm{hammer\strut} ->  node18 : drawtoprev=1 beforeskip=0 width=8 height=6 node18.east node18.west
-      \railnonterm{screwdriver\strut} ->  node19 : drawtoprev=0 beforeskip=0 width=8 height=6 node19.east node19.west
-      \railnonterm{saw\strut} ->  node21 : drawtoprev=0 beforeskip=0 width=8 height=6 node21.east node21.west
-    rail  UP node23 : drawtoprev=1 beforeskip=8 width=0 height=0 node23.east node23.west
-    \nullnode{end1\strut} ->  coord8 : drawtoprev=1 beforeskip=8 width=0 height=9 coord8 coord8
-    \nullnode{end2\strut} ->  coord9 : drawtoprev=1 beforeskip=8 width=0 height=9 coord9 coord9
+  choice
+    terminal 'hammer'
+    terminal 'screwdriver'
+    nonterminal saw
 production: saw
-  concat node49 : drawtoprev=0 beforeskip=0 width=0 height=0 coord14 coord11
-    \nullnode{start1\strut} ->  coord11 : drawtoprev=0 beforeskip=0 width=0 height=9 coord11 coord11
-    \nullnode{start2\strut} ->  coord12 : drawtoprev=1 beforeskip=8 width=0 height=9 coord12 coord12
-    rail  UP node44 : drawtoprev=0 beforeskip=8 width=0 height=0 node44.east node44.west
-    choices node43 : leftrail=node44 rightrail=node45 drawtoprev=0 beforeskip=8 width=0 height=0 node30.east node30.west
-      \railnonterm{hand\strut} ->  node30 : drawtoprev=1 beforeskip=0 width=8 height=6 node30.east node30.west
-      concat node41 : drawtoprev=0 beforeskip=0 width=0 height=0 node42.east coord10
-        choices node33 : leftrail=node44 rightrail=node35 drawtoprev=0 beforeskip=8 width=0 height=0 coord10 coord10
-          \nullnode{NULL node\strut} ->  coord10 : drawtoprev=1 beforeskip=8 width=0 height=9 coord10 coord10
-          \railnonterm{cordless\strut} ->  node31 : drawtoprev=0 beforeskip=0 width=8 height=6 node31.east node31.west
-        rail  UP node35 : drawtoprev=1 beforeskip=8 width=0 height=0 node35.east node35.west
-        rail  UP node39 : drawtoprev=1 beforeskip=8 width=0 height=0 node39.east node39.west
-        choices node38 : leftrail=node39 rightrail=node40 drawtoprev=1 beforeskip=8 width=0 height=0 node36.east node36.west
-          \railnonterm{reciprocating\strut} ->  node36 : drawtoprev=1 beforeskip=0 width=8 height=6 node36.east node36.west
-          \railnonterm{circular\strut} ->  node37 : drawtoprev=0 beforeskip=0 width=8 height=6 node37.east node37.west
-        rail  UP node40 : drawtoprev=1 beforeskip=8 width=0 height=0 node40.east node40.west
-        \railnonterm{power\strut} ->  node42 : drawtoprev=1 beforeskip=8 width=8 height=6 node42.east node42.west
-    rail  UP node45 : drawtoprev=0 beforeskip=8 width=0 height=0 node45.east node45.west
-    \railnonterm{saw\strut} ->  node46 : drawtoprev=1 beforeskip=8 width=8 height=6 node46.east node46.west
-    \nullnode{end1\strut} ->  coord13 : drawtoprev=1 beforeskip=8 width=0 height=9 coord13 coord13
-    \nullnode{end2\strut} ->  coord14 : drawtoprev=1 beforeskip=8 width=0 height=9 coord14 coord14
+  sequence
+    choice
+      terminal 'hand'
+      sequence
+        optional
+          terminal 'cordless'
+        choice
+          terminal 'reciprocating'
+          terminal 'circular'
+        terminal 'power'
+    terminal 'saw'

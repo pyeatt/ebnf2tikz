@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: signed_number
-  sequence
-    nonterminal sign
-    nonterminal unsigned_number

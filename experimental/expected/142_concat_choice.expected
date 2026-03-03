@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: concatchoice
-  sequence
-    choice
-      nonterminal a
-      terminal 'b'
-    choice
-      nonterminal c
-      terminal 'd'

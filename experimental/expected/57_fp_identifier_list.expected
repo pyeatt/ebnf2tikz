@@ -1,9 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: identifier_list
-  sequence
-    nonterminal identifier
-    loop
-      repeat:
-        sequence
-          terminal ','
-          nonterminal identifier

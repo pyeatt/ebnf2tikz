@@ -1,40 +1,31 @@
 Unable to open input file bnfnodes.dat. Continuing
 production: choiceconcatchoiceloop
-  concat node38 : drawtoprev=0 beforeskip=0 width=0 height=0 coord6 coord3
-    \nullnode{start1\strut} ->  coord3 : drawtoprev=0 beforeskip=0 width=0 height=9 coord3 coord3
-    \nullnode{start2\strut} ->  coord4 : drawtoprev=1 beforeskip=8 width=0 height=9 coord4 coord4
-    rail  UP node35 : drawtoprev=1 beforeskip=8 width=0 height=0 node35.east node35.west
-    loop node34 : leftrail=node35 rightrail=node36 drawtoprev=0 beforeskip=8 width=0 height=0 coord2 coord2
-      \nullnode{NULL node\strut} ->  coord2 : drawtoprev=1 beforeskip=8 width=0 height=9 coord2 coord2
-      \railnonterm{a\strut} ->  node1 : leftrail=node36 drawtoprev=0 beforeskip=0 width=8 height=6 node1.east node1.west
-      \railnonterm{d\strut} ->  node2 : leftrail=node36 drawtoprev=0 beforeskip=0 width=8 height=6 node2.east node2.west
-      concat node12 : leftrail=node36 drawtoprev=0 beforeskip=0 width=0 height=0 node13.east node4.west
-        \railnonterm{t\strut} ->  node13 : drawtoprev=0 beforeskip=0 width=8 height=6 node13.east node13.west
-        rail  UP node11 : drawtoprev=1 beforeskip=8 width=0 height=0 node11.east node11.west
-        choices node7 : leftrail=node11 rightrail=node10 drawtoprev=1 beforeskip=8 width=0 height=0 node5.east node5.west
-          \railnonterm{z\strut} ->  node5 : rightrail=node11 drawtoprev=0 beforeskip=8 width=8 height=6 node5.east node5.west
-          \railnonterm{35\strut} ->  node6 : drawtoprev=0 beforeskip=8 width=8 height=6 node6.east node6.west
-          \railnonterm{b\strut} ->  node8 : drawtoprev=0 beforeskip=8 width=8 height=6 node8.east node8.west
-          \railnonterm{q\strut} ->  node9 : leftrail=node10 drawtoprev=0 beforeskip=8 width=8 height=6 node9.east node9.west
-        rail  UP node10 : drawtoprev=1 beforeskip=8 width=0 height=0 node10.east node10.west
-        \railnonterm{c\strut} ->  node4 : drawtoprev=1 beforeskip=8 width=8 height=6 node4.east node4.west
-      concat node16 : leftrail=node36 drawtoprev=0 beforeskip=0 width=0 height=0 node17.east node14.west
-        \railnonterm{n\strut} ->  node17 : drawtoprev=0 beforeskip=0 width=8 height=6 node17.east node17.west
-        \railnonterm{m\strut} ->  node15 : drawtoprev=1 beforeskip=8 width=8 height=6 node15.east node15.west
-        \railnonterm{l\strut} ->  node14 : drawtoprev=1 beforeskip=8 width=8 height=6 node14.east node14.west
-      concat node24 : leftrail=node36 drawtoprev=0 beforeskip=0 width=0 height=0 node32.east node18.west
-        rail  UP node32 : drawtoprev=0 beforeskip=0 width=0 height=0 node32.east node32.west
-        choices node27 : leftrail=node32 rightrail=node31 drawtoprev=1 beforeskip=8 width=0 height=0 node25.east node25.west
-          \nullnode{NULL node\strut} ->  coord1 : rightrail=node32 drawtoprev=0 beforeskip=8 width=0 height=9 coord1 coord1
-          \railnonterm{l\strut} ->  node25 : drawtoprev=0 beforeskip=8 width=8 height=6 node25.east node25.west
-          \railnonterm{c\strut} ->  node26 : leftrail=node31 drawtoprev=0 beforeskip=8 width=8 height=6 node26.east node26.west
-        rail  UP node31 : drawtoprev=1 beforeskip=8 width=0 height=0 node31.east node31.west
-        \railnonterm{a\strut} ->  node23 : drawtoprev=1 beforeskip=8 width=8 height=6 node23.east node23.west
-        rail  UP node22 : drawtoprev=1 beforeskip=8 width=0 height=0 node22.east node22.west
-        choices node20 : leftrail=node22 rightrail=node21 drawtoprev=1 beforeskip=8 width=0 height=0 node18.east node18.west
-          \railnonterm{g\strut} ->  node18 : rightrail=node22 drawtoprev=0 beforeskip=8 width=8 height=6 node18.east node18.west
-          \railnonterm{h\strut} ->  node19 : leftrail=node21 drawtoprev=0 beforeskip=8 width=8 height=6 node19.east node19.west
-        rail  UP node21 : drawtoprev=1 beforeskip=8 width=0 height=0 node21.east node21.west
-    rail  UP node36 : drawtoprev=1 beforeskip=8 width=0 height=0 node36.east node36.west
-    \nullnode{end1\strut} ->  coord5 : drawtoprev=1 beforeskip=8 width=0 height=9 coord5 coord5
-    \nullnode{end2\strut} ->  coord6 : drawtoprev=1 beforeskip=8 width=0 height=9 coord6 coord6
+  loop
+    repeat:
+      nonterminal a
+    repeat:
+      nonterminal d
+    repeat:
+      sequence
+        nonterminal c
+        choice
+          nonterminal z
+          terminal '35'
+          terminal 'b'
+          nonterminal q
+        nonterminal t
+    repeat:
+      sequence
+        nonterminal l
+        nonterminal m
+        nonterminal n
+    repeat:
+      sequence
+        choice
+          nonterminal g
+          nonterminal h
+        nonterminal a
+        optional
+          choice
+            nonterminal l
+            nonterminal c

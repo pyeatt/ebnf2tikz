@@ -1,5 +1,0 @@
-Unable to open input file bnfnodes.dat. Continuing
-production: pointer_type
-  sequence
-    terminal '^'
-    nonterminal type
