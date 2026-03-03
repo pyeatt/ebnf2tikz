@@ -1441,16 +1441,23 @@ static void connectLoop(LoopNode *n,
       bodyExit = coordinate(midX, loopGeom.origin.y);
     }
 
-  /* Body stubs: horizontal lines from rails to body */
-  pl.points.clear();
-  pl.points.push_back(coordinate(railX, bodyEntry.y));
-  pl.points.push_back(bodyEntry);
-  addPolyline(lines, pl);
+  /* Body stubs: horizontal lines from rails to body.
+     Only needed when there are no repeats, because the feedback
+     paths already include the body-to-rail segments. Drawing
+     both causes "ears" where the straight stub extends past the
+     rounded corner of the feedback path. */
+  if(n->repeats.size() == 0)
+    {
+      pl.points.clear();
+      pl.points.push_back(coordinate(railX, bodyEntry.y));
+      pl.points.push_back(bodyEntry);
+      addPolyline(lines, pl);
 
-  pl.points.clear();
-  pl.points.push_back(bodyExit);
-  pl.points.push_back(coordinate(exitRailX, bodyExit.y));
-  addPolyline(lines, pl);
+      pl.points.clear();
+      pl.points.push_back(bodyExit);
+      pl.points.push_back(coordinate(exitRailX, bodyExit.y));
+      addPolyline(lines, pl);
+    }
 
   /* Repeat feedback paths */
   for(i = 0; i < n->repeats.size(); i++)
