@@ -116,9 +116,9 @@ static int nodesEqual(ASTNode *a, ASTNode *b)
       lb = static_cast<LoopNode*>(b);
       if(la->repeats.size() != lb->repeats.size())
         return 0;
-      if((la->body == NULL) != (lb->body == NULL))
+      if((la->body == nullptr) != (lb->body == nullptr))
         return 0;
-      if(la->body != NULL && !nodesEqual(la->body, lb->body))
+      if(la->body != nullptr && !nodesEqual(la->body, lb->body))
         return 0;
       for(i = 0; i < la->repeats.size(); i++)
         {
@@ -188,7 +188,7 @@ static int mergeSequences(ASTNode *n)
       break;
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         count += mergeSequences(loop->body);
       for(i = 0; i < loop->repeats.size(); i++)
         count += mergeSequences(loop->repeats[i]);
@@ -263,7 +263,7 @@ static int mergeChoices(ASTNode *n)
                       inner->alternatives[j]);
                   i += inner->alternatives.size();
                   inner->alternatives.clear();
-                  opt->child = NULL;
+                  opt->child = nullptr;
                   delete opt;
                 }
               else
@@ -271,7 +271,7 @@ static int mergeChoices(ASTNode *n)
                   ch->alternatives.insert(
                     ch->alternatives.begin() + i, opt->child);
                   i++;
-                  opt->child = NULL;
+                  opt->child = nullptr;
                   delete opt;
                 }
               count++;
@@ -293,7 +293,7 @@ static int mergeChoices(ASTNode *n)
       break;
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         count += mergeChoices(loop->body);
       for(i = 0; i < loop->repeats.size(); i++)
         count += mergeChoices(loop->repeats[i]);
@@ -363,7 +363,7 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
         {
           OptionalNode *inner = static_cast<OptionalNode*>(opt->child);
           opt->child = inner->child;
-          inner->child = NULL;
+          inner->child = nullptr;
           delete inner;
           (*count)++;
           return (ASTNode*)opt;
@@ -373,9 +373,9 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
       if(opt->child->kind == ASTKind::Loop)
         {
           loop = static_cast<LoopNode*>(opt->child);
-          if(loop->body == NULL)
+          if(loop->body == nullptr)
             {
-              opt->child = NULL;
+              opt->child = nullptr;
               delete opt;
               (*count)++;
               return (ASTNode*)loop;
@@ -387,7 +387,7 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
           ch = static_cast<ChoiceNode*>(opt->child);
           ch->alternatives.insert(ch->alternatives.begin(),
                                   new EpsilonNode());
-          opt->child = NULL;
+          opt->child = nullptr;
           delete opt;
           (*count)++;
           return (ASTNode*)ch;
@@ -395,7 +395,7 @@ static ASTNode* liftWrappers(ASTNode *n, int *count)
       return n;
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         loop->body = liftWrappers(loop->body, count);
       for(i = 0; i < loop->repeats.size(); i++)
         loop->repeats[i] = liftWrappers(loop->repeats[i], count);
@@ -506,7 +506,7 @@ static ASTNode* expandOptionalSequence(ASTNode *n, int *count)
 
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         loop->body = expandOptionalSequence(loop->body, count);
       for(i = 0; i < loop->repeats.size(); i++)
         loop->repeats[i] =
@@ -673,7 +673,7 @@ static int analyzeLoops(ASTNode *n)
       break;
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         count += analyzeLoops(loop->body);
       for(i = 0; i < loop->repeats.size(); i++)
         count += analyzeLoops(loop->repeats[i]);
@@ -692,7 +692,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
   OptionalNode *optWrap;
   int numAlts, ai;
   int minMatch, allZero, anyZero;
-  int *altMatches;
+  vector<int> altMatches;
   ASTNode *newBody;
   int bi, di;
   int isOptional;
@@ -700,16 +700,16 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
   ri = 0;
   while(ri < seq->children.size())
     {
-      loop = NULL;
+      loop = nullptr;
       isOptional = 0;
 
       // Check for Loop(body=null, ...) at position ri
       if(seq->children[ri]->kind == ASTKind::Loop)
         {
           loop = static_cast<LoopNode*>(seq->children[ri]);
-          if(loop->body != NULL)
+          if(loop->body != nullptr)
             {
-              loop = NULL;  // body already set, skip
+              loop = nullptr;  // body already set, skip
             }
         }
       // Check for Optional(Loop(body=null, ...)) at position ri
@@ -719,14 +719,14 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
           if(optWrap->child->kind == ASTKind::Loop)
             {
               loop = static_cast<LoopNode*>(optWrap->child);
-              if(loop->body != NULL)
-                loop = NULL;
+              if(loop->body != nullptr)
+                loop = nullptr;
               else
                 isOptional = 1;
             }
         }
 
-      if(loop == NULL)
+      if(loop == nullptr)
         {
           ri++;
         }
@@ -735,7 +735,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
           numAlts = loop->repeats.size();
 
           // Compute match counts
-          altMatches = new int[numAlts];
+          altMatches.assign(numAlts, 0);
           minMatch = -1;
           allZero = 1;
           anyZero = 0;
@@ -760,17 +760,17 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
           // For optional loops, we can still extract if some match
           if(!isOptional && (allZero || anyZero || minMatch <= 0))
             {
-              delete[] altMatches;
+
               ri++;
             }
           else if(isOptional && (allZero || minMatch <= 0))
             {
               // No match, but still unwrap Optional(Loop(null,...))
               // -> Loop(null,...) since they're semantically the same
-              delete[] altMatches;
+
               optWrap = static_cast<OptionalNode*>(seq->children[ri]);
               seq->children[ri] = optWrap->child;
-              optWrap->child = NULL;
+              optWrap->child = nullptr;
               delete optWrap;
               count++;
               // Don't advance ri — re-check in case of cascaded patterns
@@ -799,7 +799,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
                       stripTrailing(loop->repeats[ai], minMatch);
                 }
 
-              delete[] altMatches;
+
 
               // Move Epsilon repeats to the end
               stable_partition(loop->repeats.begin(),
@@ -825,7 +825,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
                   optWrap =
                     static_cast<OptionalNode*>(seq->children[ri]);
                   seq->children[ri] = loop;
-                  optWrap->child = NULL;
+                  optWrap->child = nullptr;
                   delete optWrap;
                 }
 
@@ -863,7 +863,7 @@ static int flattenLoopChoices(ASTNode *n)
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
       // Recurse into body and repeats
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         count += flattenLoopChoices(loop->body);
       for(i = 0; i < loop->repeats.size(); i++)
         count += flattenLoopChoices(loop->repeats[i]);
@@ -961,7 +961,7 @@ static int bodyChoiceToChoiceloop(ASTNode *n, int inOptionalContext)
     {
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL &&
+      if(loop->body != nullptr &&
          loop->body->kind == ASTKind::Choice &&
          loop->repeats.size() == 1 &&
          loop->repeats[0]->kind == ASTKind::Epsilon &&
@@ -976,12 +976,12 @@ static int bodyChoiceToChoiceloop(ASTNode *n, int inOptionalContext)
             loop->repeats.push_back(bodyCh->alternatives[i]);
           bodyCh->alternatives.clear();
           delete bodyCh;
-          loop->body = NULL;
+          loop->body = nullptr;
           count++;
         }
       else
         {
-          if(loop->body != NULL)
+          if(loop->body != nullptr)
             count += bodyChoiceToChoiceloop(loop->body, 0);
           for(i = 0; i < loop->repeats.size(); i++)
             count += bodyChoiceToChoiceloop(loop->repeats[i], 0);

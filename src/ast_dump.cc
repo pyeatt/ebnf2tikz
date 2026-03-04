@@ -32,6 +32,7 @@ ebnf2tikz
  */
 
 #include "ast_dump.hh"
+#include "ast_visitor.hh"
 #include <iostream>
 
 using namespace std;
@@ -49,92 +50,107 @@ static void indent(int depth)
 }
 
 /**
- * @brief Recursively dump a single AST node and its children.
- * @param n     The node to dump.
- * @param depth Current indentation depth.
+ * @brief Visitor that dumps AST nodes in indented tree format.
  */
-static void dumpNode(ASTNode *n, int depth)
-{
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
+class ASTDumper : public ASTVisitor {
+public:
+  int depth;
 
-  switch(n->kind)
-    {
-    case ASTKind::Terminal:
-      indent(depth);
-      cout << "terminal " << static_cast<TerminalNode*>(n)->text << endl;
-      return;
+  ASTDumper(int d) : depth(d) {}
 
-    case ASTKind::Nonterminal:
-      indent(depth);
-      cout << "nonterminal " << static_cast<NonterminalNode*>(n)->name << endl;
-      return;
+  void visitTerminal(TerminalNode *n) override
+  {
+    indent(depth);
+    cout << "terminal " << n->text << endl;
+  }
 
-    case ASTKind::Epsilon:
-      indent(depth);
-      cout << "epsilon" << endl;
-      return;
+  void visitNonterminal(NonterminalNode *n) override
+  {
+    indent(depth);
+    cout << "nonterminal " << n->name << endl;
+  }
 
-    case ASTKind::Newline:
-      indent(depth);
-      cout << "newline" << endl;
-      return;
+  void visitEpsilon(EpsilonNode *) override
+  {
+    indent(depth);
+    cout << "epsilon" << endl;
+  }
 
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      indent(depth);
-      cout << "sequence" << endl;
-      for(i = 0; i < seq->children.size(); i++)
-        dumpNode(seq->children[i], depth + 1);
-      return;
+  void visitNewline(NewlineNode *) override
+  {
+    indent(depth);
+    cout << "newline" << endl;
+  }
 
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      indent(depth);
-      cout << "choice" << endl;
-      for(i = 0; i < ch->alternatives.size(); i++)
-        dumpNode(ch->alternatives[i], depth + 1);
-      return;
+  void visitSequence(SequenceNode *n) override
+  {
+    size_t i;
 
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      indent(depth);
-      cout << "optional" << endl;
-      dumpNode(opt->child, depth + 1);
-      return;
+    indent(depth);
+    cout << "sequence" << endl;
+    depth++;
+    for(i = 0; i < n->children.size(); i++)
+      n->children[i]->accept(*this);
+    depth--;
+  }
 
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      indent(depth);
-      cout << "loop" << endl;
-      if(loop->body != NULL)
-        {
-          indent(depth + 1);
-          cout << "body:" << endl;
-          dumpNode(loop->body, depth + 2);
-        }
-      for(i = 0; i < loop->repeats.size(); i++)
-        {
-          indent(depth + 1);
-          cout << "repeat:" << endl;
-          dumpNode(loop->repeats[i], depth + 2);
-        }
-      return;
-    }
-}
+  void visitChoice(ChoiceNode *n) override
+  {
+    size_t i;
+
+    indent(depth);
+    cout << "choice" << endl;
+    depth++;
+    for(i = 0; i < n->alternatives.size(); i++)
+      n->alternatives[i]->accept(*this);
+    depth--;
+  }
+
+  void visitOptional(OptionalNode *n) override
+  {
+    indent(depth);
+    cout << "optional" << endl;
+    depth++;
+    n->child->accept(*this);
+    depth--;
+  }
+
+  void visitLoop(LoopNode *n) override
+  {
+    size_t i;
+
+    indent(depth);
+    cout << "loop" << endl;
+    if(n->body != nullptr)
+      {
+        indent(depth + 1);
+        cout << "body:" << endl;
+        depth += 2;
+        n->body->accept(*this);
+        depth -= 2;
+      }
+    for(i = 0; i < n->repeats.size(); i++)
+      {
+        indent(depth + 1);
+        cout << "repeat:" << endl;
+        depth += 2;
+        n->repeats[i]->accept(*this);
+        depth -= 2;
+      }
+  }
+};
 
 void astDumpGrammar(ASTGrammar *grammar)
 {
   size_t i;
   ASTProduction *prod;
+  ASTDumper dumper(1);
 
   for(i = 0; i < grammar->productions.size(); i++)
     {
       prod = grammar->productions[i];
       cout << "production: " << prod->name << endl;
-      dumpNode(prod->body, 1);
+      dumper.depth = 1;
+      prod->body->accept(dumper);
     }
 }

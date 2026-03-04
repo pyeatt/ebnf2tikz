@@ -31,6 +31,9 @@ ebnf2tikz
  */
 
 #include "ast.hh"
+#include "ast_visitor.hh"
+
+using namespace std;
 
 namespace ast {
 
@@ -83,7 +86,7 @@ ASTNode* LoopNode::clone() const
 {
   LoopNode *n = new LoopNode();
   size_t i;
-  if(body != NULL)
+  if(body != nullptr)
     n->body = body->clone();
   for(i = 0; i < repeats.size(); i++)
     n->addRepeat(repeats[i]->clone());
@@ -114,7 +117,7 @@ OptionalNode::~OptionalNode()
 LoopNode::~LoopNode()
 {
   size_t i;
-  if(body != NULL)
+  if(body != nullptr)
     delete body;
   for(i = 0; i < repeats.size(); i++)
     delete repeats[i];
@@ -137,6 +140,52 @@ void LoopNode::addRepeat(ASTNode *r)
   repeats.push_back(r);
 }
 
+// --- accept implementations ---
+
+void TerminalNode::accept(ASTVisitor &v) { v.visitTerminal(this); }
+void NonterminalNode::accept(ASTVisitor &v) { v.visitNonterminal(this); }
+void EpsilonNode::accept(ASTVisitor &v) { v.visitEpsilon(this); }
+void NewlineNode::accept(ASTVisitor &v) { v.visitNewline(this); }
+void SequenceNode::accept(ASTVisitor &v) { v.visitSequence(this); }
+void ChoiceNode::accept(ASTVisitor &v) { v.visitChoice(this); }
+void OptionalNode::accept(ASTVisitor &v) { v.visitOptional(this); }
+void LoopNode::accept(ASTVisitor &v) { v.visitLoop(this); }
+
+// --- DefaultASTVisitor implementations ---
+
+void DefaultASTVisitor::visitTerminal(TerminalNode *) {}
+void DefaultASTVisitor::visitNonterminal(NonterminalNode *) {}
+void DefaultASTVisitor::visitEpsilon(EpsilonNode *) {}
+void DefaultASTVisitor::visitNewline(NewlineNode *) {}
+
+void DefaultASTVisitor::visitSequence(SequenceNode *n)
+{
+  size_t i;
+  for(i = 0; i < n->children.size(); i++)
+    n->children[i]->accept(*this);
+}
+
+void DefaultASTVisitor::visitChoice(ChoiceNode *n)
+{
+  size_t i;
+  for(i = 0; i < n->alternatives.size(); i++)
+    n->alternatives[i]->accept(*this);
+}
+
+void DefaultASTVisitor::visitOptional(OptionalNode *n)
+{
+  n->child->accept(*this);
+}
+
+void DefaultASTVisitor::visitLoop(LoopNode *n)
+{
+  size_t i;
+  if(n->body != nullptr)
+    n->body->accept(*this);
+  for(i = 0; i < n->repeats.size(); i++)
+    n->repeats[i]->accept(*this);
+}
+
 } // namespace ast
 
 
@@ -149,9 +198,9 @@ ASTProduction::ASTProduction(annotmap *a, const string &n, ast::ASTNode *b)
 
 ASTProduction::~ASTProduction()
 {
-  if(annotations != NULL)
+  if(annotations != nullptr)
     delete annotations;
-  if(body != NULL)
+  if(body != nullptr)
     delete body;
 }
 

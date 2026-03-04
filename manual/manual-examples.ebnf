@@ -1,0 +1,26 @@
+// Simple productions
+manual_greeting = 'hello' , [ manual_recipient ] , '!' ;
+manual_recipient = 'world' | manual_name ;
+manual_name = first_name , [ last_name ] ;
+
+// Repetition
+manual_number = manual_digit , { manual_digit } ;
+manual_parameter_list = parameter , { ',' , parameter } ;
+manual_digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
+
+// Subsumption
+manual_case_alt =
+    'when' , manual_choices , '=>', sequence_of_statements;
+
+<<-- subsume -->>
+manual_choices = manual_choice, { '|', manual_choice } ;
+
+<<-- subsume -->>
+manual_choice = simple_expression | discrete_range
+              | simple_name | 'others' ;
+
+// Complex example
+manual_select_stmt = 'SELECT' , [ 'DISTINCT' ] ,
+    column_list , 'FROM' , table_ref ,
+    [ 'WHERE' , condition ] ,
+    [ 'ORDER' , 'BY' , order_list ] ;

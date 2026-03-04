@@ -49,20 +49,18 @@ ebnf2tikz
 #include <vector>
 #include <string>
 
-using namespace std;
-
 /**
  * @brief Information about a leaf node assigned during the naming pass.
  *
  * Populated by astAssignNames() for Terminal, Nonterminal, and Epsilon nodes.
  */
 struct ASTLeafInfo {
-  string tikzName;     /**< TikZ name (e.g., "node1" or "coord1"). */
+  std::string tikzName;     /**< TikZ name (e.g., "node1" or "coord1"). */
   float width;         /**< Width in points from bnfnodes.dat. */
   float height;        /**< Height in points from bnfnodes.dat. */
-  string style;        /**< TikZ style: "terminal", "nonterminal", or "null". */
-  string format;       /**< LaTeX font command: "railtermname" or "railname". */
-  string rawText;      /**< Display text (quotes stripped for terminals). */
+  std::string style;        /**< TikZ style: "terminal", "nonterminal", or "null". */
+  std::string format;       /**< LaTeX font command: "railtermname" or "railname". */
+  std::string rawText;      /**< Display text (quotes stripped for terminals). */
   int isTerminal;      /**< 1 if terminal, 0 if nonterminal. */
   int wrapped;         /**< 1 if shortstack wrapping is applied for wide names. */
 };
@@ -78,6 +76,7 @@ struct ASTNodeGeom {
   float height;        /**< Total height in points. */
   coordinate entry;    /**< Left connection point (input rail). */
   coordinate exit;     /**< Right connection point (output rail). */
+  int reversed;        /**< 1 if laid out right-to-left (loop repeats). */
 };
 
 /**
@@ -86,7 +85,7 @@ struct ASTNodeGeom {
  * Emitted as a TikZ @c \\draw command with @c rounded @c corners.
  */
 struct ASTPolyline {
-  vector<coordinate> points;  /**< Ordered list of polyline vertices. */
+  std::vector<coordinate> points;  /**< Ordered list of polyline vertices. */
 };
 
 /**
@@ -95,7 +94,7 @@ struct ASTPolyline {
  * Used for entry/exit stub coordinates of a production.
  */
 struct ASTNamedCoord {
-  string name;         /**< TikZ coordinate name (e.g., "stubleft"). */
+  std::string name;         /**< TikZ coordinate name (e.g., "stubleft"). */
   coordinate pos;      /**< Position in points. */
 };
 
@@ -106,10 +105,11 @@ struct ASTNamedCoord {
  * coordinates needed to emit TikZ for the production.
  */
 struct ASTProductionLayout {
-  map<ast::ASTNode*, ASTNodeGeom> geom;       /**< Per-node geometry. */
-  map<ast::ASTNode*, ASTLeafInfo> leafInfo;    /**< Per-leaf naming/size info. */
-  vector<ASTPolyline> connections;             /**< Connection polylines. */
-  vector<ASTNamedCoord> stubs;                 /**< Entry/exit stub coordinates. */
+  std::map<ast::ASTNode*, ASTNodeGeom> geom;       /**< Per-node geometry. */
+  std::map<ast::ASTNode*, ASTLeafInfo> leafInfo;    /**< Per-leaf naming/size info. */
+  std::vector<ASTPolyline> connections;             /**< Connection polylines. */
+  std::vector<ASTNamedCoord> stubs;                 /**< Entry/exit stub coordinates. */
+  std::map<ast::ASTNode*, std::pair<float,float>> sizeCache; /**< Cached astComputeSize results. */
 };
 
 /**
@@ -134,13 +134,13 @@ struct ASTLayoutContext {
    * @brief Generate the next unique TikZ node name.
    * @return A name like "node1", "node2", etc.
    */
-  string nextNode();
+  std::string nextNode();
 
   /**
    * @brief Generate the next unique TikZ coordinate name.
    * @return A name like "coord1", "coord2", etc.
    */
-  string nextCoord();
+  std::string nextCoord();
 };
 
 /**
@@ -155,7 +155,7 @@ struct ASTLayoutContext {
  * @param info Map to populate with leaf information.
  */
 void astAssignNames(ast::ASTNode *n, ASTLayoutContext &ctx,
-                    map<ast::ASTNode*, ASTLeafInfo> &info);
+                    ASTProductionLayout &layout);
 
 /**
  * @brief Compute the width and height of an AST subtree.
@@ -164,31 +164,29 @@ void astAssignNames(ast::ASTNode *n, ASTLayoutContext &ctx,
  * rail padding, and child arrangement (horizontal for sequences,
  * vertical for choices/optionals/loops).
  *
- * @param n     Root of the AST subtree.
- * @param info  Leaf information map (from astAssignNames).
- * @param sizes Node size cache.
+ * @param n      Root of the AST subtree.
+ * @param layout Layout result (uses leafInfo for dimensions).
+ * @param sizes  Node size cache.
  * @return A (width, height) pair in points.
  */
-pair<float,float> astComputeSize(ast::ASTNode *n,
-                                 map<ast::ASTNode*, ASTLeafInfo> &info,
+std::pair<float,float> astComputeSize(ast::ASTNode *n,
+                                 ASTProductionLayout &layout,
                                  nodesizes *sizes);
 
 /**
  * @brief Place an AST node at the given origin coordinate.
  *
  * Top-down recursive placement that computes entry/exit connection
- * points and stores geometry in the @p geom map.
+ * points and stores geometry in the layout's geom map.
  *
  * @param n      The AST node to place.
  * @param origin Top-left corner for this node's bounding box.
- * @param geom   Map to store computed geometry for each node.
- * @param info   Leaf information map.
+ * @param layout Layout result (populates geom, reads leafInfo).
  * @param sizes  Node size cache.
  * @return The computed geometry for node @p n.
  */
 ASTNodeGeom astLayoutNode(ast::ASTNode *n, coordinate origin,
-                          map<ast::ASTNode*, ASTNodeGeom> &geom,
-                          map<ast::ASTNode*, ASTLeafInfo> &info,
+                          ASTProductionLayout &layout,
                           nodesizes *sizes);
 
 /**
@@ -197,16 +195,12 @@ ASTNodeGeom astLayoutNode(ast::ASTNode *n, coordinate origin,
  * Generates the rail connections (horizontal runs, vertical drops,
  * loop-back paths) between nodes based on their placed geometry.
  *
- * @param n     Root of the AST subtree.
- * @param geom  Node geometry map (from astLayoutNode).
- * @param info  Leaf information map.
- * @param lines Vector to append connection polylines to.
- * @param sizes Node size cache.
+ * @param n      Root of the AST subtree.
+ * @param layout Layout result (reads geom/leafInfo, appends connections).
+ * @param sizes  Node size cache.
  */
 void astComputeConnections(ast::ASTNode *n,
-                           map<ast::ASTNode*, ASTNodeGeom> &geom,
-                           map<ast::ASTNode*, ASTLeafInfo> &info,
-                           vector<ASTPolyline> &lines,
+                           ASTProductionLayout &layout,
                            nodesizes *sizes);
 
 /**
@@ -235,5 +229,23 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
  * @param sizes   Node size cache (provides textwidth and colsep).
  */
 void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes);
+
+/**
+ * @brief Apply post-layout shortstack wrapping to overwide nonterminals.
+ *
+ * Checks whether a production's body is wider than \\textwidth and,
+ * if so, marks nonterminal leaf nodes that contain wrappable
+ * spaces/underscores for shortstack wrapping.  This only affects
+ * TikZ label text, not layout geometry (sizes come from bnfnodes.dat).
+ *
+ * @param layout   Layout result (modifies leafInfo wrapped flags).
+ * @param body     The production body AST node.
+ * @param needsWrap Pre-determined wrap flag from the production.
+ * @param sizes    Node size cache (provides textwidth, minsize).
+ * @param prodName Production name (for overwidth warning).
+ */
+void astPostLayoutWrap(ASTProductionLayout &layout, ast::ASTNode *body,
+                       int needsWrap, nodesizes *sizes,
+                       const std::string &prodName);
 
 #endif

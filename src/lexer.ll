@@ -47,6 +47,7 @@ ebnf2tikz
 # include "diagnostics.hh"
 # include "driver.hh"
 # include "parser.hh"
+using namespace std;
 %}
 
 
@@ -143,18 +144,22 @@ ebnf2tikz
 %%
 
 
-void driver::scan_begin ()
+bool driver::scan_begin ()
 {
   yy_flex_debug = trace_scanning;
   if (file.empty () || file == "-")
-    yyin = stdin;
-  else if (!(yyin = fopen (file.c_str (), "r")))
+    {
+      yyin = stdin;
+      return true;
+    }
+  yyin = fopen (file.c_str (), "r");
+  if (!yyin)
     {
       diagnostics.report(Severity::Error,
         string("cannot open ") + file + ": " + strerror(errno));
-      diagnostics.emit(std::cerr);
-      exit (EXIT_FAILURE);
+      return false;
     }
+  return true;
 }
 
 
