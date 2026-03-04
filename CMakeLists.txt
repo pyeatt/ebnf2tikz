@@ -145,6 +145,36 @@ add_custom_command(
 )
 add_custom_target(manual DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/manual.pdf)
 
+# --- VHDL grammar PDF ---
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/VHDL/testdriver.pdf
+  COMMAND ${RUN_QUIET} bash ${CMAKE_CURRENT_SOURCE_DIR}/VHDL/build_pdf.sh
+    ${CMAKE_CURRENT_BINARY_DIR}/ebnf2tikz
+  DEPENDS ebnf2tikz
+          ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
+          ${CMAKE_CURRENT_SOURCE_DIR}/VHDL/VHDL.ebnf
+          ${CMAKE_CURRENT_SOURCE_DIR}/VHDL/testdriver.tex
+          ${CMAKE_CURRENT_SOURCE_DIR}/VHDL/build_pdf.sh
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/VHDL
+  COMMENT "Building VHDL grammar railroad diagram PDF"
+)
+add_custom_target(vhdl-pdf DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/VHDL/testdriver.pdf)
+
+# --- Free Pascal grammar PDF ---
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal/testdriver.pdf
+  COMMAND ${RUN_QUIET} bash ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal/build_pdf.sh
+    ${CMAKE_CURRENT_BINARY_DIR}/ebnf2tikz
+  DEPENDS ebnf2tikz
+          ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
+          ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal/free-pascal.ebnf
+          ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal/testdriver.tex
+          ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal/build_pdf.sh
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal
+  COMMENT "Building Free Pascal grammar railroad diagram PDF"
+)
+add_custom_target(pascal-pdf DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/free-pascal/testdriver.pdf)
+
 # --- Test targets ---
 add_custom_target(check
   COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/unit_tests/run_tests.sh
@@ -170,7 +200,7 @@ add_custom_target(check-sty
   COMMENT "Running LaTeX package tests"
 )
 
-add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz sty-doc manual)
+add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz sty-doc manual vhdl-pdf pascal-pdf)
 
 # --- Documentation target ---
 find_package(Doxygen)
@@ -220,6 +250,9 @@ add_custom_target(realclean
   COMMAND bash -c "rm -f LaTeX/tests/*.pdf LaTeX/tests/*.aux LaTeX/tests/*.log LaTeX/tests/*.out LaTeX/tests/bnfnodes.dat LaTeX/tests/*-diagrams.tex LaTeX/tests/*_wrapper.tex"
   # Manual build artifacts (keep manual.tex and manual-examples.ebnf)
   COMMAND bash -c "rm -f manual/*.aux manual/*.log manual/*.out manual/*.toc manual/*.pdf manual/*-rail.ebnf manual/*-rail.tex manual/bnfnodes.dat"
+  # VHDL and Free Pascal build artifacts
+  COMMAND bash -c "rm -f VHDL/testdriver.pdf VHDL/testdriver.aux VHDL/testdriver.log VHDL/all_diagrams.tex VHDL/testlist.tex VHDL/bnfnodes.dat"
+  COMMAND bash -c "rm -f free-pascal/testdriver.pdf free-pascal/testdriver.aux free-pascal/testdriver.log free-pascal/all_diagrams.tex free-pascal/testlist.tex free-pascal/bnfnodes.dat"
   # CMake products
   COMMAND ${CMAKE_COMMAND} -E rm -f
     CMakeCache.txt cmake_install.cmake Makefile .depend

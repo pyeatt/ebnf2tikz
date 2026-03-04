@@ -21,7 +21,7 @@ if [ ! -f "$STYDIR/ebnf2tikz.sty" ]; then
     echo "  Run 'latex ebnf2tikz.ins' in the LaTeX/ directory first"
     exit 1
 fi
-export TEXINPUTS="$STYDIR:$TEXINPUTS"
+export TEXINPUTS="$STYDIR::"
 
 if [ ! -f "$EBNF_FILE" ]; then
     echo "Error: VHDL.ebnf not found at $EBNF_FILE"
