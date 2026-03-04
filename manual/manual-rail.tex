@@ -1,0 +1,267 @@
+\makeatletter
+
+\newsavebox{\manualGreetingBox}
+
+\savebox{\manualGreetingBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual greeting\strut}};
+\coordinate (coord1) at (0pt,-21pt);
+\coordinate (coord2) at (4pt,-21pt);
+\coordinate (coord3) at (185.893pt,-21pt);
+\coordinate (coord4) at (189.893pt,-21pt);
+\node (node1) at (12pt,-21pt)[anchor=west,terminal] {\railtermname{hello\strut}};
+\ebnf@writenodesize{node1}
+\node (node2) at (64.3032pt,-33pt)[anchor=west,nonterminal] {\railname{manual recipient\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node2}
+\node (node3) at (164.293pt,-21pt)[anchor=west,terminal] {\railtermname{!\strut}};
+\ebnf@writenodesize{node3}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (12pt,-21pt);
+\draw [rounded corners=\railcorners] (181.893pt,-21pt) -- (185.893pt,-21pt);
+\draw [rounded corners=\railcorners] (185.893pt,-21pt) -- (189.893pt,-21pt);
+\draw [rounded corners=\railcorners] (56.3032pt,-21pt) -- (156.293pt,-21pt);
+\draw [rounded corners=\railcorners] (52.3032pt,-21pt) -- (56.3032pt,-21pt) -- (56.3032pt,-33pt) -- (64.3032pt,-33pt);
+\draw [rounded corners=\railcorners] (148.293pt,-33pt) -- (156.293pt,-33pt) -- (156.293pt,-21pt) -- (160.293pt,-21pt);
+\draw [rounded corners=\railcorners] (48.3032pt,-21pt) -- (56.3032pt,-21pt);
+\draw [rounded corners=\railcorners] (156.293pt,-21pt) -- (164.293pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualRecipientBox}
+
+\savebox{\manualRecipientBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual recipient\strut}};
+\coordinate (coord5) at (0pt,-21pt);
+\coordinate (coord6) at (4pt,-21pt);
+\coordinate (coord7) at (101.13pt,-21pt);
+\coordinate (coord8) at (105.13pt,-21pt);
+\node (node4) at (34.1056pt,-21pt)[anchor=west,terminal] {\railtermname{world\strut}};
+\ebnf@writenodesize{node4}
+\node (node5) at (20pt,-44.6pt)[anchor=west,nonterminal] {\railname{manual name\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node5}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (12pt,-21pt);
+\draw [rounded corners=\railcorners] (97.1302pt,-21pt) -- (101.13pt,-21pt);
+\draw [rounded corners=\railcorners] (101.13pt,-21pt) -- (105.13pt,-21pt);
+\draw [rounded corners=\railcorners] (12pt,-21pt) -- (34.1056pt,-21pt);
+\draw [rounded corners=\railcorners] (75.0247pt,-21pt) -- (97.1302pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-44.6pt) -- (20pt,-44.6pt);
+\draw [rounded corners=\railcorners] (89.1302pt,-44.6pt) -- (97.1302pt,-44.6pt) -- (97.1302pt,-21pt) -- (101.13pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualNameBox}
+
+\savebox{\manualNameBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual name\strut}};
+\coordinate (coord9) at (0pt,-21pt);
+\coordinate (coord10) at (4pt,-21pt);
+\coordinate (coord11) at (143.983pt,-21pt);
+\coordinate (coord12) at (147.983pt,-21pt);
+\node (node6) at (12pt,-21pt)[anchor=west,nonterminal] {\railname{first name\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node6}
+\node (node7) at (81.1722pt,-33pt)[anchor=west,nonterminal] {\railname{last name\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node7}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (12pt,-21pt);
+\draw [rounded corners=\railcorners] (139.983pt,-21pt) -- (143.983pt,-21pt);
+\draw [rounded corners=\railcorners] (143.983pt,-21pt) -- (147.983pt,-21pt);
+\draw [rounded corners=\railcorners] (73.1722pt,-21pt) -- (139.983pt,-21pt);
+\draw [rounded corners=\railcorners] (69.1722pt,-21pt) -- (73.1722pt,-21pt) -- (73.1722pt,-33pt) -- (81.1722pt,-33pt);
+\draw [rounded corners=\railcorners] (131.983pt,-33pt) -- (139.983pt,-33pt) -- (139.983pt,-21pt) -- (143.983pt,-21pt);
+\draw [rounded corners=\railcorners] (65.1722pt,-21pt) -- (73.1722pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualNumberBox}
+
+\savebox{\manualNumberBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual number\strut}};
+\coordinate (coord14) at (0pt,-21pt);
+\coordinate (coord15) at (4pt,-21pt);
+\coordinate (coord16) at (96.416pt,-21pt);
+\coordinate (coord17) at (100.416pt,-21pt);
+\node (node8) at (20pt,-21pt)[anchor=west,nonterminal] {\railname{manual digit\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node8}
+\coordinate (coord13) at (52.208pt,-44.6pt);
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (20pt,-21pt);
+\draw [rounded corners=\railcorners] (84.416pt,-21pt) -- (96.416pt,-21pt);
+\draw [rounded corners=\railcorners] (96.416pt,-21pt) -- (100.416pt,-21pt);
+\draw [rounded corners=\railcorners] (84.416pt,-21pt) -- (92.416pt,-21pt) -- (92.416pt,-44.6pt) -- (52.208pt,-44.6pt);
+\draw [rounded corners=\railcorners] (52.208pt,-44.6pt) -- (12pt,-44.6pt) -- (12pt,-21pt) -- (20pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualParameterListBox}
+
+\savebox{\manualParameterListBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual parameter list\strut}};
+\coordinate (coord18) at (0pt,-21pt);
+\coordinate (coord19) at (4pt,-21pt);
+\coordinate (coord20) at (84.1981pt,-21pt);
+\coordinate (coord21) at (88.1981pt,-21pt);
+\node (node9) at (20pt,-21pt)[anchor=west,nonterminal] {\railname{parameter\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node9}
+\node (node10) at (37.299pt,-44.6pt)[anchor=west,terminal] {\railtermname{,\strut}};
+\ebnf@writenodesize{node10}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (20pt,-21pt);
+\draw [rounded corners=\railcorners] (72.1981pt,-21pt) -- (84.1981pt,-21pt);
+\draw [rounded corners=\railcorners] (84.1981pt,-21pt) -- (88.1981pt,-21pt);
+\draw [rounded corners=\railcorners] (72.1981pt,-21pt) -- (80.1981pt,-21pt) -- (80.1981pt,-44.6pt) -- (54.899pt,-44.6pt);
+\draw [rounded corners=\railcorners] (37.299pt,-44.6pt) -- (12pt,-44.6pt) -- (12pt,-21pt) -- (20pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualDigitBox}
+
+\savebox{\manualDigitBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual digit\strut}};
+\coordinate (coord22) at (0pt,-21pt);
+\coordinate (coord23) at (4pt,-21pt);
+\coordinate (coord24) at (49.6pt,-21pt);
+\coordinate (coord25) at (53.6pt,-21pt);
+\node (node11) at (20pt,-21pt)[anchor=west,terminal] {\railtermname{0\strut}};
+\ebnf@writenodesize{node11}
+\node (node12) at (20pt,-44.6pt)[anchor=west,terminal] {\railtermname{1\strut}};
+\ebnf@writenodesize{node12}
+\node (node13) at (20pt,-68.2pt)[anchor=west,terminal] {\railtermname{2\strut}};
+\ebnf@writenodesize{node13}
+\node (node14) at (20pt,-91.7999pt)[anchor=west,terminal] {\railtermname{3\strut}};
+\ebnf@writenodesize{node14}
+\node (node15) at (20pt,-115.4pt)[anchor=west,terminal] {\railtermname{4\strut}};
+\ebnf@writenodesize{node15}
+\node (node16) at (20pt,-139pt)[anchor=west,terminal] {\railtermname{5\strut}};
+\ebnf@writenodesize{node16}
+\node (node17) at (20pt,-162.6pt)[anchor=west,terminal] {\railtermname{6\strut}};
+\ebnf@writenodesize{node17}
+\node (node18) at (20pt,-186.2pt)[anchor=west,terminal] {\railtermname{7\strut}};
+\ebnf@writenodesize{node18}
+\node (node19) at (20pt,-209.8pt)[anchor=west,terminal] {\railtermname{8\strut}};
+\ebnf@writenodesize{node19}
+\node (node20) at (20pt,-233.4pt)[anchor=west,terminal] {\railtermname{9\strut}};
+\ebnf@writenodesize{node20}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (12pt,-21pt);
+\draw [rounded corners=\railcorners] (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (49.6pt,-21pt) -- (53.6pt,-21pt);
+\draw [rounded corners=\railcorners] (12pt,-21pt) -- (20pt,-21pt);
+\draw [rounded corners=\railcorners] (37.6pt,-21pt) -- (45.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-44.6pt) -- (20pt,-44.6pt);
+\draw [rounded corners=\railcorners] (37.6pt,-44.6pt) -- (45.6pt,-44.6pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-68.2pt) -- (20pt,-68.2pt);
+\draw [rounded corners=\railcorners] (37.6pt,-68.2pt) -- (45.6pt,-68.2pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-91.7999pt) -- (20pt,-91.7999pt);
+\draw [rounded corners=\railcorners] (37.6pt,-91.7999pt) -- (45.6pt,-91.7999pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-115.4pt) -- (20pt,-115.4pt);
+\draw [rounded corners=\railcorners] (37.6pt,-115.4pt) -- (45.6pt,-115.4pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-139pt) -- (20pt,-139pt);
+\draw [rounded corners=\railcorners] (37.6pt,-139pt) -- (45.6pt,-139pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-162.6pt) -- (20pt,-162.6pt);
+\draw [rounded corners=\railcorners] (37.6pt,-162.6pt) -- (45.6pt,-162.6pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-186.2pt) -- (20pt,-186.2pt);
+\draw [rounded corners=\railcorners] (37.6pt,-186.2pt) -- (45.6pt,-186.2pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-209.8pt) -- (20pt,-209.8pt);
+\draw [rounded corners=\railcorners] (37.6pt,-209.8pt) -- (45.6pt,-209.8pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\draw [rounded corners=\railcorners] (8pt,-21pt) -- (12pt,-21pt) -- (12pt,-233.4pt) -- (20pt,-233.4pt);
+\draw [rounded corners=\railcorners] (37.6pt,-233.4pt) -- (45.6pt,-233.4pt) -- (45.6pt,-21pt) -- (49.6pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualCaseAltBox}
+
+\savebox{\manualCaseAltBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual case alt\strut}};
+\coordinate (coord26) at (0pt,-21pt);
+\coordinate (coord27) at (4pt,-21pt);
+\coordinate (coord28) at (340.462pt,-21pt);
+\coordinate (coord29) at (344.462pt,-21pt);
+\node (node21) at (12pt,-21pt)[anchor=west,terminal] {\railtermname{when\strut}};
+\ebnf@writenodesize{node21}
+\node (node22) at (75.0808pt,-21pt)[anchor=west,nonterminal] {\railname{simple expression\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node22}
+\node (node23) at (83.479pt,-44.6pt)[anchor=west,nonterminal] {\railname{discrete range\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node23}
+\node (node24) at (86.5357pt,-68.2pt)[anchor=west,nonterminal] {\railname{simple name\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node24}
+\node (node25) at (96.6045pt,-91.7999pt)[anchor=west,terminal] {\railtermname{others\strut}};
+\ebnf@writenodesize{node25}
+\node (node26) at (111.269pt,-115.4pt)[anchor=west,terminal] {\railtermname{|}};
+\ebnf@writenodesize{node26}
+\node (node27) at (186.404pt,-21pt)[anchor=west,terminal] {\railtermname{=>\strut}};
+\ebnf@writenodesize{node27}
+\node (node28) at (224.29pt,-21pt)[anchor=west,nonterminal] {\railname{sequence of statements\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node28}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (12pt,-21pt);
+\draw [rounded corners=\railcorners] (336.462pt,-21pt) -- (340.462pt,-21pt);
+\draw [rounded corners=\railcorners] (340.462pt,-21pt) -- (344.462pt,-21pt);
+\draw [rounded corners=\railcorners] (67.0808pt,-21pt) -- (75.0808pt,-21pt);
+\draw [rounded corners=\railcorners] (162.404pt,-21pt) -- (170.404pt,-21pt);
+\draw [rounded corners=\railcorners] (63.0808pt,-21pt) -- (67.0808pt,-21pt) -- (67.0808pt,-44.6pt) -- (83.479pt,-44.6pt);
+\draw [rounded corners=\railcorners] (154.005pt,-44.6pt) -- (170.404pt,-44.6pt) -- (170.404pt,-21pt) -- (174.404pt,-21pt);
+\draw [rounded corners=\railcorners] (63.0808pt,-21pt) -- (67.0808pt,-21pt) -- (67.0808pt,-68.2pt) -- (86.5357pt,-68.2pt);
+\draw [rounded corners=\railcorners] (150.949pt,-68.2pt) -- (170.404pt,-68.2pt) -- (170.404pt,-21pt) -- (174.404pt,-21pt);
+\draw [rounded corners=\railcorners] (63.0808pt,-21pt) -- (67.0808pt,-21pt) -- (67.0808pt,-91.7999pt) -- (96.6045pt,-91.7999pt);
+\draw [rounded corners=\railcorners] (140.88pt,-91.7999pt) -- (170.404pt,-91.7999pt) -- (170.404pt,-21pt) -- (174.404pt,-21pt);
+\draw [rounded corners=\railcorners] (170.404pt,-21pt) -- (178.404pt,-21pt) -- (178.404pt,-115.4pt) -- (126.216pt,-115.4pt);
+\draw [rounded corners=\railcorners] (111.269pt,-115.4pt) -- (59.0808pt,-115.4pt) -- (59.0808pt,-21pt) -- (67.0808pt,-21pt);
+\draw [rounded corners=\railcorners] (51.0808pt,-21pt) -- (67.0808pt,-21pt);
+\draw [rounded corners=\railcorners] (170.404pt,-21pt) -- (186.404pt,-21pt);
+\draw [rounded corners=\railcorners] (216.29pt,-21pt) -- (224.29pt,-21pt);
+\end{tikzpicture}
+}
+
+
+\newsavebox{\manualSelectStmtBox}
+
+\savebox{\manualSelectStmtBox}{\begin{tikzpicture}[raildiagram]
+\node at (0pt,0pt)[anchor=west](name){\railprodname{manual select stmt\strut}};
+\coordinate (coord30) at (0pt,-21pt);
+\coordinate (coord31) at (4pt,-21pt);
+\coordinate (coord32) at (449.112pt,-70.2pt);
+\coordinate (coord33) at (453.112pt,-70.2pt);
+\node (node29) at (12pt,-21pt)[anchor=west,terminal] {\railtermname{SELECT\strut}};
+\ebnf@writenodesize{node29}
+\node (node30) at (87.0461pt,-33pt)[anchor=west,terminal] {\railtermname{DISTINCT\strut}};
+\ebnf@writenodesize{node30}
+\node (node31) at (175.567pt,-28.6pt)[anchor=west,nonterminal] {\shortstack{\railname{column\strut}\\[-3pt]\railname{list\strut}}\hspace*{1pt}};
+\ebnf@writenodesize{node31}
+\node (node32) at (222.16pt,-21pt)[anchor=west,terminal] {\railtermname{FROM\strut}};
+\ebnf@writenodesize{node32}
+\node (node33) at (278.702pt,-28.6pt)[anchor=west,nonterminal] {\shortstack{\railname{table\strut}\\[-3pt]\railname{ref\strut}}\hspace*{1pt}};
+\ebnf@writenodesize{node33}
+\node (node34) at (321.638pt,-33pt)[anchor=west,terminal] {\railtermname{WHERE\strut}};
+\ebnf@writenodesize{node34}
+\node (node35) at (388.522pt,-33pt)[anchor=west,nonterminal] {\railname{condition\strut}\hspace*{1pt}};
+\ebnf@writenodesize{node35}
+\node (node36) at (20pt,-82.2pt)[anchor=west,terminal] {\railtermname{ORDER\strut}};
+\ebnf@writenodesize{node36}
+\node (node37) at (84.3044pt,-82.2pt)[anchor=west,terminal] {\railtermname{BY\strut}};
+\ebnf@writenodesize{node37}
+\node (node38) at (121.067pt,-89.8pt)[anchor=west,nonterminal] {\shortstack{\railname{order\strut}\\[-3pt]\railname{list\strut}}\hspace*{1pt}};
+\ebnf@writenodesize{node38}
+\draw [rounded corners=\railcorners] (4pt,-21pt) -- (12pt,-21pt);
+\draw [rounded corners=\railcorners] (158.777pt,-70.2pt) -- (449.112pt,-70.2pt);
+\draw [rounded corners=\railcorners] (449.112pt,-70.2pt) -- (453.112pt,-70.2pt);
+\draw [rounded corners=\railcorners] (79.0461pt,-21pt) -- (167.567pt,-21pt);
+\draw [rounded corners=\railcorners] (75.0461pt,-21pt) -- (79.0461pt,-21pt) -- (79.0461pt,-33pt) -- (87.0461pt,-33pt);
+\draw [rounded corners=\railcorners] (159.567pt,-33pt) -- (167.567pt,-33pt) -- (167.567pt,-21pt) -- (171.567pt,-21pt);
+\draw [rounded corners=\railcorners] (71.0461pt,-21pt) -- (79.0461pt,-21pt);
+\draw [rounded corners=\railcorners] (167.567pt,-21pt) -- (175.567pt,-21pt);
+\draw [rounded corners=\railcorners] (214.16pt,-21pt) -- (222.16pt,-21pt);
+\draw [rounded corners=\railcorners] (270.702pt,-21pt) -- (278.702pt,-21pt);
+\draw [rounded corners=\railcorners] (380.522pt,-33pt) -- (388.522pt,-33pt);
+\draw [rounded corners=\railcorners] (313.638pt,-21pt) -- (445.112pt,-21pt);
+\draw [rounded corners=\railcorners] (309.638pt,-21pt) -- (313.638pt,-21pt) -- (313.638pt,-33pt) -- (321.638pt,-33pt);
+\draw [rounded corners=\railcorners] (437.112pt,-33pt) -- (445.112pt,-33pt) -- (445.112pt,-21pt) -- (449.112pt,-21pt);
+\draw [rounded corners=\railcorners] (305.638pt,-21pt) -- (313.638pt,-21pt);
+\draw [rounded corners=\railcorners] (445.112pt,-21pt) -- (453.112pt,-21pt) -- (453.112pt,-55.57pt) -- (4pt,-55.57pt) -- (4pt,-70.2pt) -- (12pt,-70.2pt);
+\draw [rounded corners=\railcorners] (76.3044pt,-82.2pt) -- (84.3044pt,-82.2pt);
+\draw [rounded corners=\railcorners] (113.067pt,-82.2pt) -- (121.067pt,-82.2pt);
+\draw [rounded corners=\railcorners] (12pt,-70.2pt) -- (158.777pt,-70.2pt);
+\draw [rounded corners=\railcorners] (8pt,-70.2pt) -- (12pt,-70.2pt) -- (12pt,-82.2pt) -- (20pt,-82.2pt);
+\draw [rounded corners=\railcorners] (150.777pt,-82.2pt) -- (158.777pt,-82.2pt) -- (158.777pt,-70.2pt) -- (162.777pt,-70.2pt);
+\end{tikzpicture}
+}
+
+\makeatother
