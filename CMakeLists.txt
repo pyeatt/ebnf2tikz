@@ -86,14 +86,31 @@ target_compile_options(ebnf2tikz PRIVATE -Wall -g)
 
 # --- LaTeX package extraction ---
 add_custom_command(
-  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.sty
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
   COMMAND latex ebnf2tikz.ins
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.sty
+    ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.dtx
           ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.ins
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX
   COMMENT "Extracting ebnf2tikz.sty from ebnf2tikz.dtx"
 )
-add_custom_target(sty DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.sty)
+add_custom_target(sty DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty)
+
+# --- LaTeX package documentation ---
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf
+  COMMAND pdflatex ebnf2tikz.dtx
+  COMMAND pdflatex ebnf2tikz.dtx
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.pdf
+    ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.dtx
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX
+  COMMENT "Building ebnf2tikz package documentation"
+)
+add_custom_target(sty-doc DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf)
 
 # --- Test targets ---
 add_custom_target(check
@@ -155,8 +172,8 @@ add_custom_target(realclean
   COMMAND bash -c "rm -f *.o parser.cc parser.hh location.hh lexer.cc lexer.hh annot_parser.cc annot_parser.hh annot_location.hh annot_lexer.cc annot_lexer.hh"
   # Unit test artifacts
   COMMAND bash -c "rm -f unit_tests/*.pdf unit_tests/*.aux unit_tests/*.log unit_tests/*.out unit_tests/*.toc unit_tests/*.synctex.gz unit_tests/bnfnodes.dat unit_tests/all_tests.tex unit_tests/all_input.ebnf unit_tests/testlist.tex"
-  # Top-level generated test files
-  COMMAND ${CMAKE_COMMAND} -E rm -f all_input.ebnf all_tests.tex
+  # Top-level generated files
+  COMMAND ${CMAKE_COMMAND} -E rm -f all_input.ebnf all_tests.tex ebnf2tikz.sty ebnf2tikz.pdf
   # Doxygen output
   COMMAND ${CMAKE_COMMAND} -E rm -rf documentation/html documentation/latex
   COMMAND ${CMAKE_COMMAND} -E rm -f documentation/ebnf2tikz.pdf documentation/index.html

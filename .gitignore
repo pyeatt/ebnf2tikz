@@ -49,6 +49,8 @@ LaTeX/tests/*-diagrams.tex
 LaTeX/tests/*.pdf
 
 # LaTeX package (generated from .dtx)
+ebnf2tikz.sty
+ebnf2tikz.pdf
 LaTeX/ebnf2tikz.sty
 LaTeX/ebnf2tikz.pdf
 
