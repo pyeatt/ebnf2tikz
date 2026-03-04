@@ -89,53 +89,57 @@ cmake .
 make
 \end{lstlisting}
 
-This produces the \prog{} executable in the current directory.  To
-verify the build:
+This produces the \prog{} executable, \texttt{ebnf2tikz.sty} (the
+\LaTeX{} package), and \texttt{ebnf2tikz.pdf} (package documentation)
+in the project root.  Additional targets:
 
 \begin{lstlisting}[language=bash]
 make check        # Run AST-dump regression tests
 make check-tikz   # Build PDF with all railroad diagrams
+make check-sty    # Run LaTeX package integration tests
+make sty          # Extract ebnf2tikz.sty from .dtx
+make sty-doc      # Build ebnf2tikz.pdf package documentation
+make doc          # Generate Doxygen API documentation
+make realclean    # Remove all build artifacts
 \end{lstlisting}
 
 %% ----------------------------------------------------------------
 \section{Quick Start}
 
 \begin{enumerate}
-\item Write an EBNF grammar file, for example \texttt{mygrammar.ebnf}:
-\begin{lstlisting}[language=ebnf]
+\item Create a \LaTeX{} document that loads the package and includes
+  an inline grammar:
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\documentclass{article}
+\usepackage{ebnf2tikz}
+\begin{document}
+
+\begin{ebnf}
 greeting = 'hello' , [ name ] , '!' ;
 name = identifier ;
+\end{ebnf}
+
+The greeting syntax is:
+\useproduction{greeting}
+
+\end{document}
 \end{lstlisting}
 
-\item Run \prog{} to produce initial TikZ output (with estimated node sizes):
+\item Compile three times with shell escape enabled:
 \begin{lstlisting}[language=bash]
-./ebnf2tikz mygrammar.ebnf mygrammar.tex
-\end{lstlisting}
-
-\item Include the output in a \LaTeX{} document with the required
-  preamble (see Section~\ref{sec:latex}) and compile:
-\begin{lstlisting}[language=bash]
-pdflatex mydocument
-\end{lstlisting}
-
-\item Run \prog{} again to use the real node sizes written by
-  \LaTeX{} to \texttt{bnfnodes.dat}:
-\begin{lstlisting}[language=bash]
-./ebnf2tikz mygrammar.ebnf mygrammar.tex
-\end{lstlisting}
-
-\item Compile \LaTeX{} again for the final output:
-\begin{lstlisting}[language=bash]
-pdflatex mydocument
+pdflatex -shell-escape mydocument
+pdflatex -shell-escape mydocument
+pdflatex -shell-escape mydocument
 \end{lstlisting}
 \end{enumerate}
 
 This multi-pass workflow is similar to the feedback loop required by
-Bib\TeX{} or \texttt{makeindex}.  On the first pass, \prog{} uses
+Bib\TeX{} or \texttt{makeindex}.  On the first pass, the \texttt{ebnf}
+environment writes the grammar to a file and \prog{} runs with
 estimated node dimensions.  \LaTeX{} then measures the actual rendered
-sizes of each node and writes them to \texttt{bnfnodes.dat} via the
-\verb|\writenodesize| command.  On the second pass, \prog{} reads
-these measurements and produces an accurate layout.
+sizes of each node and writes them to \texttt{bnfnodes.dat}.  On
+subsequent passes, \prog{} reads these measurements and produces an
+accurate layout.  See Section~\ref{sec:latex} for details.
 
 %% ----------------------------------------------------------------
 \section{Command-Line Options}
@@ -275,138 +279,114 @@ environment (from the \texttt{rotating} package) instead of a regular
 \section{\LaTeX{} Integration}
 \label{sec:latex}
 
-There is currently no \texttt{ebnf2tikz.sty} package file.  To use
-\prog{} output in your \LaTeX{} document, you need to define the
-required packages, lengths, TikZ styles, and the
-\verb|\writenodesize| command in your preamble.
-
-\subsection{Required Packages}
+The \texttt{ebnf2tikz} \LaTeX{} package provides all required TikZ
+styles, commands, lengths, and the multi-pass infrastructure.  Install
+\texttt{ebnf2tikz.sty} where \LaTeX{} can find it (e.g., in your
+document directory or your local \texttt{texmf} tree), then add:
 
 \begin{lstlisting}[language={[LaTeX]TeX}]
-\usepackage{tikz,pgf}
-\usetikzlibrary{positioning,shapes,matrix,chains,
-  scopes,fit,calc,shadings,intersections}
-\usepackage[nomessages]{fp}
-\usepackage{rotating}     % only if using sideways annotations
+\usepackage{ebnf2tikz}
 \end{lstlisting}
 
-\subsection{Font Commands}
-
-\begin{lstlisting}[language={[LaTeX]TeX}]
-\newcommand{\railname}[1]{\it #1}
-\newcommand{\railtermname}[1]{\bf #1}
-\end{lstlisting}
-
-The \verb|\railname| command formats nonterminal labels and
-\verb|\railtermname| formats terminal labels in the production title
-area.
-
-\subsection{Lengths}
-
-\begin{lstlisting}[language={[LaTeX]TeX}]
-\newlength\railcolsep
-\setlength\railcolsep{5pt}
-\newlength\railrowsep
-\setlength\railrowsep{\baselineskip}
-\newlength\railnodeheight
-\setlength\railnodeheight{14pt}
-\newlength\railcorners
-\setlength\railcorners{\railcolsep}
-\addtolength\railcorners{-1pt}
-\end{lstlisting}
+\subsection{Package Options}
 
 \begin{center}
-\begin{tabular}{@{}lp{8cm}@{}}
+\begin{tabular}{@{}lp{9cm}@{}}
 \toprule
-Length & Purpose \\
+Option & Effect \\
 \midrule
-\verb|\railcolsep|     & Horizontal gap between nodes. \\
-\verb|\railrowsep|     & Vertical gap between rows in multi-row diagrams. \\
-\verb|\railnodeheight| & Minimum height of terminal and nonterminal nodes. \\
-\verb|\railcorners|    & Rounding radius for rail corners. \\
+\texttt{figures}    & Pass \opt{-f} to \prog{}, wrapping each diagram in a \texttt{figure} environment. \\
+\texttt{nooptimize} & Pass \opt{-n} to \prog{}, disabling optimization and subsumption. \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\subsection{TikZ Styles}
+\subsection{Providing EBNF Input}
+
+There are two ways to provide EBNF grammars to the package.
+
+\paragraph{External files.}
+Register one or more \texttt{.ebnf} files in the preamble or body:
 
 \begin{lstlisting}[language={[LaTeX]TeX}]
-\tikzset{
-  nonterminal/.style={
-    draw, inner sep=2pt, rectangle,
-    minimum size=\railnodeheight, thick,
-    top color=white,
-    bottom color=red!50!black!20,
-    font=\itshape
-  },
-  terminal/.style={
-    draw, inner sep=2pt, rounded rectangle,
-    minimum size=\railnodeheight, thick,
-    top color=white, bottom color=black!20,
-    font=\ttfamily
-  },
-  every picture/.style={thick},
-  every node/.style={inner sep=0, outer sep=0, draw=none}
-}
+\ebnffile{mygrammar.ebnf}
 \end{lstlisting}
 
-The \texttt{nonterminal} style renders rectangular nodes with a
-gradient fill.  The \texttt{terminal} style renders rounded rectangles.
-You may customize these styles to suit your document's appearance.
-
-\subsection{The \texttt{\textbackslash writenodesize} Command}
-
-This command is essential for the multi-pass workflow.  It measures a
-TikZ node and writes its dimensions to \texttt{bnfnodes.dat}:
+\paragraph{Inline grammars.}
+Use the \texttt{ebnf} environment to write grammars directly in your
+\LaTeX{} source:
 
 \begin{lstlisting}[language={[LaTeX]TeX}]
-\newwrite\tempfile
-\immediate\openout\tempfile=bnfnodes.dat
-
-\makeatletter
-\newcommand{\writenodesize}[1]{%
-  \pgfpointdiff{\pgfpointanchor{#1}{west}}%
-               {\pgfpointanchor{#1}{east}}%
-  \FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
-  \pgfpointdiff{\pgfpointanchor{#1}{south}}%
-               {\pgfpointanchor{#1}{north}}%
-  \FP@eval\@temp@y{\pgfmath@tonumber{\pgf@y}}%
-  \immediate\write\tempfile{#1 \@temp@x,  \@temp@y}}
-\makeatother
+\begin{ebnf}
+greeting = 'hello' , [ name ] , '!' ;
+name = identifier ;
+\end{ebnf}
 \end{lstlisting}
 
-You must also write the \verb|\textwidth| value to \texttt{bnfnodes.dat}
-at the beginning of the document body so that \prog{} knows the
-available width for auto-wrapping:
+Content inside the \texttt{ebnf} environment is captured verbatim and
+written to \verb|\jobname-rail.ebnf|.
+
+\subsection{Placing Diagrams}
+
+Use \verb|\useproduction{name}| to place a specific production's
+railroad diagram:
 
 \begin{lstlisting}[language={[LaTeX]TeX}]
-\begin{document}
-\makeatletter
-\pgf@x=\textwidth%
-\FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
-\immediate\write\tempfile{textwidth \@temp@tw}
-\makeatother
+The greeting syntax is:
+\useproduction{greeting}
 \end{lstlisting}
 
-At the end of the document, close the file:
-\begin{lstlisting}[language={[LaTeX]TeX}]
-\immediate\closeout\tempfile
-\end{document}
+The name must match a production name from your EBNF input.  When
+using \opt{-f} (or the \texttt{figures} package option), diagrams are
+automatically wrapped in \texttt{figure} environments and do not
+require \verb|\useproduction|.
+
+\subsection{Multi-Pass Workflow}
+
+With \texttt{-shell-escape} enabled, the package runs \prog{}
+automatically at \verb|\begin{document}|.  The typical workflow is:
+
+\begin{lstlisting}[language=bash]
+pdflatex -shell-escape mydocument   # captures EBNF, runs ebnf2tikz
+pdflatex -shell-escape mydocument   # uses real node sizes from pass 1
+pdflatex -shell-escape mydocument   # final accurate layout
 \end{lstlisting}
 
-\subsection{Scratch Lengths}
+Without \texttt{-shell-escape}, run \prog{} manually between passes:
 
-The generated TikZ code uses three scratch lengths.  Declare them in
-your preamble or document body before including \prog{} output:
-
-\begin{lstlisting}[language={[LaTeX]TeX}]
-\newlength{\tmplength}
-\newlength{\tmplengthb}
-\newlength{\tmplengthc}
-\setlength{\tmplength}{12pt}
-\setlength{\tmplengthb}{12pt}
-\setlength{\tmplengthc}{12pt}
+\begin{lstlisting}[language=bash]
+pdflatex mydocument
+ebnf2tikz mydocument-rail.ebnf mydocument-rail.tex
+pdflatex mydocument
+ebnf2tikz mydocument-rail.ebnf mydocument-rail.tex
+pdflatex mydocument
 \end{lstlisting}
+
+\subsection{Customizable Lengths}
+
+The package defines several lengths with sensible defaults.  Override
+them with \verb|\setlength| after loading the package:
+
+\begin{center}
+\begin{tabular}{@{}llp{7cm}@{}}
+\toprule
+Length & Default & Purpose \\
+\midrule
+\verb|\railcolsep|     & 5pt            & Horizontal gap between nodes. \\
+\verb|\railrowsep|     & \verb|\baselineskip| & Vertical gap between rows in multi-row diagrams. \\
+\verb|\railnodeheight| & 14pt           & Minimum height of terminal and nonterminal nodes. \\
+\verb|\railcorners|    & 4pt            & Rounding radius for rail corners. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Customizable Styles}
+
+The package defines TikZ styles for \texttt{terminal} (rounded
+rectangles) and \texttt{nonterminal} (rectangles with gradient fill),
+as well as font commands \verb|\railname| (italics for nonterminals)
+and \verb|\railtermname| (bold for terminals).  Redefine these after
+loading the package to customize the appearance.
 
 %% ----------------------------------------------------------------
 \section{Auto-Wrap}

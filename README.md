@@ -43,8 +43,17 @@ The `subsume` annotation causes `choices` and `choice` to be inlined directly in
 
 ```bash
 cmake .
-make              # Build the ebnf2tikz binary
+make              # Build binary, extract .sty, build package docs, run check-tikz
+make check        # Run all 167 AST-dump regression tests
+make check-tikz   # Build PDF with all railroad diagrams (requires pdflatex)
+make check-sty    # Run LaTeX package integration tests
+make sty          # Extract ebnf2tikz.sty from .dtx
+make sty-doc      # Build ebnf2tikz.pdf package documentation
+make doc          # Generate Doxygen API documentation
+make realclean    # Remove all build artifacts
 ```
+
+Build products placed in the project root: `ebnf2tikz` (binary), `ebnf2tikz.sty` (LaTeX package), `ebnf2tikz.pdf` (package documentation).
 
 ## Usage
 
@@ -77,12 +86,15 @@ This is similar to the multi-pass workflow needed by BibTeX or makeindex.
 
 ### LaTeX Setup
 
-There is currently no `ebnf2tikz.sty` package file.  To use ebnf2tikz output in your LaTeX document, you need to define the required TikZ styles and commands in your preamble.  See `unit_tests/testdriver.tex` for a complete working example, which defines:
+The `ebnf2tikz` LaTeX package (`ebnf2tikz.sty`) provides all required TikZ styles, commands, and the multi-pass infrastructure.  Add to your preamble:
 
-- `\railname` and `\railtermname` font commands
-- `\railcolsep`, `\railrowsep`, `\railnodeheight`, `\railcorners` lengths
-- TikZ node styles for `terminal` and `nonterminal`
-- The `\writenodesize` command that writes node dimensions to `bnfnodes.dat`
+```latex
+\usepackage{ebnf2tikz}
+```
+
+The package provides `\ebnffile{file.ebnf}` to register EBNF source files, an `ebnf` environment for inline grammars, and `\useproduction{name}` to place individual diagrams.  With `-shell-escape`, the package runs ebnf2tikz automatically.  Package options: `figures` (wrap diagrams in figure environments), `nooptimize` (disable optimization).
+
+See the package documentation (`ebnf2tikz.pdf`) for full details.
 
 ### EBNF Input Format
 
@@ -136,6 +148,7 @@ Productions whose body exceeds the available `\textwidth` are automatically brok
 ```bash
 make check          # Run all 167 AST-dump regression tests
 make check-tikz     # Build PDF with all railroad diagrams (requires pdflatex)
+make check-sty      # Run LaTeX package integration tests
 ```
 
 Tests live in `unit_tests/`.  Each test is a `.ebnf` file with a matching `expected/<name>.expected` file containing the expected AST dump output.  Tests that require specific flags have a `flags/<name>.flags` file; the default is `-n -d` (unoptimized dump).
@@ -172,6 +185,8 @@ lexer.ll -> parser.yy -> AST -> resolver::subsume -> ast_optimizer::optimize
 ```
 
 ### Key Source Files
+
+Source files live in the `src/` directory.
 
 | File | Purpose |
 |------|---------|
