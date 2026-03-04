@@ -48,11 +48,14 @@ using namespace std;
 using namespace ast;
 
 /* Forward declarations */
+
+/** @brief Distinguishes Choice from Optional in shared choicelike functions. */
+enum ChoicelikeKind { CK_Choice, CK_Optional };
+
 static pair<float,float> computeSizeSequence(SequenceNode *n,
     ASTProductionLayout &layout, nodesizes *sizes);
-static pair<float,float> computeSizeChoice(ChoiceNode *n,
-    ASTProductionLayout &layout, nodesizes *sizes);
-static pair<float,float> computeSizeOptional(OptionalNode *n,
+static pair<float,float> computeSizeChoicelike(ASTNode *self,
+    ChoicelikeKind kind,
     ASTProductionLayout &layout, nodesizes *sizes);
 static pair<float,float> computeSizeLoop(LoopNode *n,
     ASTProductionLayout &layout, nodesizes *sizes);
@@ -63,24 +66,16 @@ static ASTNodeGeom layoutEpsilon(ASTNode *n, coordinate origin,
     ASTProductionLayout &layout);
 static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
     ASTProductionLayout &layout, nodesizes *sizes, int reversed);
-static ASTNodeGeom layoutChoicelike(ASTNode *n,
-    vector<ASTNode*> &alternatives, int isLoop,
-    coordinate origin,
-    ASTProductionLayout &layout, nodesizes *sizes);
-static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
+static ASTNodeGeom layoutChoicelike(ASTNode *self,
+    ChoicelikeKind kind, coordinate origin,
     ASTProductionLayout &layout, nodesizes *sizes);
 static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
     ASTProductionLayout &layout, nodesizes *sizes);
 
 static void connectSequence(SequenceNode *n,
     ASTProductionLayout &layout, nodesizes *sizes);
-static void connectChoicelike(ASTNode *self,
-    vector<ASTNode*> &alternatives,
-    ASTProductionLayout &layout, nodesizes *sizes,
-    int parentIsChoice);
-static void connectOptional(OptionalNode *n,
-    ASTProductionLayout &layout, nodesizes *sizes,
-    int parentIsChoice);
+static void connectChoicelike(ASTNode *self, ChoicelikeKind kind,
+    ASTProductionLayout &layout, nodesizes *sizes);
 static void connectLoop(LoopNode *n,
     ASTProductionLayout &layout, nodesizes *sizes);
 
@@ -260,7 +255,13 @@ pair<float,float> astComputeSize(ASTNode *n,
 {
   float w, h;
   ASTLeafInfo *li;
+  pair<float,float> result;
+  auto cacheIt = layout.sizeCache.find(n);
   auto it = layout.leafInfo.find(n);
+
+  /* Return cached result if available */
+  if(cacheIt != layout.sizeCache.end())
+    return cacheIt->second;
 
   switch(n->kind)
     {
@@ -275,9 +276,12 @@ pair<float,float> astComputeSize(ASTNode *n,
             w = sizes->colsep;
           if(h < sizes->rowsep)
             h = sizes->rowsep;
-          return make_pair(w, h);
+          result = make_pair(w, h);
         }
-      return make_pair(sizes->colsep, sizes->rowsep);
+      else
+        result = make_pair(sizes->colsep, sizes->rowsep);
+      layout.sizeCache[n] = result;
+      return result;
 
     case ASTKind::Epsilon:
       return make_pair(0.0f, 0.0f);
@@ -286,19 +290,25 @@ pair<float,float> astComputeSize(ASTNode *n,
       return make_pair(0.0f, 0.0f);
 
     case ASTKind::Sequence:
-      return computeSizeSequence(static_cast<SequenceNode*>(n),
-                                 layout, sizes);
+      result = computeSizeSequence(static_cast<SequenceNode*>(n),
+                                   layout, sizes);
+      layout.sizeCache[n] = result;
+      return result;
 
     case ASTKind::Choice:
-      return computeSizeChoice(static_cast<ChoiceNode*>(n),
-                               layout, sizes);
+      result = computeSizeChoicelike(n, CK_Choice, layout, sizes);
+      layout.sizeCache[n] = result;
+      return result;
 
     case ASTKind::Optional:
-      return computeSizeOptional(static_cast<OptionalNode*>(n),
-                                 layout, sizes);
+      result = computeSizeChoicelike(n, CK_Optional, layout, sizes);
+      layout.sizeCache[n] = result;
+      return result;
 
     case ASTKind::Loop:
-      return computeSizeLoop(static_cast<LoopNode*>(n), layout, sizes);
+      result = computeSizeLoop(static_cast<LoopNode*>(n), layout, sizes);
+      layout.sizeCache[n] = result;
+      return result;
     }
 
   return make_pair(0.0f, 0.0f);
@@ -373,99 +383,78 @@ static pair<float,float> computeSizeSequence(SequenceNode *n,
  * optional rail padding on each side for branching rails.
  */
 
-static pair<float,float> computeSizeChoicelike(
-    vector<ASTNode*> &alternatives, int alwaysRailPad,
+/**
+ * @brief Compute size for a Choice or Optional node.
+ *
+ * For CK_Choice, iterates over the alternatives vector.
+ * For CK_Optional, treats the layout as an implicit epsilon row
+ * followed by the single child.
+ */
+
+static pair<float,float> computeSizeChoicelike(ASTNode *self,
+    ChoicelikeKind kind,
     ASTProductionLayout &layout, nodesizes *sizes)
 {
   float maxWidth, totalHeight;
-  size_t i;
+  size_t i, numAlts;
   int widestIsRailed;
   ASTNode *child;
   pair<float,float> csz;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+
+  ch = NULL;
+  opt = NULL;
+  if(kind == CK_Choice)
+    {
+      ch = static_cast<ChoiceNode*>(self);
+      numAlts = ch->alternatives.size();
+    }
+  else
+    {
+      opt = static_cast<OptionalNode*>(self);
+      numAlts = 1;
+    }
 
   maxWidth = 0;
   totalHeight = 0;
   widestIsRailed = 0;
 
-  for(i = 0; i < alternatives.size(); i++)
+  /* For Optional: implicit epsilon row at top */
+  if(kind == CK_Optional)
+    totalHeight = sizes->rowsep;
+
+  for(i = 0; i < numAlts; i++)
     {
-      child = alternatives[i];
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
       csz = astComputeSize(child, layout, sizes);
       if(csz.first > maxWidth)
         {
           maxWidth = csz.first;
           widestIsRailed = (child->kind != ASTKind::Loop && isRailed(child));
         }
-      if(i > 0)
+      if(i > 0 || kind == CK_Optional)
         totalHeight += sizes->rowsep;
       totalHeight += csz.second;
       if(csz.second < sizes->rowsep)
         totalHeight += sizes->rowsep - csz.second;
     }
 
-  /* Add rail padding.  Loops always add their own.  Choices skip
-     when the widest child already includes rails (but not Loops,
-     whose feedback rails serve a different purpose). */
-  if(alwaysRailPad || !widestIsRailed)
-    maxWidth += 2.0f * sizes->colsep;
-
-  /* When any alternative has been auto-wrapped (contains newlines),
-     add extra rail padding so the choice branching rails don't
-     overlap the row wrap-around polylines. */
-  for(i = 0; i < alternatives.size(); i++)
-    if(containsNewline(alternatives[i]))
-      {
-        maxWidth += 2.0f * sizes->colsep;
-        i = alternatives.size() - 1;
-      }
-
-  return make_pair(maxWidth, totalHeight);
-}
-
-static pair<float,float> computeSizeChoice(ChoiceNode *n,
-    ASTProductionLayout &layout, nodesizes *sizes)
-{
-  return computeSizeChoicelike(n->alternatives, 0, layout, sizes);
-}
-
-/**
- * @brief Compute size for an OptionalNode (treated like Choice(epsilon, child)).
- */
-
-static pair<float,float> computeSizeOptional(OptionalNode *n,
-    ASTProductionLayout &layout, nodesizes *sizes)
-{
-  vector<ASTNode*> alts;
-  /* We don't have a real Epsilon node to put here; we'll use NULL
-     as a sentinel and handle it specially. */
-
-  /* Use the child's size plus a null first alternative.
-     Matches computeSizeChoicelike for choice(epsilon, child). */
-  float maxWidth, totalHeight, childW, childH;
-  pair<float,float> csz;
-  int widestIsRailed;
-
-  csz = astComputeSize(n->child, layout, sizes);
-  childW = csz.first;
-  childH = csz.second;
-
-  maxWidth = childW;
-  widestIsRailed = (n->child->kind != ASTKind::Loop && isRailed(n->child));
-
-  /* epsilon row + separator + child row (same as choicelike) */
-  totalHeight = sizes->rowsep;  /* minimum height for epsilon */
-  totalHeight += sizes->rowsep; /* separator */
-  totalHeight += childH;
-  if(childH < sizes->rowsep)
-    totalHeight += sizes->rowsep - childH;
-
   if(!widestIsRailed)
     maxWidth += 2.0f * sizes->colsep;
 
-  /* Extra padding when child is auto-wrapped, so Optional rails
-     don't overlap the row wrap-around polylines. */
-  if(containsNewline(n->child))
-    maxWidth += 2.0f * sizes->colsep;
+  /* When any alternative has been auto-wrapped (contains newlines),
+     add extra rail padding so the branching rails don't overlap
+     the row wrap-around polylines. */
+  for(i = 0; i < numAlts; i++)
+    {
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
+      if(containsNewline(child))
+        {
+          maxWidth += 2.0f * sizes->colsep;
+          i = numAlts - 1;
+        }
+    }
 
   return make_pair(maxWidth, totalHeight);
 }
@@ -555,6 +544,7 @@ ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
         g.height = 3.0f * sizes->rowsep;
         g.entry = origin;
         g.exit = origin;
+        g.reversed = 0;
         layout.geom[n] = g;
         return g;
       }
@@ -564,15 +554,10 @@ ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
                             layout, sizes, 0);
 
     case ASTKind::Choice:
-      {
-        ChoiceNode *ch = static_cast<ChoiceNode*>(n);
-        return layoutChoicelike(n, ch->alternatives, 0,
-                                origin, layout, sizes);
-      }
+      return layoutChoicelike(n, CK_Choice, origin, layout, sizes);
 
     case ASTKind::Optional:
-      return layoutOptional(static_cast<OptionalNode*>(n), origin,
-                            layout, sizes);
+      return layoutChoicelike(n, CK_Optional, origin, layout, sizes);
 
     case ASTKind::Loop:
       return layoutLoop(static_cast<LoopNode*>(n), origin,
@@ -587,6 +572,7 @@ ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
     g.height = 0;
     g.entry = origin;
     g.exit = origin;
+    g.reversed = 0;
     layout.geom[n] = g;
     return g;
   }
@@ -635,6 +621,7 @@ static ASTNodeGeom layoutLeaf(ASTNode *n, coordinate origin,
   g.height = h;
   g.entry = origin;
   g.exit = coordinate(origin.x + w, origin.y);
+  g.reversed = 0;
   layout.geom[n] = g;
   return g;
 }
@@ -653,6 +640,7 @@ static ASTNodeGeom layoutEpsilon(ASTNode *n, coordinate origin,
   g.height = 0;
   g.entry = origin;
   g.exit = origin;
+  g.reversed = 0;
   layout.geom[n] = g;
   return g;
 }
@@ -712,6 +700,7 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
           nlg.height = 3.0f * sizes->rowsep;
           nlg.entry = childOrigin;
           nlg.exit = childOrigin;
+          nlg.reversed = 0;
           layout.geom[child] = nlg;
         }
       else if(child->kind == ASTKind::Epsilon)
@@ -783,6 +772,7 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
         }
     }
 
+  g.reversed = reversed;
   layout.geom[n] = g;
   return g;
 }
@@ -794,26 +784,49 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
  * within the widest alternative's bounding box.
  */
 
-static ASTNodeGeom layoutChoicelike(ASTNode *n,
-    vector<ASTNode*> &alternatives, int isLoop,
-    coordinate origin,
+/**
+ * @brief Shared layout for Choice and Optional constructs.
+ *
+ * For CK_Choice, stacks alternatives vertically and centers them
+ * horizontally within the widest alternative's bounding box.
+ * For CK_Optional, adds an implicit epsilon row at the top followed
+ * by the single child.
+ */
+
+static ASTNodeGeom layoutChoicelike(ASTNode *self,
+    ChoicelikeKind kind, coordinate origin,
     ASTProductionLayout &layout, nodesizes *sizes)
 {
   ASTNodeGeom g, childg;
   float maxWidth, totalHeight, cursorY, childWidth, childHeight;
   float railPad;
-  size_t i;
+  size_t i, numAlts;
   int widestIsRailed;
   ASTNode *child;
   pair<float,float> csz;
   coordinate childOrigin;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+
+  ch = NULL;
+  opt = NULL;
+  if(kind == CK_Choice)
+    {
+      ch = static_cast<ChoiceNode*>(self);
+      numAlts = ch->alternatives.size();
+    }
+  else
+    {
+      opt = static_cast<OptionalNode*>(self);
+      numAlts = 1;
+    }
 
   /* first pass: find max width */
   maxWidth = 0;
   widestIsRailed = 0;
-  for(i = 0; i < alternatives.size(); i++)
+  for(i = 0; i < numAlts; i++)
     {
-      child = alternatives[i];
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
       csz = astComputeSize(child, layout, sizes);
       if(csz.first > maxWidth)
         {
@@ -822,33 +835,43 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
         }
     }
 
-  if(isLoop || !widestIsRailed)
+  if(!widestIsRailed)
     railPad = sizes->colsep;
   else
     railPad = 0;
 
   /* Extra padding when any alternative is auto-wrapped */
-  for(i = 0; i < alternatives.size(); i++)
-    if(containsNewline(alternatives[i]))
-      {
-        railPad += sizes->colsep;
-        i = alternatives.size() - 1;
-      }
+  for(i = 0; i < numAlts; i++)
+    {
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
+      if(containsNewline(child))
+        {
+          railPad += sizes->colsep;
+          i = numAlts - 1;
+        }
+    }
 
   /* second pass: place children vertically */
   cursorY = origin.y;
   totalHeight = 0;
 
-  for(i = 0; i < alternatives.size(); i++)
+  /* For Optional: implicit epsilon row at top */
+  if(kind == CK_Optional)
     {
-      child = alternatives[i];
+      totalHeight = sizes->rowsep;
+      cursorY -= sizes->rowsep;
+    }
+
+  for(i = 0; i < numAlts; i++)
+    {
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
       csz = astComputeSize(child, layout, sizes);
       childWidth = csz.first;
       childHeight = csz.second;
       if(childHeight < sizes->rowsep)
         childHeight = sizes->rowsep;
 
-      if(i > 0)
+      if(i > 0 || kind == CK_Optional)
         {
           cursorY -= sizes->rowsep;
           totalHeight += sizes->rowsep;
@@ -867,13 +890,20 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
   g.width = maxWidth + 2.0f * railPad;
   g.height = totalHeight;
 
-  if(alternatives.size() > 0 &&
-     layout.geom.find(alternatives[0]) != layout.geom.end())
+  if(kind == CK_Optional)
+    {
+      /* entry and exit at the epsilon (top) level */
+      g.entry = coordinate(origin.x, origin.y);
+      g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
+                           origin.y);
+    }
+  else if(numAlts > 0 &&
+          layout.geom.find(ch->alternatives[0]) != layout.geom.end())
     {
       g.entry = coordinate(origin.x,
-                            layout.geom[alternatives[0]].entry.y);
+                            layout.geom[ch->alternatives[0]].entry.y);
       g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
-                           layout.geom[alternatives[0]].exit.y);
+                           layout.geom[ch->alternatives[0]].exit.y);
     }
   else
     {
@@ -882,69 +912,8 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
                            origin.y);
     }
 
-  layout.geom[n] = g;
-  return g;
-}
-
-/**
- * @brief Layout an OptionalNode (treated as choice(epsilon, child) with rails).
- */
-
-static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
-    ASTProductionLayout &layout, nodesizes *sizes)
-{
-  ASTNodeGeom g, childg;
-  float maxWidth, totalHeight, cursorY, childWidth, childHeight;
-  float railPad;
-  int widestIsRailed;
-  pair<float,float> csz;
-  coordinate childOrigin;
-
-  csz = astComputeSize(n->child, layout, sizes);
-  childWidth = csz.first;
-  childHeight = csz.second;
-  if(childHeight < sizes->rowsep)
-    childHeight = sizes->rowsep;
-
-  maxWidth = childWidth;
-  widestIsRailed = (n->child->kind != ASTKind::Loop && isRailed(n->child));
-
-  if(!widestIsRailed)
-    railPad = sizes->colsep;
-  else
-    railPad = 0;
-
-  /* Extra padding when child is auto-wrapped */
-  if(containsNewline(n->child))
-    railPad += sizes->colsep;
-
-  /* Place epsilon (first alternative) at the top.
-     Matches layoutChoicelike for choice(epsilon, child). */
-  cursorY = origin.y;
-  totalHeight = sizes->rowsep; /* minimum height for epsilon path */
-
-  /* Past epsilon row, then separator gap */
-  cursorY -= sizes->rowsep;
-  cursorY -= sizes->rowsep;
-  totalHeight += sizes->rowsep; /* separator */
-
-  childOrigin = coordinate(origin.x + railPad +
-                           (maxWidth - childWidth) / 2.0f,
-                           cursorY);
-  childg = astLayoutNode(n->child, childOrigin, layout, sizes);
-
-  totalHeight += childHeight;
-
-  g.origin = origin;
-  g.width = maxWidth + 2.0f * railPad;
-  g.height = totalHeight;
-
-  /* entry and exit at the epsilon (top) level */
-  g.entry = coordinate(origin.x, origin.y);
-  g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
-                       origin.y);
-
-  layout.geom[n] = g;
+  g.reversed = 0;
+  layout.geom[self] = g;
   return g;
 }
 
@@ -1071,6 +1040,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
       g.exit = coordinate(midX, origin.y);
     }
 
+  g.reversed = 0;
   layout.geom[n] = g;
   return g;
 }
@@ -1089,15 +1059,11 @@ void astComputeConnections(ASTNode *n,
       return;
 
     case ASTKind::Choice:
-      {
-        ChoiceNode *ch = static_cast<ChoiceNode*>(n);
-        connectChoicelike(n, ch->alternatives, layout, sizes, 0);
-        return;
-      }
+      connectChoicelike(n, CK_Choice, layout, sizes);
+      return;
 
     case ASTKind::Optional:
-      connectOptional(static_cast<OptionalNode*>(n),
-                      layout, sizes, 0);
+      connectChoicelike(n, CK_Optional, layout, sizes);
       return;
 
     case ASTKind::Loop:
@@ -1134,35 +1100,10 @@ static void connectSequence(SequenceNode *n,
   prevContent = NULL;
   rowMaxBelow = 0;
 
-  /* Detect if the sequence was laid out reversed (e.g. loop repeat)
-     by checking if the first content child is to the right of the second */
+  /* Read the reversed flag stored during layout */
   reversed = 0;
-  {
-    ASTNode *first, *second;
-    first = NULL;
-    second = NULL;
-    for(i = 0; i < nc; i++)
-      {
-        if(n->children[i]->kind != ASTKind::Newline &&
-           n->children[i]->kind != ASTKind::Epsilon)
-          {
-            if(first == NULL)
-              first = n->children[i];
-            else if(second == NULL)
-              {
-                second = n->children[i];
-                i = nc - 1;
-              }
-          }
-      }
-    if(first != NULL && second != NULL &&
-       layout.geom.find(first) != layout.geom.end() &&
-       layout.geom.find(second) != layout.geom.end())
-      {
-        if(layout.geom[first].entry.x > layout.geom[second].entry.x)
-          reversed = 1;
-      }
-  }
+  if(layout.geom.find((ASTNode*)n) != layout.geom.end())
+    reversed = layout.geom[(ASTNode*)n].reversed;
 
   for(i = 0; i < nc; i++)
     {
@@ -1267,64 +1208,103 @@ static void connectSequence(SequenceNode *n,
  * in Choice, Optional, and Loop nodes.
  */
 
-static void connectChoicelike(ASTNode *self,
-    vector<ASTNode*> &alternatives,
-    ASTProductionLayout &layout, nodesizes *sizes,
-    int parentIsChoice)
-{
-  size_t i;
-  ASTNode *child;
-  ASTNodeGeom choiceGeom, firstGeom, childGeom;
-  ASTPolyline pl;
-  float railX, exitRailX;
+/**
+ * @brief Generate connections for a Choice or Optional node.
+ *
+ * For CK_Choice, connects the first alternative with straight horizontal
+ * entry/exit and routes rail connections for remaining alternatives.
+ * For CK_Optional, draws a straight epsilon bypass and routes the
+ * child through rail connections.
+ */
 
-  if(alternatives.size() < 1)
+static void connectChoicelike(ASTNode *self, ChoicelikeKind kind,
+    ASTProductionLayout &layout, nodesizes *sizes)
+{
+  size_t i, numAlts;
+  ASTNode *child;
+  ASTNodeGeom selfGeom, firstGeom, childGeom;
+  ASTPolyline pl;
+  float railX, exitRailX, halfCol;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+
+  ch = NULL;
+  opt = NULL;
+  if(kind == CK_Choice)
+    {
+      ch = static_cast<ChoiceNode*>(self);
+      numAlts = ch->alternatives.size();
+    }
+  else
+    {
+      opt = static_cast<OptionalNode*>(self);
+      numAlts = 1;
+    }
+
+  if(numAlts < 1)
     return;
   if(layout.geom.find(self) == layout.geom.end())
     return;
 
-  choiceGeom = layout.geom[self];
+  selfGeom = layout.geom[self];
 
   /* recurse into children */
-  for(i = 0; i < alternatives.size(); i++)
-    astComputeConnections(alternatives[i], layout, sizes);
-
-  if(layout.geom.find(alternatives[0]) == layout.geom.end())
-    return;
-  firstGeom = layout.geom[alternatives[0]];
-
-  railX = choiceGeom.origin.x;
-  exitRailX = choiceGeom.origin.x + choiceGeom.width;
-
-  /* first child: straight horizontal entry/exit */
-  pl.points.clear();
-  pl.points.push_back(coordinate(railX, firstGeom.entry.y));
-  pl.points.push_back(firstGeom.entry);
-  addPolyline(layout.connections, pl);
-
-  pl.points.clear();
-  pl.points.push_back(firstGeom.exit);
-  pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
-  addPolyline(layout.connections, pl);
-
-  /* remaining children: rail connections */
-  for(i = 1; i < alternatives.size(); i++)
+  for(i = 0; i < numAlts; i++)
     {
-      child = alternatives[i];
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
+      astComputeConnections(child, layout, sizes);
+    }
+
+  railX = selfGeom.origin.x;
+  exitRailX = selfGeom.origin.x + selfGeom.width;
+
+  /* First alternative connections */
+  if(kind == CK_Choice)
+    {
+      /* First child: straight horizontal entry/exit */
+      if(layout.geom.find(ch->alternatives[0]) == layout.geom.end())
+        return;
+      firstGeom = layout.geom[ch->alternatives[0]];
+
+      pl.points.clear();
+      pl.points.push_back(coordinate(railX, firstGeom.entry.y));
+      pl.points.push_back(firstGeom.entry);
+      addPolyline(layout.connections, pl);
+
+      pl.points.clear();
+      pl.points.push_back(firstGeom.exit);
+      pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
+      addPolyline(layout.connections, pl);
+    }
+  else
+    {
+      /* Optional: epsilon path (straight through at top) */
+      pl.points.clear();
+      pl.points.push_back(coordinate(railX, selfGeom.entry.y));
+      pl.points.push_back(coordinate(exitRailX, selfGeom.exit.y));
+      addPolyline(layout.connections, pl);
+    }
+
+  /* Remaining alternatives: rail connections.
+     For Choice, start at index 1 (first child handled above).
+     For Optional, start at index 0 (the child is the "second" alt).
+     Reference Y for rail alignment is selfGeom.entry/exit. */
+  for(i = (kind == CK_Choice) ? 1 : 0; i < numAlts; i++)
+    {
+      child = (kind == CK_Choice) ? ch->alternatives[i] : opt->child;
       if(layout.geom.find(child) == layout.geom.end())
         return;
       childGeom = layout.geom[child];
+      halfCol = 0.5f * sizes->colsep;
 
       if(childGeom.entry.x == railX)
         {
           /* child's entry aligns with rail (nested railed node) */
-          float halfCol = 0.5f * sizes->colsep;
-
           pl.points.clear();
           pl.points.push_back(
-              coordinate(railX - halfCol, firstGeom.entry.y));
+              coordinate(railX - halfCol, selfGeom.entry.y));
           pl.points.push_back(
-              coordinate(railX, firstGeom.entry.y));
+              coordinate(railX, selfGeom.entry.y));
           pl.points.push_back(
               coordinate(railX, childGeom.entry.y));
           pl.points.push_back(
@@ -1337,41 +1317,19 @@ static void connectChoicelike(ASTNode *self,
           pl.points.push_back(
               coordinate(exitRailX, childGeom.exit.y));
           pl.points.push_back(
-              coordinate(exitRailX, firstGeom.exit.y));
+              coordinate(exitRailX, selfGeom.exit.y));
           pl.points.push_back(
-              coordinate(exitRailX + halfCol, firstGeom.exit.y));
-          addPolyline(layout.connections, pl);
-        }
-      else if(parentIsChoice)
-        {
-          /* 3-point: parent handles outer extension */
-          pl.points.clear();
-          pl.points.push_back(
-              coordinate(railX, firstGeom.entry.y));
-          pl.points.push_back(
-              coordinate(railX, childGeom.entry.y));
-          pl.points.push_back(childGeom.entry);
-          addPolyline(layout.connections, pl);
-
-          pl.points.clear();
-          pl.points.push_back(childGeom.exit);
-          pl.points.push_back(
-              coordinate(exitRailX, childGeom.exit.y));
-          pl.points.push_back(
-              coordinate(exitRailX, firstGeom.exit.y));
+              coordinate(exitRailX + halfCol, selfGeom.exit.y));
           addPolyline(layout.connections, pl);
         }
       else
         {
           /* 4-point: extend past rail for inward curve */
-          float halfCol = 0.5f * sizes->colsep;
-
           pl.points.clear();
           pl.points.push_back(
-              coordinate(railX - halfCol,
-                         firstGeom.entry.y));
+              coordinate(railX - halfCol, selfGeom.entry.y));
           pl.points.push_back(
-              coordinate(railX, firstGeom.entry.y));
+              coordinate(railX, selfGeom.entry.y));
           pl.points.push_back(
               coordinate(railX, childGeom.entry.y));
           pl.points.push_back(childGeom.entry);
@@ -1382,120 +1340,11 @@ static void connectChoicelike(ASTNode *self,
           pl.points.push_back(
               coordinate(exitRailX, childGeom.exit.y));
           pl.points.push_back(
-              coordinate(exitRailX, firstGeom.exit.y));
+              coordinate(exitRailX, selfGeom.exit.y));
           pl.points.push_back(
-              coordinate(exitRailX + halfCol,
-                         firstGeom.exit.y));
+              coordinate(exitRailX + halfCol, selfGeom.exit.y));
           addPolyline(layout.connections, pl);
         }
-    }
-}
-
-/**
- * @brief Generate connections for an OptionalNode.
- *
- * Routes the bypass (epsilon) path and the child path with
- * appropriate rail connections.
- */
-
-static void connectOptional(OptionalNode *n,
-    ASTProductionLayout &layout, nodesizes *sizes,
-    int parentIsChoice)
-{
-  ASTNodeGeom optGeom, childGeom;
-  ASTPolyline pl;
-  float railX, exitRailX;
-
-  if(layout.geom.find((ASTNode*)n) == layout.geom.end())
-    return;
-
-  optGeom = layout.geom[(ASTNode*)n];
-
-  /* recurse into child */
-  astComputeConnections(n->child, layout, sizes);
-
-  if(layout.geom.find(n->child) == layout.geom.end())
-    return;
-  childGeom = layout.geom[n->child];
-
-  railX = optGeom.origin.x;
-  exitRailX = optGeom.origin.x + optGeom.width;
-
-  /* epsilon path (first alternative): straight through at top */
-  pl.points.clear();
-  pl.points.push_back(coordinate(railX, optGeom.entry.y));
-  pl.points.push_back(coordinate(exitRailX, optGeom.exit.y));
-  addPolyline(layout.connections, pl);
-
-  /* child path (second alternative): through the rails */
-  if(childGeom.entry.x == railX)
-    {
-      float halfCol = 0.5f * sizes->colsep;
-
-      pl.points.clear();
-      pl.points.push_back(
-          coordinate(railX - halfCol, optGeom.entry.y));
-      pl.points.push_back(
-          coordinate(railX, optGeom.entry.y));
-      pl.points.push_back(
-          coordinate(railX, childGeom.entry.y));
-      pl.points.push_back(
-          coordinate(railX + halfCol, childGeom.entry.y));
-      addPolyline(layout.connections, pl);
-
-      pl.points.clear();
-      pl.points.push_back(
-          coordinate(exitRailX - halfCol, childGeom.exit.y));
-      pl.points.push_back(
-          coordinate(exitRailX, childGeom.exit.y));
-      pl.points.push_back(
-          coordinate(exitRailX, optGeom.exit.y));
-      pl.points.push_back(
-          coordinate(exitRailX + halfCol, optGeom.exit.y));
-      addPolyline(layout.connections, pl);
-    }
-  else if(parentIsChoice)
-    {
-      pl.points.clear();
-      pl.points.push_back(
-          coordinate(railX, optGeom.entry.y));
-      pl.points.push_back(
-          coordinate(railX, childGeom.entry.y));
-      pl.points.push_back(childGeom.entry);
-      addPolyline(layout.connections, pl);
-
-      pl.points.clear();
-      pl.points.push_back(childGeom.exit);
-      pl.points.push_back(
-          coordinate(exitRailX, childGeom.exit.y));
-      pl.points.push_back(
-          coordinate(exitRailX, optGeom.exit.y));
-      addPolyline(layout.connections, pl);
-    }
-  else
-    {
-      /* 4-point: extend past rail for inward curve */
-      float halfCol = 0.5f * sizes->colsep;
-
-      pl.points.clear();
-      pl.points.push_back(
-          coordinate(railX - halfCol, optGeom.entry.y));
-      pl.points.push_back(
-          coordinate(railX, optGeom.entry.y));
-      pl.points.push_back(
-          coordinate(railX, childGeom.entry.y));
-      pl.points.push_back(childGeom.entry);
-      addPolyline(layout.connections, pl);
-
-      pl.points.clear();
-      pl.points.push_back(childGeom.exit);
-      pl.points.push_back(
-          coordinate(exitRailX, childGeom.exit.y));
-      pl.points.push_back(
-          coordinate(exitRailX, optGeom.exit.y));
-      pl.points.push_back(
-          coordinate(exitRailX + halfCol, optGeom.exit.y));
-      addPolyline(layout.connections, pl);
     }
 }
 
@@ -2102,4 +1951,210 @@ void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
           ctx.nextCoord();  /* end2 */
         }
     }
+}
+
+/* ------------------------------------------------------------------ */
+/** @name Post-layout wrapping helpers */
+/** @{ */
+
+/**
+ * @brief Check if a leaf node's display text contains wrappable spaces.
+ * @param li The leaf info to check.
+ * @return 1 if the node is a nonterminal with spaces/underscores, 0 otherwise.
+ */
+static int hasWrappableSpaces(ASTLeafInfo &li)
+{
+  string display;
+
+  if(li.isTerminal)
+    return 0;
+
+  display = li.rawText;
+  replace(display.begin(), display.end(), '_', ' ');
+  if(display.find(' ') != string::npos)
+    return 1;
+  return 0;
+}
+
+/**
+ * @brief Collect nonterminal nodes that can be shortstack-wrapped.
+ * @param n      Root of subtree to scan.
+ * @param info   Leaf information map.
+ * @param result Vector to append wrappable nodes to.
+ */
+static void collectWrappableNodes(ASTNode *n,
+    map<ASTNode*, ASTLeafInfo> &info,
+    vector<ASTNode*> &result)
+{
+  SequenceNode *seq;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+  LoopNode *loop;
+  size_t i;
+  auto it = info.find(n);
+
+  switch(n->kind)
+    {
+    case ASTKind::Nonterminal:
+      if(it != info.end() && !it->second.wrapped &&
+         hasWrappableSpaces(it->second))
+        result.push_back(n);
+      return;
+
+    case ASTKind::Terminal:
+    case ASTKind::Epsilon:
+    case ASTKind::Newline:
+      return;
+
+    case ASTKind::Sequence:
+      seq = static_cast<SequenceNode*>(n);
+      for(i = 0; i < seq->children.size(); i++)
+        collectWrappableNodes(seq->children[i], info, result);
+      return;
+
+    case ASTKind::Choice:
+      ch = static_cast<ChoiceNode*>(n);
+      for(i = 0; i < ch->alternatives.size(); i++)
+        collectWrappableNodes(ch->alternatives[i], info, result);
+      return;
+
+    case ASTKind::Optional:
+      opt = static_cast<OptionalNode*>(n);
+      collectWrappableNodes(opt->child, info, result);
+      return;
+
+    case ASTKind::Loop:
+      loop = static_cast<LoopNode*>(n);
+      if(loop->body != NULL)
+        collectWrappableNodes(loop->body, info, result);
+      for(i = 0; i < loop->repeats.size(); i++)
+        collectWrappableNodes(loop->repeats[i], info, result);
+      return;
+    }
+}
+
+/**
+ * @brief Estimate extra width from unwrapped tall nonterminals.
+ *
+ * For nonterminals that are taller than expected (indicating LaTeX
+ * has already wrapped them), estimates how much width would be saved
+ * by shortstack-wrapping them.
+ *
+ * @param n     Root of subtree to scan.
+ * @param info  Leaf information map.
+ * @param sizes Node size cache.
+ * @return Estimated extra width in points.
+ */
+static float estimateUnwrappedExtra(ASTNode *n,
+    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+{
+  SequenceNode *seq;
+  ChoiceNode *ch;
+  OptionalNode *opt;
+  LoopNode *loop;
+  size_t i;
+  float extra;
+  int numLines;
+  auto it = info.find(n);
+
+  switch(n->kind)
+    {
+    case ASTKind::Nonterminal:
+      if(it != info.end() && it->second.height > 1.5f * sizes->minsize &&
+         hasWrappableSpaces(it->second))
+        {
+          numLines = (int)(it->second.height / sizes->minsize + 0.5f);
+          if(numLines < 2)
+            numLines = 2;
+          return (float)(numLines - 1) * it->second.width;
+        }
+      return 0;
+
+    case ASTKind::Terminal:
+    case ASTKind::Epsilon:
+    case ASTKind::Newline:
+      return 0;
+
+    case ASTKind::Sequence:
+      seq = static_cast<SequenceNode*>(n);
+      extra = 0;
+      for(i = 0; i < seq->children.size(); i++)
+        extra += estimateUnwrappedExtra(seq->children[i], info, sizes);
+      return extra;
+
+    case ASTKind::Choice:
+      ch = static_cast<ChoiceNode*>(n);
+      extra = 0;
+      for(i = 0; i < ch->alternatives.size(); i++)
+        extra += estimateUnwrappedExtra(ch->alternatives[i], info, sizes);
+      return extra;
+
+    case ASTKind::Optional:
+      opt = static_cast<OptionalNode*>(n);
+      return estimateUnwrappedExtra(opt->child, info, sizes);
+
+    case ASTKind::Loop:
+      loop = static_cast<LoopNode*>(n);
+      extra = 0;
+      if(loop->body != NULL)
+        extra += estimateUnwrappedExtra(loop->body, info, sizes);
+      for(i = 0; i < loop->repeats.size(); i++)
+        extra += estimateUnwrappedExtra(loop->repeats[i], info, sizes);
+      return extra;
+    }
+
+  return 0;
+}
+
+/** @} */
+
+/** @brief Apply post-layout shortstack wrapping. @see astPostLayoutWrap() in ast_layout.hh */
+
+void astPostLayoutWrap(ASTProductionLayout &layout, ASTNode *body,
+                       int needsWrap, nodesizes *sizes,
+                       const string &prodName)
+{
+  float bodyWidth, extraWidth;
+  size_t j;
+  vector<ASTNode*> wrappable;
+  auto git = layout.geom.find(body);
+
+  if(sizes->textwidth <= 0)
+    return;
+
+  if(git != layout.geom.end())
+    bodyWidth = git->second.width;
+  else
+    bodyWidth = 0;
+
+  if(bodyWidth > sizes->textwidth)
+    needsWrap = 1;
+
+  if(!needsWrap)
+    {
+      extraWidth = estimateUnwrappedExtra(body, layout.leafInfo, sizes);
+      if(extraWidth > 0 && bodyWidth + extraWidth > sizes->textwidth)
+        needsWrap = 1;
+    }
+
+  if(needsWrap)
+    {
+      collectWrappableNodes(body, layout.leafInfo, wrappable);
+      for(j = 0; j < wrappable.size(); j++)
+        {
+          auto it = layout.leafInfo.find(wrappable[j]);
+          if(it != layout.leafInfo.end())
+            it->second.wrapped = 1;
+        }
+    }
+
+  /* Warn if still overwide */
+  if(bodyWidth > sizes->textwidth)
+    cerr << "Warning: production '"
+         << prodName
+         << "' width (" << bodyWidth
+         << "pt) exceeds \\textwidth ("
+         << sizes->textwidth << "pt) by "
+         << bodyWidth - sizes->textwidth << "pt"
+         << endl;
 }
