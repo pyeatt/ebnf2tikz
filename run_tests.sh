@@ -25,7 +25,7 @@ for ebnf in *.ebnf; do
         if [ -f "$flagsfile" ]; then
             FLAGS=$(cat "$flagsfile")
         else
-            FLAGS="-d"
+            FLAGS="-n -d"
         fi
         actual=$("$EBNF2TIKZ" $FLAGS "$ebnf" /dev/null 2>/dev/null)
         if echo "$actual" | diff -u "$expected" - > /dev/null 2>&1; then

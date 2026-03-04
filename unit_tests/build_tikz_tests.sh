@@ -13,6 +13,16 @@ if [ ! -x "$EBNF2TIKZ" ]; then
     exit 1
 fi
 
+# Locate the LaTeX package directory so pdflatex can find ebnf2tikz.sty
+SCRIPTDIR="$(cd "$(dirname "$0")" && pwd)"
+STYDIR="$(cd "$SCRIPTDIR/../LaTeX" && pwd)"
+if [ ! -f "$STYDIR/ebnf2tikz.sty" ]; then
+    echo "Error: ebnf2tikz.sty not found in $STYDIR"
+    echo "  Run 'latex ebnf2tikz.ins' in the LaTeX/ directory first"
+    exit 1
+fi
+export TEXINPUTS="$STYDIR:$TEXINPUTS"
+
 # Clean generated files from previous runs
 rm -f all_tests.tex all_input.ebnf testlist.tex bnfnodes.dat
 rm -f testdriver.aux testdriver.log testdriver.pdf
@@ -42,7 +52,7 @@ for iter in 1 2 3; do
     echo "=== Iteration $iter ==="
 
     # Run ebnf2tikz once on the concatenated input
-    if ! "$EBNF2TIKZ" -O all_input.ebnf all_tests.tex 2>/dev/null; then
+    if ! "$EBNF2TIKZ" all_input.ebnf all_tests.tex 2>/dev/null; then
         echo "  WARN: ebnf2tikz failed"
     fi
 
