@@ -122,7 +122,7 @@ string ASTTikzWriter::texName(ASTLeafInfo &li)
 }
 
 
-void ASTTikzWriter::emitLeafNode(ASTNode *n, ASTLeafInfo &li,
+void ASTTikzWriter::emitLeafNode(ASTNode *, ASTLeafInfo &li,
                                   ASTNodeGeom &geom)
 {
   if(li.style == "null")
@@ -203,16 +203,29 @@ void ASTTikzWriter::emitPolyline(const ASTPolyline &pl)
 
 
 void ASTTikzWriter::writeProduction(ASTProduction *prod,
-                                     ASTProductionLayout &layout)
+                                     ASTProductionLayout &layout,
+                                     bool figures)
 {
   string boxname;
+  string caption;
+  string label;
+  bool sideways;
   unsigned int i;
 
   boxname = camelcase(prod->name);
+  sideways = false;
+
+  /* extract annotation values */
+  if(prod->annotations != nullptr)
+    {
+      caption = (*prod->annotations)["caption"];
+      label = (*prod->annotations)["label"];
+      sideways = (*prod->annotations)["sideways"] != "";
+    }
 
   outs << "\n\\newsavebox{\\" << boxname << "Box}\n\n";
   outs << "\\savebox{\\" << boxname << "Box}{";
-  outs << "\\begin{tikzpicture}\n";
+  outs << "\\begin{tikzpicture}[raildiagram]\n";
 
   /* production name label — replace underscores with spaces */
   {
@@ -238,12 +251,31 @@ void ASTTikzWriter::writeProduction(ASTProduction *prod,
 
   outs << "\\end{tikzpicture}\n";
   outs << "}\n\n";
+
+  /* when -f is active, emit a figure environment that uses the savebox */
+  if(figures)
+    {
+      if(sideways)
+        outs << "\\begin{sidewaysfigure}[htbp]\n";
+      else
+        outs << "\\begin{figure}[htbp]\n";
+      outs << "\\centering\n";
+      outs << "\\usebox{\\" << boxname << "Box}\n";
+      if(!caption.empty())
+        outs << "\\caption{" << caption << "}\n";
+      if(!label.empty())
+        outs << "\\label{" << label << "}\n";
+      if(sideways)
+        outs << "\\end{sidewaysfigure}\n";
+      else
+        outs << "\\end{figure}\n";
+    }
 }
 
 /** @brief Layout and write TikZ for all productions. @see astPlaceGrammar() in ast_tikzwriter.hh */
 
 void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
-                     nodesizes *sizes)
+                     nodesizes *sizes, bool figures)
 {
   ASTLayoutContext ctx(sizes);
   ASTTikzWriter writer(outs, sizes);
@@ -271,7 +303,7 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
           astPostLayoutWrap(layout, prod->body, prod->needsWrap,
                             sizes, prod->name);
 
-          writer.writeProduction(prod, layout);
+          writer.writeProduction(prod, layout, figures);
         }
     }
 

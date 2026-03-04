@@ -6,6 +6,8 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{ebnf2tikz}
+\ebnffile{manual-examples.ebnf}
 
 \hypersetup{
   colorlinks=true,
@@ -256,13 +258,31 @@ expression.
 \subsection{\texttt{caption}}
 
 \begin{lstlisting}[language=ebnf]
-<<-- caption A descriptive caption -->>
+<<-- caption "A descriptive caption" -->>
 production_name = body ;
 \end{lstlisting}
 
 Sets the \LaTeX{} figure caption for this production's diagram.
 Requires the \opt{-f} flag to have any effect, since captions only
 apply to \texttt{figure} environments.
+
+\subsection{\texttt{label}}
+
+\begin{lstlisting}[language=ebnf]
+<<-- label "fig:my-production" -->>
+production_name = body ;
+\end{lstlisting}
+
+Sets the \LaTeX{} \verb|\label| for this production's figure, allowing
+cross-references with \verb|\ref{fig:my-production}|.  Requires the
+\opt{-f} flag.  The \verb|\label| is always emitted after \verb|\caption|
+in the generated output.  Multiple annotations can be combined with
+semicolons:
+
+\begin{lstlisting}[language=ebnf]
+<<-- caption "The greeting syntax" ; label "fig:greeting" -->>
+greeting = 'hello' , [ name ] , '!' ;
+\end{lstlisting}
 
 \subsection{\texttt{sideways}}
 
@@ -273,7 +293,13 @@ production_name = body ;
 
 Places this production's diagram in a \texttt{sidewaysfigure}
 environment (from the \texttt{rotating} package) instead of a regular
-\texttt{figure}.  Requires the \opt{-f} flag.
+\texttt{figure}.  Requires the \opt{-f} flag.  Can be combined with
+\texttt{caption} and \texttt{label}:
+
+\begin{lstlisting}[language=ebnf]
+<<-- sideways ; caption "Full SQL syntax" ; label "fig:sql" -->>
+select_stmt = 'SELECT' , column_list , 'FROM' , table_ref ;
+\end{lstlisting}
 
 %% ----------------------------------------------------------------
 \section{\LaTeX{} Integration}
@@ -381,12 +407,59 @@ Length & Default & Purpose \\
 \end{center}
 
 \subsection{Customizable Styles}
+\label{sec:styles}
 
-The package defines TikZ styles for \texttt{terminal} (rounded
-rectangles) and \texttt{nonterminal} (rectangles with gradient fill),
-as well as font commands \verb|\railname| (italics for nonterminals)
-and \verb|\railtermname| (bold for terminals).  Redefine these after
-loading the package to customize the appearance.
+The package defines three TikZ styles that control the visual
+appearance of railroad diagrams.
+
+\paragraph{The \texttt{raildiagram} style.}
+Every railroad diagram is wrapped in
+\verb|\begin{tikzpicture}[raildiagram]|.  The \texttt{raildiagram}
+style sets the default line weight to \texttt{thick} for all rail
+connections, and establishes a baseline node style with zero padding
+and no visible border:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+raildiagram/.style={
+  thick,
+  every node/.style={inner sep=0, outer sep=0, draw=none}
+}
+\end{lstlisting}
+
+This style is \emph{scoped} to railroad diagram pictures only.  It
+does not affect any other \texttt{tikzpicture} environments in your
+document.  You can freely mix railroad diagrams with circuit diagrams,
+plots, commutative diagrams, or any other TikZ content without style
+interference.
+
+\paragraph{The \texttt{terminal} style.}
+Draws a rounded rectangle with a subtle grey gradient fill.  Applied
+to terminal (literal) tokens such as \texttt{'while'} or
+\texttt{"begin"}.
+
+\paragraph{The \texttt{nonterminal} style.}
+Draws a sharp-cornered rectangle with a red-tinted gradient fill.
+Applied to nonterminal references such as \texttt{expression} or
+\texttt{statement}.
+
+\paragraph{Font commands.}
+Three commands control the fonts used for text within diagrams:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Command & Default & Purpose \\
+\midrule
+\verb|\railtermname|   & \verb|\bfseries| & Terminal node text \\
+\verb|\railname|       & \verb|\itshape|  & Nonterminal node text \\
+\verb|\railprodname|   & \verb|\itshape|  & Production name labels \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Use the setter commands \verb|\setrailtermfont|,
+\verb|\setrailnontermfont|, and \verb|\setraillabelfont| to change
+these after loading the package.
 
 %% ----------------------------------------------------------------
 \section{Auto-Wrap}
@@ -412,61 +485,262 @@ long_production =
 \section{Examples}
 \label{sec:examples}
 
-\subsection{Case Statement Alternative}
+The examples in this section are live---they are rendered by
+\prog{} and \LaTeX{} as part of building this manual.
 
-This example from the VHDL grammar demonstrates subsumption.  Three
-productions are defined, but \texttt{choices} and \texttt{choice} are
-annotated with \texttt{subsume}, so they are inlined into
-\texttt{case\_statement\_alternative}:
+%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Simple Productions}
+
+A basic grammar with a sequence, a choice, and an optional element:
+
+\begin{lstlisting}[language=ebnf]
+// Simple productions
+manual_greeting = 'hello' , [ manual_recipient ] , '!' ;
+manual_recipient = 'world' | manual_name ;
+manual_name = first_name , [ last_name ] ;
+\end{lstlisting}
+
+\noindent Rendered output:
+
+\medskip\noindent
+\useproduction{manual_greeting}
+
+\medskip\noindent
+\useproduction{manual_recipient}
+
+\medskip\noindent
+\useproduction{manual_name}
+
+%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Repetition (Loops)}
+
+Repetition is expressed with curly braces.  The optimizer transforms
+loops with separators into a compact form:
+
+\begin{lstlisting}[language=ebnf]
+// Repetition
+manual_number = manual_digit , { manual_digit } ;
+manual_parameter_list = parameter , { ',' , parameter } ;
+manual_digit = '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9' ;
+\end{lstlisting}
+
+\noindent Rendered output:
+
+\medskip\noindent
+\useproduction{manual_number}
+
+\medskip\noindent
+\useproduction{manual_parameter_list}
+
+\medskip\noindent
+\useproduction{manual_digit}
+
+%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Subsumption}
+
+The \texttt{subsume} annotation inlines a production wherever it is
+referenced, then the optimizer simplifies the result.  Consider this
+VHDL fragment:
 
 \begin{lstlisting}[language=ebnf]
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
 
 <<-- subsume -->>
-choices =
-    choice, { '|', choice } ;
+choices = choice, { '|', choice } ;
 
 <<-- subsume -->>
-choice =
-    simple_expression |
-    discrete_range |
-    simple_name |
-    'others' ;
+choice = simple_expression | discrete_range
+       | simple_name | 'others' ;
 \end{lstlisting}
 
-With optimization enabled (the default), the optimizer inlines the
-subsumed productions and simplifies the resulting AST.  The final
-diagram shows a single, compact railroad for
-\texttt{case\_statement\_alternative} with all the choices expanded
-inline.
+\noindent
+After subsumption and optimization, only a single compact diagram is
+produced for \texttt{manual\_case\_alt}:
 
-\subsection{Tool List}
+\medskip\noindent
+\useproduction{manual_case_alt}
 
-This example shows a more complex grammar with subsumption:
+\medskip\noindent
+Without subsumption, the diagram would instead show
+\texttt{choices} and \texttt{choice} as opaque nonterminal
+references, requiring the reader to look up separate diagrams.
+
+%% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Complex Example with Nested Constructs}
+
+This example combines sequences, choices, optionals, and loops:
 
 \begin{lstlisting}[language=ebnf]
-<<-- subsume -->>
-toollist =
-  '(' , tool , { ',' , tool } , ')' ;
-
-<<-- subsume -->>
-tool =
-  'hammer' | 'screwdriver' | saw;
-
-<<-- subsume -->>
-saw =
-  ('hand' | ( [ 'cordless'] ,
-  ('reciprocating' | 'circular') ,
-  'power' ) ),'saw';
+select_stmt = 'SELECT' , [ 'DISTINCT' ] ,
+    column_list , 'FROM' , table_ref ,
+    [ 'WHERE' , condition ] ,
+    [ 'ORDER' , 'BY' , order_list ] ;
 \end{lstlisting}
 
-When all three productions are marked with \texttt{subsume}, each
-nonterminal reference is replaced by the referenced production's body.
-The result is a single, fully-expanded railroad diagram.  In practice,
-you would mark only the helper productions for subsumption, leaving
-the top-level production (\texttt{toollist}) as a standalone diagram
-that incorporates the others.
+\noindent Rendered output:
+
+\medskip\noindent
+\useproduction{manual_select_stmt}
+
+%% ----------------------------------------------------------------
+\section{Customization Examples}
+\label{sec:customization}
+
+All railroad diagrams are generated inside
+\verb|\begin{tikzpicture}[raildiagram]|, so the \texttt{raildiagram}
+TikZ style controls the overall appearance of every diagram.  Because
+it is applied as an option to individual \texttt{tikzpicture}
+environments, it is completely scoped---changes to \texttt{raildiagram}
+affect only railroad diagrams, never other TikZ pictures in the
+document.
+
+\subsection{Default Appearance}
+
+With no customization, the default \texttt{raildiagram} style uses
+\texttt{thick} lines, terminals are grey rounded rectangles, and
+nonterminals are pink-tinted rectangles:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+% No customization needed --- this is the default
+\usepackage{ebnf2tikz}
+\end{lstlisting}
+
+All of the diagrams in Section~\ref{sec:examples} use the default
+appearance.
+
+\subsection{Changing Line Weight}
+
+To make railroad diagrams use thinner lines, append to the
+\texttt{raildiagram} style:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\tikzset{raildiagram/.append style={thin}}
+\end{lstlisting}
+
+To change the line weight for individual node types as well, also
+update the \texttt{terminal} and \texttt{nonterminal} styles:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\tikzset{
+  raildiagram/.append style={thin},
+  terminal/.append style={thin},
+  nonterminal/.append style={thin}
+}
+\end{lstlisting}
+
+\subsection{Changing Node Colors}
+
+Override the gradient fills on terminal and nonterminal nodes:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\tikzset{
+  terminal/.append style={
+    top color=white, bottom color=blue!20
+  },
+  nonterminal/.append style={
+    top color=white, bottom color=green!20
+  }
+}
+\end{lstlisting}
+
+For flat (non-gradient) fills, replace the shading keys entirely:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\tikzset{
+  terminal/.style={
+    draw, inner sep=2pt, rounded rectangle,
+    minimum size=\railnodeheight, thick,
+    fill=orange!15
+  },
+  nonterminal/.style={
+    draw, inner sep=2pt, rectangle,
+    minimum size=\railnodeheight, thick,
+    fill=cyan!15
+  }
+}
+\end{lstlisting}
+
+\subsection{Changing Fonts}
+
+Use the setter commands to change the font used for text inside nodes
+and production labels:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\setrailtermfont{\ttfamily\bfseries}     % monospace bold terminals
+\setrailnontermfont{\sffamily\itshape}   % sans-serif italic nonterminals
+\setraillabelfont{\sffamily\bfseries}    % sans-serif bold labels
+\end{lstlisting}
+
+\subsection{Changing Spacing}
+
+Adjust the spacing parameters after loading the package:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\setlength{\railcolsep}{8pt}            % wider horizontal gaps
+\setlength{\railrowsep}{20pt}           % taller vertical gaps
+\setlength{\railnodeheight}{18pt}       % taller nodes
+\setlength{\railcorners}{6pt}           % rounder corners
+\end{lstlisting}
+
+Note: after changing these lengths, you must re-run the full
+\prog{} $\to$ \texttt{pdflatex} feedback loop, since the layout
+engine reads spacing parameters from the node sizes file.
+
+\subsection{Replacing the raildiagram Style Entirely}
+
+If you need full control, you can completely replace the
+\texttt{raildiagram} style.  When doing so, you \emph{must} include
+the baseline \texttt{every node} reset, because the generated TikZ
+code depends on nodes having zero default padding:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\tikzset{
+  raildiagram/.style={
+    semithick,
+    every node/.style={inner sep=0, outer sep=0, draw=none}
+  }
+}
+\end{lstlisting}
+
+Omitting the \texttt{every node} reset will cause unwanted padding
+and borders on the coordinate nodes and connection points that form
+the railroad tracks.
+
+\subsection{Coexistence with Other TikZ Packages}
+
+Because \texttt{raildiagram} is scoped to railroad pictures, it does
+not interfere with other TikZ-based packages.  For example, you can
+use \texttt{ebnf2tikz} alongside \texttt{circuitikz},
+\texttt{pgfplots}, or \texttt{tikz-cd} in the same document without
+any style conflicts:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\documentclass{article}
+\usepackage{ebnf2tikz}
+\usepackage{circuitikz}     % uses its own TikZ styles
+\usepackage{pgfplots}       % uses its own TikZ styles
+\ebnffile{mygrammar.ebnf}
+
+\begin{document}
+
+Railroad diagram (uses raildiagram style):
+\useproduction{my_rule}
+
+Circuit diagram (unaffected by ebnf2tikz):
+\begin{circuitikz}
+  \draw (0,0) to[R, l=$R_1$] (2,0) to[C, l=$C_1$] (2,-2) -- (0,-2);
+\end{circuitikz}
+
+Plot (unaffected by ebnf2tikz):
+\begin{tikzpicture}
+  \begin{axis}[width=6cm, height=4cm]
+    \addplot {x^2};
+  \end{axis}
+\end{tikzpicture}
+
+\end{document}
+\end{lstlisting}
 
 %% ----------------------------------------------------------------
 \section{Tips}

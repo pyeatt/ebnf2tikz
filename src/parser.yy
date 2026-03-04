@@ -155,7 +155,8 @@ grammar : productions {
            }
          else
            {
-             astPlaceGrammar(astg, drv.outs(), drv.getSizes());
+             astPlaceGrammar(astg, drv.outs(), drv.getSizes(),
+                            drv.get_figures());
              delete astg;
            }
        }
@@ -283,6 +284,8 @@ void yy::parser::error (const location_type& l, const std::string& m)
 {
   cerr << m << " between "
   "line "<<l.begin.line << " col "<<l.begin.column<<" and "<<
-  "line "<<l.end.line   << " col "<<l.end.column << " in "<<
-  *l.begin.filename<<endl;
+  "line "<<l.end.line   << " col "<<l.end.column;
+  if(l.begin.filename)
+    cerr << " in " << *l.begin.filename;
+  cerr << endl;
 }

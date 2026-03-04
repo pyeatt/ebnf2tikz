@@ -153,10 +153,10 @@ void LoopNode::accept(ASTVisitor &v) { v.visitLoop(this); }
 
 // --- DefaultASTVisitor implementations ---
 
-void DefaultASTVisitor::visitTerminal(TerminalNode *n) {}
-void DefaultASTVisitor::visitNonterminal(NonterminalNode *n) {}
-void DefaultASTVisitor::visitEpsilon(EpsilonNode *n) {}
-void DefaultASTVisitor::visitNewline(NewlineNode *n) {}
+void DefaultASTVisitor::visitTerminal(TerminalNode *) {}
+void DefaultASTVisitor::visitNonterminal(NonterminalNode *) {}
+void DefaultASTVisitor::visitEpsilon(EpsilonNode *) {}
+void DefaultASTVisitor::visitNewline(NewlineNode *) {}
 
 void DefaultASTVisitor::visitSequence(SequenceNode *n)
 {

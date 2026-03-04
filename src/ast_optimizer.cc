@@ -692,7 +692,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
   OptionalNode *optWrap;
   int numAlts, ai;
   int minMatch, allZero, anyZero;
-  int *altMatches;
+  vector<int> altMatches;
   ASTNode *newBody;
   int bi, di;
   int isOptional;
@@ -735,7 +735,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
           numAlts = loop->repeats.size();
 
           // Compute match counts
-          altMatches = new int[numAlts];
+          altMatches.assign(numAlts, 0);
           minMatch = -1;
           allZero = 1;
           anyZero = 0;
@@ -760,14 +760,14 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
           // For optional loops, we can still extract if some match
           if(!isOptional && (allZero || anyZero || minMatch <= 0))
             {
-              delete[] altMatches;
+
               ri++;
             }
           else if(isOptional && (allZero || minMatch <= 0))
             {
               // No match, but still unwrap Optional(Loop(null,...))
               // -> Loop(null,...) since they're semantically the same
-              delete[] altMatches;
+
               optWrap = static_cast<OptionalNode*>(seq->children[ri]);
               seq->children[ri] = optWrap->child;
               optWrap->child = nullptr;
@@ -799,7 +799,7 @@ static int analyzeLoopsInSequence(SequenceNode *seq)
                       stripTrailing(loop->repeats[ai], minMatch);
                 }
 
-              delete[] altMatches;
+
 
               // Move Epsilon repeats to the end
               stable_partition(loop->repeats.begin(),
