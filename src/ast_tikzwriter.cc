@@ -236,7 +236,7 @@ void ASTTikzWriter::writeProduction(ASTProduction *prod,
     string prodDisplayName = prod->name;
     replace(prodDisplayName.begin(), prodDisplayName.end(), '_', ' ');
     outs << "\\node at (0pt,0pt)[anchor=west](name){"
-         << astLatexwrite("railname", prodDisplayName) << "};\n";
+         << astLatexwrite("railprodname", prodDisplayName) << "};\n";
   }
 
   /* emit stub coordinates */
