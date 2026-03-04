@@ -1,19 +1,72 @@
+# Build artifacts
 *.o
 *.jou
+ebnf2tikz
+
+# Bison/Flex generated files (built into src/)
+src/parser.cc
+src/parser.hh
+src/location.hh
+src/lexer.cc
+src/lexer.hh
+src/annot_parser.cc
+src/annot_parser.hh
+src/annot_location.hh
+src/annot_lexer.cc
+src/annot_lexer.hh
+
+# CMake build products
+CMakeCache.txt
+CMakeFiles/
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+Makefile
+cmake_install.cmake
+.depend
+
+# LaTeX intermediates
+*.aux
 *.log
 *.out
+*.toc
+*.idx
+*.glo
+*.hd
+*.ilg
 *.ind
-ebnf2tikz
-lexer.cc
-lexer.hh
-location.hh
-parser.cc
-parser.hh
-annot_lexer.cc
-annot_lexer.hh
-annot_parser.cc
-annot_parser.hh
-annot_location.hh
+*.synctex.gz
 bnfnodes.dat
+
+# Generated test files
+all_input.ebnf
+all_tests.tex
+unit_tests/all_input.ebnf
+unit_tests/all_tests.tex
+unit_tests/testlist.tex
+unit_tests/testdriver.pdf
+LaTeX/tests/*_wrapper.tex
+LaTeX/tests/*-diagrams.tex
+LaTeX/tests/*.pdf
+
+# LaTeX package (generated from .dtx)
+ebnf2tikz.sty
+ebnf2tikz.pdf
+LaTeX/ebnf2tikz.sty
+LaTeX/ebnf2tikz.pdf
+
+# Doxygen output
+documentation/html/
+documentation/latex/
+documentation/ebnf2tikz.pdf
+documentation/index.html
+
+# Manual build artifacts (keep manual.tex)
+manual/*.pdf
+
+# Editor/IDE
+*.jou
+*~
+
+# Project notes
 TODO.txt
 CLAUDE.md

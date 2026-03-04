@@ -2,142 +2,195 @@
 
 Author: Larry D. Pyeatt
 
-February, 2021 (updated March, 2026)
+An optimizing compiler that converts (possibly annotated) [Extended Backus-Naur Form](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form) (EBNF) grammar specifications into railroad (syntax) diagrams expressed as LaTeX [TikZ](https://en.wikipedia.org/wiki/PGF/TikZ) commands.
 
-## What Does It Do?
-It is an optimizing compiler that converts (possibly annotated) <a href=https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form>Extended Backus–Naur  Form</a> (EBNF) to railroad diagrams expressed as LaTeX <a href=https://en.wikipedia.org/wiki/PGF/TikZ> TikZ</a> commands.
+## Example
 
-For example, if  you feed a file containing the following annotated EBNF into ebnf2tikz:
+Given the following annotated EBNF input:
+
 ```ebnf
 case_statement_alternative =
     'when' , choices , '=>', sequence_of_statements;
 
-subsume
+<<-- subsume -->>
 choices =
     choice, { '|', choice } ;
 
-subsume
+<<-- subsume -->>
 choice =
     simple_expression |
     discrete_range |
     simple_name |
     'others' ;
 ```
-Then it will output the following TikZ code:
 
-```latex
-\begin{figure}
-\centerline{
-\begin{tikzpicture}
-\node at (0pt,0pt)[anchor=west](name){\railname{case\_statement\_alternative\strut}};
-\coordinate (node42) at (59.3677pt,-21pt);
-\coordinate (node42linetop) at (59.3677pt,-27pt);
-\coordinate (node42linebottom) at (59.3677pt,-101pt);
-\draw [rounded corners=\railcorners] (node42linetop) -- (node42linebottom);
-\draw [rounded corners=\railcorners] (node42linetop) -- (node42) -- +(east:8pt);
-\coordinate (node45) at (67.3677pt,-21pt);
-\coordinate (node45linetop) at (67.3677pt,-27pt);
-\coordinate (node45linebottom) at (67.3677pt,-79pt);
-\draw [rounded corners=\railcorners] (node45linetop) -- (node45linebottom);
-\draw [rounded corners=\railcorners] (node45linetop) -- (node45) -- +(west:8pt);
-\coordinate (node51) at (156.118pt,-21pt);
-\coordinate (node51linetop) at (156.118pt,-27pt);
-\coordinate (node51linebottom) at (156.118pt,-79pt);
-\draw [rounded corners=\railcorners] (node51linetop) -- (node51linebottom);
-\draw [rounded corners=\railcorners] (node51linetop) -- (node51) -- +(east:8pt);
-\coordinate (node53) at (164.118pt,-21pt);
-\coordinate (node53linetop) at (164.118pt,-27pt);
-\coordinate (node53linebottom) at (164.118pt,-101pt);
-\draw [rounded corners=\railcorners] (node53linetop) -- (node53linebottom);
-\draw [rounded corners=\railcorners] (node53linetop) -- (node53) -- +(west:8pt);
-\node (node1) at (16pt,-21pt)[anchor=west,terminal] {\railtermname{when\strut}};
-\writenodesize{node1}
-\draw [rounded corners=\railcorners] (node1.east) -- (node42.west);
-\node (node47) at (75.3677pt,-21pt)[anchor=west,nonterminal] {\railname{simple\_expression\strut}};
-\writenodesize{node47}
-\node (node48) at (83.5977pt,-43pt)[anchor=west,nonterminal] {\railname{discrete\_range\strut}};
-\writenodesize{node48}
-\node (node49) at (84.5176pt,-65pt)[anchor=west,nonterminal] {\railname{simple\_name\strut}};
-\writenodesize{node49}
-\node (node50) at (92.8288pt,-87pt)[anchor=west,terminal] {\railtermname{others\strut}};
-\writenodesize{node50}
-\draw [rounded corners=\railcorners] (node45.east) -- (node47.west);
-\draw [rounded corners=\railcorners] (node47.east) -- (node51.west);
-\node (node52) at (104.743pt,-109pt)[anchor=west,terminal] {\railtermname{|}};
-\writenodesize{node52}
-\draw [rounded corners=\railcorners] (node42.east) -- (node45.west);
-\draw [rounded corners=\railcorners] (node51.east) -- (node53.west);
-\node (node4) at (172.118pt,-21pt)[anchor=west,terminal] {\railtermname{=>\strut}};
-\writenodesize{node4}
-\draw [rounded corners=\railcorners] (node53.east) -- (node4.west);
-\node (node5) at (199.775pt,-21pt)[anchor=west,nonterminal] {\railname{sequence\_of\_statements\strut}};
-\writenodesize{node5}
-\draw [rounded corners=\railcorners] (node4.east) -- (node5.west);
-\draw [rounded corners=\railcorners] (node48.west) -- (node48.west-|node45) -- (node45linetop);
-\draw [rounded corners=\railcorners] (node49.west) -- (node49.west-|node45) -- (node45linetop);
-\draw [rounded corners=\railcorners] (node50.west) -- (node50.west-|node45) -- (node45linetop);
-\draw [rounded corners=\railcorners] (node52.west) -- (node52.west-|node42) -- (node42linetop);
-\draw [rounded corners=\railcorners] (node48.east) -- (node48.east-|node51) -- (node51linetop);
-\draw [rounded corners=\railcorners] (node49.east) -- (node49.east-|node51) -- (node51linetop);
-\draw [rounded corners=\railcorners] (node50.east) -- (node50.east-|node51) -- (node51linetop);
-\draw [rounded corners=\railcorners] (node52.east) -- (node52.east-|node53) -- (node53linetop);
-\end{tikzpicture}
-}
-\caption{No Caption.}
-\label{No Caption.}
-\end{figure}
-```
-
-You will need a ```\usepackage{ebnf2tikz}``` command in the preamble of your LaTeX document.
-Then you can just include the TikZ code in your LaTeX document, and it will draw this:
+ebnf2tikz produces TikZ code that renders this railroad diagram:
 
 <img src="./testdriver.png" height="200">
 
+The `subsume` annotation causes `choices` and `choice` to be inlined directly into `case_statement_alternative`, and the optimizer simplifies the resulting AST into the compact diagram shown above.
 
-## About the Code
+## Prerequisites
 
-As of March, 2026, ebnf2tikz has been thoroughly debugged and there are no known issues. It would be nice to add an auto-wrap feature that automatically breaks long productions across multiple lines.
+- C++ compiler with C++17 support (e.g., g++)
+- [Bison](https://www.gnu.org/software/bison/) >= 3.7
+- [Flex](https://github.com/westes/flex)
+- [CMake](https://cmake.org/) >= 3.16
+- pdflatex with TikZ (for generating diagrams)
+- [Doxygen](https://www.doxygen.nl/) (optional, for building API documentation)
 
-Originally, I planned to have TikZ do most of the work.  However,
-while I could get it to do small diagrams, it failed miserably when
-the level of nesting went beyond three.  TikZ really does not have the
-concept of "sub-images" that have user-defined anchor points. I think
-it is possible because, ... look at CircuiTikZ.
+## Building
 
-Trying to get TikZ to do all of the work to lay out complex diagrams was a nightmare.  It
-does not do recursive structures well. I put in some effort, then gave
-up and decided to go another direction.  I now have ebnf2tikz do all of the layout, and just use TikZ to do the drawing.
-This does mean that ebnf2tikz needs some information from LaTeX about how big the basic nodes are.  Therefore, you have to run ebnf2tikz, then LaTeX, then ebnf2tikz again, then LaTeX again.
+```bash
+cmake .
+make              # Build the ebnf2tikz binary
+```
 
-I have written it so that
-you can:
+## Usage
 
-1. Run ebnf2tikz to produce all of the diagrams, but they are not
-correct.
+```
+./ebnf2tikz [options] input_file output_file
+```
 
-2. Run the incorrect diagrams through LaTeX to get the dimensions of
-the basic nodes and the settings for railcolsep and railrowsep.
+### Options
 
-3. After that, re-run ebnf2tikz and all of the diagrams are correct.
+| Option | Description |
+|--------|-------------|
+| `-O`, `--optimize` | Enable optimization (default; accepted for compatibility) |
+| `-n`, `--nooptimize` | Disable optimization and subsumption |
+| `-f`, `--makefigures` | Wrap tikzpictures in LaTeX figure environments |
+| `-d`, `--dumponly` | Parse and dump the AST; do not generate TikZ output |
+| `-B`, `--dump-before` | Dump the AST before optimization (to stdout) |
+| `-A`, `--dump-after` | Dump the AST after optimization (to stdout) |
+| `-h`, `--help` | Print usage information |
 
-4. Run LaTeX again and everything looks good.
+### Multi-Pass Workflow
 
-Any change to the ebnf file requires these four steps to get
-everything looking good again. It is not so different from bibtex,
-makeindex, etc.  The bottom line is that you may have to run ebnf2tikz
-twice if you change its input files, and you will have to run it at
-least once if you change the input file or change railrowsep or
-railcolsep or any other layout settings.
+ebnf2tikz requires a feedback loop with LaTeX because accurate layout depends on knowing the rendered dimensions of each node.  LaTeX measures these dimensions and writes them to `bnfnodes.dat` via the `\writenodesize` command.  The typical workflow is:
 
-The good news is that this approach makes the diagrams as concise as
-they can possibly be. All of the layout is handled by ebnf2tikz, so
-LaTeX does not spend a lot of time on them.
+1. Run `ebnf2tikz` to produce initial TikZ output (with estimated node sizes).
+2. Run `pdflatex` to render the diagrams and generate `bnfnodes.dat`.
+3. Run `ebnf2tikz` again to produce accurate TikZ output (using real node sizes).
+4. Run `pdflatex` again for the final PDF.
 
-All nodes are placed using exact coordinates```\node (nodename) at (exact
-coordinate)``` but all lines are drawn using the node names.
+This is similar to the multi-pass workflow needed by BibTeX or makeindex.
 
-## To Do
+### LaTeX Setup
 
-- Auto-wrap: automatically break productions that exceed ```\textwidth``` across multiple lines.
-- I have not written the ```ebnf2tikz``` style file, so the ```\usepackage{ebnf2tikz}``` will not work.
-For now, you just have to look at ```testdriver.tex``` and do the best you can.
+There is currently no `ebnf2tikz.sty` package file.  To use ebnf2tikz output in your LaTeX document, you need to define the required TikZ styles and commands in your preamble.  See `unit_tests/testdriver.tex` for a complete working example, which defines:
+
+- `\railname` and `\railtermname` font commands
+- `\railcolsep`, `\railrowsep`, `\railnodeheight`, `\railcorners` lengths
+- TikZ node styles for `terminal` and `nonterminal`
+- The `\writenodesize` command that writes node dimensions to `bnfnodes.dat`
+
+### EBNF Input Format
+
+ebnf2tikz accepts standard EBNF with these constructs:
+
+| Syntax | Meaning |
+|--------|---------|
+| `A = expr ;` | Production rule |
+| `A , B` | Sequence (concatenation) |
+| `A \| B` | Choice (alternation) |
+| `[ expr ]` | Optional |
+| `{ expr }` | Repetition (loop) |
+| `( expr )` | Grouping |
+| `'text'` or `"text"` | Terminal |
+| `? text ?` | Special sequence (rendered as terminal) |
+| `\\\\` | Explicit line break |
+
+Comments are supported in three forms: `// line comment`, `--- line comment`, and `(* block comment *)`.
+
+### Annotations
+
+Annotations are placed before a production definition using `<<-- ... -->>` syntax:
+
+```ebnf
+<<-- subsume -->>
+production_name = expr ;
+
+<<-- subsume as regex_pattern -->>
+production_name = expr ;
+
+<<-- caption description -->>
+production_name = expr ;
+
+<<-- sideways -->>
+production_name = expr ;
+```
+
+| Annotation | Effect |
+|------------|--------|
+| `subsume` | Inline this production's body wherever its name is referenced |
+| `subsume as <regex>` | Inline into nonterminals matching the POSIX extended regex |
+| `caption <string>` | Set the LaTeX figure caption |
+| `sideways` | Use a `sidewaysfigure` environment |
+
+### Auto-Wrap
+
+Productions whose body exceeds the available `\textwidth` are automatically broken across multiple rows.  Wide nonterminal labels containing spaces are also wrapped using `\shortstack` to reduce their width.
+
+## Testing
+
+```bash
+make check          # Run all 167 AST-dump regression tests
+make check-tikz     # Build PDF with all railroad diagrams (requires pdflatex)
+```
+
+Tests live in `unit_tests/`.  Each test is a `.ebnf` file with a matching `expected/<name>.expected` file containing the expected AST dump output.  Tests that require specific flags have a `flags/<name>.flags` file; the default is `-n -d` (unoptimized dump).
+
+To add a new test:
+
+1. Create `unit_tests/<N>_<name>.ebnf`
+2. Optionally create `unit_tests/flags/<N>_<name>.flags` (e.g., `-d` for optimized dump)
+3. Run `./ebnf2tikz [flags] <file>.ebnf /dev/null` and save stdout to `unit_tests/expected/<N>_<name>.expected`
+
+Production names must be unique across all `.ebnf` files because `make check-tikz` concatenates them into a single input.
+
+## API Documentation
+
+```bash
+make doc            # Generate HTML and PDF documentation in documentation/
+```
+
+This produces:
+
+- `documentation/ebnf2tikz.pdf` -- complete API reference
+- `documentation/index.html` -- entry point for the HTML documentation
+
+Requires Doxygen and pdflatex.
+
+## Architecture
+
+The compiler follows a classic pipeline:
+
+```
+lexer.ll -> parser.yy -> AST -> resolver::subsume -> ast_optimizer::optimize
+  -> auto-wrap -> dump mode: astDumpGrammar (stdout)
+                -> TikZ mode: ast_layout -> ast_tikzwriter (output file)
+```
+
+### Key Source Files
+
+| File | Purpose |
+|------|---------|
+| `ast.hh/cc` | AST node hierarchy (Terminal, Nonterminal, Epsilon, Sequence, Choice, Optional, Loop, Newline) |
+| `ast_optimizer.hh/cc` | Fixed-point optimization passes (merge, lift, loop analysis) |
+| `ast_layout.hh/cc` | Layout engine: sizing, coordinate placement, connection routing |
+| `ast_tikzwriter.hh/cc` | TikZ code emission from layout results |
+| `resolver.hh/cc` | Reference checking and subsumption |
+| `ast_dump.hh/cc` | AST dump for regression testing |
+| `driver.hh/cc` | Parser driver coordinating Flex/Bison |
+| `nodesizes.hh/cc` | Node dimension cache (reads `bnfnodes.dat`) |
+| `diagnostics.hh/cc` | Structured error/warning reporting |
+| `parser.yy` / `lexer.ll` | Main Bison/Flex grammar and tokenizer |
+| `annot_parser.yy` / `annot_lexer.ll` | Annotation sub-parser and tokenizer |
+| `main.cc` | CLI entry point |
+| `util.hh/cc` | Utility functions |
+
+## License
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+See [LICENSE](LICENSE) for the full text.

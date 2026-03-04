@@ -1,0 +1,606 @@
+% \iffalse meta-comment
+%
+% ebnf2tikz.dtx — Railroad (syntax) diagrams from EBNF grammars via TikZ
+%
+% Copyright (C) 2024–2026 Larry Pyeatt
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%    https://www.latex-project.org/lppl.txt
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{ebnf2tikz.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \changes{v1.0}{2026/03/03}{Initial version}
+%
+% \GetFileInfo{ebnf2tikz.sty}
+%
+% \title{The \textsf{ebnf2tikz} package\thanks{This document
+%   corresponds to \textsf{ebnf2tikz}~v1.0, dated 2026/03/03.}}
+% \author{Larry Pyeatt}
+% \date{2026/03/03}
+%
+% \maketitle
+%
+% \begin{abstract}
+% The \textsf{ebnf2tikz} package provides all the \LaTeX{} infrastructure
+% needed to render railroad (syntax) diagrams produced by the
+% \texttt{ebnf2tikz} compiler.  It loads the required packages, defines
+% TikZ styles for terminal and nonterminal nodes, provides the
+% |\writenodesize| macro for the multi-pass sizing feedback loop, and
+% offers convenience commands for integrating EBNF grammars into
+% \LaTeX{} documents.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \section{Introduction}
+%
+% The \texttt{ebnf2tikz} program is an optimizing compiler that converts
+% Extended Backus-Naur Form (EBNF) grammar specifications into railroad
+% (syntax) diagrams rendered as \LaTeX{} TikZ commands.  Accurate layout
+% requires a multi-pass feedback loop between \texttt{ebnf2tikz} and
+% \texttt{pdflatex}: node sizes measured by \LaTeX{} are written to
+% \texttt{bnfnodes.dat} via |\writenodesize|, then read back by
+% \texttt{ebnf2tikz} on the next run.
+%
+% Without this package, users must copy roughly 80 lines of preamble
+% from the test driver.  This package encapsulates all of that setup.
+%
+% \section{Usage}
+%
+% \subsection{Basic usage with external EBNF files}
+%
+% \begin{verbatim}
+% \documentclass{article}
+% \usepackage{ebnf2tikz}
+% \ebnffile{mygrammar.ebnf}
+% \begin{document}
+% \useproduction{myRule}
+% \end{document}
+% \end{verbatim}
+%
+% Compile with:
+% \begin{verbatim}
+% pdflatex -shell-escape mydoc     % pass 1: registers files
+% pdflatex -shell-escape mydoc     % pass 2: runs ebnf2tikz, renders
+% pdflatex -shell-escape mydoc     % pass 3: final accurate sizes
+% \end{verbatim}
+%
+% Without \texttt{-shell-escape}, run \texttt{ebnf2tikz} manually between
+% passes:
+% \begin{verbatim}
+% pdflatex mydoc
+% ebnf2tikz mydoc-rail.ebnf mydoc-rail.tex
+% pdflatex mydoc
+% ebnf2tikz mydoc-rail.ebnf mydoc-rail.tex
+% pdflatex mydoc
+% \end{verbatim}
+%
+% \subsection{Inline EBNF with the \texttt{ebnf} environment}
+%
+% \begin{verbatim}
+% \begin{ebnf}
+% expression = term { ("+" | "-") term } ;
+% \end{ebnf}
+%
+% \useproduction{expression}
+% \end{verbatim}
+%
+% The |ebnf| environment writes its contents verbatim to
+% |\jobname-rail.ebnf|, which is then processed automatically
+% (with \texttt{-shell-escape}) or manually.
+%
+% \subsection{Package options}
+%
+% \begin{description}
+% \item[\texttt{figures}] Pass \texttt{-f} to \texttt{ebnf2tikz},
+%   wrapping each diagram in a \LaTeX{} figure environment.
+% \item[\texttt{nooptimize}] Pass \texttt{-n} to \texttt{ebnf2tikz},
+%   disabling optimization and subsumption.
+% \end{description}
+%
+% \section{Commands}
+%
+% \DescribeMacro{\ebnffile}
+% |\ebnffile{|\meta{file}|}| registers an external EBNF file to be
+% appended to the combined input.  May be used in the preamble or
+% document body (before |\useproduction|).
+%
+% \DescribeMacro{\useproduction}
+% |\useproduction{|\meta{name}|}| places the railroad diagram for the
+% named production.  The \meta{name} is the EBNF production name
+% (e.g., \texttt{my\_rule}); the macro automatically converts it to
+% the camelCase savebox name used by \texttt{ebnf2tikz}
+% (e.g., \texttt{myRule}).
+%
+% \DescribeMacro{\writenodesize}
+% |\writenodesize{|\meta{nodename}|}| measures the named TikZ node
+% and writes its width and height to \texttt{bnfnodes.dat}.  This is
+% called automatically by the generated TikZ code; users do not
+% normally need to call it directly.
+%
+% \DescribeMacro{\railname}
+% \DescribeMacro{\railtermname}
+% |\railname{|\meta{text}|}| and |\railtermname{|\meta{text}|}| format
+% nonterminal and terminal names respectively.  Override these to
+% change the fonts used in diagrams.
+%
+% \section{Customization}
+%
+% \subsection{Lengths}
+%
+% The following lengths can be changed with |\setlength| after loading
+% the package:
+%
+% \begin{description}
+% \item[\texttt{\string\railcolsep}] Horizontal separation (default 5pt)
+% \item[\texttt{\string\railrowsep}] Vertical row separation (default |\baselineskip|)
+% \item[\texttt{\string\railnodeheight}] Minimum node height (default 14pt)
+% \item[\texttt{\string\railcorners}] Rounded corner radius (default |railcolsep - 1pt|)
+% \end{description}
+%
+% \subsection{TikZ styles}
+%
+% The |nonterminal| and |terminal| TikZ styles can be redefined with
+% |\tikzset| after loading the package.
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{ebnf2tikz}[2026/03/03 v1.0 Railroad diagrams from EBNF via TikZ]
+%    \end{macrocode}
+%
+% \subsection{Option handling}
+%
+% We build up the \texttt{ebnf2tikz} command-line flags in a macro.
+%
+%    \begin{macrocode}
+\newif\ifebnf@figures
+\newif\ifebnf@nooptimize
+\DeclareOption{figures}{\ebnf@figurestrue}
+\DeclareOption{nooptimize}{\ebnf@nooptimizetrue}
+\ProcessOptions\relax
+\def\ebnf@flags{}
+\ifebnf@figures
+  \g@addto@macro\ebnf@flags{ -f}
+\fi
+\ifebnf@nooptimize
+  \g@addto@macro\ebnf@flags{ -n}
+\fi
+%    \end{macrocode}
+%
+% \subsection{Required packages}
+%
+%    \begin{macrocode}
+\RequirePackage{tikz,pgf}
+\usetikzlibrary{positioning,shapes,matrix,chains,scopes,fit,calc,shadings,intersections}
+\RequirePackage[nomessages]{fp}
+\RequirePackage{rotating}
+\RequirePackage{shellesc}
+%    \end{macrocode}
+%
+% \subsection{Lengths}
+%
+% \begin{macro}{\railcolsep}
+% \begin{macro}{\railrowsep}
+% \begin{macro}{\railnodeheight}
+% \begin{macro}{\railcorners}
+%    \begin{macrocode}
+\newlength\railcolsep
+\setlength\railcolsep{5pt}
+\newlength\railrowsep
+\setlength\railrowsep{\baselineskip}
+\newlength\railnodeheight
+\setlength\railnodeheight{14pt}
+\newlength\railcorners
+\setlength\railcorners{\railcolsep}
+\addtolength\railcorners{-1pt}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Scratch lengths}
+%
+% These are used by the generated TikZ code.
+%
+% \begin{macro}{\tmplength}
+% \begin{macro}{\tmplengthb}
+% \begin{macro}{\tmplengthc}
+%    \begin{macrocode}
+\newlength{\tmplength}
+\newlength{\tmplengthb}
+\newlength{\tmplengthc}
+\setlength{\tmplength}{12pt}
+\setlength{\tmplengthb}{12pt}
+\setlength{\tmplengthc}{12pt}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{Font commands}
+%
+% \begin{macro}{\railname}
+% \begin{macro}{\railtermname}
+%    \begin{macrocode}
+\newcommand{\railname}[1]{\textit{#1}}
+\newcommand{\railtermname}[1]{\textbf{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \subsection{TikZ styles}
+%
+%    \begin{macrocode}
+\tikzset{
+  nonterminal/.style={
+    draw,
+    inner sep=2pt,
+    rectangle,
+    minimum size=\railnodeheight,
+    thick,
+    top color=white,
+    bottom color=red!50!black!20,
+    font=\itshape
+  },
+  terminal/.style={
+    draw,
+    inner sep=2pt,
+    rounded rectangle,
+    minimum size=\railnodeheight,
+    thick,
+    top color=white,
+    bottom color=black!20,
+    font=\ttfamily
+  },
+  every picture/.style={thick},
+  every node/.style={inner sep=0, outer sep=0, draw=none}
+}
+%    \end{macrocode}
+%
+% \subsection{Distance and coordinate utilities}
+%
+% These macros are used by the generated TikZ code for computing
+% distances and shifts between nodes.
+%
+% \begin{macro}{\Distance}
+%    \begin{macrocode}
+\newcommand{\Distance}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax
+  \pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\settoxdiff}
+%    \begin{macrocode}
+\newcommand\settoxdiff[3]{%
+  \pgfpointdiff{#2}{#3}%
+  \global\expandafter\edef #1{\pgf@x}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% The |getyshift| and |getdistc| TikZ keys compute vertical shifts
+% between nodes for connection routing.
+%
+%    \begin{macrocode}
+\tikzset{
+  getyshift/.style args={#1 and #2 and #3}{
+    getdistc={#1}{#2},yshift=-\mylength-\railnodeheight+\pgflinewidth/#3
+  },
+  getdistc/.code 2 args={
+    \pgfextra{%
+      \pgfpointdiff{\pgfpointanchor{#1}{north}}{\pgfpointanchor{#2}{south}}%
+      \xdef\mylength{\the\pgf@y}%
+    }%
+  }
+}
+%    \end{macrocode}
+%
+% The |\settodistance| macro computes the Euclidean distance between
+% two node centers.
+%
+% \begin{macro}{\settodistance}
+%    \begin{macrocode}
+\def\settodistance(#1,#2)#3{%
+  \pgfpointdiff{\pgfpointanchor{#1}{center}}%
+               {\pgfpointanchor{#2}{center}}%
+  \pgf@xa=\pgf@x%
+  \pgf@ya=\pgf@y%
+  \global\expandafter\edef\csname xlen\endcsname{\pgf@xa}%
+  \global\expandafter\edef\csname ylen\endcsname{\pgf@ya}%
+  \FP@eval\@temp@a{\pgfmath@tonumber{\pgf@xa}}%
+  \FPeval\@temp@b{\pgfmath@tonumber{\pgf@ya}}%
+  \FPeval\@temp@sum{(\@temp@a*\@temp@a+\@temp@b*\@temp@b)}%
+  \FProot{\FPMathLen}{\@temp@sum}{2}%
+  \FPround\FPMathLen\FPMathLen5\relax%
+  \global\expandafter\edef\csname #3\endcsname{\pgf@x}%
+}%
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Node size measurement (bnfnodes.dat)}
+%
+% The \texttt{bnfnodes.dat} file is used for the multi-pass feedback loop.
+% We open it at |\begin{document}|, write |textwidth| immediately, and
+% close it at |\end{document}|.
+%
+% \begin{macro}{\writenodesize}
+%    \begin{macrocode}
+\newwrite\ebnf@nodefile
+\newcommand{\writenodesize}[1]{%
+  \pgfpointdiff{\pgfpointanchor{#1}{west}}{\pgfpointanchor{#1}{east}}%
+  \FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
+  \pgfpointdiff{\pgfpointanchor{#1}{south}}{\pgfpointanchor{#1}{north}}%
+  \FP@eval\@temp@y{\pgfmath@tonumber{\pgf@y}}%
+  \immediate\write\ebnf@nodefile{#1 \@temp@x,  \@temp@y}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% Open the node file and write |textwidth| at the start of the document.
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \immediate\openout\ebnf@nodefile=bnfnodes.dat\relax
+  \pgf@x=\textwidth
+  \FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
+  \immediate\write\ebnf@nodefile{textwidth \@temp@tw}%
+}
+\AtEndDocument{%
+  \immediate\closeout\ebnf@nodefile
+}
+%    \end{macrocode}
+%
+% \subsection{EBNF file registration}
+%
+% \begin{macro}{\ebnffile}
+% Register an external EBNF file.  The file path is appended to a list
+% that is used when assembling the combined input.
+%    \begin{macrocode}
+\newif\ifebnf@hasfiles
+\def\ebnf@filelist{}
+\newcommand{\ebnffile}[1]{%
+  \ebnf@hasfilestrue
+  \g@addto@macro\ebnf@filelist{\ebnf@appendfile{#1}}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{The \texttt{ebnf} environment (verbatim capture)}
+%
+% \begin{environment}{ebnf}
+% The |ebnf| environment captures its body verbatim and appends it to
+% |\jobname-rail.ebnf|.  We use catcode manipulation similar to the
+% |filecontents| environment.
+%    \begin{macrocode}
+\newwrite\ebnf@inlinefile
+\newif\ifebnf@fileopen
+\def\ebnf@openinline{%
+  \ifebnf@fileopen\else
+    \immediate\openout\ebnf@inlinefile=\jobname-rail.ebnf\relax
+    \global\ebnf@fileopentrue
+  \fi
+}
+\newenvironment{ebnf}{%
+  \ebnf@hasfilestrue
+  \ebnf@openinline
+  \begingroup
+  \catcode`\\=12\relax
+  \catcode`\{=12\relax
+  \catcode`\}=12\relax
+  \catcode`\$=12\relax
+  \catcode`\&=12\relax
+  \catcode`\#=12\relax
+  \catcode`\^=12\relax
+  \catcode`\_=12\relax
+  \catcode`\~=12\relax
+  \catcode`\%=12\relax
+  \obeylines
+  \ebnf@verbbody
+}{%
+}
+%    \end{macrocode}
+%
+% The actual verbatim reader scans line by line until it finds
+% |\end{ebnf}| (as a literal string after catcode changes).
+%
+%    \begin{macrocode}
+\begingroup
+\catcode`\|=0\relax
+\catcode`\\=12\relax
+\catcode13=13\relax
+|long|gdef|ebnf@verbbody#1^^M{|ebnf@checkend{#1}}%
+|long|gdef|ebnf@checkend#1{%
+  |def|ebnf@temp{#1}%
+  |def|ebnf@sentinel{\end{ebnf}}%
+  |ifx|ebnf@temp|ebnf@sentinel
+    |expandafter|ebnf@endverb
+  |else
+    |immediate|write|ebnf@inlinefile{#1}%
+    |expandafter|ebnf@verbbody
+  |fi
+}
+|endgroup
+\def\ebnf@endverb{%
+  \endgroup
+  \end{ebnf}%
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \subsection{Camelcase conversion}
+%
+% \begin{macro}{\ebnf@camelcase}
+% Convert an underscore-separated production name to camelCase,
+% matching the C++ |camelcase()| function in \texttt{util.cc}.
+% Underscores are removed; the letter following an underscore is
+% uppercased; digits are spelled out as words.
+%
+% We build the result token by token in |\ebnf@result|.  The flag
+% |\ifebnf@upper| tracks whether the next letter should be uppercased
+% (set after an underscore).
+%    \begin{macrocode}
+\newif\ifebnf@upper
+\newcommand{\ebnf@camelcase}[1]{%
+  \begingroup
+  \def\ebnf@result{}%
+  \ebnf@upperfalse
+  \expandafter\ebnf@cc@loop#1\ebnf@cc@end
+}
+\def\ebnf@cc@loop#1{%
+  \ifx#1\ebnf@cc@end
+    \expandafter\ebnf@cc@done
+  \else
+    \ebnf@cc@char{#1}%
+    \expandafter\ebnf@cc@loop
+  \fi
+}
+\def\ebnf@cc@done{%
+  \edef\ebnf@cc@out{\ebnf@result}%
+  \expandafter\endgroup\expandafter\def\expandafter\ebnf@cc@out\expandafter{\ebnf@cc@out}%
+}
+\def\ebnf@cc@char#1{%
+  \def\ebnf@cc@cur{#1}%
+  \def\ebnf@cc@underscore{_}%
+  \ifx\ebnf@cc@cur\ebnf@cc@underscore
+    \ebnf@uppertrue
+  \else
+    \ebnf@cc@isdigit{#1}%
+  \fi
+}
+%    \end{macrocode}
+%
+% Check if a character is a digit and spell it out.
+%
+%    \begin{macrocode}
+\def\ebnf@cc@isdigit#1{%
+  \ifcase\numexpr\ifnum`#1<`0 -1%
+    \else\ifnum`#1>`9 -1%
+    \else`#1-`0\fi\fi\relax
+    \edef\ebnf@result{\ebnf@result Zero}%  0
+  \or\edef\ebnf@result{\ebnf@result One}%  1
+  \or\edef\ebnf@result{\ebnf@result Two}%  2
+  \or\edef\ebnf@result{\ebnf@result Three}%  3
+  \or\edef\ebnf@result{\ebnf@result Four}%  4
+  \or\edef\ebnf@result{\ebnf@result Five}%  5
+  \or\edef\ebnf@result{\ebnf@result Six}%  6
+  \or\edef\ebnf@result{\ebnf@result Seven}%  7
+  \or\edef\ebnf@result{\ebnf@result Eight}%  8
+  \or\edef\ebnf@result{\ebnf@result Nine}%  9
+  \else
+    \ifebnf@upper
+      \edef\ebnf@result{\ebnf@result\uppercase{#1}}%
+      \ebnf@upperfalse
+    \else
+      \edef\ebnf@result{\ebnf@result#1}%
+    \fi
+  \fi
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Using productions}
+%
+% \begin{macro}{\useproduction}
+% |\useproduction{name}| places the diagram for the named production.
+% It converts the name to camelCase, appends |Box| (matching the
+% savebox naming convention in the generated TikZ code), and uses
+% |\usebox| to render the diagram.
+%    \begin{macrocode}
+\newcommand{\useproduction}[1]{%
+  \ebnf@camelcase{#1}%
+  \edef\ebnf@boxname{\ebnf@cc@out Box}%
+  \ifcsname\ebnf@boxname\endcsname
+    \usebox{\csname\ebnf@boxname\endcsname}%
+  \else
+    \PackageWarning{ebnf2tikz}{Production `#1' (savebox `\ebnf@boxname') not defined.
+      Have you run ebnf2tikz and included the output?}%
+  \fi
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Automatic processing}
+%
+% \begin{macro}{\ebnf@appendfile}
+% Append a registered EBNF file to the combined input by copying it
+% with a shell command.
+%    \begin{macrocode}
+\def\ebnf@appendfile#1{%
+  \ShellEscape{cat "#1" >> "\jobname-rail.ebnf"}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% At |\begin{document}|, if any EBNF content exists, we assemble the
+% combined input, run \texttt{ebnf2tikz}, and |\input| the result.
+% This requires \texttt{-shell-escape}.
+%
+%    \begin{macrocode}
+\AtBeginDocument{%
+  \ifebnf@hasfiles
+    %% Close inline file if it was opened by ebnf environments in the preamble
+    \ifebnf@fileopen
+      \immediate\closeout\ebnf@inlinefile
+      \global\ebnf@fileopenfalse
+    \fi
+    %% Append registered external files
+    \ebnf@filelist
+    %% Run ebnf2tikz if shell escape is available
+    \ShellEscape{ebnf2tikz\ebnf@flags\space
+      "\jobname-rail.ebnf" "\jobname-rail.tex"}%
+    %% Input the generated TikZ code if the file exists
+    \IfFileExists{\jobname-rail.tex}{%
+      \input{\jobname-rail.tex}%
+    }{%
+      \PackageWarning{ebnf2tikz}{%
+        Output file \jobname-rail.tex not found.\MessageBreak
+        Run ebnf2tikz manually or use -shell-escape}%
+    }%
+  \fi
+}
+%    \end{macrocode}
+%
+% Close the inline EBNF file at end of document if it is still open
+% (e.g., if |ebnf| environments appear in the document body and no
+% external files triggered the AtBeginDocument close).
+%
+%    \begin{macrocode}
+\AtEndDocument{%
+  \ifebnf@fileopen
+    \immediate\closeout\ebnf@inlinefile
+    \global\ebnf@fileopenfalse
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%
+% \Finale
+\endinput
