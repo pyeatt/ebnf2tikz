@@ -43,17 +43,20 @@ The `subsume` annotation causes `choices` and `choice` to be inlined directly in
 
 ```bash
 cmake .
-make              # Build binary, extract .sty, build package docs, run check-tikz
+make              # Build binary, extract .sty, build package docs, manual, run check-tikz
 make check        # Run all 167 AST-dump regression tests
 make check-tikz   # Build PDF with all railroad diagrams (requires pdflatex)
 make check-sty    # Run LaTeX package integration tests
 make sty          # Extract ebnf2tikz.sty from .dtx
 make sty-doc      # Build ebnf2tikz.pdf package documentation
+make manual       # Build user manual (manual.pdf)
 make doc          # Generate Doxygen API documentation
 make realclean    # Remove all build artifacts
 ```
 
-Build products placed in the project root: `ebnf2tikz` (binary), `ebnf2tikz.sty` (LaTeX package), `ebnf2tikz.pdf` (package documentation).
+Build products placed in the project root: `ebnf2tikz` (binary), `ebnf2tikz.sty` (LaTeX package), `ebnf2tikz.pdf` (package documentation), `manual.pdf` (user manual).
+
+LaTeX build output is suppressed by default. Set `LATEX_VERBOSE=1` to see full output (e.g., `LATEX_VERBOSE=1 make manual`).
 
 ## Usage
 
@@ -125,7 +128,10 @@ production_name = expr ;
 <<-- subsume as regex_pattern -->>
 production_name = expr ;
 
-<<-- caption description -->>
+<<-- caption "description" -->>
+production_name = expr ;
+
+<<-- label "fig:name" -->>
 production_name = expr ;
 
 <<-- sideways -->>
@@ -136,8 +142,9 @@ production_name = expr ;
 |------------|--------|
 | `subsume` | Inline this production's body wherever its name is referenced |
 | `subsume as <regex>` | Inline into nonterminals matching the POSIX extended regex |
-| `caption <string>` | Set the LaTeX figure caption |
-| `sideways` | Use a `sidewaysfigure` environment |
+| `caption "<string>"` | Set the LaTeX figure caption (requires `-f`) |
+| `label "<string>"` | Set the LaTeX figure `\label` (requires `-f`) |
+| `sideways` | Use a `sidewaysfigure` environment (requires `-f`) |
 
 ### Auto-Wrap
 
