@@ -50,6 +50,8 @@ ebnf2tikz
 // declare yylex here
 YY_DECL;
 
+using namespace std;
+
 string stripquotes(string s)
 {
   s.erase(s.begin());

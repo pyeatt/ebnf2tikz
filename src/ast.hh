@@ -39,16 +39,16 @@ ebnf2tikz
 #include <string>
 #include <vector>
 
-using namespace std;
-
 /** @brief Map of annotation key-value pairs (e.g., subsume, caption). */
-typedef map<string,string> annotmap;
+typedef std::map<std::string,std::string> annotmap;
 
 /** @brief A single annotation key-value pair. */
-typedef pair<string,string> annot_t;
+typedef std::pair<std::string,std::string> annot_t;
 
 /** @brief Namespace for all AST node types. */
 namespace ast {
+
+class ASTVisitor;  /* Forward declaration; see ast_visitor.hh */
 
 /**
  * @brief Discriminator for AST node types.
@@ -90,6 +90,12 @@ public:
    * @return A newly allocated clone of the entire subtree.
    */
   virtual ASTNode* clone() const = 0;
+
+  /**
+   * @brief Accept a visitor (double-dispatch).
+   * @param v The visitor to dispatch to.
+   */
+  virtual void accept(ASTVisitor &v) = 0;
 };
 
 /**
@@ -100,16 +106,17 @@ public:
  */
 class TerminalNode : public ASTNode {
 public:
-  string text;  /**< Terminal text including surrounding quotes. */
+  std::string text;  /**< Terminal text including surrounding quotes. */
 
   /**
    * @brief Construct a terminal node.
    * @param s The terminal text (with quotes).
    */
-  TerminalNode(const string &s) : ASTNode(ASTKind::Terminal), text(s) {}
+  TerminalNode(const std::string &s) : ASTNode(ASTKind::Terminal), text(s) {}
 
   /** @brief Deep copy this terminal node. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -119,16 +126,17 @@ public:
  */
 class NonterminalNode : public ASTNode {
 public:
-  string name;  /**< The referenced production name. */
+  std::string name;  /**< The referenced production name. */
 
   /**
    * @brief Construct a nonterminal node.
    * @param s The production name being referenced.
    */
-  NonterminalNode(const string &s) : ASTNode(ASTKind::Nonterminal), name(s) {}
+  NonterminalNode(const std::string &s) : ASTNode(ASTKind::Nonterminal), name(s) {}
 
   /** @brief Deep copy this nonterminal node. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -142,6 +150,7 @@ public:
 
   /** @brief Deep copy this epsilon node. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -156,6 +165,7 @@ public:
 
   /** @brief Deep copy this newline node. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -166,7 +176,7 @@ public:
  */
 class SequenceNode : public ASTNode {
 public:
-  vector<ASTNode*> children;  /**< Ordered list of child nodes. */
+  std::vector<ASTNode*> children;  /**< Ordered list of child nodes. */
 
   SequenceNode() : ASTNode(ASTKind::Sequence) {}
 
@@ -181,6 +191,7 @@ public:
 
   /** @brief Deep copy this sequence and all children. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -191,7 +202,7 @@ public:
  */
 class ChoiceNode : public ASTNode {
 public:
-  vector<ASTNode*> alternatives;  /**< List of alternative subtrees. */
+  std::vector<ASTNode*> alternatives;  /**< List of alternative subtrees. */
 
   ChoiceNode() : ASTNode(ASTKind::Choice) {}
 
@@ -206,6 +217,7 @@ public:
 
   /** @brief Deep copy this choice and all alternatives. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -230,6 +242,7 @@ public:
 
   /** @brief Deep copy this optional and its child. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 /**
@@ -245,9 +258,9 @@ public:
 class LoopNode : public ASTNode {
 public:
   ASTNode *body;              /**< Forward-path body, may be nullptr. */
-  vector<ASTNode*> repeats;   /**< Backward-path repeat alternatives (owned). */
+  std::vector<ASTNode*> repeats;   /**< Backward-path repeat alternatives (owned). */
 
-  LoopNode() : ASTNode(ASTKind::Loop), body(NULL) {}
+  LoopNode() : ASTNode(ASTKind::Loop), body(nullptr) {}
 
   /** @brief Destroy this node, the body, and all repeats. */
   ~LoopNode() override;
@@ -260,6 +273,7 @@ public:
 
   /** @brief Deep copy this loop, its body, and all repeats. */
   ASTNode* clone() const override;
+  void accept(ASTVisitor &v) override;
 };
 
 } // namespace ast
@@ -272,7 +286,7 @@ public:
  */
 class ASTProduction {
 public:
-  string name;                /**< Production name (left-hand side). */
+  std::string name;                /**< Production name (left-hand side). */
   annotmap *annotations;      /**< Annotation key-value map, may be nullptr. */
   ast::ASTNode *body;         /**< Body expression tree (owned). */
   int needsWrap;              /**< Set by astAutoWrapGrammar when body exceeds row width. */
@@ -283,10 +297,16 @@ public:
    * @param n  Production name.
    * @param b  Body expression (ownership transferred).
    */
-  ASTProduction(annotmap *a, const string &n, ast::ASTNode *b);
+  ASTProduction(annotmap *a, const std::string &n, ast::ASTNode *b);
 
   /** @brief Destroy the production, its annotations, and body. */
   ~ASTProduction();
+
+  /** @brief Check if this production has a subsume annotation. */
+  bool isSubsumed() const {
+    return annotations != nullptr &&
+           (*annotations)["subsume"] != "";
+  }
 };
 
 /**
@@ -297,7 +317,7 @@ public:
  */
 class ASTGrammar {
 public:
-  vector<ASTProduction*> productions;  /**< Ordered list of productions (owned). */
+  std::vector<ASTProduction*> productions;  /**< Ordered list of productions (owned). */
 
   /**
    * @brief Add a production to the grammar.

@@ -36,11 +36,10 @@ ebnf2tikz
 #define DRIVER_HH
 #include <set>
 #include <fstream>
+#include <sstream>
 #include "ast.hh"
 #include "nodesizes.hh"
 #include "parser.hh"
-
-using namespace std;
 
 /** @brief Flex scanner function prototype, receives a driver reference. */
 #define YY_DECL yy::parser::symbol_type yylex (driver& drv)
@@ -57,9 +56,9 @@ class driver
 {
   int result;                  /**< Parser return code. */
   std::string file;            /**< Current input filename. */
-  set<string> nonterminals;    /**< Set of nonterminal names seen. */
-  set<string> terminals;       /**< Set of terminal strings seen. */
-  ofstream *outFile;           /**< Output file stream for TikZ. */
+  std::set<std::string> nonterminals;    /**< Set of nonterminal names seen. */
+  std::set<std::string> terminals;       /**< Set of terminal strings seen. */
+  std::ofstream *outFile;           /**< Output file stream for TikZ. */
   nodesizes *sizes;            /**< Node size cache from bnfnodes.dat. */
   int noopt;                   /**< 1 to skip optimization. */
   int figures;                 /**< 1 to wrap tikzpictures in figures. */
@@ -75,10 +74,10 @@ public:
    * @param out Output file stream for TikZ output.
    * @param sz  Node size cache.
    */
-  driver(ofstream *out, nodesizes *sz);
+  driver(std::ofstream *out, nodesizes *sz);
 
   /** @brief Get the output file stream. */
-  ofstream &outs(){return *outFile;}
+  std::ofstream &outs(){return *outFile;}
 
   /** @brief Get the node size cache pointer. */
   nodesizes *getSizes(){return sizes;}
@@ -88,7 +87,7 @@ public:
    * @param s Terminal text (with quotes).
    * @return Newly allocated TerminalNode.
    */
-  ast::ASTNode* addTerminal(string &s)
+  ast::ASTNode* addTerminal(std::string &s)
   {
     terminals.insert(s);
     return new ast::TerminalNode(s);
@@ -99,7 +98,7 @@ public:
    * @param s Nonterminal name.
    * @return Newly allocated NonterminalNode.
    */
-  ast::ASTNode* addString(string &s)
+  ast::ASTNode* addString(std::string &s)
   {
     nonterminals.insert(s);
     return new ast::NonterminalNode(s);
@@ -137,7 +136,7 @@ public:
    * @brief Begin scanning from a string stream.
    * @param s The string stream to scan.
    */
-  void scan_begin (stringstream &s);
+  void scan_begin (std::stringstream &s);
 
   /** @brief End scanning and close the input. */
   void scan_end ();

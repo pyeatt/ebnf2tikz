@@ -47,6 +47,7 @@ ebnf2tikz
 # include "diagnostics.hh"
 # include "driver.hh"
 # include "parser.hh"
+using namespace std;
 %}
 
 

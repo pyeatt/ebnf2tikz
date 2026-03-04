@@ -28,6 +28,7 @@ ebnf2tikz
  */
 
 #include "resolver.hh"
+#include "ast_visitor.hh"
 #include <regex.h>
 #include <set>
 #include <string>
@@ -41,48 +42,19 @@ using namespace ast;
 // -----------------------------------------------------------------------
 
 /**
- * @brief Recursively collect all nonterminal names referenced in an AST subtree.
- * @param n    Root of the subtree to scan.
- * @param refs Set to insert referenced names into.
+ * @brief Visitor that collects all nonterminal names referenced in an AST.
  */
-static void collectRefs(ASTNode *n, set<string> &refs)
-{
-  size_t i;
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  LoopNode *loop;
+class RefCollector : public DefaultASTVisitor {
+public:
+  set<string> &refs;
 
-  switch(n->kind)
-    {
-    case ASTKind::Terminal:
-    case ASTKind::Epsilon:
-    case ASTKind::Newline:
-      break;
-    case ASTKind::Nonterminal:
-      refs.insert(static_cast<NonterminalNode*>(n)->name);
-      break;
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      for(i = 0; i < seq->children.size(); i++)
-        collectRefs(seq->children[i], refs);
-      break;
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      for(i = 0; i < ch->alternatives.size(); i++)
-        collectRefs(ch->alternatives[i], refs);
-      break;
-    case ASTKind::Optional:
-      collectRefs(static_cast<OptionalNode*>(n)->child, refs);
-      break;
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
-        collectRefs(loop->body, refs);
-      for(i = 0; i < loop->repeats.size(); i++)
-        collectRefs(loop->repeats[i], refs);
-      break;
-    }
-}
+  RefCollector(set<string> &r) : refs(r) {}
+
+  void visitNonterminal(NonterminalNode *n) override
+  {
+    refs.insert(n->name);
+  }
+};
 
 void resolver::checkReferences(ASTGrammar *grammar)
 {
@@ -95,8 +67,11 @@ void resolver::checkReferences(ASTGrammar *grammar)
     defined.insert(grammar->productions[i]->name);
 
   // Collect all referenced nonterminals
-  for(i = 0; i < grammar->productions.size(); i++)
-    collectRefs(grammar->productions[i]->body, referenced);
+  {
+    RefCollector collector(referenced);
+    for(i = 0; i < grammar->productions.size(); i++)
+      grammar->productions[i]->body->accept(collector);
+  }
 
   // Warn about undefined references
   for(auto it = referenced.begin(); it != referenced.end(); it++)
@@ -186,7 +161,7 @@ static ASTNode* subsumeNode(ASTNode *n, regex_t *pattern,
 
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         {
           result = subsumeNode(loop->body, pattern, replacement);
           if(result != loop->body)
@@ -219,7 +194,7 @@ void resolver::subsume(ASTGrammar *grammar)
   for(i = 0; i < grammar->productions.size(); i++)
     {
       prod = grammar->productions[i];
-      if(prod->annotations == NULL)
+      if(prod->annotations == nullptr)
         ;  /* no annotations, skip */
       else
         {

@@ -7,7 +7,6 @@
 #define UTIL_HH
 
 #include <string>
-using namespace std;
 
 /**
  * @brief Convert an underscore-separated name to camelCase for LaTeX commands.
@@ -19,6 +18,6 @@ using namespace std;
  * @param s The underscore-separated input string.
  * @return The camelCase version suitable for a LaTeX command name.
  */
-string camelcase(string s);
+std::string camelcase(std::string s);
 
 #endif

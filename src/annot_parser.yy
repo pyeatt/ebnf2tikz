@@ -52,7 +52,6 @@ ebnf2tikz
   #include <assert.h>
   #include <map>
   #include <ast.hh>
-  using namespace std;
   class annotdriver;
 }
 // The parsing context.

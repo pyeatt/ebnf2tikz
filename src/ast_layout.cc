@@ -42,6 +42,7 @@ ebnf2tikz
  */
 
 #include "ast_layout.hh"
+#include "ast_visitor.hh"
 #include <algorithm>
 
 using namespace std;
@@ -166,85 +167,71 @@ string ASTLayoutContext::nextCoord()
 
 /** @} */
 
+/**
+ * @brief Visitor that assigns TikZ names to leaf nodes during layout.
+ */
+class NameAssigner : public DefaultASTVisitor {
+public:
+  ASTLayoutContext &ctx;
+  ASTProductionLayout &layout;
+
+  NameAssigner(ASTLayoutContext &c, ASTProductionLayout &l)
+    : ctx(c), layout(l) {}
+
+  void visitTerminal(TerminalNode *n) override
+  {
+    ASTLeafInfo li;
+
+    li.tikzName = ctx.nextNode();
+    li.rawText = n->text;
+    /* strip surrounding quotes */
+    if(li.rawText.size() >= 2)
+      li.rawText = li.rawText.substr(1, li.rawText.size() - 2);
+    li.style = "terminal";
+    li.format = "railtermname";
+    li.isTerminal = 1;
+    li.wrapped = 0;
+    ctx.sizes->getSize(li.tikzName, li.width, li.height);
+    layout.leafInfo[(ASTNode*)n] = li;
+  }
+
+  void visitNonterminal(NonterminalNode *n) override
+  {
+    ASTLeafInfo li;
+
+    li.tikzName = ctx.nextNode();
+    li.rawText = n->name;
+    li.style = "nonterminal";
+    li.format = "railname";
+    li.isTerminal = 0;
+    li.wrapped = 0;
+    ctx.sizes->getSize(li.tikzName, li.width, li.height);
+    layout.leafInfo[(ASTNode*)n] = li;
+  }
+
+  void visitEpsilon(EpsilonNode *n) override
+  {
+    ASTLeafInfo li;
+
+    li.tikzName = ctx.nextCoord();
+    li.rawText = "";
+    li.style = "null";
+    li.format = "";
+    li.isTerminal = 0;
+    li.wrapped = 0;
+    li.width = 0;
+    li.height = 0;
+    layout.leafInfo[(ASTNode*)n] = li;
+  }
+};
+
 /** @brief Walk AST assigning TikZ names to leaf nodes. @see astAssignNames() in ast_layout.hh */
 
 void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
                     ASTProductionLayout &layout)
 {
-  ASTLeafInfo li;
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
-
-  switch(n->kind)
-    {
-    case ASTKind::Terminal:
-      li.tikzName = ctx.nextNode();
-      li.rawText = static_cast<TerminalNode*>(n)->text;
-      /* strip surrounding quotes */
-      if(li.rawText.size() >= 2)
-        li.rawText = li.rawText.substr(1, li.rawText.size() - 2);
-      li.style = "terminal";
-      li.format = "railtermname";
-      li.isTerminal = 1;
-      li.wrapped = 0;
-      ctx.sizes->getSize(li.tikzName, li.width, li.height);
-      layout.leafInfo[n] = li;
-      return;
-
-    case ASTKind::Nonterminal:
-      li.tikzName = ctx.nextNode();
-      li.rawText = static_cast<NonterminalNode*>(n)->name;
-      li.style = "nonterminal";
-      li.format = "railname";
-      li.isTerminal = 0;
-      li.wrapped = 0;
-      ctx.sizes->getSize(li.tikzName, li.width, li.height);
-      layout.leafInfo[n] = li;
-      return;
-
-    case ASTKind::Epsilon:
-      li.tikzName = ctx.nextCoord();
-      li.rawText = "";
-      li.style = "null";
-      li.format = "";
-      li.isTerminal = 0;
-      li.wrapped = 0;
-      li.width = 0;
-      li.height = 0;
-      layout.leafInfo[n] = li;
-      return;
-
-    case ASTKind::Newline:
-      return;
-
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      for(i = 0; i < seq->children.size(); i++)
-        astAssignNames(seq->children[i], ctx, layout);
-      return;
-
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      for(i = 0; i < ch->alternatives.size(); i++)
-        astAssignNames(ch->alternatives[i], ctx, layout);
-      return;
-
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      astAssignNames(opt->child, ctx, layout);
-      return;
-
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
-        astAssignNames(loop->body, ctx, layout);
-      for(i = 0; i < loop->repeats.size(); i++)
-        astAssignNames(loop->repeats[i], ctx, layout);
-      return;
-    }
+  NameAssigner assigner(ctx, layout);
+  n->accept(assigner);
 }
 
 /** @brief Measure an AST subtree. @see astComputeSize() in ast_layout.hh */
@@ -403,8 +390,8 @@ static pair<float,float> computeSizeChoicelike(ASTNode *self,
   ChoiceNode *ch;
   OptionalNode *opt;
 
-  ch = NULL;
-  opt = NULL;
+  ch = nullptr;
+  opt = nullptr;
   if(kind == CK_Choice)
     {
       ch = static_cast<ChoiceNode*>(self);
@@ -474,7 +461,7 @@ static pair<float,float> computeSizeLoop(LoopNode *n,
   totalHeight = 0;
 
   /* Body (child 0, may be null/epsilon) */
-  if(n->body != NULL)
+  if(n->body != nullptr)
     {
       csz = astComputeSize(n->body, layout, sizes);
       if(csz.first > maxWidth)
@@ -506,7 +493,7 @@ static pair<float,float> computeSizeLoop(LoopNode *n,
 
   /* Extra padding when body or any repeat is auto-wrapped, so the
      Loop's feedback rails don't overlap wrap-around polylines. */
-  if(n->body != NULL && containsNewline(n->body))
+  if(n->body != nullptr && containsNewline(n->body))
     maxWidth += 2.0f * sizes->colsep;
   else
     {
@@ -808,8 +795,8 @@ static ASTNodeGeom layoutChoicelike(ASTNode *self,
   ChoiceNode *ch;
   OptionalNode *opt;
 
-  ch = NULL;
-  opt = NULL;
+  ch = nullptr;
+  opt = nullptr;
   if(kind == CK_Choice)
     {
       ch = static_cast<ChoiceNode*>(self);
@@ -933,7 +920,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
 
   /* Compute max width across body and all repeats */
   maxWidth = 0;
-  if(n->body != NULL)
+  if(n->body != nullptr)
     {
       csz = astComputeSize(n->body, layout, sizes);
       if(csz.first > maxWidth)
@@ -950,7 +937,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
   railPad = sizes->colsep;
 
   /* Extra padding when body or any repeat is auto-wrapped */
-  if(n->body != NULL && containsNewline(n->body))
+  if(n->body != nullptr && containsNewline(n->body))
     railPad += sizes->colsep;
   else
     {
@@ -966,7 +953,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
   cursorY = origin.y;
   totalHeight = 0;
 
-  if(n->body != NULL)
+  if(n->body != nullptr)
     {
       csz = astComputeSize(n->body, layout, sizes);
       childWidth = csz.first;
@@ -1026,7 +1013,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
      The feedback paths already draw body-to-rail segments with
      rounded corners; setting entry/exit at the rail would create
      gaps where the rounded corner bypasses the exact rail point. */
-  if(n->body != NULL && layout.geom.find(n->body) != layout.geom.end())
+  if(n->body != nullptr && layout.geom.find(n->body) != layout.geom.end())
     {
       g.entry = layout.geom[n->body].entry;
       g.exit = layout.geom[n->body].exit;
@@ -1097,7 +1084,7 @@ static void connectSequence(SequenceNode *n,
   int reversed;
 
   nc = n->children.size();
-  prevContent = NULL;
+  prevContent = nullptr;
   rowMaxBelow = 0;
 
   /* Read the reversed flag stored during layout */
@@ -1129,11 +1116,11 @@ static void connectSequence(SequenceNode *n,
       if(child->kind == ASTKind::Newline)
         {
           /* Route wrap-around */
-          if(prevContent != NULL &&
+          if(prevContent != nullptr &&
              layout.geom.find(prevContent) != layout.geom.end() &&
              layout.geom.find((ASTNode*)n) != layout.geom.end())
             {
-              nextContent = NULL;
+              nextContent = nullptr;
               for(j = i + 1; j < nc; j++)
                 {
                   size_t jdx;
@@ -1146,7 +1133,7 @@ static void connectSequence(SequenceNode *n,
                     }
                 }
 
-              if(nextContent != NULL)
+              if(nextContent != nullptr)
                 {
                   seqGeom = layout.geom[(ASTNode*)n];
                   prevGeom = layout.geom[prevContent];
@@ -1179,13 +1166,13 @@ static void connectSequence(SequenceNode *n,
                   addPolyline(layout.connections, pl);
                 }
             }
-          prevContent = NULL;
+          prevContent = nullptr;
           rowMaxBelow = 0;
         }
       else
         {
           /* content or epsilon node: connect to previous */
-          if(prevContent != NULL &&
+          if(prevContent != nullptr &&
              layout.geom.find(prevContent) != layout.geom.end() &&
              layout.geom.find(child) != layout.geom.end())
             {
@@ -1228,8 +1215,8 @@ static void connectChoicelike(ASTNode *self, ChoicelikeKind kind,
   ChoiceNode *ch;
   OptionalNode *opt;
 
-  ch = NULL;
-  opt = NULL;
+  ch = nullptr;
+  opt = nullptr;
   if(kind == CK_Choice)
     {
       ch = static_cast<ChoiceNode*>(self);
@@ -1370,7 +1357,7 @@ static void connectLoop(LoopNode *n,
   loopGeom = layout.geom[(ASTNode*)n];
 
   /* recurse into body */
-  if(n->body != NULL)
+  if(n->body != nullptr)
     astComputeConnections(n->body, layout, sizes);
   for(i = 0; i < n->repeats.size(); i++)
     astComputeConnections(n->repeats[i], layout, sizes);
@@ -1379,7 +1366,7 @@ static void connectLoop(LoopNode *n,
   exitRailX = loopGeom.origin.x + loopGeom.width;
 
   /* Body entry/exit coordinates */
-  if(n->body != NULL && layout.geom.find(n->body) != layout.geom.end())
+  if(n->body != nullptr && layout.geom.find(n->body) != layout.geom.end())
     {
       bodyGeom = layout.geom[n->body];
       bodyEntry = bodyGeom.entry;
@@ -1613,7 +1600,7 @@ static void adjustWrappedWidths(ASTNode *n,
 
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         adjustWrappedWidths(loop->body, layout, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
         adjustWrappedWidths(loop->repeats[i], layout, sizes);
@@ -1687,7 +1674,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
       loop = static_cast<LoopNode*>(body);
       innerWidth = availableWidth - 2.0f * sizes->colsep;
       /* Same tighter width check as Choice above. */
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         {
           csz = astComputeSize(loop->body, layout, sizes);
           if(csz.first > innerWidth)
@@ -1705,7 +1692,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
                 }
             }
         }
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         astAutoWrap(loop->body, innerWidth, layout, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
         astAutoWrap(loop->repeats[i], innerWidth, layout, sizes);
@@ -1817,7 +1804,7 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
       innerWidth = availableWidth - 2.0f * sizes->colsep;
 
       /* Recurse into body and repeats first */
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         loop->body = astSplitOverwideLoop(loop->body, innerWidth,
                          layout, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
@@ -1825,7 +1812,7 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
                                innerWidth, layout, sizes);
 
       /* Check if this is a splittable null-body loop */
-      if(loop->body != NULL)
+      if(loop->body != nullptr)
         return n;
       if(loop->repeats.size() != 1)
         return n;
@@ -1909,7 +1896,7 @@ void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
   pair<float,float> bodySize;
   float availableWidth;
 
-  if(sizes == NULL || sizes->textwidth <= 0)
+  if(sizes == nullptr || sizes->textwidth <= 0)
     return;
 
   for(i = 0; i < grammar->productions.size(); i++)
@@ -1917,8 +1904,7 @@ void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
       prod = grammar->productions[i];
 
       /* Skip subsumed productions */
-      if(prod->annotations != NULL &&
-         (*prod->annotations)["subsume"] != "")
+      if(prod->isSubsumed())
         ;
       else
         {
@@ -1977,134 +1963,51 @@ static int hasWrappableSpaces(ASTLeafInfo &li)
 }
 
 /**
- * @brief Collect nonterminal nodes that can be shortstack-wrapped.
- * @param n      Root of subtree to scan.
- * @param info   Leaf information map.
- * @param result Vector to append wrappable nodes to.
+ * @brief Visitor that collects nonterminal nodes eligible for shortstack wrapping.
  */
-static void collectWrappableNodes(ASTNode *n,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTNode*> &result)
-{
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
-  auto it = info.find(n);
+class WrappableCollector : public DefaultASTVisitor {
+public:
+  map<ASTNode*, ASTLeafInfo> &info;
+  vector<ASTNode*> &result;
 
-  switch(n->kind)
-    {
-    case ASTKind::Nonterminal:
-      if(it != info.end() && !it->second.wrapped &&
-         hasWrappableSpaces(it->second))
-        result.push_back(n);
-      return;
+  WrappableCollector(map<ASTNode*, ASTLeafInfo> &i, vector<ASTNode*> &r)
+    : info(i), result(r) {}
 
-    case ASTKind::Terminal:
-    case ASTKind::Epsilon:
-    case ASTKind::Newline:
-      return;
-
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      for(i = 0; i < seq->children.size(); i++)
-        collectWrappableNodes(seq->children[i], info, result);
-      return;
-
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      for(i = 0; i < ch->alternatives.size(); i++)
-        collectWrappableNodes(ch->alternatives[i], info, result);
-      return;
-
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      collectWrappableNodes(opt->child, info, result);
-      return;
-
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
-        collectWrappableNodes(loop->body, info, result);
-      for(i = 0; i < loop->repeats.size(); i++)
-        collectWrappableNodes(loop->repeats[i], info, result);
-      return;
-    }
-}
+  void visitNonterminal(NonterminalNode *n) override
+  {
+    auto it = info.find((ASTNode*)n);
+    if(it != info.end() && !it->second.wrapped &&
+       hasWrappableSpaces(it->second))
+      result.push_back((ASTNode*)n);
+  }
+};
 
 /**
- * @brief Estimate extra width from unwrapped tall nonterminals.
- *
- * For nonterminals that are taller than expected (indicating LaTeX
- * has already wrapped them), estimates how much width would be saved
- * by shortstack-wrapping them.
- *
- * @param n     Root of subtree to scan.
- * @param info  Leaf information map.
- * @param sizes Node size cache.
- * @return Estimated extra width in points.
+ * @brief Visitor that estimates extra width from unwrapped tall nonterminals.
  */
-static float estimateUnwrappedExtra(ASTNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
-{
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
+class UnwrappedWidthEstimator : public DefaultASTVisitor {
+public:
+  map<ASTNode*, ASTLeafInfo> &info;
+  nodesizes *sizes;
   float extra;
-  int numLines;
-  auto it = info.find(n);
 
-  switch(n->kind)
-    {
-    case ASTKind::Nonterminal:
-      if(it != info.end() && it->second.height > 1.5f * sizes->minsize &&
-         hasWrappableSpaces(it->second))
-        {
-          numLines = (int)(it->second.height / sizes->minsize + 0.5f);
-          if(numLines < 2)
-            numLines = 2;
-          return (float)(numLines - 1) * it->second.width;
-        }
-      return 0;
+  UnwrappedWidthEstimator(map<ASTNode*, ASTLeafInfo> &i, nodesizes *s)
+    : info(i), sizes(s), extra(0) {}
 
-    case ASTKind::Terminal:
-    case ASTKind::Epsilon:
-    case ASTKind::Newline:
-      return 0;
-
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      extra = 0;
-      for(i = 0; i < seq->children.size(); i++)
-        extra += estimateUnwrappedExtra(seq->children[i], info, sizes);
-      return extra;
-
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      extra = 0;
-      for(i = 0; i < ch->alternatives.size(); i++)
-        extra += estimateUnwrappedExtra(ch->alternatives[i], info, sizes);
-      return extra;
-
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      return estimateUnwrappedExtra(opt->child, info, sizes);
-
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      extra = 0;
-      if(loop->body != NULL)
-        extra += estimateUnwrappedExtra(loop->body, info, sizes);
-      for(i = 0; i < loop->repeats.size(); i++)
-        extra += estimateUnwrappedExtra(loop->repeats[i], info, sizes);
-      return extra;
-    }
-
-  return 0;
-}
+  void visitNonterminal(NonterminalNode *n) override
+  {
+    int numLines;
+    auto it = info.find((ASTNode*)n);
+    if(it != info.end() && it->second.height > 1.5f * sizes->minsize &&
+       hasWrappableSpaces(it->second))
+      {
+        numLines = (int)(it->second.height / sizes->minsize + 0.5f);
+        if(numLines < 2)
+          numLines = 2;
+        extra += (float)(numLines - 1) * it->second.width;
+      }
+  }
+};
 
 /** @} */
 
@@ -2132,14 +2035,17 @@ void astPostLayoutWrap(ASTProductionLayout &layout, ASTNode *body,
 
   if(!needsWrap)
     {
-      extraWidth = estimateUnwrappedExtra(body, layout.leafInfo, sizes);
+      UnwrappedWidthEstimator estimator(layout.leafInfo, sizes);
+      body->accept(estimator);
+      extraWidth = estimator.extra;
       if(extraWidth > 0 && bodyWidth + extraWidth > sizes->textwidth)
         needsWrap = 1;
     }
 
   if(needsWrap)
     {
-      collectWrappableNodes(body, layout.leafInfo, wrappable);
+      WrappableCollector collector(layout.leafInfo, wrappable);
+      body->accept(collector);
       for(j = 0; j < wrappable.size(); j++)
         {
           auto it = layout.leafInfo.find(wrappable[j]);
