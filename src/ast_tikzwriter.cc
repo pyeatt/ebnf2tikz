@@ -145,7 +145,7 @@ void ASTTikzWriter::emitLeafNode(ASTNode *n, ASTLeafInfo &li,
            << li.style << "] {" << texName(li)
            << "\\hspace*{1pt}};\n";
     }
-  outs << "\\writenodesize{" << li.tikzName << "}\n";
+  outs << "\\ebnf@writenodesize{" << li.tikzName << "}\n";
 }
 
 
@@ -426,6 +426,8 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
   float extraWidth, bodyWidth;
   vector<ASTNode*> wrappable;
 
+  outs << "\\makeatletter\n";
+
   for(i = 0; i < grammar->productions.size(); i++)
     {
       prod = grammar->productions[i];
@@ -490,4 +492,6 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
           writer.writeProduction(prod, layout);
         }
     }
+
+  outs << "\\makeatother\n";
 }
