@@ -1,0 +1,3 @@
+expr = term, { ("+" | "-"), term };
+term = factor, { ("*" | "/"), factor };
+factor = number | "(", expr, ")";

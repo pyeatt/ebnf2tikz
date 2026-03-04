@@ -1,0 +1,26 @@
+% Test: \useproduction with underscore names and digit names
+% Verifies that the TeX camelcase conversion matches util.cc's camelcase().
+% Underscore names: my_rule -> myRule, long_name_here -> longNameHere
+% Digit names: rule_3 -> ruleThree
+\documentclass{article}
+\usepackage{ebnf2tikz}
+\begin{document}
+
+\section*{Test: useproduction camelcase conversion}
+
+\bigskip
+\noindent\textbf{my\_rule} (savebox: myRuleBox)
+\par\medskip
+\useproduction{my_rule}
+
+\bigskip
+\noindent\textbf{long\_name\_here} (savebox: longNameHereBox)
+\par\medskip
+\useproduction{long_name_here}
+
+\bigskip
+\noindent\textbf{rule\_3} (savebox: ruleThreeBox)
+\par\medskip
+\useproduction{rule_3}
+
+\end{document}

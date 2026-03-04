@@ -1,0 +1,3 @@
+my_rule = 'a' | 'b';
+long_name_here = 'x', 'y', 'z';
+rule_3 = 'hello';
