@@ -180,8 +180,10 @@ generation entirely.
 %% ----------------------------------------------------------------
 \section{EBNF Syntax Reference}
 
-\prog{} accepts standard EBNF as defined by ISO~14977, with a few
-extensions.
+\prog{} accepts a practical subset of the EBNF notation defined by
+ISO/IEC~14977~\cite{iso14977}, with several extensions for railroad
+diagram generation.  See Appendix~\ref{sec:iso14977} for a detailed
+comparison with the standard.
 
 \subsection{Productions}
 
@@ -769,5 +771,119 @@ Plot (unaffected by ebnf2tikz):
   node content changes.  If you are only editing prose around
   existing diagrams, a single \texttt{pdflatex} run suffices.
 \end{itemize}
+
+%% ----------------------------------------------------------------
+\appendix
+\section{Conformance with ISO/IEC 14977}
+\label{sec:iso14977}
+
+ISO/IEC~14977:1996~\cite{iso14977} defines the international standard
+for Extended Backus-Naur Form.  \prog{} implements a practical subset
+of that standard and adds several extensions for railroad diagram
+generation.  This appendix details the differences.
+
+\subsection{Supported ISO~14977 Features}
+
+The following features conform to the standard:
+
+\begin{center}
+\begin{tabular}{@{}llp{6.5cm}@{}}
+\toprule
+Feature & Syntax & Notes \\
+\midrule
+Defining symbol       & \texttt{=}               & \\
+Terminator            & \texttt{;}               & \\
+Concatenation         & \texttt{,}               & \\
+Definition separator  & \texttt{|}                & \\
+Grouping              & \texttt{( \ldots{} )}    & \\
+Optional              & \texttt{[ \ldots{} ]}    & \\
+Repetition            & \texttt{\{ \ldots{} \}}  & Zero or more repetitions. \\
+First quote           & \texttt{'\ldots{}'}      & Terminal strings. \\
+Second quote          & \texttt{"\ldots{}"}      & Terminal strings. \\
+Special sequence      & \texttt{? \ldots{} ?}    & Rendered as a terminal node. \\
+Block comments        & \texttt{(* \ldots{} *)}  & May span multiple lines. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Unsupported ISO~14977 Features}
+
+The following features defined by the standard are \emph{not} supported:
+
+\begin{center}
+\begin{tabular}{@{}llp{6.5cm}@{}}
+\toprule
+Feature & ISO~14977 Syntax & Notes \\
+\midrule
+Exception         & \texttt{A - B}     & Set subtraction of syntactic terms. \\
+Repetition factor & \texttt{3 * A}     & Integer prefix for fixed repetition count. \\
+Alternative brackets & \texttt{(/ /)} for \texttt{[ ]},
+                       \texttt{(: :)} for \texttt{\{ \}} & Compatibility
+                       notations for keyboards lacking square and curly
+                       brackets.  Obsolete in practice. \\
+Alternative defining symbol & \texttt{:} & Some dialects use a colon
+                       instead of \texttt{=}. \\
+Alternative terminator & \texttt{.}    & Some dialects use a period
+                       instead of \texttt{;}. \\
+Alternative separators & \texttt{/} or \texttt{!} & Some dialects use
+                       these instead of \texttt{|}. \\
+Spaces in meta-identifiers & \texttt{case statement} & ISO~14977
+                       allows spaces in nonterminal names.  \prog{}
+                       requires underscores (e.g.,
+                       \texttt{case\_statement}), which are rendered as
+                       spaces in the diagram. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The \emph{exception} and \emph{repetition factor} operators are the
+most significant omissions.  The exception operator (\texttt{A - B})
+specifies that the syntax defined by~\texttt{A} excludes anything
+matching~\texttt{B}.  This concept has no natural visual
+representation in a railroad diagram, so it is omitted.  The
+repetition factor (\texttt{3 * A}) specifies exactly~$n$ repetitions
+of a syntactic term; railroad diagrams typically represent such
+patterns as loops or sequences, making a dedicated operator
+unnecessary.
+
+The alternative bracket notations (\texttt{(/ /)}, \texttt{(: :)})
+and alternative operator symbols (\texttt{:}, \texttt{.}, \texttt{/},
+\texttt{!}) were included in the standard for compatibility with
+character sets that lack certain punctuation.  They are obsolete on
+modern systems and are not supported.
+
+\subsection{\prog{} Extensions Beyond ISO~14977}
+
+\prog{} extends standard EBNF with the following features:
+
+\begin{center}
+\begin{tabular}{@{}lp{8.5cm}@{}}
+\toprule
+Feature & Description \\
+\midrule
+Explicit line break (\texttt{\textbackslash\textbackslash})
+  & Forces a new row in the railroad diagram at a specific point in a
+    production body. \\
+Annotations (\texttt{<<-{}- \ldots{} -{}->>})
+  & Per-production metadata controlling subsumption, figure captions,
+    labels, and rotation.  See Section~\ref{sec:annotations}. \\
+Line comments (\texttt{//} and \texttt{-{}-{}-})
+  & C++ and Ada style line comments, in addition to the standard
+    \texttt{(* \ldots{} *)} block comments. \\
+Underscore identifiers
+  & Nonterminal names use underscores instead of spaces
+    (e.g., \texttt{case\_statement} rather than \texttt{case statement}).
+    Underscores are rendered as spaces in the diagram. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{1}
+\bibitem{iso14977}
+  ISO/IEC~14977:1996,
+  \emph{Information technology---Syntactic metalanguage---Extended BNF},
+  International Organization for Standardization, 1996.
+\end{thebibliography}
 
 \end{document}
