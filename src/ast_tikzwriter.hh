@@ -38,8 +38,6 @@ ebnf2tikz
 #include "ast_layout.hh"
 #include <fstream>
 
-using namespace std;
-
 /**
  * @brief Emits TikZ commands for laid-out railroad diagram productions.
  *
@@ -49,7 +47,7 @@ using namespace std;
  */
 class ASTTikzWriter {
 private:
-  ofstream &outs;    /**< Output stream for TikZ commands. */
+  std::ofstream &outs;    /**< Output stream for TikZ commands. */
   nodesizes *sizes;  /**< Node size cache for dimension queries. */
 
   /**
@@ -57,16 +55,7 @@ private:
    * @param li The leaf info to format.
    * @return LaTeX string for the node label.
    */
-  string texName(ASTLeafInfo &li);
-
-  /**
-   * @brief Emit a single TikZ @c \\node or @c \\coordinate for a leaf.
-   * @param n    The AST leaf node.
-   * @param li   Leaf information (name, style, text).
-   * @param geom Placed geometry (position).
-   */
-  void emitLeafNode(ast::ASTNode *n, ASTLeafInfo &li,
-                    ASTNodeGeom &geom);
+  std::string texName(ASTLeafInfo &li);
 
   /**
    * @brief Emit a TikZ @c \\draw command for a polyline.
@@ -83,11 +72,19 @@ private:
 
 public:
   /**
+   * @brief Emit a single TikZ @c \\node or @c \\coordinate for a leaf.
+   * @param n    The AST leaf node.
+   * @param li   Leaf information (name, style, text).
+   * @param geom Placed geometry (position).
+   */
+  void emitLeafNode(ast::ASTNode *n, ASTLeafInfo &li,
+                    ASTNodeGeom &geom);
+  /**
    * @brief Construct a TikZ writer.
    * @param out Output file stream.
    * @param sz  Node size cache.
    */
-  ASTTikzWriter(ofstream &out, nodesizes *sz);
+  ASTTikzWriter(std::ofstream &out, nodesizes *sz);
 
   /**
    * @brief Write complete TikZ output for one production.
@@ -100,7 +97,8 @@ public:
    * @param layout The production's layout data.
    */
   void writeProduction(ASTProduction *prod,
-                       ASTProductionLayout &layout);
+                       ASTProductionLayout &layout,
+                       bool figures);
 };
 
 /**
@@ -112,8 +110,9 @@ public:
  * @param grammar The grammar to output.
  * @param outs    Output file stream.
  * @param sizes   Node size cache.
+ * @param figures If true, wrap each production in a figure environment.
  */
-void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
-                     nodesizes *sizes);
+void astPlaceGrammar(ASTGrammar *grammar, std::ofstream &outs,
+                     nodesizes *sizes, bool figures);
 
 #endif

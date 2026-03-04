@@ -36,11 +36,10 @@ ebnf2tikz
 #define DRIVER_HH
 #include <set>
 #include <fstream>
+#include <sstream>
 #include "ast.hh"
 #include "nodesizes.hh"
 #include "parser.hh"
-
-using namespace std;
 
 /** @brief Flex scanner function prototype, receives a driver reference. */
 #define YY_DECL yy::parser::symbol_type yylex (driver& drv)
@@ -57,9 +56,9 @@ class driver
 {
   int result;                  /**< Parser return code. */
   std::string file;            /**< Current input filename. */
-  set<string> nonterminals;    /**< Set of nonterminal names seen. */
-  set<string> terminals;       /**< Set of terminal strings seen. */
-  ofstream *outFile;           /**< Output file stream for TikZ. */
+  std::set<std::string> nonterminals;    /**< Set of nonterminal names seen. */
+  std::set<std::string> terminals;       /**< Set of terminal strings seen. */
+  std::ofstream *outFile;           /**< Output file stream for TikZ. */
   nodesizes *sizes;            /**< Node size cache from bnfnodes.dat. */
   int noopt;                   /**< 1 to skip optimization. */
   int figures;                 /**< 1 to wrap tikzpictures in figures. */
@@ -75,20 +74,20 @@ public:
    * @param out Output file stream for TikZ output.
    * @param sz  Node size cache.
    */
-  driver(ofstream *out, nodesizes *sz);
+  driver(std::ofstream *out, nodesizes *sz);
 
   /** @brief Get the output file stream. */
-  ofstream &outs(){return *outFile;}
+  std::ofstream &outs() {return *outFile;}
 
   /** @brief Get the node size cache pointer. */
-  nodesizes *getSizes(){return sizes;}
+  nodesizes *getSizes() const {return sizes;}
 
   /**
    * @brief Create a TerminalNode and record the terminal string.
    * @param s Terminal text (with quotes).
    * @return Newly allocated TerminalNode.
    */
-  ast::ASTNode* addTerminal(string &s)
+  ast::ASTNode* addTerminal(std::string &s)
   {
     terminals.insert(s);
     return new ast::TerminalNode(s);
@@ -99,7 +98,7 @@ public:
    * @param s Nonterminal name.
    * @return Newly allocated NonterminalNode.
    */
-  ast::ASTNode* addString(string &s)
+  ast::ASTNode* addString(std::string &s)
   {
     nonterminals.insert(s);
     return new ast::NonterminalNode(s);
@@ -119,34 +118,39 @@ public:
              int dbefore, int dafter);
 
   /** @brief Get whether dump-only mode is enabled. */
-  int get_dumponly(){return dumponly;}
+  int get_dumponly() const {return dumponly;}
 
   /** @brief Get whether optimization is disabled. */
-  int get_noopt(){return noopt;}
+  int get_noopt() const {return noopt;}
 
   /** @brief Get whether to dump AST before optimization. */
-  int get_dump_before(){return dump_before;}
+  int get_dump_before() const {return dump_before;}
 
   /** @brief Get whether to dump AST after optimization. */
-  int get_dump_after(){return dump_after;}
+  int get_dump_after() const {return dump_after;}
 
-  /** @brief Begin scanning from the current file. */
-  void scan_begin ();
+  /** @brief Get whether to wrap productions in figure environments. */
+  int get_figures() const {return figures;}
+
+  /** @brief Begin scanning from the current file.
+   *  @return true on success, false if the file cannot be opened.
+   */
+  bool scan_begin ();
 
   /**
    * @brief Begin scanning from a string stream.
    * @param s The string stream to scan.
    */
-  void scan_begin (stringstream &s);
+  void scan_begin (std::stringstream &s);
 
   /** @brief End scanning and close the input. */
   void scan_end ();
 
   /** @brief Get the parser return code. */
-  int get_result(){return result;}
+  int get_result() const {return result;}
 
   /** @brief Get a reference to the current source location. */
-  yy::location &get_location(){return location;}
+  yy::location &get_location() {return location;}
 
 };
 #endif

@@ -8,6 +8,8 @@
 #include <string>
 #include <util.hh>
 
+using namespace std;
+
 /**
  * @brief Spell out a single digit character as an English word.
  *

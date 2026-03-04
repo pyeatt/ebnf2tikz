@@ -25,7 +25,7 @@ ebnf2tikz
  * @brief Flex tokenizer for annotation blocks.
  *
  * Tokenizes annotation content between @c \\<\\<-- and @c --\\>\\>.
- * Recognizes keywords (@c subsume, @c as, @c caption, @c sideways),
+ * Recognizes keywords (@c subsume, @c as, @c caption, @c label, @c sideways),
  * quoted strings, and semicolons.  Uses the @c annot prefix to
  * avoid symbol collisions with the main lexer.
  *
@@ -49,6 +49,8 @@ ebnf2tikz
 #define YY_DECL annot::parser::symbol_type annotlex (annotmap *m)
 // declare yylex here
 YY_DECL;
+
+using namespace std;
 
 string stripquotes(string s)
 {
@@ -74,6 +76,7 @@ string stripquotes(string s)
   extern annot::location aloc;
   // Code run each time yylex is called.
   aloc.step ();
+  (void)m;  /* m is used by the parser, not directly in lexer rules */
 %}
 
 <<EOF>>           {return annot::parser::make_END(aloc);}
@@ -91,10 +94,11 @@ string stripquotes(string s)
 subsume 	  {return annot::parser::make_SUBSUME (aloc);}
 as	   	  {return annot::parser::make_AS (aloc);}
 caption           {return annot::parser::make_CAPTION (aloc);}
+label             {return annot::parser::make_LABEL (aloc);}
 sideways          {return annot::parser::make_SIDEWAYS (aloc);}
 
 \;                {return annot::parser::make_SEMICOLON (aloc);}
-\".*\"            {return annot::parser::make_STRING(stripquotes(yytext),aloc);}
+\"[^"]*\"         {return annot::parser::make_STRING(stripquotes(yytext),aloc);}
 
 .                 {return annot::parser::make_UNEXP(yytext,aloc);}
 

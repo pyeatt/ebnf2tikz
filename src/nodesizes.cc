@@ -31,6 +31,8 @@ ebnf2tikz
 #include "diagnostics.hh"
 #include <fstream>
 
+using namespace std;
+
 nodesizes::nodesizes()
   : rowsep(6), colsep(8), minsize(14), textwidth(0)
 {
@@ -68,6 +70,12 @@ void nodesizes::loadData(const string &filename)
       if(nodename == "textwidth")
 	{
 	  inf >> textwidth;
+	  if(!inf || textwidth < 0)
+	    {
+	      diagnostics.report(Severity::Warning,
+		"Invalid textwidth in " + filename + "; ignoring");
+	      textwidth = 0;
+	    }
 	}
       else
 	{
@@ -76,18 +84,22 @@ void nodesizes::loadData(const string &filename)
 	  while(ch != ',' && !inf.eof())
 	    inf >> ch;
 	  inf >> size.y;
-	  if(inf)
+	  if(!inf)
 	    {
-	      if(size.x < 0 || size.y < 0)
-		{
-		  diagnostics.report(Severity::Warning,
-		    "Negative dimension for node '" + nodename +
-		    "' in " + filename + "; skipping");
-		}
-	      else
-		{
-		  sizemap.insert(pair<string, coordinate>(nodename, size));
-		}
+	      diagnostics.report(Severity::Warning,
+		"Malformed size entry for '" + nodename +
+		"' in " + filename + "; skipping");
+	      inf.clear();
+	    }
+	  else if(size.x < 0 || size.y < 0)
+	    {
+	      diagnostics.report(Severity::Warning,
+		"Negative dimension for node '" + nodename +
+		"' in " + filename + "; skipping");
+	    }
+	  else
+	    {
+	      sizemap.insert(pair<string, coordinate>(nodename, size));
 	    }
 	}
     }

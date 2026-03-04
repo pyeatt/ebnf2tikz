@@ -29,6 +29,7 @@ ebnf2tikz
  * - @c subsume — inline this production into references
  * - @c subsume @c as @c \\<regex\\> — inline into matching nonterminals
  * - @c caption @c \\<string\\> — set LaTeX figure caption
+ * - @c label @c \\<string\\> — set LaTeX figure label
  * - @c sideways — use sidewaysfigure environment
  *
  * Uses the @c -P @c annot prefix to avoid symbol collisions with the
@@ -52,7 +53,6 @@ ebnf2tikz
   #include <assert.h>
   #include <map>
   #include <ast.hh>
-  using namespace std;
   class annotdriver;
 }
 // The parsing context.
@@ -86,6 +86,7 @@ annot::location loc;
   SUBSUME   "subsume"
   AS        "as"
   CAPTION   "caption"
+  LABEL     "label"
   SIDEWAYS  "sideways"
 ;			
 
@@ -117,6 +118,7 @@ annot::location loc;
 //
 // sideways           // create a sidewaysfigure instead of figure
 // caption "chars"    // set the caption for the LaTeX figure
+// label "chars"      // set the \label for the LaTeX figure
 // subsume            // replace all nonterms matching the name of the
                       // annotated node
 // subsume as <regex> // using regex... replace all nonterms matching this
@@ -161,6 +163,9 @@ annot :
   } |
   CAPTION STRING {
   $$=new annot_t("caption",$2);
+  } |
+  LABEL STRING {
+  $$=new annot_t("label",$2);
   } ;
 
 
@@ -186,7 +191,9 @@ void annot::parser::error (const annot::location& l, const std::string& m)
 {
   cerr << m << " between "
   "line "<<l.begin.line << " col "<<l.begin.column<<" and "<<
-  "line "<<l.end.line   << " col "<<l.end.column << " in "<<
-  *l.begin.filename<<endl;
+  "line "<<l.end.line   << " col "<<l.end.column;
+  if(l.begin.filename)
+    cerr << " in " << *l.begin.filename;
+  cerr << endl;
 }
 
