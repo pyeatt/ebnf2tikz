@@ -1,0 +1,37 @@
+% Test: custom TikZ style and length overrides
+% Verifies that users can override package defaults after loading.
+\documentclass{article}
+\usepackage{ebnf2tikz}
+
+% Override default lengths
+\setlength{\railcolsep}{8pt}
+\setlength{\railnodeheight}{18pt}
+
+% Override TikZ styles
+\tikzset{
+  nonterminal/.style={
+    draw, inner sep=3pt, rectangle,
+    minimum size=\railnodeheight, thick,
+    top color=white, bottom color=blue!20,
+    font=\sffamily\itshape
+  },
+  terminal/.style={
+    draw, inner sep=3pt, rounded rectangle,
+    minimum size=\railnodeheight, thick,
+    top color=white, bottom color=green!20,
+    font=\ttfamily\bfseries
+  }
+}
+
+\begin{document}
+
+\section*{Test: custom style overrides}
+
+Blue nonterminals, green terminals, larger spacing:
+
+\bigskip
+\noindent\textbf{expr}
+\par\medskip
+\useproduction{expr}
+
+\end{document}
