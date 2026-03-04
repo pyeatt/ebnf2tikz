@@ -128,13 +128,24 @@
 % the camelCase savebox name used by \texttt{ebnf2tikz}
 % (e.g., \texttt{myRule}).
 %
-% \DescribeMacro{\railname}
-% \DescribeMacro{\railtermname}
-% |\railname{|\meta{text}|}| and |\railtermname{|\meta{text}|}| format
-% nonterminal and terminal names respectively.  Override these to
-% change the fonts used in diagrams.
-%
 % \section{Customization}
+%
+% \subsection{Fonts}
+%
+% \DescribeMacro{\setrailtermfont}
+% \DescribeMacro{\setrailnontermfont}
+% \DescribeMacro{\setraillabelfont}
+% Three commands control the fonts used in diagrams.  Each takes a
+% font declaration (e.g., |\bfseries|, |\sffamily|, |\ttfamily|):
+%
+% \begin{description}
+% \item[\texttt{\string\setrailtermfont\{\meta{decl}\}}]
+%   Terminal node font (default |\bfseries|)
+% \item[\texttt{\string\setrailnontermfont\{\meta{decl}\}}]
+%   Nonterminal node font (default |\itshape|)
+% \item[\texttt{\string\setraillabelfont\{\meta{decl}\}}]
+%   Production name label font (default |\itshape|)
+% \end{description}
 %
 % \subsection{Lengths}
 %
@@ -192,8 +203,9 @@
 % \usepackage{ebnf2tikz}
 % \setlength{\railcolsep}{8pt}
 % \setlength{\railrowsep}{20pt}
-% \renewcommand{\railname}[1]{\textsf{#1}}
-% \renewcommand{\railtermname}[1]{\texttt{#1}}
+% \setrailnontermfont{\sffamily}
+% \setrailtermfont{\ttfamily}
+% \setraillabelfont{\sffamily\bfseries}
 % \tikzset{
 %   terminal/.append style={fill=blue!10},
 %   nonterminal/.append style={fill=green!10}
@@ -278,12 +290,46 @@
 %
 % \subsection{Font commands}
 %
+% Three internal macros store the current font declarations for
+% terminals, nonterminals, and production-name labels.  Users change
+% them via the corresponding setter commands.
+%
+% \begin{macro}{\ebnf@termfont}
+% \begin{macro}{\ebnf@nontermfont}
+% \begin{macro}{\ebnf@labelfont}
+%    \begin{macrocode}
+\def\ebnf@termfont{\bfseries}
+\def\ebnf@nontermfont{\itshape}
+\def\ebnf@labelfont{\itshape}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}{\setrailtermfont}
+% \begin{macro}{\setrailnontermfont}
+% \begin{macro}{\setraillabelfont}
+%    \begin{macrocode}
+\newcommand{\setrailtermfont}[1]{\def\ebnf@termfont{#1}}
+\newcommand{\setrailnontermfont}[1]{\def\ebnf@nontermfont{#1}}
+\newcommand{\setraillabelfont}[1]{\def\ebnf@labelfont{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
+% The following commands are called by the generated TikZ code to
+% format label text.  They apply the stored font declaration.
+%
 % \begin{macro}{\railname}
 % \begin{macro}{\railtermname}
+% \begin{macro}{\railprodname}
 %    \begin{macrocode}
-\newcommand{\railname}[1]{\textit{#1}}
-\newcommand{\railtermname}[1]{\textbf{#1}}
+\newcommand{\railname}[1]{{\ebnf@nontermfont #1}}
+\newcommand{\railtermname}[1]{{\ebnf@termfont #1}}
+\newcommand{\railprodname}[1]{{\ebnf@labelfont #1}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -298,8 +344,7 @@
     minimum size=\railnodeheight,
     thick,
     top color=white,
-    bottom color=red!50!black!20,
-    font=\itshape
+    bottom color=red!50!black!20
   },
   terminal/.style={
     draw,
@@ -308,8 +353,7 @@
     minimum size=\railnodeheight,
     thick,
     top color=white,
-    bottom color=black!20,
-    font=\ttfamily
+    bottom color=black!20
   },
   every picture/.style={thick},
   every node/.style={inner sep=0, outer sep=0, draw=none}
