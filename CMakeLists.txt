@@ -139,7 +139,7 @@ add_custom_target(check-sty
   COMMENT "Running LaTeX package tests"
 )
 
-add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz)
+add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz sty-doc)
 
 # --- Documentation target ---
 find_package(Doxygen)
