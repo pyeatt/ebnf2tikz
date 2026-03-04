@@ -70,13 +70,13 @@ public:
     cout << "nonterminal " << n->name << endl;
   }
 
-  void visitEpsilon(EpsilonNode *n) override
+  void visitEpsilon(EpsilonNode *) override
   {
     indent(depth);
     cout << "epsilon" << endl;
   }
 
-  void visitNewline(NewlineNode *n) override
+  void visitNewline(NewlineNode *) override
   {
     indent(depth);
     cout << "newline" << endl;

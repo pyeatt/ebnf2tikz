@@ -8,6 +8,7 @@ find_package(BISON 3.7 REQUIRED)
 find_package(FLEX REQUIRED)
 
 set(GENDIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(RUN_QUIET bash ${CMAKE_CURRENT_SOURCE_DIR}/cmake/run_quiet.sh)
 
 # --- Main parser (bison) ---
 add_custom_command(
@@ -84,12 +85,12 @@ target_include_directories(ebnf2tikz PRIVATE
   ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-target_compile_options(ebnf2tikz PRIVATE -Wall -g)
+target_compile_options(ebnf2tikz PRIVATE -Wall -Wextra -g)
 
 # --- LaTeX package extraction ---
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
-  COMMAND latex ebnf2tikz.ins > /dev/null 2>&1
+  COMMAND ${RUN_QUIET} latex ebnf2tikz.ins
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.sty
     ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
@@ -103,8 +104,8 @@ add_custom_target(sty DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty)
 # --- LaTeX package documentation ---
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf
-  COMMAND pdflatex ebnf2tikz.dtx > /dev/null 2>&1
-  COMMAND pdflatex ebnf2tikz.dtx > /dev/null 2>&1
+  COMMAND ${RUN_QUIET} pdflatex ebnf2tikz.dtx
+  COMMAND ${RUN_QUIET} pdflatex ebnf2tikz.dtx
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.pdf
     ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf
@@ -113,6 +114,36 @@ add_custom_command(
   COMMENT "Building ebnf2tikz package documentation"
 )
 add_custom_target(sty-doc DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf)
+
+# --- User manual ---
+# The manual uses \ebnffile which invokes ebnf2tikz via shell-escape.
+# We put the build directory on PATH so pdflatex can find the binary,
+# and set TEXINPUTS so it can find ebnf2tikz.sty.
+set(MANUAL_ENV ${CMAKE_COMMAND} -E env
+  "PATH=${CMAKE_CURRENT_BINARY_DIR}:$ENV{PATH}"
+  "TEXINPUTS=${CMAKE_CURRENT_SOURCE_DIR}/LaTeX::")
+add_custom_command(
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/manual.pdf
+  # Clean stale artifacts to prevent \newsavebox redefinition errors
+  COMMAND ${CMAKE_COMMAND} -E rm -f
+    manual.aux manual.toc manual.out manual.log
+    manual-rail.ebnf manual-rail.tex bnfnodes.dat
+  # Three passes: pdflatex runs ebnf2tikz via shell-escape, measures
+  # nodes, and feeds sizes back through bnfnodes.dat
+  COMMAND ${MANUAL_ENV} ${RUN_QUIET} pdflatex -shell-escape -interaction=nonstopmode manual
+  COMMAND ${MANUAL_ENV} ${RUN_QUIET} pdflatex -shell-escape -interaction=nonstopmode manual
+  COMMAND ${MANUAL_ENV} ${RUN_QUIET} pdflatex -shell-escape -interaction=nonstopmode manual
+  COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_CURRENT_SOURCE_DIR}/manual/manual.pdf
+    ${CMAKE_CURRENT_SOURCE_DIR}/manual.pdf
+  DEPENDS ebnf2tikz
+          ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
+          ${CMAKE_CURRENT_SOURCE_DIR}/manual/manual.tex
+          ${CMAKE_CURRENT_SOURCE_DIR}/manual/manual-examples.ebnf
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/manual
+  COMMENT "Building user manual"
+)
+add_custom_target(manual DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/manual.pdf)
 
 # --- Test targets ---
 add_custom_target(check
@@ -139,7 +170,7 @@ add_custom_target(check-sty
   COMMENT "Running LaTeX package tests"
 )
 
-add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz sty-doc)
+add_custom_target(all_targets ALL DEPENDS ebnf2tikz check-tikz sty-doc manual)
 
 # --- Documentation target ---
 find_package(Doxygen)
@@ -147,7 +178,7 @@ if(DOXYGEN_FOUND)
   find_package(LATEX COMPONENTS PDFLATEX MAKEINDEX)
   add_custom_target(doc
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/documentation/Doxyfile
-    COMMAND ${CMAKE_MAKE_PROGRAM} -C ${CMAKE_CURRENT_SOURCE_DIR}/documentation/latex
+    COMMAND ${RUN_QUIET} ${CMAKE_MAKE_PROGRAM} -C ${CMAKE_CURRENT_SOURCE_DIR}/documentation/latex
     COMMAND ${CMAKE_COMMAND} -E copy
       ${CMAKE_CURRENT_SOURCE_DIR}/documentation/latex/refman.pdf
       ${CMAKE_CURRENT_SOURCE_DIR}/documentation/ebnf2tikz.pdf
@@ -177,7 +208,7 @@ add_custom_target(realclean
   # Unit test artifacts
   COMMAND bash -c "rm -f unit_tests/*.pdf unit_tests/*.aux unit_tests/*.log unit_tests/*.out unit_tests/*.toc unit_tests/*.synctex.gz unit_tests/bnfnodes.dat unit_tests/all_tests.tex unit_tests/all_input.ebnf unit_tests/testlist.tex"
   # Top-level generated files
-  COMMAND ${CMAKE_COMMAND} -E rm -f all_input.ebnf all_tests.tex ebnf2tikz.sty ebnf2tikz.pdf
+  COMMAND ${CMAKE_COMMAND} -E rm -f all_input.ebnf all_tests.tex ebnf2tikz.sty ebnf2tikz.pdf manual.pdf
   # Doxygen output
   COMMAND ${CMAKE_COMMAND} -E rm -rf documentation/html documentation/latex
   COMMAND ${CMAKE_COMMAND} -E rm -f documentation/ebnf2tikz.pdf documentation/index.html
@@ -187,8 +218,8 @@ add_custom_target(realclean
   COMMAND bash -c "rm -f LaTeX/ebnf2tikz.sty LaTeX/*.aux LaTeX/*.glo LaTeX/*.hd LaTeX/*.idx LaTeX/*.log LaTeX/*.out LaTeX/*.pdf LaTeX/*.toc"
   # LaTeX test artifacts
   COMMAND bash -c "rm -f LaTeX/tests/*.pdf LaTeX/tests/*.aux LaTeX/tests/*.log LaTeX/tests/*.out LaTeX/tests/bnfnodes.dat LaTeX/tests/*-diagrams.tex LaTeX/tests/*_wrapper.tex"
-  # Manual build artifacts (keep manual.tex)
-  COMMAND bash -c "rm -f manual/*.aux manual/*.log manual/*.out manual/*.toc manual/*.pdf"
+  # Manual build artifacts (keep manual.tex and manual-examples.ebnf)
+  COMMAND bash -c "rm -f manual/*.aux manual/*.log manual/*.out manual/*.toc manual/*.pdf manual/*-rail.ebnf manual/*-rail.tex manual/bnfnodes.dat"
   # CMake products
   COMMAND ${CMAKE_COMMAND} -E rm -f
     CMakeCache.txt cmake_install.cmake Makefile .depend

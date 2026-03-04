@@ -161,8 +161,55 @@
 %
 % \subsection{TikZ styles}
 %
-% The |nonterminal| and |terminal| TikZ styles can be redefined with
-% |\tikzset| after loading the package.
+% Three TikZ styles control the appearance of railroad diagrams:
+%
+% \begin{description}
+% \item[\texttt{raildiagram}] The top-level style applied to every
+%   railroad |tikzpicture| environment.  It sets the default line
+%   width to |thick| and configures the base node style so that
+%   nodes have zero padding and no border by default (individual
+%   node styles like |terminal| and |nonterminal| override this
+%   as needed).  This style is \emph{scoped} to railroad diagram
+%   pictures only---it does not affect other |tikzpicture|
+%   environments in the document.  Users who want to change the
+%   overall line weight or default node behavior for all railroad
+%   diagrams should redefine this style.
+%
+% \item[\texttt{terminal}] Draws a rounded rectangle with a
+%   gradient fill for terminal (literal) tokens.
+%
+% \item[\texttt{nonterminal}] Draws a sharp-cornered rectangle
+%   with a gradient fill for nonterminal references.
+% \end{description}
+%
+% All three styles can be redefined or extended with |\tikzset|
+% after loading the package.  For example, to make railroad diagrams
+% use thin lines instead of thick:
+%
+% \begin{verbatim}
+% \tikzset{raildiagram/.append style={thin}}
+% \end{verbatim}
+%
+% To change the default node appearance within railroad diagrams
+% (e.g., to add a faint background to all nodes):
+%
+% \begin{verbatim}
+% \tikzset{
+%   raildiagram/.style={
+%     semithick,
+%     every node/.style={
+%       inner sep=0, outer sep=0, draw=none,
+%       fill=yellow!5
+%     }
+%   }
+% }
+% \end{verbatim}
+%
+% Since |raildiagram| is applied only via
+% |\begin{tikzpicture}[raildiagram]| in the generated TikZ code,
+% it is completely isolated from other TikZ pictures.  A user can
+% freely mix railroad diagrams with circuit diagrams, plots, or any
+% other TikZ content without style interference.
 %
 % \section{Examples}
 %
@@ -197,7 +244,7 @@
 %
 % \subsection{Customization example}
 %
-% Overriding lengths and TikZ styles:
+% Overriding lengths, fonts, and individual node styles:
 %
 % \begin{verbatim}
 % \usepackage{ebnf2tikz}
@@ -210,6 +257,58 @@
 %   terminal/.append style={fill=blue!10},
 %   nonterminal/.append style={fill=green!10}
 % }
+% \end{verbatim}
+%
+% \subsection{Customizing the raildiagram style}
+%
+% The |raildiagram| style controls the overall appearance of every
+% railroad |tikzpicture|.  It is scoped---changes to it do not
+% affect other TikZ pictures in your document.
+%
+% To use thinner lines for all rail connections:
+%
+% \begin{verbatim}
+% \tikzset{raildiagram/.append style={semithick}}
+% \end{verbatim}
+%
+% To completely replace the default |raildiagram| style (for example,
+% to use thin lines and add a light background to the picture):
+%
+% \begin{verbatim}
+% \tikzset{
+%   raildiagram/.style={
+%     thin,
+%     every node/.style={inner sep=0, outer sep=0, draw=none},
+%     background rectangle/.style={fill=blue!3},
+%     show background rectangle
+%   }
+% }
+% \end{verbatim}
+%
+% Note that when completely replacing |raildiagram|, you must include
+% the |every node| baseline reset, since the generated TikZ code
+% depends on nodes having zero default padding.
+%
+% \subsection{Mixing with other TikZ content}
+%
+% Because |raildiagram| is scoped to railroad pictures, it coexists
+% safely with other TikZ usage.  For example, a document can contain
+% both railroad diagrams and circuit diagrams without interference:
+%
+% \begin{verbatim}
+% \documentclass{article}
+% \usepackage{ebnf2tikz}
+% \usepackage{circuitikz}    % unaffected by ebnf2tikz styles
+% \ebnffile{mygrammar.ebnf}
+% \begin{document}
+% Railroad diagram:
+% \useproduction{my_rule}
+%
+% Circuit diagram (uses its own TikZ styles):
+% \begin{circuitikz}
+%   \draw (0,0) to[R, l=$R_1$] (2,0);
+% \end{circuitikz}
+% \end{document}
 % \end{verbatim}
 %
 % \subsection{Subsumption example}
@@ -335,6 +434,26 @@
 %
 % \subsection{TikZ styles}
 %
+% The |nonterminal| style draws a rectangular box with a subtle
+% red-tinted gradient fill, used for nonterminal references.
+% The |terminal| style draws a rounded rectangle with a grey
+% gradient fill, used for literal tokens.  Both styles set their
+% own |inner sep|, border, and shading, overriding the bare
+% defaults established by |raildiagram|.
+%
+% The |raildiagram| style is the top-level style applied to
+% every generated |tikzpicture|.  It sets the line width to
+% |thick| for all rail connections, and configures a baseline
+% |every node| style with zero padding and no border.  This
+% baseline is intentional: the connection polylines that form
+% the railroad tracks should not be affected by default node
+% decorations.  Terminal and nonterminal nodes explicitly set
+% their own padding and borders via their respective styles.
+%
+% Because |raildiagram| is scoped to generated pictures (via
+% |\begin{tikzpicture}[raildiagram]|), it does not leak into
+% other TikZ environments in the user's document.
+%
 %    \begin{macrocode}
 \tikzset{
   nonterminal/.style={
@@ -355,8 +474,10 @@
     top color=white,
     bottom color=black!20
   },
-  every picture/.style={thick},
-  every node/.style={inner sep=0, outer sep=0, draw=none}
+  raildiagram/.style={
+    thick,
+    every node/.style={inner sep=0, outer sep=0, draw=none}
+  }
 }
 %    \end{macrocode}
 %
@@ -380,9 +501,13 @@
 % \end{macro}
 %
 % Open the node file and write |textwidth| at the start of the document.
+% This is done by |\ebnf@opennodefile|, which is called \emph{after}
+% the shell-escape invocation of \texttt{ebnf2tikz} so that
+% \texttt{bnfnodes.dat} from the previous pass is not truncated before
+% \texttt{ebnf2tikz} reads it.
 %
 %    \begin{macrocode}
-\AtBeginDocument{%
+\newcommand{\ebnf@opennodefile}{%
   \immediate\openout\ebnf@nodefile=bnfnodes.dat\relax
   \pgf@x=\textwidth
   \FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
@@ -531,7 +656,8 @@
   \or\edef\ebnf@result{\ebnf@result Nine}%  9
   \else
     \ifebnf@upper
-      \edef\ebnf@result{\ebnf@result\uppercase{#1}}%
+      \uppercase{\def\ebnf@cc@tmp{#1}}%
+      \edef\ebnf@result{\ebnf@result\ebnf@cc@tmp}%
       \ebnf@upperfalse
     \else
       \edef\ebnf@result{\ebnf@result#1}%
@@ -585,12 +711,20 @@
     \ifebnf@fileopen
       \immediate\closeout\ebnf@inlinefile
       \global\ebnf@fileopenfalse
+    \else
+      %% No inline environments: remove stale rail file from previous pass
+      %% to prevent duplication (the append in \ebnf@appendfile would
+      %% otherwise accumulate copies on each pdflatex pass).
+      %% When \ebnf@fileopen is true, \openout already truncated the file.
+      \ShellEscape{rm -f "\jobname-rail.ebnf"}%
     \fi
     %% Append registered external files
     \ebnf@filelist
     %% Run ebnf2tikz if shell escape is available
     \ShellEscape{ebnf2tikz\ebnf@flags\space
       "\jobname-rail.ebnf" "\jobname-rail.tex"}%
+    %% Now open bnfnodes.dat for writing (ebnf2tikz has already read it)
+    \ebnf@opennodefile
     %% Input the generated TikZ code if the file exists
     \IfFileExists{\jobname-rail.tex}{%
       \input{\jobname-rail.tex}%
@@ -599,6 +733,10 @@
         Output file \jobname-rail.tex not found.\MessageBreak
         Run ebnf2tikz manually or use -shell-escape}%
     }%
+  \else
+    %% No EBNF content, but still open bnfnodes.dat for any
+    %% manually included TikZ diagrams that use \ebnf@writenodesize
+    \ebnf@opennodefile
   \fi
 }
 %    \end{macrocode}

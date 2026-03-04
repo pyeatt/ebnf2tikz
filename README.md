@@ -204,6 +204,10 @@ Source files live in the `src/` directory.
 | `main.cc` | CLI entry point |
 | `util.hh/cc` | Utility functions |
 
+## Future Enhancements
+
+- Adding direct PDF and SVG output support using the Cairo library
+
 ## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.

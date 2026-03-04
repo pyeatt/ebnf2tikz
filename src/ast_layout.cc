@@ -43,6 +43,7 @@ ebnf2tikz
 
 #include "ast_layout.hh"
 #include "ast_visitor.hh"
+#include "diagnostics.hh"
 #include <algorithm>
 
 using namespace std;
@@ -332,6 +333,7 @@ static pair<float,float> computeSizeSequence(SequenceNode *n,
         {
           if(rowWidth > totalWidth)
             totalWidth = rowWidth;
+          /* 3x rowsep: gap above rail + rail height + gap below rail */
           maxHeight += rowHeight + 3.0f * sizes->rowsep;
           rowWidth = 0;
           rowHeight = 0;
@@ -1402,7 +1404,11 @@ static void connectLoop(LoopNode *n,
   for(i = 0; i < n->repeats.size(); i++)
     {
       if(layout.geom.find(n->repeats[i]) == layout.geom.end())
-        return;
+        {
+          diagnostics.report(Severity::Warning,
+            "loop repeat node has no geometry; skipping connection routing");
+          return;
+        }
       repeatGeom = layout.geom[n->repeats[i]];
 
       /* Right feedback: body exit → right rail → down → repeat
@@ -1447,7 +1453,9 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
   /* Assign names to all leaf nodes */
   astAssignNames(prod->body, ctx, layout);
 
-  /* Production body starts below the name label */
+  /* Production body starts below the name label.
+     1.5x minsize provides clearance: 1x for the label height
+     plus 0.5x padding between the label baseline and the first rail. */
   Y = -1.5f * sizes->minsize;
 
   /* Start stubs */

@@ -77,10 +77,10 @@ public:
   driver(std::ofstream *out, nodesizes *sz);
 
   /** @brief Get the output file stream. */
-  std::ofstream &outs(){return *outFile;}
+  std::ofstream &outs() {return *outFile;}
 
   /** @brief Get the node size cache pointer. */
-  nodesizes *getSizes(){return sizes;}
+  nodesizes *getSizes() const {return sizes;}
 
   /**
    * @brief Create a TerminalNode and record the terminal string.
@@ -118,19 +118,24 @@ public:
              int dbefore, int dafter);
 
   /** @brief Get whether dump-only mode is enabled. */
-  int get_dumponly(){return dumponly;}
+  int get_dumponly() const {return dumponly;}
 
   /** @brief Get whether optimization is disabled. */
-  int get_noopt(){return noopt;}
+  int get_noopt() const {return noopt;}
 
   /** @brief Get whether to dump AST before optimization. */
-  int get_dump_before(){return dump_before;}
+  int get_dump_before() const {return dump_before;}
 
   /** @brief Get whether to dump AST after optimization. */
-  int get_dump_after(){return dump_after;}
+  int get_dump_after() const {return dump_after;}
 
-  /** @brief Begin scanning from the current file. */
-  void scan_begin ();
+  /** @brief Get whether to wrap productions in figure environments. */
+  int get_figures() const {return figures;}
+
+  /** @brief Begin scanning from the current file.
+   *  @return true on success, false if the file cannot be opened.
+   */
+  bool scan_begin ();
 
   /**
    * @brief Begin scanning from a string stream.
@@ -142,10 +147,10 @@ public:
   void scan_end ();
 
   /** @brief Get the parser return code. */
-  int get_result(){return result;}
+  int get_result() const {return result;}
 
   /** @brief Get a reference to the current source location. */
-  yy::location &get_location(){return location;}
+  yy::location &get_location() {return location;}
 
 };
 #endif

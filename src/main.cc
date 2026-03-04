@@ -149,6 +149,11 @@ int main(int argc, char** argv) {
   outfilename = argv[optind + 1];
 
   ofstream outfile(outfilename);
+  if(!outfile.is_open())
+    {
+      cerr << "Error: cannot open output file '" << outfilename << "'\n";
+      return 1;
+    }
   nodesizes sizes;
 
   sizes.loadData("bnfnodes.dat");

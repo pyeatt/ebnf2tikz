@@ -97,7 +97,8 @@ public:
    * @param layout The production's layout data.
    */
   void writeProduction(ASTProduction *prod,
-                       ASTProductionLayout &layout);
+                       ASTProductionLayout &layout,
+                       bool figures);
 };
 
 /**
@@ -109,8 +110,9 @@ public:
  * @param grammar The grammar to output.
  * @param outs    Output file stream.
  * @param sizes   Node size cache.
+ * @param figures If true, wrap each production in a figure environment.
  */
 void astPlaceGrammar(ASTGrammar *grammar, std::ofstream &outs,
-                     nodesizes *sizes);
+                     nodesizes *sizes, bool figures);
 
 #endif

@@ -49,7 +49,11 @@ int driver::parse (const char *f, int opt, int fig, int dump,
   dump_before=dbefore;
   dump_after=dafter;
   location.initialize (&file);
-  scan_begin ();
+  if(!scan_begin ())
+    {
+      result = 1;
+      return result;
+    }
   yy::parser parse (*this);
   parse.set_debug_level (trace_parsing);
   result = parse ();
