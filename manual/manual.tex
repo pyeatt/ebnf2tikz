@@ -1,0 +1,519 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!70!black,
+  pdftitle={ebnf2tikz User Manual},
+  pdfauthor={Larry D. Pyeatt}
+}
+
+\lstdefinelanguage{ebnf}{
+  morekeywords={},
+  morestring=[b]',
+  morestring=[b]",
+  morecomment=[l]{//},
+  morecomment=[l]{---},
+  morecomment=[s]{(*}{*)},
+  literate={|}{{\textbar}}1
+           {<<--}{{\textless\textless--}}4
+           {-->>}{{--\textgreater\textgreater}}4,
+  sensitive=true
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries,
+  stringstyle=\color{red!70!black},
+  commentstyle=\color{green!50!black}\itshape,
+  showstringspaces=false,
+  frame=single,
+  framerule=0.4pt,
+  xleftmargin=1em,
+  xrightmargin=1em,
+  breaklines=true,
+  aboveskip=1em,
+  belowskip=1em
+}
+
+\newcommand{\opt}[1]{\texttt{#1}}
+\newcommand{\prog}{\texttt{ebnf2tikz}}
+
+\title{\textbf{ebnf2tikz User Manual}}
+\author{Larry D. Pyeatt}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+%% ----------------------------------------------------------------
+\section{Introduction}
+
+\prog{} is an optimizing compiler that converts Extended Backus-Naur
+Form (EBNF) grammar specifications into railroad (syntax) diagrams
+expressed as \LaTeX{} TikZ commands.  It supports annotations that
+control inlining of productions, figure captions, and rotated figures.
+An optimizer simplifies the resulting abstract syntax tree before
+layout, producing compact, readable diagrams.
+
+\prog{} is free software distributed under the GNU General Public
+License, version~3 or later.
+
+%% ----------------------------------------------------------------
+\section{Installation}
+
+\subsection{Prerequisites}
+
+\begin{itemize}
+  \item A C++ compiler with C++17 support (e.g., \texttt{g++})
+  \item \href{https://www.gnu.org/software/bison/}{Bison} $\geq$ 3.7
+  \item \href{https://github.com/westes/flex}{Flex}
+  \item \href{https://cmake.org/}{CMake} $\geq$ 3.16
+  \item \texttt{pdflatex} with TikZ (for rendering diagrams)
+\end{itemize}
+
+\subsection{Building}
+
+\begin{lstlisting}[language=bash]
+cmake .
+make
+\end{lstlisting}
+
+This produces the \prog{} executable in the current directory.  To
+verify the build:
+
+\begin{lstlisting}[language=bash]
+make check        # Run AST-dump regression tests
+make check-tikz   # Build PDF with all railroad diagrams
+\end{lstlisting}
+
+%% ----------------------------------------------------------------
+\section{Quick Start}
+
+\begin{enumerate}
+\item Write an EBNF grammar file, for example \texttt{mygrammar.ebnf}:
+\begin{lstlisting}[language=ebnf]
+greeting = 'hello' , [ name ] , '!' ;
+name = identifier ;
+\end{lstlisting}
+
+\item Run \prog{} to produce initial TikZ output (with estimated node sizes):
+\begin{lstlisting}[language=bash]
+./ebnf2tikz mygrammar.ebnf mygrammar.tex
+\end{lstlisting}
+
+\item Include the output in a \LaTeX{} document with the required
+  preamble (see Section~\ref{sec:latex}) and compile:
+\begin{lstlisting}[language=bash]
+pdflatex mydocument
+\end{lstlisting}
+
+\item Run \prog{} again to use the real node sizes written by
+  \LaTeX{} to \texttt{bnfnodes.dat}:
+\begin{lstlisting}[language=bash]
+./ebnf2tikz mygrammar.ebnf mygrammar.tex
+\end{lstlisting}
+
+\item Compile \LaTeX{} again for the final output:
+\begin{lstlisting}[language=bash]
+pdflatex mydocument
+\end{lstlisting}
+\end{enumerate}
+
+This multi-pass workflow is similar to the feedback loop required by
+Bib\TeX{} or \texttt{makeindex}.  On the first pass, \prog{} uses
+estimated node dimensions.  \LaTeX{} then measures the actual rendered
+sizes of each node and writes them to \texttt{bnfnodes.dat} via the
+\verb|\writenodesize| command.  On the second pass, \prog{} reads
+these measurements and produces an accurate layout.
+
+%% ----------------------------------------------------------------
+\section{Command-Line Options}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Short & Long & Description \\
+\midrule
+\opt{-O} & \opt{-{}-optimize}     & Enable optimization (default). \\
+\opt{-n} & \opt{-{}-nooptimize}   & Disable optimization and subsumption. \\
+\opt{-f} & \opt{-{}-makefigures}  & Wrap \texttt{tikzpicture}s in \LaTeX{} \texttt{figure} environments. \\
+\opt{-d} & \opt{-{}-dumponly}     & Parse and dump the AST; do not generate TikZ output. \\
+\opt{-B} & \opt{-{}-dump-before}  & Dump the AST before optimization (to stdout). \\
+\opt{-A} & \opt{-{}-dump-after}   & Dump the AST after optimization (to stdout). \\
+\opt{-h} & \opt{-{}-help}         & Print usage information and exit. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip\noindent
+Usage:
+\begin{lstlisting}[language=bash]
+./ebnf2tikz [options] input_file output_file
+\end{lstlisting}
+
+The \opt{-O} flag is the default and is accepted for compatibility.
+Use \opt{-n} to suppress both the optimizer and annotation-driven
+subsumption.
+
+The \opt{-B} and \opt{-A} flags print the AST to standard output
+before and after optimization, respectively.  These are useful for
+debugging grammars.  The \opt{-d} flag prints the AST and skips TikZ
+generation entirely.
+
+%% ----------------------------------------------------------------
+\section{EBNF Syntax Reference}
+
+\prog{} accepts standard EBNF as defined by ISO~14977, with a few
+extensions.
+
+\subsection{Productions}
+
+A grammar consists of one or more productions.  Each production has a
+name, an equals sign, a body expression, and a terminating semicolon:
+
+\begin{lstlisting}[language=ebnf]
+production_name = body_expression ;
+\end{lstlisting}
+
+\subsection{Constructs}
+
+\begin{center}
+\begin{tabular}{@{}llp{6cm}@{}}
+\toprule
+Syntax & Meaning & Example \\
+\midrule
+\texttt{A , B}     & Sequence (concatenation) & \texttt{'if' , expr , 'then'} \\
+\texttt{A | B}     & Choice (alternation)     & \texttt{'true' | 'false'} \\
+\texttt{[ A ]}     & Optional                 & \texttt{[ 'else' , statement ]} \\
+\texttt{\{ A \}}   & Repetition (zero or more) & \texttt{\{ ',' , param \}} \\
+\texttt{( A )}     & Grouping                 & \texttt{( 'a' | 'b' ) , 'c'} \\
+\texttt{'text'}    & Terminal (single quotes)  & \texttt{'while'} \\
+\texttt{"text"}    & Terminal (double quotes)  & \texttt{"begin"} \\
+\texttt{? text ?}  & Special sequence          & \texttt{? any character ?} \\
+\texttt{name}      & Nonterminal reference     & \texttt{expression} \\
+\texttt{\textbackslash\textbackslash} & Explicit line break & Forces a new row in the diagram \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Comments}
+
+Three comment styles are supported:
+
+\begin{lstlisting}[language=ebnf]
+// C++-style line comment
+--- Ada-style line comment
+(* Block comment, can span
+   multiple lines *)
+\end{lstlisting}
+
+%% ----------------------------------------------------------------
+\section{Annotations}
+\label{sec:annotations}
+
+Annotations are placed immediately before a production definition
+using the \verb|<<-- ... -->>| syntax.  Multiple annotations may be
+placed before a single production.
+
+\subsection{\texttt{subsume}}
+
+\begin{lstlisting}[language=ebnf]
+<<-- subsume -->>
+production_name = body ;
+\end{lstlisting}
+
+The \texttt{subsume} annotation marks a production for inlining:
+wherever its name appears as a nonterminal reference in other
+productions, the reference is replaced by the production's body.  The
+subsumed production itself is not emitted as a separate diagram.
+
+\subsection{\texttt{subsume as}}
+
+\begin{lstlisting}[language=ebnf]
+<<-- subsume as regex_pattern -->>
+production_name = body ;
+\end{lstlisting}
+
+Like \texttt{subsume}, but the production is only inlined into
+nonterminals whose names match the given POSIX extended regular
+expression.
+
+\subsection{\texttt{caption}}
+
+\begin{lstlisting}[language=ebnf]
+<<-- caption A descriptive caption -->>
+production_name = body ;
+\end{lstlisting}
+
+Sets the \LaTeX{} figure caption for this production's diagram.
+Requires the \opt{-f} flag to have any effect, since captions only
+apply to \texttt{figure} environments.
+
+\subsection{\texttt{sideways}}
+
+\begin{lstlisting}[language=ebnf]
+<<-- sideways -->>
+production_name = body ;
+\end{lstlisting}
+
+Places this production's diagram in a \texttt{sidewaysfigure}
+environment (from the \texttt{rotating} package) instead of a regular
+\texttt{figure}.  Requires the \opt{-f} flag.
+
+%% ----------------------------------------------------------------
+\section{\LaTeX{} Integration}
+\label{sec:latex}
+
+There is currently no \texttt{ebnf2tikz.sty} package file.  To use
+\prog{} output in your \LaTeX{} document, you need to define the
+required packages, lengths, TikZ styles, and the
+\verb|\writenodesize| command in your preamble.
+
+\subsection{Required Packages}
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\usepackage{tikz,pgf}
+\usetikzlibrary{positioning,shapes,matrix,chains,
+  scopes,fit,calc,shadings,intersections}
+\usepackage[nomessages]{fp}
+\usepackage{rotating}     % only if using sideways annotations
+\end{lstlisting}
+
+\subsection{Font Commands}
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\newcommand{\railname}[1]{\it #1}
+\newcommand{\railtermname}[1]{\bf #1}
+\end{lstlisting}
+
+The \verb|\railname| command formats nonterminal labels and
+\verb|\railtermname| formats terminal labels in the production title
+area.
+
+\subsection{Lengths}
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\newlength\railcolsep
+\setlength\railcolsep{5pt}
+\newlength\railrowsep
+\setlength\railrowsep{\baselineskip}
+\newlength\railnodeheight
+\setlength\railnodeheight{14pt}
+\newlength\railcorners
+\setlength\railcorners{\railcolsep}
+\addtolength\railcorners{-1pt}
+\end{lstlisting}
+
+\begin{center}
+\begin{tabular}{@{}lp{8cm}@{}}
+\toprule
+Length & Purpose \\
+\midrule
+\verb|\railcolsep|     & Horizontal gap between nodes. \\
+\verb|\railrowsep|     & Vertical gap between rows in multi-row diagrams. \\
+\verb|\railnodeheight| & Minimum height of terminal and nonterminal nodes. \\
+\verb|\railcorners|    & Rounding radius for rail corners. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{TikZ Styles}
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\tikzset{
+  nonterminal/.style={
+    draw, inner sep=2pt, rectangle,
+    minimum size=\railnodeheight, thick,
+    top color=white,
+    bottom color=red!50!black!20,
+    font=\itshape
+  },
+  terminal/.style={
+    draw, inner sep=2pt, rounded rectangle,
+    minimum size=\railnodeheight, thick,
+    top color=white, bottom color=black!20,
+    font=\ttfamily
+  },
+  every picture/.style={thick},
+  every node/.style={inner sep=0, outer sep=0, draw=none}
+}
+\end{lstlisting}
+
+The \texttt{nonterminal} style renders rectangular nodes with a
+gradient fill.  The \texttt{terminal} style renders rounded rectangles.
+You may customize these styles to suit your document's appearance.
+
+\subsection{The \texttt{\textbackslash writenodesize} Command}
+
+This command is essential for the multi-pass workflow.  It measures a
+TikZ node and writes its dimensions to \texttt{bnfnodes.dat}:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\newwrite\tempfile
+\immediate\openout\tempfile=bnfnodes.dat
+
+\makeatletter
+\newcommand{\writenodesize}[1]{%
+  \pgfpointdiff{\pgfpointanchor{#1}{west}}%
+               {\pgfpointanchor{#1}{east}}%
+  \FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
+  \pgfpointdiff{\pgfpointanchor{#1}{south}}%
+               {\pgfpointanchor{#1}{north}}%
+  \FP@eval\@temp@y{\pgfmath@tonumber{\pgf@y}}%
+  \immediate\write\tempfile{#1 \@temp@x,  \@temp@y}}
+\makeatother
+\end{lstlisting}
+
+You must also write the \verb|\textwidth| value to \texttt{bnfnodes.dat}
+at the beginning of the document body so that \prog{} knows the
+available width for auto-wrapping:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\begin{document}
+\makeatletter
+\pgf@x=\textwidth%
+\FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
+\immediate\write\tempfile{textwidth \@temp@tw}
+\makeatother
+\end{lstlisting}
+
+At the end of the document, close the file:
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\immediate\closeout\tempfile
+\end{document}
+\end{lstlisting}
+
+\subsection{Scratch Lengths}
+
+The generated TikZ code uses three scratch lengths.  Declare them in
+your preamble or document body before including \prog{} output:
+
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\newlength{\tmplength}
+\newlength{\tmplengthb}
+\newlength{\tmplengthc}
+\setlength{\tmplength}{12pt}
+\setlength{\tmplengthb}{12pt}
+\setlength{\tmplengthc}{12pt}
+\end{lstlisting}
+
+%% ----------------------------------------------------------------
+\section{Auto-Wrap}
+\label{sec:autowrap}
+
+Productions whose body exceeds the available \verb|\textwidth| are
+automatically broken across multiple rows in the railroad diagram.
+This happens without any user intervention.
+
+Additionally, wide nonterminal labels that contain spaces are
+automatically wrapped using \verb|\shortstack| to reduce their
+rendered width.
+
+If you need to force a line break at a specific point, use the
+explicit line break operator \verb|\\| in your EBNF input:
+
+\begin{lstlisting}[language=ebnf]
+long_production =
+    first_part , second_part , \\ third_part , fourth_part ;
+\end{lstlisting}
+
+%% ----------------------------------------------------------------
+\section{Examples}
+\label{sec:examples}
+
+\subsection{Case Statement Alternative}
+
+This example from the VHDL grammar demonstrates subsumption.  Three
+productions are defined, but \texttt{choices} and \texttt{choice} are
+annotated with \texttt{subsume}, so they are inlined into
+\texttt{case\_statement\_alternative}:
+
+\begin{lstlisting}[language=ebnf]
+case_statement_alternative =
+    'when' , choices , '=>', sequence_of_statements;
+
+<<-- subsume -->>
+choices =
+    choice, { '|', choice } ;
+
+<<-- subsume -->>
+choice =
+    simple_expression |
+    discrete_range |
+    simple_name |
+    'others' ;
+\end{lstlisting}
+
+With optimization enabled (the default), the optimizer inlines the
+subsumed productions and simplifies the resulting AST.  The final
+diagram shows a single, compact railroad for
+\texttt{case\_statement\_alternative} with all the choices expanded
+inline.
+
+\subsection{Tool List}
+
+This example shows a more complex grammar with subsumption:
+
+\begin{lstlisting}[language=ebnf]
+<<-- subsume -->>
+toollist =
+  '(' , tool , { ',' , tool } , ')' ;
+
+<<-- subsume -->>
+tool =
+  'hammer' | 'screwdriver' | saw;
+
+<<-- subsume -->>
+saw =
+  ('hand' | ( [ 'cordless'] ,
+  ('reciprocating' | 'circular') ,
+  'power' ) ),'saw';
+\end{lstlisting}
+
+When all three productions are marked with \texttt{subsume}, each
+nonterminal reference is replaced by the referenced production's body.
+The result is a single, fully-expanded railroad diagram.  In practice,
+you would mark only the helper productions for subsumption, leaving
+the top-level production (\texttt{toollist}) as a standalone diagram
+that incorporates the others.
+
+%% ----------------------------------------------------------------
+\section{Tips}
+\label{sec:tips}
+
+\begin{itemize}
+\item Use the \opt{-B} and \opt{-A} flags to inspect the AST before
+  and after optimization.  This is helpful for understanding how the
+  optimizer transforms your grammar.
+
+\item When adding \prog{} diagrams to an existing document, it is
+  convenient to \verb|\input| the generated TikZ file rather than
+  pasting it inline.
+
+\item The \opt{-f} flag wraps each diagram in a \texttt{figure}
+  environment, which enables captions, labels, and
+  \verb|\listoffigures|.  Without \opt{-f}, diagrams are placed
+  inline.
+
+\item Production names must be valid identifiers (letters, digits,
+  underscores).  Underscores in production names are rendered in the
+  diagram using \LaTeX{} formatting.
+
+\item The feedback loop (\prog{} $\to$ \texttt{pdflatex} $\to$
+  \prog{} $\to$ \texttt{pdflatex}) need only be repeated when
+  node content changes.  If you are only editing prose around
+  existing diagrams, a single \texttt{pdflatex} run suffices.
+\end{itemize}
+
+\end{document}

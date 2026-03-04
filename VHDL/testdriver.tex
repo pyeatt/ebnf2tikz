@@ -9,7 +9,6 @@
 \pagestyle{empty}
 \thispagestyle{empty}
 
-
 \RequirePackage[T1]{fontenc}
 \RequirePackage[full]{textcomp}
 \RequirePackage[scale=.95,type1]{cabin}% sans serif in style of Gill Sans
@@ -19,135 +18,14 @@
 \RequirePackage{amsmath,amssymb,amsfonts}
 \let\openbox\relax
 \RequirePackage{amsthm}
+\RequirePackage{graphicx}
 
-\RequirePackage{rotating,graphicx}
-\usepackage{tikz,pgf}
-\usetikzlibrary{positioning,shapes,matrix,chains,scopes,fit,scopes,calc,shadings,intersections}
-\usepackage[nomessages]{fp}
-
-\newcommand{\railname}[1]{\it #1}
-\newcommand{\railtermname}[1]{\bf #1}
-\newlength\railcolsep
-\setlength\railcolsep{5pt}
-\newlength\railrowsep
-\setlength\railrowsep{\baselineskip}
-\newlength\railnodeheight
-\setlength\railnodeheight{14pt}
-\newlength\railcorners
-\setlength\railcorners{\railcolsep}
-\addtolength\railcorners{-1pt}
-
-\tikzset{
-  nonterminal/.style={
-    draw,
-    inner sep=2pt,
-    % The shape:
-    rectangle,
-    % The size:
-    minimum size=\railnodeheight,
-    % The border:
-    thick,
-     % The filling:
-   top color=white,
-    bottom color=red!50!black!20,
-    % Font
-    font=\itshape
-  },
-  terminal/.style={
-    draw,
-    inner sep=2pt,
-    % The shape:
-    rounded rectangle,
-    minimum size=\railnodeheight,
-    % The rest
-    thick,
-    top color=white,bottom color=black!20,
-    font=\ttfamily
-  },
-  every picture/.style={thick},
-  every node/.style={inner sep=0,outer sep=0,draw=none}
-}
-
-\makeatletter
-\tikzset{
-    getyshift/.style args={#1 and #2 and #3}{
-      getdistc={#1}{#2},yshift=-\mylength-\railnodeheight+\pgflinewidth/#3
-    },
-getdistc/.code 2 args={
-\pgfextra{
-    \pgfpointdiff{\pgfpointanchor{#1}{north}}{\pgfpointanchor{#2}{south}}
-    \xdef\mylength{\the\pgf@y}
-         }
-    }
-}
-\makeatother
-
-\makeatletter
-\newcommand{\Distance}[3]{%
-\tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax
-\pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}
-}
-\makeatother
-
-\makeatletter
-\newcommand\settoxdiff[3]{%
-\pgfpointdiff{#2}{#3}%
-\global\expandafter\edef #1{\pgf@x}%
-}
-
-\def\settodistance(#1,#2)#3{%
-\pgfpointdiff{\pgfpointanchor{#1}{center}}%
-             {\pgfpointanchor{#2}{center}}%
-\pgf@xa=\pgf@x%
-\pgf@ya=\pgf@y%
-\global\expandafter\edef\csname xlen\endcsname{\pgf@xa}%
-\global\expandafter\edef\csname ylen\endcsname{\pgf@ya}%
-\FP@eval\@temp@a{\pgfmath@tonumber{\pgf@xa}}%
-\FPeval\@temp@b{\pgfmath@tonumber{\pgf@ya}}%
-\FPeval\@temp@sum{(\@temp@a*\@temp@a+\@temp@b*\@temp@b)}%
-\FProot{\FPMathLen}{\@temp@sum}{2}%
-\FPround\FPMathLen\FPMathLen5\relax%
-\global\expandafter\edef\csname #3\endcsname{\pgf@x}%
-}%
-\makeatother
-
-
-
-
-\newwrite\tempfile
-\immediate\openout\tempfile=bnfnodes.dat
-
-
-\makeatletter
-\newcommand{\writenodesize}[1]{%
-  \pgfpointdiff{\pgfpointanchor{#1}{west}}{\pgfpointanchor{#1}{east}}%
-\FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
-  \pgfpointdiff{\pgfpointanchor{#1}{south}}{\pgfpointanchor{#1}{north}}%
-\FP@eval\@temp@y{\pgfmath@tonumber{\pgf@y}}%
-\immediate\write\tempfile{#1 \@temp@x,  \@temp@y}}
-\makeatother
-
+\usepackage{ebnf2tikz}
 
 \begin{document}
-\makeatletter
-\pgf@x=\textwidth%
-\FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
-\immediate\write\tempfile{textwidth \@temp@tw}
-\makeatother
-\newlength{\tmplength}
-\newlength{\tmplengthb}
-\newlength{\tmplengthc}
-\setlength{\tmplength}{12pt}
-\setlength{\tmplengthb}{12pt}
-\setlength{\tmplengthc}{12pt}
-
-
 
 \input{all_diagrams}
 
 \input{testlist}
-
-
-\immediate\closeout\tempfile
 
 \end{document}

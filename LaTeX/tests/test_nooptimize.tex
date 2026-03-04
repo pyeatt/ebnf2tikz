@@ -1,0 +1,20 @@
+% Test: nooptimize package option
+% Loads the package with nooptimize, verifying no conflicts.
+% Uses the same sample.ebnf productions.
+\documentclass{article}
+\usepackage[nooptimize]{ebnf2tikz}
+\begin{document}
+
+\section*{Test: nooptimize option}
+
+\bigskip
+\noindent\textbf{expr} (unoptimized)
+\par\medskip
+\useproduction{expr}
+
+\bigskip
+\noindent\textbf{term} (unoptimized)
+\par\medskip
+\useproduction{term}
+
+\end{document}
