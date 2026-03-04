@@ -127,7 +127,7 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
   find_package(LATEX COMPONENTS PDFLATEX MAKEINDEX)
   add_custom_target(doc
-    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/documentation/Doxyfile
     COMMAND ${CMAKE_MAKE_PROGRAM} -C ${CMAKE_CURRENT_SOURCE_DIR}/documentation/latex
     COMMAND ${CMAKE_COMMAND} -E copy
       ${CMAKE_CURRENT_SOURCE_DIR}/documentation/latex/refman.pdf
@@ -136,7 +136,7 @@ if(DOXYGEN_FOUND)
       ${CMAKE_CURRENT_SOURCE_DIR}/documentation/latex
     COMMAND ${CMAKE_COMMAND}
       -DOUTFILE=${CMAKE_CURRENT_SOURCE_DIR}/documentation/index.html
-      -P ${CMAKE_CURRENT_SOURCE_DIR}/write_index_redirect.cmake
+      -P ${CMAKE_CURRENT_SOURCE_DIR}/documentation/write_index_redirect.cmake
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generating API documentation in documentation/"
   )
