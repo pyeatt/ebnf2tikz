@@ -78,6 +78,7 @@ struct ASTNodeGeom {
   float height;        /**< Total height in points. */
   coordinate entry;    /**< Left connection point (input rail). */
   coordinate exit;     /**< Right connection point (output rail). */
+  int reversed;        /**< 1 if laid out right-to-left (loop repeats). */
 };
 
 /**
@@ -110,6 +111,7 @@ struct ASTProductionLayout {
   map<ast::ASTNode*, ASTLeafInfo> leafInfo;    /**< Per-leaf naming/size info. */
   vector<ASTPolyline> connections;             /**< Connection polylines. */
   vector<ASTNamedCoord> stubs;                 /**< Entry/exit stub coordinates. */
+  map<ast::ASTNode*, pair<float,float>> sizeCache; /**< Cached astComputeSize results. */
 };
 
 /**
@@ -229,5 +231,23 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
  * @param sizes   Node size cache (provides textwidth and colsep).
  */
 void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes);
+
+/**
+ * @brief Apply post-layout shortstack wrapping to overwide nonterminals.
+ *
+ * Checks whether a production's body is wider than \\textwidth and,
+ * if so, marks nonterminal leaf nodes that contain wrappable
+ * spaces/underscores for shortstack wrapping.  This only affects
+ * TikZ label text, not layout geometry (sizes come from bnfnodes.dat).
+ *
+ * @param layout   Layout result (modifies leafInfo wrapped flags).
+ * @param body     The production body AST node.
+ * @param needsWrap Pre-determined wrap flag from the production.
+ * @param sizes    Node size cache (provides textwidth, minsize).
+ * @param prodName Production name (for overwidth warning).
+ */
+void astPostLayoutWrap(ASTProductionLayout &layout, ast::ASTNode *body,
+                       int needsWrap, nodesizes *sizes,
+                       const string &prodName);
 
 #endif

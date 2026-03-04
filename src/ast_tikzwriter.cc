@@ -257,160 +257,6 @@ void ASTTikzWriter::writeProduction(ASTProduction *prod,
   outs << "}\n\n";
 }
 
-/** @name Overwide nonterminal wrapping helpers */
-/** @{ */
-
-/**
- * @brief Check if a leaf node's display text contains wrappable spaces.
- * @param li The leaf info to check.
- * @return 1 if the node is a nonterminal with spaces/underscores, 0 otherwise.
- */
-static int hasWrappableSpaces(ASTLeafInfo &li)
-{
-  string display;
-
-  if(li.isTerminal)
-    return 0;
-
-  display = li.rawText;
-  replace(display.begin(), display.end(), '_', ' ');
-  if(display.find(' ') != string::npos)
-    return 1;
-  return 0;
-}
-
-/**
- * @brief Collect nonterminal nodes that can be shortstack-wrapped.
- * @param n      Root of subtree to scan.
- * @param info   Leaf information map.
- * @param result Vector to append wrappable nodes to.
- */
-static void collectWrappableNodes(ASTNode *n,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTNode*> &result)
-{
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
-  auto it = info.find(n);
-
-  switch(n->kind)
-    {
-    case ASTKind::Nonterminal:
-      if(it != info.end() && !it->second.wrapped &&
-         hasWrappableSpaces(it->second))
-        result.push_back(n);
-      return;
-
-    case ASTKind::Terminal:
-    case ASTKind::Epsilon:
-    case ASTKind::Newline:
-      return;
-
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      for(i = 0; i < seq->children.size(); i++)
-        collectWrappableNodes(seq->children[i], info, result);
-      return;
-
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      for(i = 0; i < ch->alternatives.size(); i++)
-        collectWrappableNodes(ch->alternatives[i], info, result);
-      return;
-
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      collectWrappableNodes(opt->child, info, result);
-      return;
-
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
-        collectWrappableNodes(loop->body, info, result);
-      for(i = 0; i < loop->repeats.size(); i++)
-        collectWrappableNodes(loop->repeats[i], info, result);
-      return;
-    }
-}
-
-/**
- * @brief Estimate extra width from unwrapped tall nonterminals.
- *
- * For nonterminals that are taller than expected (indicating LaTeX
- * has already wrapped them), estimates how much width would be saved
- * by shortstack-wrapping them.
- *
- * @param n     Root of subtree to scan.
- * @param info  Leaf information map.
- * @param sizes Node size cache.
- * @return Estimated extra width in points.
- */
-static float estimateUnwrappedExtra(ASTNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
-{
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
-  float extra;
-  int numLines;
-  auto it = info.find(n);
-
-  switch(n->kind)
-    {
-    case ASTKind::Nonterminal:
-      if(it != info.end() && it->second.height > 1.5f * sizes->minsize &&
-         hasWrappableSpaces(it->second))
-        {
-          numLines = (int)(it->second.height / sizes->minsize + 0.5f);
-          if(numLines < 2)
-            numLines = 2;
-          return (float)(numLines - 1) * it->second.width;
-        }
-      return 0;
-
-    case ASTKind::Terminal:
-    case ASTKind::Epsilon:
-    case ASTKind::Newline:
-      return 0;
-
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      extra = 0;
-      for(i = 0; i < seq->children.size(); i++)
-        extra += estimateUnwrappedExtra(seq->children[i], info, sizes);
-      return extra;
-
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      extra = 0;
-      for(i = 0; i < ch->alternatives.size(); i++)
-        extra += estimateUnwrappedExtra(ch->alternatives[i], info, sizes);
-      return extra;
-
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      return estimateUnwrappedExtra(opt->child, info, sizes);
-
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      extra = 0;
-      if(loop->body != NULL)
-        extra += estimateUnwrappedExtra(loop->body, info, sizes);
-      for(i = 0; i < loop->repeats.size(); i++)
-        extra += estimateUnwrappedExtra(loop->repeats[i], info, sizes);
-      return extra;
-    }
-
-  return 0;
-}
-
-/** @} */
-
 /** @brief Layout and write TikZ for all productions. @see astPlaceGrammar() in ast_tikzwriter.hh */
 
 void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
@@ -419,12 +265,8 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
   ASTLayoutContext ctx(sizes);
   ASTTikzWriter writer(outs, sizes);
   ASTProductionLayout layout;
-  size_t i, j;
+  size_t i;
   ASTProduction *prod;
-  int needsWrap;
-  pair<float,float> bodySize;
-  float extraWidth, bodyWidth;
-  vector<ASTNode*> wrappable;
 
   outs << "\\makeatletter\n";
 
@@ -444,50 +286,8 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
           /* Post-layout wrapping check: wrapping only affects texName
              output, not layout geometry (sizes come from bnfnodes.dat).
              So we can check and set wrapped flags after layout. */
-          needsWrap = prod->needsWrap;
-          if(sizes->textwidth > 0)
-            {
-              auto git = layout.geom.find(prod->body);
-              if(git != layout.geom.end())
-                bodyWidth = git->second.width;
-              else
-                bodyWidth = 0;
-
-              if(bodyWidth > sizes->textwidth)
-                needsWrap = 1;
-
-              if(!needsWrap)
-                {
-                  extraWidth = estimateUnwrappedExtra(
-                      prod->body, layout.leafInfo, sizes);
-                  if(extraWidth > 0 &&
-                     bodyWidth + extraWidth > sizes->textwidth)
-                    needsWrap = 1;
-                }
-
-              if(needsWrap)
-                {
-                  wrappable.clear();
-                  collectWrappableNodes(prod->body,
-                                        layout.leafInfo, wrappable);
-                  for(j = 0; j < wrappable.size(); j++)
-                    {
-                      auto it = layout.leafInfo.find(wrappable[j]);
-                      if(it != layout.leafInfo.end())
-                        it->second.wrapped = 1;
-                    }
-                }
-
-              /* Warn if still overwide */
-              if(bodyWidth > sizes->textwidth)
-                cerr << "Warning: production '"
-                     << prod->name
-                     << "' width (" << bodyWidth
-                     << "pt) exceeds \\textwidth ("
-                     << sizes->textwidth << "pt) by "
-                     << bodyWidth - sizes->textwidth << "pt"
-                     << endl;
-            }
+          astPostLayoutWrap(layout, prod->body, prod->needsWrap,
+                            sizes, prod->name);
 
           writer.writeProduction(prod, layout);
         }
