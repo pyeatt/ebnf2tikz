@@ -1,0 +1,28 @@
+% Test: \ebnffile with \useproduction
+% This test loads an external .ebnf file and renders productions
+% using \useproduction (which does camelcase + Box lookup).
+% Must be run with ebnf2tikz externally (no shell-escape).
+\documentclass{article}
+\usepackage{ebnf2tikz}
+\begin{document}
+
+\section*{Test: ebnffile + useproduction}
+
+Diagrams loaded from \texttt{sample.ebnf} via manual ebnf2tikz run:
+
+\bigskip
+\noindent\textbf{expr}
+\par\medskip
+\useproduction{expr}
+
+\bigskip
+\noindent\textbf{term}
+\par\medskip
+\useproduction{term}
+
+\bigskip
+\noindent\textbf{factor}
+\par\medskip
+\useproduction{factor}
+
+\end{document}
