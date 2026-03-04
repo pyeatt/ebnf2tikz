@@ -41,10 +41,9 @@
 % The \textsf{ebnf2tikz} package provides all the \LaTeX{} infrastructure
 % needed to render railroad (syntax) diagrams produced by the
 % \texttt{ebnf2tikz} compiler.  It loads the required packages, defines
-% TikZ styles for terminal and nonterminal nodes, provides the
-% |\writenodesize| macro for the multi-pass sizing feedback loop, and
-% offers convenience commands for integrating EBNF grammars into
-% \LaTeX{} documents.
+% TikZ styles for terminal and nonterminal nodes, manages the multi-pass
+% sizing feedback loop, and offers convenience commands for integrating
+% EBNF grammars into \LaTeX{} documents.
 % \end{abstract}
 %
 % \tableofcontents
@@ -56,8 +55,8 @@
 % (syntax) diagrams rendered as \LaTeX{} TikZ commands.  Accurate layout
 % requires a multi-pass feedback loop between \texttt{ebnf2tikz} and
 % \texttt{pdflatex}: node sizes measured by \LaTeX{} are written to
-% \texttt{bnfnodes.dat} via |\writenodesize|, then read back by
-% \texttt{ebnf2tikz} on the next run.
+% \texttt{bnfnodes.dat}, then read back by \texttt{ebnf2tikz} on the
+% next run.
 %
 % Without this package, users must copy roughly 80 lines of preamble
 % from the test driver.  This package encapsulates all of that setup.
@@ -129,12 +128,6 @@
 % the camelCase savebox name used by \texttt{ebnf2tikz}
 % (e.g., \texttt{myRule}).
 %
-% \DescribeMacro{\writenodesize}
-% |\writenodesize{|\meta{nodename}|}| measures the named TikZ node
-% and writes its width and height to \texttt{bnfnodes.dat}.  This is
-% called automatically by the generated TikZ code; users do not
-% normally need to call it directly.
-%
 % \DescribeMacro{\railname}
 % \DescribeMacro{\railtermname}
 % |\railname{|\meta{text}|}| and |\railtermname{|\meta{text}|}| format
@@ -159,6 +152,68 @@
 %
 % The |nonterminal| and |terminal| TikZ styles can be redefined with
 % |\tikzset| after loading the package.
+%
+% \section{Examples}
+%
+% \subsection{Minimal inline example}
+%
+% A complete document with an inline grammar and diagram:
+%
+% \begin{verbatim}
+% \documentclass{article}
+% \usepackage{ebnf2tikz}
+% \begin{ebnf}
+% expression = term { ("+" | "-") term } ;
+% \end{ebnf}
+% \begin{document}
+% \useproduction{expression}
+% \end{document}
+% \end{verbatim}
+%
+% \subsection{External file example}
+%
+% Using a separate \texttt{.ebnf} file:
+%
+% \begin{verbatim}
+% \documentclass{article}
+% \usepackage{ebnf2tikz}
+% \ebnffile{mygrammar.ebnf}
+% \begin{document}
+% \useproduction{if_statement}
+% \useproduction{while_loop}
+% \end{document}
+% \end{verbatim}
+%
+% \subsection{Customization example}
+%
+% Overriding lengths and TikZ styles:
+%
+% \begin{verbatim}
+% \usepackage{ebnf2tikz}
+% \setlength{\railcolsep}{8pt}
+% \setlength{\railrowsep}{20pt}
+% \renewcommand{\railname}[1]{\textsf{#1}}
+% \renewcommand{\railtermname}[1]{\texttt{#1}}
+% \tikzset{
+%   terminal/.append style={fill=blue!10},
+%   nonterminal/.append style={fill=green!10}
+% }
+% \end{verbatim}
+%
+% \subsection{Subsumption example}
+%
+% The |subsume| annotation inlines one production into another,
+% reducing the number of separate diagrams:
+%
+% \begin{verbatim}
+% digit = "0" | "1" | "2" | "3" | "4"
+%       | "5" | "6" | "7" | "8" | "9" ;
+%       <<-- subsume -->>
+% number = digit { digit } ;
+% \end{verbatim}
+%
+% The |digit| production is expanded inline within the |number|
+% diagram rather than appearing as a separate nonterminal reference.
 %
 % \StopEventually{\PrintChanges\PrintIndex}
 %
@@ -221,25 +276,6 @@
 % \end{macro}
 % \end{macro}
 %
-% \subsection{Scratch lengths}
-%
-% These are used by the generated TikZ code.
-%
-% \begin{macro}{\tmplength}
-% \begin{macro}{\tmplengthb}
-% \begin{macro}{\tmplengthc}
-%    \begin{macrocode}
-\newlength{\tmplength}
-\newlength{\tmplengthb}
-\newlength{\tmplengthc}
-\setlength{\tmplength}{12pt}
-\setlength{\tmplengthb}{12pt}
-\setlength{\tmplengthc}{12pt}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \end{macro}
-%
 % \subsection{Font commands}
 %
 % \begin{macro}{\railname}
@@ -280,78 +316,16 @@
 }
 %    \end{macrocode}
 %
-% \subsection{Distance and coordinate utilities}
-%
-% These macros are used by the generated TikZ code for computing
-% distances and shifts between nodes.
-%
-% \begin{macro}{\Distance}
-%    \begin{macrocode}
-\newcommand{\Distance}[3]{%
-  \tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax
-  \pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\settoxdiff}
-%    \begin{macrocode}
-\newcommand\settoxdiff[3]{%
-  \pgfpointdiff{#2}{#3}%
-  \global\expandafter\edef #1{\pgf@x}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% The |getyshift| and |getdistc| TikZ keys compute vertical shifts
-% between nodes for connection routing.
-%
-%    \begin{macrocode}
-\tikzset{
-  getyshift/.style args={#1 and #2 and #3}{
-    getdistc={#1}{#2},yshift=-\mylength-\railnodeheight+\pgflinewidth/#3
-  },
-  getdistc/.code 2 args={
-    \pgfextra{%
-      \pgfpointdiff{\pgfpointanchor{#1}{north}}{\pgfpointanchor{#2}{south}}%
-      \xdef\mylength{\the\pgf@y}%
-    }%
-  }
-}
-%    \end{macrocode}
-%
-% The |\settodistance| macro computes the Euclidean distance between
-% two node centers.
-%
-% \begin{macro}{\settodistance}
-%    \begin{macrocode}
-\def\settodistance(#1,#2)#3{%
-  \pgfpointdiff{\pgfpointanchor{#1}{center}}%
-               {\pgfpointanchor{#2}{center}}%
-  \pgf@xa=\pgf@x%
-  \pgf@ya=\pgf@y%
-  \global\expandafter\edef\csname xlen\endcsname{\pgf@xa}%
-  \global\expandafter\edef\csname ylen\endcsname{\pgf@ya}%
-  \FP@eval\@temp@a{\pgfmath@tonumber{\pgf@xa}}%
-  \FPeval\@temp@b{\pgfmath@tonumber{\pgf@ya}}%
-  \FPeval\@temp@sum{(\@temp@a*\@temp@a+\@temp@b*\@temp@b)}%
-  \FProot{\FPMathLen}{\@temp@sum}{2}%
-  \FPround\FPMathLen\FPMathLen5\relax%
-  \global\expandafter\edef\csname #3\endcsname{\pgf@x}%
-}%
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsection{Node size measurement (bnfnodes.dat)}
 %
 % The \texttt{bnfnodes.dat} file is used for the multi-pass feedback loop.
 % We open it at |\begin{document}|, write |textwidth| immediately, and
 % close it at |\end{document}|.
 %
-% \begin{macro}{\writenodesize}
+% \begin{macro}{\ebnf@writenodesize}
 %    \begin{macrocode}
 \newwrite\ebnf@nodefile
-\newcommand{\writenodesize}[1]{%
+\newcommand{\ebnf@writenodesize}[1]{%
   \pgfpointdiff{\pgfpointanchor{#1}{west}}{\pgfpointanchor{#1}{east}}%
   \FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
   \pgfpointdiff{\pgfpointanchor{#1}{south}}{\pgfpointanchor{#1}{north}}%
