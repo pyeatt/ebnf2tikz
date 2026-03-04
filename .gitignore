@@ -3,17 +3,17 @@
 *.jou
 ebnf2tikz
 
-# Bison/Flex generated files (built into CMake binary dir)
-parser.cc
-parser.hh
-location.hh
-lexer.cc
-lexer.hh
-annot_parser.cc
-annot_parser.hh
-annot_location.hh
-annot_lexer.cc
-annot_lexer.hh
+# Bison/Flex generated files (built into src/)
+src/parser.cc
+src/parser.hh
+src/location.hh
+src/lexer.cc
+src/lexer.hh
+src/annot_parser.cc
+src/annot_parser.hh
+src/annot_location.hh
+src/annot_lexer.cc
+src/annot_lexer.hh
 
 # CMake build products
 CMakeCache.txt
