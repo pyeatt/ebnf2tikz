@@ -33,6 +33,7 @@ ebnf2tikz
  */
 
 #include "ast_tikzwriter.hh"
+#include "ast_visitor.hh"
 #include <util.hh>
 #include <sstream>
 #include <algorithm>
@@ -58,7 +59,7 @@ static string astLatexwrite(const string &fontspec, const string &s)
   outs << "\\" << fontspec << "{";
   for(auto i = s.begin(); i != s.end(); i++)
     {
-      if(strchr("&%$#_{}~^\\", *i) != NULL)
+      if(strchr("&%$#_{}~^\\", *i) != nullptr)
         outs << "\\";
       outs << *i;
     }
@@ -149,55 +150,37 @@ void ASTTikzWriter::emitLeafNode(ASTNode *n, ASTLeafInfo &li,
 }
 
 
+/**
+ * @brief Visitor that emits TikZ nodes for all leaf nodes in the AST.
+ */
+class NodeEmitter : public DefaultASTVisitor {
+public:
+  ASTTikzWriter &writer;
+  ASTProductionLayout &layout;
+
+  NodeEmitter(ASTTikzWriter &w, ASTProductionLayout &l)
+    : writer(w), layout(l) {}
+
+  void visitTerminal(TerminalNode *n) override { emitIfPresent((ASTNode*)n); }
+  void visitNonterminal(NonterminalNode *n) override { emitIfPresent((ASTNode*)n); }
+  void visitEpsilon(EpsilonNode *n) override { emitIfPresent((ASTNode*)n); }
+
+private:
+  void emitIfPresent(ASTNode *n)
+  {
+    auto leafIt = layout.leafInfo.find(n);
+    auto geomIt = layout.geom.find(n);
+    if(leafIt != layout.leafInfo.end() &&
+       geomIt != layout.geom.end())
+      writer.emitLeafNode(n, leafIt->second, geomIt->second);
+  }
+};
+
 void ASTTikzWriter::emitAllNodes(ASTNode *n,
                                   ASTProductionLayout &layout)
 {
-  SequenceNode *seq;
-  ChoiceNode *ch;
-  OptionalNode *opt;
-  LoopNode *loop;
-  size_t i;
-  auto leafIt = layout.leafInfo.find(n);
-  auto geomIt = layout.geom.find(n);
-
-  switch(n->kind)
-    {
-    case ASTKind::Terminal:
-    case ASTKind::Nonterminal:
-    case ASTKind::Epsilon:
-      if(leafIt != layout.leafInfo.end() &&
-         geomIt != layout.geom.end())
-        emitLeafNode(n, leafIt->second, geomIt->second);
-      return;
-
-    case ASTKind::Newline:
-      return;
-
-    case ASTKind::Sequence:
-      seq = static_cast<SequenceNode*>(n);
-      for(i = 0; i < seq->children.size(); i++)
-        emitAllNodes(seq->children[i], layout);
-      return;
-
-    case ASTKind::Choice:
-      ch = static_cast<ChoiceNode*>(n);
-      for(i = 0; i < ch->alternatives.size(); i++)
-        emitAllNodes(ch->alternatives[i], layout);
-      return;
-
-    case ASTKind::Optional:
-      opt = static_cast<OptionalNode*>(n);
-      emitAllNodes(opt->child, layout);
-      return;
-
-    case ASTKind::Loop:
-      loop = static_cast<LoopNode*>(n);
-      if(loop->body != NULL)
-        emitAllNodes(loop->body, layout);
-      for(i = 0; i < loop->repeats.size(); i++)
-        emitAllNodes(loop->repeats[i], layout);
-      return;
-    }
+  NodeEmitter emitter(*this, layout);
+  n->accept(emitter);
 }
 
 
@@ -275,8 +258,7 @@ void astPlaceGrammar(ASTGrammar *grammar, ofstream &outs,
       prod = grammar->productions[i];
 
       /* skip subsumed productions */
-      if(prod->annotations != NULL &&
-         (*prod->annotations)["subsume"] != "")
+      if(prod->isSubsumed())
         ;  /* subsumed: skip */
       else
         {

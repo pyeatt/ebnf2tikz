@@ -38,8 +38,6 @@ ebnf2tikz
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 /**
  * @brief A 2D point in the TikZ coordinate system (in points).
  *
@@ -70,6 +68,16 @@ public:
     return c;
   }
 
+  /** @brief Component-wise equality. */
+  bool operator==(const coordinate &r) const {
+    return x == r.x && y == r.y;
+  }
+
+  /** @brief Component-wise inequality. */
+  bool operator!=(const coordinate &r) const {
+    return x != r.x || y != r.y;
+  }
+
   /** @brief Component-wise subtraction. */
   coordinate operator-(coordinate r) {
     coordinate c;
@@ -78,20 +86,13 @@ public:
     return c;
   }
 
-  /** @brief Assignment operator. */
-  coordinate& operator=(coordinate r) {
-    x = r.x;
-    y = r.y;
-    return *this;
-  }
-
   /**
    * @brief Output in TikZ coordinate syntax: @c (Xpt,Ypt).
    * @param out Output stream.
    * @param c   Coordinate to print.
    * @return The output stream.
    */
-  friend ostream& operator<<(ostream& out, const coordinate &c) {
+  friend std::ostream& operator<<(std::ostream& out, const coordinate &c) {
     out << '(' << c.x << "pt," << c.y << "pt)";
     return out;
   }
@@ -107,7 +108,7 @@ public:
  */
 class nodesizes {
 private:
-  map<string, coordinate> sizemap;  /**< Map from node name to (width, height). */
+  std::map<std::string, coordinate> sizemap;  /**< Map from node name to (width, height). */
 public:
   float rowsep;      /**< Vertical separation between rows (default 6pt). */
   float colsep;      /**< Horizontal separation between nodes (default 8pt). */
@@ -129,7 +130,7 @@ public:
    *
    * @param filename Path to the bnfnodes.dat file.
    */
-  void loadData(const string &filename);
+  void loadData(const std::string &filename);
 
   /**
    * @brief Look up the size of a named node.
@@ -143,7 +144,7 @@ public:
    * @param height   Output: node height in points.
    * @return 1 if found, 0 if defaults were used.
    */
-  int getSize(const string &nodename, float &width, float &height);
+  int getSize(const std::string &nodename, float &width, float &height);
 };
 
 #endif

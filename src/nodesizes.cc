@@ -31,6 +31,8 @@ ebnf2tikz
 #include "diagnostics.hh"
 #include <fstream>
 
+using namespace std;
+
 nodesizes::nodesizes()
   : rowsep(6), colsep(8), minsize(14), textwidth(0)
 {

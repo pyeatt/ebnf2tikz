@@ -29,6 +29,8 @@ ebnf2tikz
 
 #include "diagnostics.hh"
 
+using namespace std;
+
 /** @brief Global diagnostic engine instance used throughout the compiler. */
 DiagnosticEngine diagnostics;
 

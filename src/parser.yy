@@ -47,7 +47,7 @@ ebnf2tikz
   #include <assert.h>
   #include "ast.hh"
   class driver;
-  annotmap *scanAnnot(string &s, void *loc);
+  annotmap *scanAnnot(std::string &s, void *loc);
 }
 // The parsing context.
 %param { driver& drv }
@@ -187,7 +187,7 @@ annotations : ANNOTATION {
     $$ = a;
   } |
   {
-      $$=NULL;
+      $$=nullptr;
   } ;
 
 // The body of a production may span multiple rows separated by newlines.

@@ -38,8 +38,6 @@ ebnf2tikz
 #include <vector>
 #include <iostream>
 
-using namespace std;
-
 /**
  * @brief Diagnostic severity levels.
  */
@@ -53,7 +51,7 @@ enum class Severity {
  * @brief Source file location for diagnostic messages.
  */
 struct SourceLocation {
-  string filename;  /**< Source file name (empty if unknown). */
+  std::string filename;  /**< Source file name (empty if unknown). */
   int line;         /**< Line number (0 if unknown). */
   int column;       /**< Column number (0 if unknown). */
 
@@ -66,7 +64,7 @@ struct SourceLocation {
    * @param l Line number.
    * @param c Column number.
    */
-  SourceLocation(const string &f, int l, int c)
+  SourceLocation(const std::string &f, int l, int c)
     : filename(f), line(l), column(c) {}
 };
 
@@ -76,7 +74,7 @@ struct SourceLocation {
 struct Diagnostic {
   Severity severity;     /**< Severity level. */
   SourceLocation loc;    /**< Source location (may be empty). */
-  string message;        /**< Diagnostic message text. */
+  std::string message;        /**< Diagnostic message text. */
 };
 
 /**
@@ -87,7 +85,7 @@ struct Diagnostic {
  */
 class DiagnosticEngine {
 private:
-  vector<Diagnostic> diags;  /**< Accumulated diagnostic messages. */
+  std::vector<Diagnostic> diags;  /**< Accumulated diagnostic messages. */
   int errorCount;            /**< Number of error-level diagnostics. */
   int warningCount;          /**< Number of warning-level diagnostics. */
 public:
@@ -100,14 +98,14 @@ public:
    * @param loc Source location.
    * @param msg Message text.
    */
-  void report(Severity sev, const SourceLocation &loc, const string &msg);
+  void report(Severity sev, const SourceLocation &loc, const std::string &msg);
 
   /**
    * @brief Report a diagnostic without a source location.
    * @param sev Severity level.
    * @param msg Message text.
    */
-  void report(Severity sev, const string &msg);
+  void report(Severity sev, const std::string &msg);
 
   /**
    * @brief Check if any errors have been reported.
@@ -125,13 +123,13 @@ public:
    * @brief Emit all collected diagnostics to an output stream.
    * @param out The stream to write diagnostics to (typically stderr).
    */
-  void emit(ostream &out) const;
+  void emit(std::ostream &out) const;
 
   /**
    * @brief Get the raw list of collected diagnostics.
    * @return Const reference to the diagnostics vector.
    */
-  const vector<Diagnostic>& getDiagnostics() const;
+  const std::vector<Diagnostic>& getDiagnostics() const;
 
   /** @brief Clear all accumulated diagnostics and reset counters. */
   void clear();

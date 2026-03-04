@@ -30,6 +30,8 @@ ebnf2tikz
 #include "driver.hh"
 #include "parser.hh"
 
+using namespace std;
+
 driver::driver (ofstream *out, nodesizes *sz)
   : trace_parsing (false), trace_scanning (false)
 {

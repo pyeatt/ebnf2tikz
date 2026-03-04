@@ -38,15 +38,17 @@ ebnf2tikz
 #include <nodesizes.hh>
 #include <diagnostics.hh>
 
+using namespace std;
+
 /** @brief Command-line option table for getopt_long. */
 struct option options[] = {
-  {"optimize", no_argument, NULL, 'O'},
-  {"nooptimize", no_argument, NULL, 'n'},
-  {"makefigures", no_argument, NULL, 'f'},
-  {"dumponly", no_argument, NULL, 'd'},
-  {"dump-before", no_argument, NULL, 'B'},
-  {"dump-after", no_argument, NULL, 'A'},
-  {"help", no_argument, NULL, 'h'},
+  {"optimize", no_argument, nullptr, 'O'},
+  {"nooptimize", no_argument, nullptr, 'n'},
+  {"makefigures", no_argument, nullptr, 'f'},
+  {"dumponly", no_argument, nullptr, 'd'},
+  {"dump-before", no_argument, nullptr, 'B'},
+  {"dump-after", no_argument, nullptr, 'A'},
+  {"help", no_argument, nullptr, 'h'},
   {0, 0, 0, 0}
 };
 
@@ -77,7 +79,7 @@ void usage(const char *name)
   cout << "\nUSAGE: ";
   cout << name << " <options> input_file output_file\n";
   cout << "  where command is one of:\n\n";
-  for(i = 0; options[i].name != NULL; i++)
+  for(i = 0; options[i].name != nullptr; i++)
     {
       if(options[i].has_arg == 1)
 	cout << "  --" << options[i].name << " <arg> or -"
