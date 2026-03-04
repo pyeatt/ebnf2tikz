@@ -14,6 +14,15 @@ if [ ! -x "$EBNF2TIKZ" ]; then
     exit 1
 fi
 
+# Locate the LaTeX package directory so pdflatex can find ebnf2tikz.sty
+STYDIR="$(cd "$SRCDIR/../LaTeX" && pwd)"
+if [ ! -f "$STYDIR/ebnf2tikz.sty" ]; then
+    echo "Error: ebnf2tikz.sty not found in $STYDIR"
+    echo "  Run 'latex ebnf2tikz.ins' in the LaTeX/ directory first"
+    exit 1
+fi
+export TEXINPUTS="$STYDIR:$TEXINPUTS"
+
 if [ ! -f "$EBNF_FILE" ]; then
     echo "Error: VHDL.ebnf not found at $EBNF_FILE"
     exit 1

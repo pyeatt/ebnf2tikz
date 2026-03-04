@@ -1,0 +1,275 @@
+%%
+%% This is file `ebnf2tikz.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ebnf2tikz.dtx  (with options: `package')
+%% 
+%% ebnf2tikz — Railroad (syntax) diagrams from EBNF grammars via TikZ
+%% 
+%% Copyright (C) 2024–2026 Larry Pyeatt
+%% 
+%% This file may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3c
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%    https://www.latex-project.org/lppl.txt
+%% 
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{ebnf2tikz}[2026/03/03 v1.0 Railroad diagrams from EBNF via TikZ]
+\newif\ifebnf@figures
+\newif\ifebnf@nooptimize
+\DeclareOption{figures}{\ebnf@figurestrue}
+\DeclareOption{nooptimize}{\ebnf@nooptimizetrue}
+\ProcessOptions\relax
+\def\ebnf@flags{}
+\ifebnf@figures
+  \g@addto@macro\ebnf@flags{ -f}
+\fi
+\ifebnf@nooptimize
+  \g@addto@macro\ebnf@flags{ -n}
+\fi
+\RequirePackage{tikz,pgf}
+\usetikzlibrary{positioning,shapes,matrix,chains,scopes,fit,calc,shadings,intersections}
+\RequirePackage[nomessages]{fp}
+\RequirePackage{rotating}
+\RequirePackage{shellesc}
+\newlength\railcolsep
+\setlength\railcolsep{5pt}
+\newlength\railrowsep
+\setlength\railrowsep{\baselineskip}
+\newlength\railnodeheight
+\setlength\railnodeheight{14pt}
+\newlength\railcorners
+\setlength\railcorners{\railcolsep}
+\addtolength\railcorners{-1pt}
+\newlength{\tmplength}
+\newlength{\tmplengthb}
+\newlength{\tmplengthc}
+\setlength{\tmplength}{12pt}
+\setlength{\tmplengthb}{12pt}
+\setlength{\tmplengthc}{12pt}
+\newcommand{\railname}[1]{\textit{#1}}
+\newcommand{\railtermname}[1]{\textbf{#1}}
+\tikzset{
+  nonterminal/.style={
+    draw,
+    inner sep=2pt,
+    rectangle,
+    minimum size=\railnodeheight,
+    thick,
+    top color=white,
+    bottom color=red!50!black!20,
+    font=\itshape
+  },
+  terminal/.style={
+    draw,
+    inner sep=2pt,
+    rounded rectangle,
+    minimum size=\railnodeheight,
+    thick,
+    top color=white,
+    bottom color=black!20,
+    font=\ttfamily
+  },
+  every picture/.style={thick},
+  every node/.style={inner sep=0, outer sep=0, draw=none}
+}
+\newcommand{\Distance}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax
+  \pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}%
+}
+\newcommand\settoxdiff[3]{%
+  \pgfpointdiff{#2}{#3}%
+  \global\expandafter\edef #1{\pgf@x}%
+}
+\tikzset{
+  getyshift/.style args={#1 and #2 and #3}{
+    getdistc={#1}{#2},yshift=-\mylength-\railnodeheight+\pgflinewidth/#3
+  },
+  getdistc/.code 2 args={
+    \pgfextra{%
+      \pgfpointdiff{\pgfpointanchor{#1}{north}}{\pgfpointanchor{#2}{south}}%
+      \xdef\mylength{\the\pgf@y}%
+    }%
+  }
+}
+\def\settodistance(#1,#2)#3{%
+  \pgfpointdiff{\pgfpointanchor{#1}{center}}%
+               {\pgfpointanchor{#2}{center}}%
+  \pgf@xa=\pgf@x%
+  \pgf@ya=\pgf@y%
+  \global\expandafter\edef\csname xlen\endcsname{\pgf@xa}%
+  \global\expandafter\edef\csname ylen\endcsname{\pgf@ya}%
+  \FP@eval\@temp@a{\pgfmath@tonumber{\pgf@xa}}%
+  \FPeval\@temp@b{\pgfmath@tonumber{\pgf@ya}}%
+  \FPeval\@temp@sum{(\@temp@a*\@temp@a+\@temp@b*\@temp@b)}%
+  \FProot{\FPMathLen}{\@temp@sum}{2}%
+  \FPround\FPMathLen\FPMathLen5\relax%
+  \global\expandafter\edef\csname #3\endcsname{\pgf@x}%
+}%
+\newwrite\ebnf@nodefile
+\newcommand{\writenodesize}[1]{%
+  \pgfpointdiff{\pgfpointanchor{#1}{west}}{\pgfpointanchor{#1}{east}}%
+  \FP@eval\@temp@x{\pgfmath@tonumber{\pgf@x}}%
+  \pgfpointdiff{\pgfpointanchor{#1}{south}}{\pgfpointanchor{#1}{north}}%
+  \FP@eval\@temp@y{\pgfmath@tonumber{\pgf@y}}%
+  \immediate\write\ebnf@nodefile{#1 \@temp@x,  \@temp@y}%
+}
+\AtBeginDocument{%
+  \immediate\openout\ebnf@nodefile=bnfnodes.dat\relax
+  \pgf@x=\textwidth
+  \FP@eval\@temp@tw{\pgfmath@tonumber{\pgf@x}}%
+  \immediate\write\ebnf@nodefile{textwidth \@temp@tw}%
+}
+\AtEndDocument{%
+  \immediate\closeout\ebnf@nodefile
+}
+\newif\ifebnf@hasfiles
+\def\ebnf@filelist{}
+\newcommand{\ebnffile}[1]{%
+  \ebnf@hasfilestrue
+  \g@addto@macro\ebnf@filelist{\ebnf@appendfile{#1}}%
+}
+\newwrite\ebnf@inlinefile
+\newif\ifebnf@fileopen
+\def\ebnf@openinline{%
+  \ifebnf@fileopen\else
+    \immediate\openout\ebnf@inlinefile=\jobname-rail.ebnf\relax
+    \global\ebnf@fileopentrue
+  \fi
+}
+\newenvironment{ebnf}{%
+  \ebnf@hasfilestrue
+  \ebnf@openinline
+  \begingroup
+  \catcode`\\=12\relax
+  \catcode`\{=12\relax
+  \catcode`\}=12\relax
+  \catcode`\$=12\relax
+  \catcode`\&=12\relax
+  \catcode`\#=12\relax
+  \catcode`\^=12\relax
+  \catcode`\_=12\relax
+  \catcode`\~=12\relax
+  \catcode`\%=12\relax
+  \obeylines
+  \ebnf@verbbody
+}{%
+}
+\begingroup
+\catcode`\|=0\relax
+\catcode`\\=12\relax
+\catcode13=13\relax
+|long|gdef|ebnf@verbbody#1^^M{|ebnf@checkend{#1}}%
+|long|gdef|ebnf@checkend#1{%
+  |def|ebnf@temp{#1}%
+  |def|ebnf@sentinel{\end{ebnf}}%
+  |ifx|ebnf@temp|ebnf@sentinel
+    |expandafter|ebnf@endverb
+  |else
+    |immediate|write|ebnf@inlinefile{#1}%
+    |expandafter|ebnf@verbbody
+  |fi
+}
+|endgroup
+\def\ebnf@endverb{%
+  \endgroup
+  \end{ebnf}%
+}
+\newif\ifebnf@upper
+\newcommand{\ebnf@camelcase}[1]{%
+  \begingroup
+  \def\ebnf@result{}%
+  \ebnf@upperfalse
+  \expandafter\ebnf@cc@loop#1\ebnf@cc@end
+}
+\def\ebnf@cc@loop#1{%
+  \ifx#1\ebnf@cc@end
+    \expandafter\ebnf@cc@done
+  \else
+    \ebnf@cc@char{#1}%
+    \expandafter\ebnf@cc@loop
+  \fi
+}
+\def\ebnf@cc@done{%
+  \edef\ebnf@cc@out{\ebnf@result}%
+  \expandafter\endgroup\expandafter\def\expandafter\ebnf@cc@out\expandafter{\ebnf@cc@out}%
+}
+\def\ebnf@cc@char#1{%
+  \def\ebnf@cc@cur{#1}%
+  \def\ebnf@cc@underscore{_}%
+  \ifx\ebnf@cc@cur\ebnf@cc@underscore
+    \ebnf@uppertrue
+  \else
+    \ebnf@cc@isdigit{#1}%
+  \fi
+}
+\def\ebnf@cc@isdigit#1{%
+  \ifcase\numexpr\ifnum`#1<`0 -1%
+    \else\ifnum`#1>`9 -1%
+    \else`#1-`0\fi\fi\relax
+    \edef\ebnf@result{\ebnf@result Zero}%  0
+  \or\edef\ebnf@result{\ebnf@result One}%  1
+  \or\edef\ebnf@result{\ebnf@result Two}%  2
+  \or\edef\ebnf@result{\ebnf@result Three}%  3
+  \or\edef\ebnf@result{\ebnf@result Four}%  4
+  \or\edef\ebnf@result{\ebnf@result Five}%  5
+  \or\edef\ebnf@result{\ebnf@result Six}%  6
+  \or\edef\ebnf@result{\ebnf@result Seven}%  7
+  \or\edef\ebnf@result{\ebnf@result Eight}%  8
+  \or\edef\ebnf@result{\ebnf@result Nine}%  9
+  \else
+    \ifebnf@upper
+      \edef\ebnf@result{\ebnf@result\uppercase{#1}}%
+      \ebnf@upperfalse
+    \else
+      \edef\ebnf@result{\ebnf@result#1}%
+    \fi
+  \fi
+}
+\newcommand{\useproduction}[1]{%
+  \ebnf@camelcase{#1}%
+  \edef\ebnf@boxname{\ebnf@cc@out Box}%
+  \ifcsname\ebnf@boxname\endcsname
+    \usebox{\csname\ebnf@boxname\endcsname}%
+  \else
+    \PackageWarning{ebnf2tikz}{Production `#1' (savebox `\ebnf@boxname') not defined.
+      Have you run ebnf2tikz and included the output?}%
+  \fi
+}
+\def\ebnf@appendfile#1{%
+  \ShellEscape{cat "#1" >> "\jobname-rail.ebnf"}%
+}
+\AtBeginDocument{%
+  \ifebnf@hasfiles
+    %% Close inline file if it was opened by ebnf environments in the preamble
+    \ifebnf@fileopen
+      \immediate\closeout\ebnf@inlinefile
+      \global\ebnf@fileopenfalse
+    \fi
+    %% Append registered external files
+    \ebnf@filelist
+    %% Run ebnf2tikz if shell escape is available
+    \ShellEscape{ebnf2tikz\ebnf@flags\space
+      "\jobname-rail.ebnf" "\jobname-rail.tex"}%
+    %% Input the generated TikZ code if the file exists
+    \IfFileExists{\jobname-rail.tex}{%
+      \input{\jobname-rail.tex}%
+    }{%
+      \PackageWarning{ebnf2tikz}{%
+        Output file \jobname-rail.tex not found.\MessageBreak
+        Run ebnf2tikz manually or use -shell-escape}%
+    }%
+  \fi
+}
+\AtEndDocument{%
+  \ifebnf@fileopen
+    \immediate\closeout\ebnf@inlinefile
+    \global\ebnf@fileopenfalse
+  \fi
+}
+\endinput
+%%
+%% End of file `ebnf2tikz.sty'.
