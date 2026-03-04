@@ -97,7 +97,7 @@ add_custom_target(sty DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.sty)
 
 # --- Test targets ---
 add_custom_target(check
-  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.sh
+  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/unit_tests/run_tests.sh
     ${CMAKE_CURRENT_BINARY_DIR}/ebnf2tikz
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/unit_tests
   DEPENDS ebnf2tikz
