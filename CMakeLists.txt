@@ -89,7 +89,7 @@ target_compile_options(ebnf2tikz PRIVATE -Wall -g)
 # --- LaTeX package extraction ---
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
-  COMMAND latex ebnf2tikz.ins
+  COMMAND latex ebnf2tikz.ins > /dev/null 2>&1
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.sty
     ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty
@@ -103,8 +103,8 @@ add_custom_target(sty DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.sty)
 # --- LaTeX package documentation ---
 add_custom_command(
   OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf
-  COMMAND pdflatex ebnf2tikz.dtx
-  COMMAND pdflatex ebnf2tikz.dtx
+  COMMAND pdflatex ebnf2tikz.dtx > /dev/null 2>&1
+  COMMAND pdflatex ebnf2tikz.dtx > /dev/null 2>&1
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_CURRENT_SOURCE_DIR}/LaTeX/ebnf2tikz.pdf
     ${CMAKE_CURRENT_SOURCE_DIR}/ebnf2tikz.pdf
