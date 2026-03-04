@@ -7,54 +7,56 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(BISON 3.7 REQUIRED)
 find_package(FLEX REQUIRED)
 
+set(GENDIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 # --- Main parser (bison) ---
 add_custom_command(
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/parser.cc
-         ${CMAKE_CURRENT_BINARY_DIR}/parser.hh
-         ${CMAKE_CURRENT_BINARY_DIR}/location.hh
+  OUTPUT ${GENDIR}/parser.cc
+         ${GENDIR}/parser.hh
+         ${GENDIR}/location.hh
   COMMAND ${BISON_EXECUTABLE} -d --locations
-    -o ${CMAKE_CURRENT_BINARY_DIR}/parser.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.yy
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.yy
+    -o ${GENDIR}/parser.cc
+    ${GENDIR}/parser.yy
+  DEPENDS ${GENDIR}/parser.yy
   COMMENT "Generating main parser from parser.yy"
 )
 
 # --- Main lexer (flex) ---
 add_custom_command(
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/lexer.cc
-         ${CMAKE_CURRENT_BINARY_DIR}/lexer.hh
+  OUTPUT ${GENDIR}/lexer.cc
+         ${GENDIR}/lexer.hh
   COMMAND ${FLEX_EXECUTABLE}
-    --header-file=${CMAKE_CURRENT_BINARY_DIR}/lexer.hh
-    -o ${CMAKE_CURRENT_BINARY_DIR}/lexer.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/lexer.ll
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/lexer.ll
-          ${CMAKE_CURRENT_BINARY_DIR}/parser.hh
+    --header-file=${GENDIR}/lexer.hh
+    -o ${GENDIR}/lexer.cc
+    ${GENDIR}/lexer.ll
+  DEPENDS ${GENDIR}/lexer.ll
+          ${GENDIR}/parser.hh
   COMMENT "Generating main lexer from lexer.ll"
 )
 
 # --- Annotation parser (bison) ---
 add_custom_command(
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/annot_parser.cc
-         ${CMAKE_CURRENT_BINARY_DIR}/annot_parser.hh
-         ${CMAKE_CURRENT_BINARY_DIR}/annot_location.hh
+  OUTPUT ${GENDIR}/annot_parser.cc
+         ${GENDIR}/annot_parser.hh
+         ${GENDIR}/annot_location.hh
   COMMAND ${BISON_EXECUTABLE} -d --locations
-    -o ${CMAKE_CURRENT_BINARY_DIR}/annot_parser.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/annot_parser.yy
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/annot_parser.yy
+    -o ${GENDIR}/annot_parser.cc
+    ${GENDIR}/annot_parser.yy
+  DEPENDS ${GENDIR}/annot_parser.yy
   COMMENT "Generating annotation parser from annot_parser.yy"
 )
 
 # --- Annotation lexer (flex with -P annot prefix) ---
 add_custom_command(
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/annot_lexer.cc
-         ${CMAKE_CURRENT_BINARY_DIR}/annot_lexer.hh
+  OUTPUT ${GENDIR}/annot_lexer.cc
+         ${GENDIR}/annot_lexer.hh
   COMMAND ${FLEX_EXECUTABLE}
-    --header-file=${CMAKE_CURRENT_BINARY_DIR}/annot_lexer.hh
+    --header-file=${GENDIR}/annot_lexer.hh
     -P annot
-    -o ${CMAKE_CURRENT_BINARY_DIR}/annot_lexer.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/annot_lexer.ll
-  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/annot_lexer.ll
-          ${CMAKE_CURRENT_BINARY_DIR}/annot_parser.hh
+    -o ${GENDIR}/annot_lexer.cc
+    ${GENDIR}/annot_lexer.ll
+  DEPENDS ${GENDIR}/annot_lexer.ll
+          ${GENDIR}/annot_parser.hh
   COMMENT "Generating annotation lexer from annot_lexer.ll"
 )
 
@@ -71,10 +73,10 @@ add_executable(ebnf2tikz
   src/ast_optimizer.cc
   src/ast_layout.cc
   src/ast_tikzwriter.cc
-  ${CMAKE_CURRENT_BINARY_DIR}/parser.cc
-  ${CMAKE_CURRENT_BINARY_DIR}/lexer.cc
-  ${CMAKE_CURRENT_BINARY_DIR}/annot_parser.cc
-  ${CMAKE_CURRENT_BINARY_DIR}/annot_lexer.cc
+  ${GENDIR}/parser.cc
+  ${GENDIR}/lexer.cc
+  ${GENDIR}/annot_parser.cc
+  ${GENDIR}/annot_lexer.cc
 )
 
 target_include_directories(ebnf2tikz PRIVATE
@@ -168,8 +170,10 @@ set_directory_properties(PROPERTIES ADDITIONAL_CLEAN_FILES "${_stale_objects}")
 # --- realclean target ---
 add_custom_target(realclean
   COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target clean
-  # Stale object files and bison/flex generated files in project root
-  COMMAND bash -c "rm -f *.o parser.cc parser.hh location.hh lexer.cc lexer.hh annot_parser.cc annot_parser.hh annot_location.hh annot_lexer.cc annot_lexer.hh"
+  # Stale object files
+  COMMAND bash -c "rm -f *.o"
+  # Bison/Flex generated files in src/
+  COMMAND bash -c "rm -f src/parser.cc src/parser.hh src/location.hh src/lexer.cc src/lexer.hh src/annot_parser.cc src/annot_parser.hh src/annot_location.hh src/annot_lexer.cc src/annot_lexer.hh"
   # Unit test artifacts
   COMMAND bash -c "rm -f unit_tests/*.pdf unit_tests/*.aux unit_tests/*.log unit_tests/*.out unit_tests/*.toc unit_tests/*.synctex.gz unit_tests/bnfnodes.dat unit_tests/all_tests.tex unit_tests/all_input.ebnf unit_tests/testlist.tex"
   # Top-level generated files
