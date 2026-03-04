@@ -49,54 +49,40 @@ using namespace ast;
 
 /* Forward declarations */
 static pair<float,float> computeSizeSequence(SequenceNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static pair<float,float> computeSizeChoice(ChoiceNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static pair<float,float> computeSizeOptional(OptionalNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static pair<float,float> computeSizeLoop(LoopNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 
 static ASTNodeGeom layoutLeaf(ASTNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static ASTNodeGeom layoutEpsilon(ASTNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info);
+    ASTProductionLayout &layout);
 static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes, int reversed);
+    ASTProductionLayout &layout, nodesizes *sizes, int reversed);
 static ASTNodeGeom layoutChoicelike(ASTNode *n,
     vector<ASTNode*> &alternatives, int isLoop,
     coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 
 static void connectSequence(SequenceNode *n,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 static void connectChoicelike(ASTNode *self,
     vector<ASTNode*> &alternatives,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes,
+    ASTProductionLayout &layout, nodesizes *sizes,
     int parentIsChoice);
 static void connectOptional(OptionalNode *n,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes,
+    ASTProductionLayout &layout, nodesizes *sizes,
     int parentIsChoice);
 static void connectLoop(LoopNode *n,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes);
+    ASTProductionLayout &layout, nodesizes *sizes);
 
 /**
  * @brief Add a polyline to the connection list, skipping degenerate lines.
@@ -188,7 +174,7 @@ string ASTLayoutContext::nextCoord()
 /** @brief Walk AST assigning TikZ names to leaf nodes. @see astAssignNames() in ast_layout.hh */
 
 void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
-                    map<ASTNode*, ASTLeafInfo> &info)
+                    ASTProductionLayout &layout)
 {
   ASTLeafInfo li;
   SequenceNode *seq;
@@ -210,7 +196,7 @@ void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
       li.isTerminal = 1;
       li.wrapped = 0;
       ctx.sizes->getSize(li.tikzName, li.width, li.height);
-      info[n] = li;
+      layout.leafInfo[n] = li;
       return;
 
     case ASTKind::Nonterminal:
@@ -221,7 +207,7 @@ void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
       li.isTerminal = 0;
       li.wrapped = 0;
       ctx.sizes->getSize(li.tikzName, li.width, li.height);
-      info[n] = li;
+      layout.leafInfo[n] = li;
       return;
 
     case ASTKind::Epsilon:
@@ -233,7 +219,7 @@ void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
       li.wrapped = 0;
       li.width = 0;
       li.height = 0;
-      info[n] = li;
+      layout.leafInfo[n] = li;
       return;
 
     case ASTKind::Newline:
@@ -242,26 +228,26 @@ void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
     case ASTKind::Sequence:
       seq = static_cast<SequenceNode*>(n);
       for(i = 0; i < seq->children.size(); i++)
-        astAssignNames(seq->children[i], ctx, info);
+        astAssignNames(seq->children[i], ctx, layout);
       return;
 
     case ASTKind::Choice:
       ch = static_cast<ChoiceNode*>(n);
       for(i = 0; i < ch->alternatives.size(); i++)
-        astAssignNames(ch->alternatives[i], ctx, info);
+        astAssignNames(ch->alternatives[i], ctx, layout);
       return;
 
     case ASTKind::Optional:
       opt = static_cast<OptionalNode*>(n);
-      astAssignNames(opt->child, ctx, info);
+      astAssignNames(opt->child, ctx, layout);
       return;
 
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
       if(loop->body != NULL)
-        astAssignNames(loop->body, ctx, info);
+        astAssignNames(loop->body, ctx, layout);
       for(i = 0; i < loop->repeats.size(); i++)
-        astAssignNames(loop->repeats[i], ctx, info);
+        astAssignNames(loop->repeats[i], ctx, layout);
       return;
     }
 }
@@ -269,18 +255,18 @@ void astAssignNames(ASTNode *n, ASTLayoutContext &ctx,
 /** @brief Measure an AST subtree. @see astComputeSize() in ast_layout.hh */
 
 pair<float,float> astComputeSize(ASTNode *n,
-                                 map<ASTNode*, ASTLeafInfo> &info,
+                                 ASTProductionLayout &layout,
                                  nodesizes *sizes)
 {
   float w, h;
   ASTLeafInfo *li;
-  auto it = info.find(n);
+  auto it = layout.leafInfo.find(n);
 
   switch(n->kind)
     {
     case ASTKind::Terminal:
     case ASTKind::Nonterminal:
-      if(it != info.end())
+      if(it != layout.leafInfo.end())
         {
           li = &it->second;
           w = li->width;
@@ -301,18 +287,18 @@ pair<float,float> astComputeSize(ASTNode *n,
 
     case ASTKind::Sequence:
       return computeSizeSequence(static_cast<SequenceNode*>(n),
-                                 info, sizes);
+                                 layout, sizes);
 
     case ASTKind::Choice:
       return computeSizeChoice(static_cast<ChoiceNode*>(n),
-                               info, sizes);
+                               layout, sizes);
 
     case ASTKind::Optional:
       return computeSizeOptional(static_cast<OptionalNode*>(n),
-                                 info, sizes);
+                                 layout, sizes);
 
     case ASTKind::Loop:
-      return computeSizeLoop(static_cast<LoopNode*>(n), info, sizes);
+      return computeSizeLoop(static_cast<LoopNode*>(n), layout, sizes);
     }
 
   return make_pair(0.0f, 0.0f);
@@ -327,7 +313,7 @@ pair<float,float> astComputeSize(ASTNode *n,
  */
 
 static pair<float,float> computeSizeSequence(SequenceNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   float totalWidth, maxHeight, rowWidth, rowHeight;
   size_t i;
@@ -362,7 +348,7 @@ static pair<float,float> computeSizeSequence(SequenceNode *n,
         }
       else
         {
-          csz = astComputeSize(child, info, sizes);
+          csz = astComputeSize(child, layout, sizes);
           if(!firstContent)
             rowWidth += sizes->colsep;
           else
@@ -389,7 +375,7 @@ static pair<float,float> computeSizeSequence(SequenceNode *n,
 
 static pair<float,float> computeSizeChoicelike(
     vector<ASTNode*> &alternatives, int alwaysRailPad,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   float maxWidth, totalHeight;
   size_t i;
@@ -404,7 +390,7 @@ static pair<float,float> computeSizeChoicelike(
   for(i = 0; i < alternatives.size(); i++)
     {
       child = alternatives[i];
-      csz = astComputeSize(child, info, sizes);
+      csz = astComputeSize(child, layout, sizes);
       if(csz.first > maxWidth)
         {
           maxWidth = csz.first;
@@ -437,9 +423,9 @@ static pair<float,float> computeSizeChoicelike(
 }
 
 static pair<float,float> computeSizeChoice(ChoiceNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
-  return computeSizeChoicelike(n->alternatives, 0, info, sizes);
+  return computeSizeChoicelike(n->alternatives, 0, layout, sizes);
 }
 
 /**
@@ -447,7 +433,7 @@ static pair<float,float> computeSizeChoice(ChoiceNode *n,
  */
 
 static pair<float,float> computeSizeOptional(OptionalNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   vector<ASTNode*> alts;
   /* We don't have a real Epsilon node to put here; we'll use NULL
@@ -459,7 +445,7 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
   pair<float,float> csz;
   int widestIsRailed;
 
-  csz = astComputeSize(n->child, info, sizes);
+  csz = astComputeSize(n->child, layout, sizes);
   childW = csz.first;
   childH = csz.second;
 
@@ -489,7 +475,7 @@ static pair<float,float> computeSizeOptional(OptionalNode *n,
  */
 
 static pair<float,float> computeSizeLoop(LoopNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   float maxWidth, totalHeight;
   size_t i;
@@ -501,7 +487,7 @@ static pair<float,float> computeSizeLoop(LoopNode *n,
   /* Body (child 0, may be null/epsilon) */
   if(n->body != NULL)
     {
-      csz = astComputeSize(n->body, info, sizes);
+      csz = astComputeSize(n->body, layout, sizes);
       if(csz.first > maxWidth)
           maxWidth = csz.first;
       totalHeight += csz.second;
@@ -517,7 +503,7 @@ static pair<float,float> computeSizeLoop(LoopNode *n,
   /* Repeats (children 1..N) */
   for(i = 0; i < n->repeats.size(); i++)
     {
-      csz = astComputeSize(n->repeats[i], info, sizes);
+      csz = astComputeSize(n->repeats[i], layout, sizes);
       totalHeight += sizes->rowsep;
       totalHeight += csz.second;
       if(csz.second < sizes->rowsep)
@@ -549,18 +535,17 @@ static pair<float,float> computeSizeLoop(LoopNode *n,
 /** @brief Dispatch to type-specific layout. @see astLayoutNode() in ast_layout.hh */
 
 ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
-                          map<ASTNode*, ASTNodeGeom> &geom,
-                          map<ASTNode*, ASTLeafInfo> &info,
+                          ASTProductionLayout &layout,
                           nodesizes *sizes)
 {
   switch(n->kind)
     {
     case ASTKind::Terminal:
     case ASTKind::Nonterminal:
-      return layoutLeaf(n, origin, geom, info, sizes);
+      return layoutLeaf(n, origin, layout, sizes);
 
     case ASTKind::Epsilon:
-      return layoutEpsilon(n, origin, geom, info);
+      return layoutEpsilon(n, origin, layout);
 
     case ASTKind::Newline:
       {
@@ -570,28 +555,28 @@ ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
         g.height = 3.0f * sizes->rowsep;
         g.entry = origin;
         g.exit = origin;
-        geom[n] = g;
+        layout.geom[n] = g;
         return g;
       }
 
     case ASTKind::Sequence:
       return layoutSequence(static_cast<SequenceNode*>(n), origin,
-                            geom, info, sizes, 0);
+                            layout, sizes, 0);
 
     case ASTKind::Choice:
       {
         ChoiceNode *ch = static_cast<ChoiceNode*>(n);
         return layoutChoicelike(n, ch->alternatives, 0,
-                                origin, geom, info, sizes);
+                                origin, layout, sizes);
       }
 
     case ASTKind::Optional:
       return layoutOptional(static_cast<OptionalNode*>(n), origin,
-                            geom, info, sizes);
+                            layout, sizes);
 
     case ASTKind::Loop:
       return layoutLoop(static_cast<LoopNode*>(n), origin,
-                        geom, info, sizes);
+                        layout, sizes);
     }
 
   /* fallback */
@@ -602,7 +587,7 @@ ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
     g.height = 0;
     g.entry = origin;
     g.exit = origin;
-    geom[n] = g;
+    layout.geom[n] = g;
     return g;
   }
 }
@@ -615,15 +600,14 @@ ASTNodeGeom astLayoutNode(ASTNode *n, coordinate origin,
  */
 
 static ASTNodeGeom layoutLeaf(ASTNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   ASTNodeGeom g;
   ASTLeafInfo *li;
   float w, h, singleH, yShift;
-  auto it = info.find(n);
+  auto it = layout.leafInfo.find(n);
 
-  if(it == info.end())
+  if(it == layout.leafInfo.end())
     {
       w = sizes->colsep;
       h = sizes->rowsep;
@@ -651,7 +635,7 @@ static ASTNodeGeom layoutLeaf(ASTNode *n, coordinate origin,
   g.height = h;
   g.entry = origin;
   g.exit = coordinate(origin.x + w, origin.y);
-  geom[n] = g;
+  layout.geom[n] = g;
   return g;
 }
 
@@ -660,8 +644,7 @@ static ASTNodeGeom layoutLeaf(ASTNode *n, coordinate origin,
  */
 
 static ASTNodeGeom layoutEpsilon(ASTNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info)
+    ASTProductionLayout &layout)
 {
   ASTNodeGeom g;
 
@@ -670,7 +653,7 @@ static ASTNodeGeom layoutEpsilon(ASTNode *n, coordinate origin,
   g.height = 0;
   g.entry = origin;
   g.exit = origin;
-  geom[n] = g;
+  layout.geom[n] = g;
   return g;
 }
 
@@ -681,8 +664,7 @@ static ASTNodeGeom layoutEpsilon(ASTNode *n, coordinate origin,
  */
 
 static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes,
+    ASTProductionLayout &layout, nodesizes *sizes,
     int reversed)
 {
   ASTNodeGeom g, childg;
@@ -730,12 +712,12 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
           nlg.height = 3.0f * sizes->rowsep;
           nlg.entry = childOrigin;
           nlg.exit = childOrigin;
-          geom[child] = nlg;
+          layout.geom[child] = nlg;
         }
       else if(child->kind == ASTKind::Epsilon)
         {
           childOrigin = coordinate(cursorX, cursorY);
-          layoutEpsilon(child, childOrigin, geom, info);
+          layoutEpsilon(child, childOrigin, layout);
           if(firstContent)
             firstContent = 0;
         }
@@ -752,7 +734,7 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
             }
 
           childOrigin = coordinate(cursorX, cursorY);
-          childg = astLayoutNode(child, childOrigin, geom, info, sizes);
+          childg = astLayoutNode(child, childOrigin, layout, sizes);
           cursorX += childg.width;
           lineWidth += childg.width;
           if(childg.height > rowHeight)
@@ -781,8 +763,8 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
       child = n->children[idx];
       if(child->kind != ASTKind::Newline)
         {
-          if(geom.find(child) != geom.end())
-            g.entry = geom[child].entry;
+          if(layout.geom.find(child) != layout.geom.end())
+            g.entry = layout.geom[child].entry;
           i = nc;
         }
     }
@@ -795,13 +777,13 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
       child = n->children[idx];
       if(child->kind != ASTKind::Newline)
         {
-          if(geom.find(child) != geom.end())
-            g.exit = geom[child].exit;
+          if(layout.geom.find(child) != layout.geom.end())
+            g.exit = layout.geom[child].exit;
           i = 0;
         }
     }
 
-  geom[n] = g;
+  layout.geom[n] = g;
   return g;
 }
 
@@ -815,8 +797,7 @@ static ASTNodeGeom layoutSequence(SequenceNode *n, coordinate origin,
 static ASTNodeGeom layoutChoicelike(ASTNode *n,
     vector<ASTNode*> &alternatives, int isLoop,
     coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   ASTNodeGeom g, childg;
   float maxWidth, totalHeight, cursorY, childWidth, childHeight;
@@ -833,7 +814,7 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
   for(i = 0; i < alternatives.size(); i++)
     {
       child = alternatives[i];
-      csz = astComputeSize(child, info, sizes);
+      csz = astComputeSize(child, layout, sizes);
       if(csz.first > maxWidth)
         {
           maxWidth = csz.first;
@@ -861,7 +842,7 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
   for(i = 0; i < alternatives.size(); i++)
     {
       child = alternatives[i];
-      csz = astComputeSize(child, info, sizes);
+      csz = astComputeSize(child, layout, sizes);
       childWidth = csz.first;
       childHeight = csz.second;
       if(childHeight < sizes->rowsep)
@@ -876,7 +857,7 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
       childOrigin = coordinate(origin.x + railPad +
                                (maxWidth - childWidth) / 2.0f,
                                cursorY);
-      childg = astLayoutNode(child, childOrigin, geom, info, sizes);
+      childg = astLayoutNode(child, childOrigin, layout, sizes);
 
       cursorY -= childHeight;
       totalHeight += childHeight;
@@ -887,12 +868,12 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
   g.height = totalHeight;
 
   if(alternatives.size() > 0 &&
-     geom.find(alternatives[0]) != geom.end())
+     layout.geom.find(alternatives[0]) != layout.geom.end())
     {
       g.entry = coordinate(origin.x,
-                            geom[alternatives[0]].entry.y);
+                            layout.geom[alternatives[0]].entry.y);
       g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
-                           geom[alternatives[0]].exit.y);
+                           layout.geom[alternatives[0]].exit.y);
     }
   else
     {
@@ -901,7 +882,7 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
                            origin.y);
     }
 
-  geom[n] = g;
+  layout.geom[n] = g;
   return g;
 }
 
@@ -910,8 +891,7 @@ static ASTNodeGeom layoutChoicelike(ASTNode *n,
  */
 
 static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   ASTNodeGeom g, childg;
   float maxWidth, totalHeight, cursorY, childWidth, childHeight;
@@ -920,7 +900,7 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
   pair<float,float> csz;
   coordinate childOrigin;
 
-  csz = astComputeSize(n->child, info, sizes);
+  csz = astComputeSize(n->child, layout, sizes);
   childWidth = csz.first;
   childHeight = csz.second;
   if(childHeight < sizes->rowsep)
@@ -951,7 +931,7 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
   childOrigin = coordinate(origin.x + railPad +
                            (maxWidth - childWidth) / 2.0f,
                            cursorY);
-  childg = astLayoutNode(n->child, childOrigin, geom, info, sizes);
+  childg = astLayoutNode(n->child, childOrigin, layout, sizes);
 
   totalHeight += childHeight;
 
@@ -964,7 +944,7 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
   g.exit = coordinate(origin.x + maxWidth + 2.0f * railPad,
                        origin.y);
 
-  geom[n] = g;
+  layout.geom[n] = g;
   return g;
 }
 
@@ -973,8 +953,7 @@ static ASTNodeGeom layoutOptional(OptionalNode *n, coordinate origin,
  */
 
 static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   ASTNodeGeom g, childg;
   float maxWidth, totalHeight, cursorY;
@@ -987,13 +966,13 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
   maxWidth = 0;
   if(n->body != NULL)
     {
-      csz = astComputeSize(n->body, info, sizes);
+      csz = astComputeSize(n->body, layout, sizes);
       if(csz.first > maxWidth)
         maxWidth = csz.first;
     }
   for(i = 0; i < n->repeats.size(); i++)
     {
-      csz = astComputeSize(n->repeats[i], info, sizes);
+      csz = astComputeSize(n->repeats[i], layout, sizes);
       if(csz.first > maxWidth)
         maxWidth = csz.first;
     }
@@ -1020,7 +999,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
 
   if(n->body != NULL)
     {
-      csz = astComputeSize(n->body, info, sizes);
+      csz = astComputeSize(n->body, layout, sizes);
       childWidth = csz.first;
       childHeight = csz.second;
       if(childHeight < sizes->rowsep)
@@ -1029,7 +1008,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
       childOrigin = coordinate(origin.x + railPad +
                                (maxWidth - childWidth) / 2.0f,
                                cursorY);
-      childg = astLayoutNode(n->body, childOrigin, geom, info, sizes);
+      childg = astLayoutNode(n->body, childOrigin, layout, sizes);
       cursorY -= childHeight;
       totalHeight += childHeight;
     }
@@ -1044,7 +1023,7 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
   /* Place repeats below, reversed */
   for(i = 0; i < n->repeats.size(); i++)
     {
-      csz = astComputeSize(n->repeats[i], info, sizes);
+      csz = astComputeSize(n->repeats[i], layout, sizes);
       childWidth = csz.first;
       childHeight = csz.second;
       if(childHeight < sizes->rowsep)
@@ -1061,10 +1040,10 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
       if(n->repeats[i]->kind == ASTKind::Sequence)
         childg = layoutSequence(
             static_cast<SequenceNode*>(n->repeats[i]),
-            childOrigin, geom, info, sizes, 1);
+            childOrigin, layout, sizes, 1);
       else
         childg = astLayoutNode(n->repeats[i], childOrigin,
-                               geom, info, sizes);
+                               layout, sizes);
 
       cursorY -= childHeight;
       totalHeight += childHeight;
@@ -1078,10 +1057,10 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
      The feedback paths already draw body-to-rail segments with
      rounded corners; setting entry/exit at the rail would create
      gaps where the rounded corner bypasses the exact rail point. */
-  if(n->body != NULL && geom.find(n->body) != geom.end())
+  if(n->body != NULL && layout.geom.find(n->body) != layout.geom.end())
     {
-      g.entry = geom[n->body].entry;
-      g.exit = geom[n->body].exit;
+      g.entry = layout.geom[n->body].entry;
+      g.exit = layout.geom[n->body].exit;
     }
   else
     {
@@ -1092,41 +1071,37 @@ static ASTNodeGeom layoutLoop(LoopNode *n, coordinate origin,
       g.exit = coordinate(midX, origin.y);
     }
 
-  geom[n] = g;
+  layout.geom[n] = g;
   return g;
 }
 
 /** @brief Compute connection polylines for a subtree. @see astComputeConnections() in ast_layout.hh */
 
 void astComputeConnections(ASTNode *n,
-                           map<ASTNode*, ASTNodeGeom> &geom,
-                           map<ASTNode*, ASTLeafInfo> &info,
-                           vector<ASTPolyline> &lines,
+                           ASTProductionLayout &layout,
                            nodesizes *sizes)
 {
   switch(n->kind)
     {
     case ASTKind::Sequence:
       connectSequence(static_cast<SequenceNode*>(n),
-                      geom, info, lines, sizes);
+                      layout, sizes);
       return;
 
     case ASTKind::Choice:
       {
         ChoiceNode *ch = static_cast<ChoiceNode*>(n);
-        connectChoicelike(n, ch->alternatives, geom, info,
-                          lines, sizes, 0);
+        connectChoicelike(n, ch->alternatives, layout, sizes, 0);
         return;
       }
 
     case ASTKind::Optional:
       connectOptional(static_cast<OptionalNode*>(n),
-                      geom, info, lines, sizes, 0);
+                      layout, sizes, 0);
       return;
 
     case ASTKind::Loop:
-      connectLoop(static_cast<LoopNode*>(n), geom, info,
-                  lines, sizes);
+      connectLoop(static_cast<LoopNode*>(n), layout, sizes);
       return;
 
     case ASTKind::Terminal:
@@ -1145,9 +1120,7 @@ void astComputeConnections(ASTNode *n,
  */
 
 static void connectSequence(SequenceNode *n,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   size_t i, j, nc, idx;
   ASTNode *child, *prevContent, *nextContent;
@@ -1183,10 +1156,10 @@ static void connectSequence(SequenceNode *n,
           }
       }
     if(first != NULL && second != NULL &&
-       geom.find(first) != geom.end() &&
-       geom.find(second) != geom.end())
+       layout.geom.find(first) != layout.geom.end() &&
+       layout.geom.find(second) != layout.geom.end())
       {
-        if(geom[first].entry.x > geom[second].entry.x)
+        if(layout.geom[first].entry.x > layout.geom[second].entry.x)
           reversed = 1;
       }
   }
@@ -1197,13 +1170,13 @@ static void connectSequence(SequenceNode *n,
       child = n->children[idx];
 
       /* recurse into children first */
-      astComputeConnections(child, geom, info, lines, sizes);
+      astComputeConnections(child, layout, sizes);
 
       /* track below-rail extent for newline routing */
       if(child->kind != ASTKind::Newline &&
-         geom.find(child) != geom.end())
+         layout.geom.find(child) != layout.geom.end())
         {
-          childGeom = geom[child];
+          childGeom = layout.geom[child];
           if(isRailed(child))
             belowExtent = childGeom.height - sizes->minsize / 2.0f;
           else
@@ -1216,8 +1189,8 @@ static void connectSequence(SequenceNode *n,
         {
           /* Route wrap-around */
           if(prevContent != NULL &&
-             geom.find(prevContent) != geom.end() &&
-             geom.find((ASTNode*)n) != geom.end())
+             layout.geom.find(prevContent) != layout.geom.end() &&
+             layout.geom.find((ASTNode*)n) != layout.geom.end())
             {
               nextContent = NULL;
               for(j = i + 1; j < nc; j++)
@@ -1226,7 +1199,7 @@ static void connectSequence(SequenceNode *n,
                   jdx = reversed ? (nc - 1 - j) : j;
                   if(n->children[jdx]->kind != ASTKind::Newline)
                     {
-                      if(geom.find(n->children[jdx]) != geom.end())
+                      if(layout.geom.find(n->children[jdx]) != layout.geom.end())
                         nextContent = n->children[jdx];
                       j = nc - 1;
                     }
@@ -1234,9 +1207,9 @@ static void connectSequence(SequenceNode *n,
 
               if(nextContent != NULL)
                 {
-                  seqGeom = geom[(ASTNode*)n];
-                  prevGeom = geom[prevContent];
-                  nextGeom = geom[nextContent];
+                  seqGeom = layout.geom[(ASTNode*)n];
+                  prevGeom = layout.geom[prevContent];
+                  nextGeom = layout.geom[nextContent];
                   rightEdge = seqGeom.origin.x + seqGeom.width;
                   leftEdge = seqGeom.origin.x;
 
@@ -1262,7 +1235,7 @@ static void connectSequence(SequenceNode *n,
                   pl.points.push_back(
                       coordinate(wrapLeft, nextGeom.entry.y));
                   pl.points.push_back(nextGeom.entry);
-                  addPolyline(lines, pl);
+                  addPolyline(layout.connections, pl);
                 }
             }
           prevContent = NULL;
@@ -1272,15 +1245,15 @@ static void connectSequence(SequenceNode *n,
         {
           /* content or epsilon node: connect to previous */
           if(prevContent != NULL &&
-             geom.find(prevContent) != geom.end() &&
-             geom.find(child) != geom.end())
+             layout.geom.find(prevContent) != layout.geom.end() &&
+             layout.geom.find(child) != layout.geom.end())
             {
-              prevGeom = geom[prevContent];
-              curGeom = geom[child];
+              prevGeom = layout.geom[prevContent];
+              curGeom = layout.geom[child];
               pl.points.clear();
               pl.points.push_back(prevGeom.exit);
               pl.points.push_back(curGeom.entry);
-              addPolyline(lines, pl);
+              addPolyline(layout.connections, pl);
             }
           prevContent = child;
         }
@@ -1296,9 +1269,7 @@ static void connectSequence(SequenceNode *n,
 
 static void connectChoicelike(ASTNode *self,
     vector<ASTNode*> &alternatives,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes,
+    ASTProductionLayout &layout, nodesizes *sizes,
     int parentIsChoice)
 {
   size_t i;
@@ -1309,19 +1280,18 @@ static void connectChoicelike(ASTNode *self,
 
   if(alternatives.size() < 1)
     return;
-  if(geom.find(self) == geom.end())
+  if(layout.geom.find(self) == layout.geom.end())
     return;
 
-  choiceGeom = geom[self];
+  choiceGeom = layout.geom[self];
 
   /* recurse into children */
   for(i = 0; i < alternatives.size(); i++)
-    astComputeConnections(alternatives[i], geom, info,
-                          lines, sizes);
+    astComputeConnections(alternatives[i], layout, sizes);
 
-  if(geom.find(alternatives[0]) == geom.end())
+  if(layout.geom.find(alternatives[0]) == layout.geom.end())
     return;
-  firstGeom = geom[alternatives[0]];
+  firstGeom = layout.geom[alternatives[0]];
 
   railX = choiceGeom.origin.x;
   exitRailX = choiceGeom.origin.x + choiceGeom.width;
@@ -1330,20 +1300,20 @@ static void connectChoicelike(ASTNode *self,
   pl.points.clear();
   pl.points.push_back(coordinate(railX, firstGeom.entry.y));
   pl.points.push_back(firstGeom.entry);
-  addPolyline(lines, pl);
+  addPolyline(layout.connections, pl);
 
   pl.points.clear();
   pl.points.push_back(firstGeom.exit);
   pl.points.push_back(coordinate(exitRailX, firstGeom.exit.y));
-  addPolyline(lines, pl);
+  addPolyline(layout.connections, pl);
 
   /* remaining children: rail connections */
   for(i = 1; i < alternatives.size(); i++)
     {
       child = alternatives[i];
-      if(geom.find(child) == geom.end())
+      if(layout.geom.find(child) == layout.geom.end())
         return;
-      childGeom = geom[child];
+      childGeom = layout.geom[child];
 
       if(childGeom.entry.x == railX)
         {
@@ -1359,7 +1329,7 @@ static void connectChoicelike(ASTNode *self,
               coordinate(railX, childGeom.entry.y));
           pl.points.push_back(
               coordinate(railX + halfCol, childGeom.entry.y));
-          addPolyline(lines, pl);
+          addPolyline(layout.connections, pl);
 
           pl.points.clear();
           pl.points.push_back(
@@ -1370,7 +1340,7 @@ static void connectChoicelike(ASTNode *self,
               coordinate(exitRailX, firstGeom.exit.y));
           pl.points.push_back(
               coordinate(exitRailX + halfCol, firstGeom.exit.y));
-          addPolyline(lines, pl);
+          addPolyline(layout.connections, pl);
         }
       else if(parentIsChoice)
         {
@@ -1381,7 +1351,7 @@ static void connectChoicelike(ASTNode *self,
           pl.points.push_back(
               coordinate(railX, childGeom.entry.y));
           pl.points.push_back(childGeom.entry);
-          addPolyline(lines, pl);
+          addPolyline(layout.connections, pl);
 
           pl.points.clear();
           pl.points.push_back(childGeom.exit);
@@ -1389,7 +1359,7 @@ static void connectChoicelike(ASTNode *self,
               coordinate(exitRailX, childGeom.exit.y));
           pl.points.push_back(
               coordinate(exitRailX, firstGeom.exit.y));
-          addPolyline(lines, pl);
+          addPolyline(layout.connections, pl);
         }
       else
         {
@@ -1405,7 +1375,7 @@ static void connectChoicelike(ASTNode *self,
           pl.points.push_back(
               coordinate(railX, childGeom.entry.y));
           pl.points.push_back(childGeom.entry);
-          addPolyline(lines, pl);
+          addPolyline(layout.connections, pl);
 
           pl.points.clear();
           pl.points.push_back(childGeom.exit);
@@ -1416,7 +1386,7 @@ static void connectChoicelike(ASTNode *self,
           pl.points.push_back(
               coordinate(exitRailX + halfCol,
                          firstGeom.exit.y));
-          addPolyline(lines, pl);
+          addPolyline(layout.connections, pl);
         }
     }
 }
@@ -1429,26 +1399,24 @@ static void connectChoicelike(ASTNode *self,
  */
 
 static void connectOptional(OptionalNode *n,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes,
+    ASTProductionLayout &layout, nodesizes *sizes,
     int parentIsChoice)
 {
   ASTNodeGeom optGeom, childGeom;
   ASTPolyline pl;
   float railX, exitRailX;
 
-  if(geom.find((ASTNode*)n) == geom.end())
+  if(layout.geom.find((ASTNode*)n) == layout.geom.end())
     return;
 
-  optGeom = geom[(ASTNode*)n];
+  optGeom = layout.geom[(ASTNode*)n];
 
   /* recurse into child */
-  astComputeConnections(n->child, geom, info, lines, sizes);
+  astComputeConnections(n->child, layout, sizes);
 
-  if(geom.find(n->child) == geom.end())
+  if(layout.geom.find(n->child) == layout.geom.end())
     return;
-  childGeom = geom[n->child];
+  childGeom = layout.geom[n->child];
 
   railX = optGeom.origin.x;
   exitRailX = optGeom.origin.x + optGeom.width;
@@ -1457,7 +1425,7 @@ static void connectOptional(OptionalNode *n,
   pl.points.clear();
   pl.points.push_back(coordinate(railX, optGeom.entry.y));
   pl.points.push_back(coordinate(exitRailX, optGeom.exit.y));
-  addPolyline(lines, pl);
+  addPolyline(layout.connections, pl);
 
   /* child path (second alternative): through the rails */
   if(childGeom.entry.x == railX)
@@ -1473,7 +1441,7 @@ static void connectOptional(OptionalNode *n,
           coordinate(railX, childGeom.entry.y));
       pl.points.push_back(
           coordinate(railX + halfCol, childGeom.entry.y));
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
 
       pl.points.clear();
       pl.points.push_back(
@@ -1484,7 +1452,7 @@ static void connectOptional(OptionalNode *n,
           coordinate(exitRailX, optGeom.exit.y));
       pl.points.push_back(
           coordinate(exitRailX + halfCol, optGeom.exit.y));
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
     }
   else if(parentIsChoice)
     {
@@ -1494,7 +1462,7 @@ static void connectOptional(OptionalNode *n,
       pl.points.push_back(
           coordinate(railX, childGeom.entry.y));
       pl.points.push_back(childGeom.entry);
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
 
       pl.points.clear();
       pl.points.push_back(childGeom.exit);
@@ -1502,7 +1470,7 @@ static void connectOptional(OptionalNode *n,
           coordinate(exitRailX, childGeom.exit.y));
       pl.points.push_back(
           coordinate(exitRailX, optGeom.exit.y));
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
     }
   else
     {
@@ -1517,7 +1485,7 @@ static void connectOptional(OptionalNode *n,
       pl.points.push_back(
           coordinate(railX, childGeom.entry.y));
       pl.points.push_back(childGeom.entry);
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
 
       pl.points.clear();
       pl.points.push_back(childGeom.exit);
@@ -1527,7 +1495,7 @@ static void connectOptional(OptionalNode *n,
           coordinate(exitRailX, optGeom.exit.y));
       pl.points.push_back(
           coordinate(exitRailX + halfCol, optGeom.exit.y));
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
     }
 }
 
@@ -1539,9 +1507,7 @@ static void connectOptional(OptionalNode *n,
  */
 
 static void connectLoop(LoopNode *n,
-    map<ASTNode*, ASTNodeGeom> &geom,
-    map<ASTNode*, ASTLeafInfo> &info,
-    vector<ASTPolyline> &lines, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   size_t i;
   ASTNodeGeom loopGeom, bodyGeom, repeatGeom;
@@ -1550,23 +1516,23 @@ static void connectLoop(LoopNode *n,
   coordinate bodyEntry, bodyExit;
   float midX;
 
-  if(geom.find((ASTNode*)n) == geom.end())
+  if(layout.geom.find((ASTNode*)n) == layout.geom.end())
     return;
-  loopGeom = geom[(ASTNode*)n];
+  loopGeom = layout.geom[(ASTNode*)n];
 
   /* recurse into body */
   if(n->body != NULL)
-    astComputeConnections(n->body, geom, info, lines, sizes);
+    astComputeConnections(n->body, layout, sizes);
   for(i = 0; i < n->repeats.size(); i++)
-    astComputeConnections(n->repeats[i], geom, info, lines, sizes);
+    astComputeConnections(n->repeats[i], layout, sizes);
 
   railX = loopGeom.origin.x;
   exitRailX = loopGeom.origin.x + loopGeom.width;
 
   /* Body entry/exit coordinates */
-  if(n->body != NULL && geom.find(n->body) != geom.end())
+  if(n->body != NULL && layout.geom.find(n->body) != layout.geom.end())
     {
-      bodyGeom = geom[n->body];
+      bodyGeom = layout.geom[n->body];
       bodyEntry = bodyGeom.entry;
       bodyExit = bodyGeom.exit;
     }
@@ -1588,20 +1554,20 @@ static void connectLoop(LoopNode *n,
       pl.points.clear();
       pl.points.push_back(coordinate(railX, bodyEntry.y));
       pl.points.push_back(bodyEntry);
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
 
       pl.points.clear();
       pl.points.push_back(bodyExit);
       pl.points.push_back(coordinate(exitRailX, bodyExit.y));
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
     }
 
   /* Repeat feedback paths */
   for(i = 0; i < n->repeats.size(); i++)
     {
-      if(geom.find(n->repeats[i]) == geom.end())
+      if(layout.geom.find(n->repeats[i]) == layout.geom.end())
         return;
-      repeatGeom = geom[n->repeats[i]];
+      repeatGeom = layout.geom[n->repeats[i]];
 
       /* Right feedback: body exit → right rail → down → repeat
          right side (which is the exit for reversed layout) */
@@ -1612,7 +1578,7 @@ static void connectLoop(LoopNode *n,
       pl.points.push_back(
           coordinate(exitRailX, repeatGeom.exit.y));
       pl.points.push_back(repeatGeom.exit);
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
 
       /* Left feedback: repeat left side → left rail → up → body */
       pl.points.clear();
@@ -1622,7 +1588,7 @@ static void connectLoop(LoopNode *n,
       pl.points.push_back(
           coordinate(railX, bodyEntry.y));
       pl.points.push_back(bodyEntry);
-      addPolyline(lines, pl);
+      addPolyline(layout.connections, pl);
     }
 }
 
@@ -1643,7 +1609,7 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
   sizes = ctx.sizes;
 
   /* Assign names to all leaf nodes */
-  astAssignNames(prod->body, ctx, layout.leafInfo);
+  astAssignNames(prod->body, ctx, layout);
 
   /* Production body starts below the name label */
   Y = -1.5f * sizes->minsize;
@@ -1665,8 +1631,7 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
 
   /* Layout body */
   bodyOrigin = coordinate(cursorX, Y);
-  bodyGeom = astLayoutNode(prod->body, bodyOrigin,
-                           layout.geom, layout.leafInfo, sizes);
+  bodyGeom = astLayoutNode(prod->body, bodyOrigin, layout, sizes);
 
   cursorX = bodyOrigin.x + bodyGeom.width;
 
@@ -1704,8 +1669,7 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
   addPolyline(layout.connections, pl);
 
   /* Compute all connections within the body */
-  astComputeConnections(prod->body, layout.geom, layout.leafInfo,
-                        layout.connections, sizes);
+  astComputeConnections(prod->body, layout, sizes);
 
   return layout;
 }
@@ -1723,7 +1687,7 @@ ASTProductionLayout astLayoutProduction(ASTProduction *prod,
  */
 
 static void adjustWrappedWidths(ASTNode *n,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   SequenceNode *seq;
   ChoiceNode *ch;
@@ -1738,8 +1702,8 @@ static void adjustWrappedWidths(ASTNode *n,
     {
     case ASTKind::Nonterminal:
       {
-        auto it = info.find(n);
-        if(it == info.end())
+        auto it = layout.leafInfo.find(n);
+        if(it == layout.leafInfo.end())
           return;
         ASTLeafInfo &li = it->second;
         if(li.isTerminal)
@@ -1784,26 +1748,26 @@ static void adjustWrappedWidths(ASTNode *n,
     case ASTKind::Sequence:
       seq = static_cast<SequenceNode*>(n);
       for(i = 0; i < seq->children.size(); i++)
-        adjustWrappedWidths(seq->children[i], info, sizes);
+        adjustWrappedWidths(seq->children[i], layout, sizes);
       return;
 
     case ASTKind::Choice:
       ch = static_cast<ChoiceNode*>(n);
       for(i = 0; i < ch->alternatives.size(); i++)
-        adjustWrappedWidths(ch->alternatives[i], info, sizes);
+        adjustWrappedWidths(ch->alternatives[i], layout, sizes);
       return;
 
     case ASTKind::Optional:
       opt = static_cast<OptionalNode*>(n);
-      adjustWrappedWidths(opt->child, info, sizes);
+      adjustWrappedWidths(opt->child, layout, sizes);
       return;
 
     case ASTKind::Loop:
       loop = static_cast<LoopNode*>(n);
       if(loop->body != NULL)
-        adjustWrappedWidths(loop->body, info, sizes);
+        adjustWrappedWidths(loop->body, layout, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
-        adjustWrappedWidths(loop->repeats[i], info, sizes);
+        adjustWrappedWidths(loop->repeats[i], layout, sizes);
       return;
     }
 }
@@ -1818,7 +1782,7 @@ static void adjustWrappedWidths(ASTNode *n,
  */
 
 static void astAutoWrap(ASTNode *body, float availableWidth,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   SequenceNode *seq;
   ChoiceNode *ch;
@@ -1849,7 +1813,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
          computeSizeChoicelike / layoutChoicelike). */
       for(i = 0; i < ch->alternatives.size(); i++)
         {
-          csz = astComputeSize(ch->alternatives[i], info, sizes);
+          csz = astComputeSize(ch->alternatives[i], layout, sizes);
           if(csz.first > innerWidth)
             {
               innerWidth = availableWidth - 4.0f * sizes->colsep;
@@ -1857,17 +1821,17 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
             }
         }
       for(i = 0; i < ch->alternatives.size(); i++)
-        astAutoWrap(ch->alternatives[i], innerWidth, info, sizes);
+        astAutoWrap(ch->alternatives[i], innerWidth, layout, sizes);
       return;
 
     case ASTKind::Optional:
       opt = static_cast<OptionalNode*>(body);
       innerWidth = availableWidth - 2.0f * sizes->colsep;
       /* Same tighter width check as Choice above. */
-      csz = astComputeSize(opt->child, info, sizes);
+      csz = astComputeSize(opt->child, layout, sizes);
       if(csz.first > innerWidth)
         innerWidth = availableWidth - 4.0f * sizes->colsep;
-      astAutoWrap(opt->child, innerWidth, info, sizes);
+      astAutoWrap(opt->child, innerWidth, layout, sizes);
       return;
 
     case ASTKind::Loop:
@@ -1876,7 +1840,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
       /* Same tighter width check as Choice above. */
       if(loop->body != NULL)
         {
-          csz = astComputeSize(loop->body, info, sizes);
+          csz = astComputeSize(loop->body, layout, sizes);
           if(csz.first > innerWidth)
             innerWidth = availableWidth - 4.0f * sizes->colsep;
         }
@@ -1884,7 +1848,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
         {
           for(i = 0; i < loop->repeats.size(); i++)
             {
-              csz = astComputeSize(loop->repeats[i], info, sizes);
+              csz = astComputeSize(loop->repeats[i], layout, sizes);
               if(csz.first > innerWidth)
                 {
                   innerWidth = availableWidth - 4.0f * sizes->colsep;
@@ -1893,9 +1857,9 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
             }
         }
       if(loop->body != NULL)
-        astAutoWrap(loop->body, innerWidth, info, sizes);
+        astAutoWrap(loop->body, innerWidth, layout, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
-        astAutoWrap(loop->repeats[i], innerWidth, info, sizes);
+        astAutoWrap(loop->repeats[i], innerWidth, layout, sizes);
       return;
 
     case ASTKind::Sequence:
@@ -1916,7 +1880,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
             }
           else
             {
-              csz = astComputeSize(seq->children[i], info, sizes);
+              csz = astComputeSize(seq->children[i], layout, sizes);
               childWidth = csz.first;
               if(!firstOnRow)
                 childWidth += sizes->colsep;
@@ -1937,7 +1901,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
 
               /* Also recurse into this child in case it contains
                  inner sequences that need wrapping */
-              astAutoWrap(seq->children[i], availableWidth, info, sizes);
+              astAutoWrap(seq->children[i], availableWidth, layout, sizes);
             }
         }
       return;
@@ -1957,7 +1921,7 @@ static void astAutoWrap(ASTNode *body, float availableWidth,
  */
 
 static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
-    map<ASTNode*, ASTLeafInfo> &info, nodesizes *sizes)
+    ASTProductionLayout &layout, nodesizes *sizes)
 {
   SequenceNode *seq;
   ChoiceNode *ch;
@@ -1983,20 +1947,20 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
       seq = static_cast<SequenceNode*>(n);
       for(i = 0; i < seq->children.size(); i++)
         seq->children[i] = astSplitOverwideLoop(seq->children[i],
-                               availableWidth, info, sizes);
+                               availableWidth, layout, sizes);
       return n;
 
     case ASTKind::Choice:
       ch = static_cast<ChoiceNode*>(n);
       for(i = 0; i < ch->alternatives.size(); i++)
         ch->alternatives[i] = astSplitOverwideLoop(ch->alternatives[i],
-                                   availableWidth, info, sizes);
+                                   availableWidth, layout, sizes);
       return n;
 
     case ASTKind::Optional:
       opt = static_cast<OptionalNode*>(n);
       opt->child = astSplitOverwideLoop(opt->child, availableWidth,
-                       info, sizes);
+                       layout, sizes);
       return n;
 
     case ASTKind::Loop:
@@ -2006,10 +1970,10 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
       /* Recurse into body and repeats first */
       if(loop->body != NULL)
         loop->body = astSplitOverwideLoop(loop->body, innerWidth,
-                         info, sizes);
+                         layout, sizes);
       for(i = 0; i < loop->repeats.size(); i++)
         loop->repeats[i] = astSplitOverwideLoop(loop->repeats[i],
-                               innerWidth, info, sizes);
+                               innerWidth, layout, sizes);
 
       /* Check if this is a splittable null-body loop */
       if(loop->body != NULL)
@@ -2020,7 +1984,7 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
         return n;
 
       repeatSeq = static_cast<SequenceNode*>(loop->repeats[0]);
-      csz = astComputeSize(repeatSeq, info, sizes);
+      csz = astComputeSize(repeatSeq, layout, sizes);
       if(csz.first <= innerWidth)
         return n;
 
@@ -2031,7 +1995,7 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
       breakPoint = 0;
       for(i = 0; i < repeatSeq->children.size() && !foundBreak; i++)
         {
-          csz = astComputeSize(repeatSeq->children[i], info, sizes);
+          csz = astComputeSize(repeatSeq->children[i], layout, sizes);
           childWidth = csz.first;
           if(i > 0)
             childWidth += sizes->colsep;
@@ -2090,7 +2054,7 @@ static ASTNode* astSplitOverwideLoop(ASTNode *n, float availableWidth,
 void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
 {
   ASTLayoutContext ctx(sizes);
-  map<ASTNode*, ASTLeafInfo> info;
+  ASTProductionLayout tempLayout;
   size_t i;
   ASTProduction *prod;
   pair<float,float> bodySize;
@@ -2109,26 +2073,26 @@ void astAutoWrapGrammar(ASTGrammar *grammar, nodesizes *sizes)
         ;
       else
         {
-          info.clear();
-          astAssignNames(prod->body, ctx, info);
+          tempLayout.leafInfo.clear();
+          astAssignNames(prod->body, ctx, tempLayout);
 
           /* Compute body width.  If it exceeds the available row
              width, mark the production for nonterminal wrapping
              (shortstack) and estimate narrower widths before
              deciding where to insert auto-wrap newlines. */
-          bodySize = astComputeSize(prod->body, info, sizes);
+          bodySize = astComputeSize(prod->body, tempLayout, sizes);
           availableWidth = sizes->textwidth - 2.5f * sizes->colsep;
           if(bodySize.first > availableWidth)
             {
               prod->needsWrap = 1;
-              adjustWrappedWidths(prod->body, info, sizes);
+              adjustWrappedWidths(prod->body, tempLayout, sizes);
             }
 
           /* Split overwide null-body loops into body+repeat */
           prod->body = astSplitOverwideLoop(prod->body, availableWidth,
-                                             info, sizes);
+                                             tempLayout, sizes);
 
-          astAutoWrap(prod->body, availableWidth, info, sizes);
+          astAutoWrap(prod->body, availableWidth, tempLayout, sizes);
 
           /* Consume coord names for stubs (4 per production)
              to keep counters in sync with the later layout pass */

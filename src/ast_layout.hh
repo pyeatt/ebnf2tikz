@@ -155,7 +155,7 @@ struct ASTLayoutContext {
  * @param info Map to populate with leaf information.
  */
 void astAssignNames(ast::ASTNode *n, ASTLayoutContext &ctx,
-                    map<ast::ASTNode*, ASTLeafInfo> &info);
+                    ASTProductionLayout &layout);
 
 /**
  * @brief Compute the width and height of an AST subtree.
@@ -164,31 +164,29 @@ void astAssignNames(ast::ASTNode *n, ASTLayoutContext &ctx,
  * rail padding, and child arrangement (horizontal for sequences,
  * vertical for choices/optionals/loops).
  *
- * @param n     Root of the AST subtree.
- * @param info  Leaf information map (from astAssignNames).
- * @param sizes Node size cache.
+ * @param n      Root of the AST subtree.
+ * @param layout Layout result (uses leafInfo for dimensions).
+ * @param sizes  Node size cache.
  * @return A (width, height) pair in points.
  */
 pair<float,float> astComputeSize(ast::ASTNode *n,
-                                 map<ast::ASTNode*, ASTLeafInfo> &info,
+                                 ASTProductionLayout &layout,
                                  nodesizes *sizes);
 
 /**
  * @brief Place an AST node at the given origin coordinate.
  *
  * Top-down recursive placement that computes entry/exit connection
- * points and stores geometry in the @p geom map.
+ * points and stores geometry in the layout's geom map.
  *
  * @param n      The AST node to place.
  * @param origin Top-left corner for this node's bounding box.
- * @param geom   Map to store computed geometry for each node.
- * @param info   Leaf information map.
+ * @param layout Layout result (populates geom, reads leafInfo).
  * @param sizes  Node size cache.
  * @return The computed geometry for node @p n.
  */
 ASTNodeGeom astLayoutNode(ast::ASTNode *n, coordinate origin,
-                          map<ast::ASTNode*, ASTNodeGeom> &geom,
-                          map<ast::ASTNode*, ASTLeafInfo> &info,
+                          ASTProductionLayout &layout,
                           nodesizes *sizes);
 
 /**
@@ -197,16 +195,12 @@ ASTNodeGeom astLayoutNode(ast::ASTNode *n, coordinate origin,
  * Generates the rail connections (horizontal runs, vertical drops,
  * loop-back paths) between nodes based on their placed geometry.
  *
- * @param n     Root of the AST subtree.
- * @param geom  Node geometry map (from astLayoutNode).
- * @param info  Leaf information map.
- * @param lines Vector to append connection polylines to.
- * @param sizes Node size cache.
+ * @param n      Root of the AST subtree.
+ * @param layout Layout result (reads geom/leafInfo, appends connections).
+ * @param sizes  Node size cache.
  */
 void astComputeConnections(ast::ASTNode *n,
-                           map<ast::ASTNode*, ASTNodeGeom> &geom,
-                           map<ast::ASTNode*, ASTLeafInfo> &info,
-                           vector<ASTPolyline> &lines,
+                           ASTProductionLayout &layout,
                            nodesizes *sizes);
 
 /**
