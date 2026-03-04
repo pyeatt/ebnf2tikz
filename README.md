@@ -101,7 +101,9 @@ See the package documentation (`ebnf2tikz.pdf`) for full details.
 
 ### EBNF Input Format
 
-ebnf2tikz accepts standard EBNF with these constructs:
+ebnf2tikz accepts a practical subset of EBNF as defined by ISO/IEC 14977, with several extensions for railroad diagram generation.  See the user manual (Appendix A) for a detailed conformance comparison.
+
+### Supported Constructs
 
 | Syntax | Meaning |
 |--------|---------|
